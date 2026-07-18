@@ -20,8 +20,7 @@ const config = {
     name: "Miranda Soft",
     version: "0.10.44",
     environment: "production",
-    debug: false,
-    token: "9f3c8b1a-2d7e-4a4d-91e3-c9f621f7dcb1"
+    debug: false
   },
   api: {
     baseUrl: resolveApiBaseUrl(),
@@ -29,8 +28,7 @@ const config = {
     timeout: 30000,
     retryAttempts: 3,
     useProxy: false,
-    proxyUrl: "",
-    token: "b2247aa5e3c3e54254c81a05cdc7dc44f3493ae0e24de14cffdd959c928696466056ff6cc07969dc8c0808b2eed328bc84c58a6a800bb6a9eb01f6422f3b9d40bb93a86bbf3867f762f3d6a7b567b7056c698d4c39c12af913b5bb53bafb79f5592c8e43d8b1565eeca078588539a0ffe118900d6b3e5b87b7bef214511186f7"
+    proxyUrl: ""
   },
   routes: {
     defaultPage: "home",

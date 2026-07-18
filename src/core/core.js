@@ -372,7 +372,7 @@ class Core {
           method: verb,
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('msoft_auth_token') || config?.api?.token || '____STANDBY____'}`,
+            'Authorization': `Bearer ${localStorage.getItem('msoft_auth_token') || '____STANDBY____'}`,
             'X-CSRF-TOKEN': localStorage.getItem('csrf_token') || '____STANDBY____'
           },
           mode: 'cors',
@@ -409,7 +409,7 @@ class Core {
         method: verb,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('msoft_auth_token') || config?.api?.token || '____STANDBY____'}`,
+          'Authorization': `Bearer ${localStorage.getItem('msoft_auth_token') || '____STANDBY____'}`,
         },
         mode: 'cors',
         credentials: 'include'
@@ -454,7 +454,7 @@ class Core {
             headers: {
               'Accept': '*/*',
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${localStorage.getItem('msoft_auth_token') || config?.api?.token || '____STANDBY____'}`,
+              'Authorization': `Bearer ${localStorage.getItem('msoft_auth_token') || '____STANDBY____'}`,
             },
             mode: 'cors',
             credentials: 'include'
