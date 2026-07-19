@@ -1,0 +1,19 @@
+status:
+  branch: master
+  modifiedFiles:
+    - README.md
+    - .ai/
+    - .aiox-core/
+    - .aiox/
+    - .antigravity/
+  modifiedFilesTotalCount: 18
+  recentCommits:
+    - Merge branch 'feat/premium-apps-per-user'
+    - Merge branch 'fix/login-page-render-and-layout'
+  currentEpic: null
+  currentStory: null
+  lastUpdate: '2026-07-19T15:53:46.142Z'
+  isGitRepo: true
+timestamp: 1784476426148
+ttl: 60
+gitFingerprint: 1784400846862.2786:1784428270786.756

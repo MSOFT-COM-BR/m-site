@@ -1,0 +1,37 @@
+{
+  "story_id": "1.1",
+  "story_title": "Alinhar o README ao produto Miranda Soft",
+  "reviewer": "Quinn (Test Architect)",
+  "reviewed_at": "2026-07-19T09:50:52-03:00",
+  "reviewed_revision": "working-tree:sha256:fe8166296a00016b684b24d5bb53a24bd9189ce786107e32dc684d79c750f31e",
+  "validation_result": true,
+  "gate": "PASS",
+  "quality_score": 100,
+  "errors": [],
+  "checks": [
+    {
+      "name": "diff_scope",
+      "result": "PASS",
+      "evidence": "git diff --name-only listed only README.md; git diff --check passed."
+    },
+    {
+      "name": "legacy_references",
+      "result": "PASS",
+      "evidence": "README.md has no matches for Breno Miranda, brenossan.com.br, or Landing page pessoal."
+    },
+    {
+      "name": "api_resolution",
+      "result": "PASS",
+      "evidence": "VM checks passed for production, localhost, loopback, and override URL normalization."
+    },
+    {
+      "name": "spa_smoke",
+      "result": "PASS",
+      "evidence": "npx serve -s . -l 8082 returned HTTP 200 for /, /about, /src/config/config.js, and /src/pages/about.html."
+    }
+  ],
+  "follow_up_recommendations": [
+    "Replan Story 1.2 because src/config/config.js has no client-side token to remove.",
+    "Correct the PRD statement that sitemap.xml exists; the file is absent from the repository."
+  ]
+}

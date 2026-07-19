@@ -1,0 +1,41 @@
+{
+  "story_id": "2.1",
+  "validated_at": "2026-07-19T13:05:00-03:00",
+  "result": "PASS_WITH_VISUAL_REVIEW_PENDING",
+  "checks": [
+    {
+      "name": "route_and_cta_validation",
+      "result": "PASS",
+      "evidence": "ecossistema is registered in config.routes.validPages and all 15 internal hub links resolve to registered routes."
+    },
+    {
+      "name": "semantic_and_responsive_static_review",
+      "result": "PASS",
+      "evidence": "One h1, semantic sections, focus-visible styling, and mobile breakpoints at 767.98px and 575.98px were verified."
+    },
+    {
+      "name": "runtime_scope",
+      "result": "PASS",
+      "evidence": "The new page has no fetch, storage, API base, or authentication runtime usage."
+    },
+    {
+      "name": "http_smoke",
+      "result": "PASS",
+      "evidence": "serve -s returned HTTP 200 for /, /ecossistema, /apps, the ecosystem page partial, and the header; Safari loaded the SPA assets."
+    },
+    {
+      "name": "html_fragment_validation",
+      "result": "PASS",
+      "evidence": "tidy reported no errors. Its warnings are expected for a partial HTML document and Bootstrap icon elements."
+    },
+    {
+      "name": "diff_and_quality_review",
+      "result": "PASS",
+      "evidence": "git diff --check passed. CodeRabbit CLI is absent, so the configured manual-review fallback was used."
+    }
+  ],
+  "known_limitations": [
+    "No display, browser headless runtime, or Safari JavaScript automation permission was available for captured desktop/mobile visual inspection.",
+    "QA must visually inspect the final page at desktop and mobile breakpoints before release."
+  ]
+}

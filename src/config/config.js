@@ -58,6 +58,7 @@ const config = {
       'healthtech-formulas',
       'marketplace',
       'expertise',
+      'ecossistema',
       'mcredential',
       'profile',
       'support',

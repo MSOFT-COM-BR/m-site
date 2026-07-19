@@ -1,0 +1,64 @@
+schema: 1
+story: '4.1'
+story_title: 'Adicionar seletor global de idiomas'
+gate: CONCERNS
+status_reason: 'Todos os testes automatizados, checks de seguranca e smoke tests passaram. A inspeção visual em navegador desktop e mobile ainda nao pode ser capturada neste ambiente.'
+reviewer: 'Quinn (Test Architect) / Codex'
+reviewed_revision: 'working-tree:sha256:2291e850abe7cc4b7f49da6ab4e06c57adf0b024a7bdb7dcba1a9b5437b344f3'
+updated: '2026-07-19T19:06:04-03:00'
+top_issues:
+  - id: 'VIS-001'
+    severity: low
+    finding: 'O seletor de idiomas nao foi inspecionado visualmente em navegador real nos breakpoints desktop e mobile.'
+    suggested_action: 'Validar troca PT/ES/EN, foco, clique externo, Escape e menu de conta autenticada antes do release.'
+waiver: { active: false }
+quality_score: 92
+expires: '2026-08-02T19:06:04-03:00'
+
+evidence:
+  tests_reviewed: 7
+  risks_identified: 1
+  trace:
+    ac_covered: [1, 2, 3, 4, 5, 6, 7, 8]
+    ac_gaps: []
+  checks:
+    - name: 'Unit and header integration tests'
+      result: PASS
+      notes: 'node --test tests/*.test.js passed seven tests, including persisted locale application to the initial document shell.'
+    - name: 'Syntax and inline scripts'
+      result: PASS
+      notes: 'node --check passed for i18n/core and the header inline script parsed successfully.'
+    - name: 'Security and scope'
+      result: PASS
+      notes: 'No new dependency, network call or translated innerHTML was added; account display names are escaped.'
+    - name: 'Static SPA smoke'
+      result: PASS
+      notes: 'serve -s returned HTTP 200 for home, deep link, i18n module and header fragment.'
+    - name: 'Visual responsive review'
+      result: CONCERNS
+      notes: 'Static responsive rules were reviewed, but browser automation is unavailable for final visual confirmation.'
+
+nfr_validation:
+  security:
+    status: PASS
+    notes: 'Supported locales are allowlisted and storage errors are handled without API interaction.'
+  performance:
+    status: PASS
+    notes: 'The local dictionary adds no network request and no external dependency.'
+  reliability:
+    status: PASS
+    notes: 'Invalid locale and blocked storage tests preserve a safe Portuguese fallback.'
+  accessibility:
+    status: CONCERNS
+    notes: 'Semantic buttons, labels, selected state and focus styling are present; visual validation remains pending.'
+
+recommendations:
+  immediate:
+    - action: 'Perform browser-based desktop and mobile validation before release.'
+      refs:
+        - 'docs/stories/4.1.seletor-global-de-idiomas.md'
+        - 'src/components/header.html'
+  future:
+    - action: 'Create scoped stories for public page and CMS content translations before advertising full multilingual coverage.'
+      refs:
+        - 'docs/PRD/epic-4-internacionalizacao-da-navegacao.md'
