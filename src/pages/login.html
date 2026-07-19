@@ -1,54 +1,127 @@
-<!-- Version: V0.13.0 -->
-<!-- Luminous Background Elements -->
-<div class="orb-primary" style="top: 20%; left: -10%;"></div>
-<div class="orb-secondary" style="bottom: 10%; right: -5%;"></div>
+<!-- Version: V0.14.0 -->
+<section class="login-screen d-flex position-relative">
+    <!-- Coluna de composição visual (somente desktop) -->
+    <div class="login-showcase d-none d-lg-flex flex-column justify-content-between position-relative">
+        <div class="orb-primary" style="top: 15%; left: -15%;"></div>
+        <div class="orb-secondary" style="bottom: -10%; right: -10%;"></div>
 
-<section class="min-vh-100 d-flex align-items-center justify-content-center py-5 overflow-hidden position-relative">
-    <div class="container-fluid position-relative z-1 px-4 px-lg-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-6 col-xl-5 col-xxl-4 login-panel">
-                <div class="text-center mb-3">
-                    <h2 class="h5 text-white fw-semibold m-0">Acesso da Plataforma</h2>
-                    <p class="text-on-surface-variant small mt-2 mb-0">
-                        Entre com suas credenciais para acessar seu ambiente com segurança.
-                    </p>
-                </div>
+        <div class="position-relative z-1">
+            <a href="/" class="text-decoration-none d-inline-flex align-items-center fw-bold fs-4">
+                <span class="text-white">Miranda<span class="brand-soft text-mono">Soft</span></span>
+            </a>
+        </div>
 
-                <div class="ms-login-surface p-4 p-md-5 animate__animated animate__fadeInUp">
-                    <form id="login-form">
-                        <div class="mb-3">
-                            <label for="email" class="text-muted small d-block mb-2">E-mail ou Usuário</label>
-                            <input type="text" class="form-control" id="email" placeholder="nome@exemplo.com" required>
-                        </div>
+        <div class="position-relative z-1">
+            <h1 class="display-6 fw-semibold text-white mb-3">
+                Tecnologia sob medida para o seu negócio.
+            </h1>
+            <p class="text-on-surface-variant fs-5 mb-4" style="max-width: 32rem;">
+                Acesse sua área exclusiva para acompanhar projetos, produtos e credenciais em um só lugar.
+            </p>
 
-                        <div class="mb-4">
-                            <label for="password" class="text-muted small d-block mb-2">Senha de Acesso</label>
-                            <input type="password" class="form-control" id="password" placeholder="Senha" required>
-                        </div>
+            <ul class="list-unstyled d-flex flex-column gap-3 m-0">
+                <li class="d-flex align-items-center gap-3">
+                    <span class="login-feature-icon"><i class="bi bi-shield-lock-fill"></i></span>
+                    <span class="text-on-surface-variant">Ambiente protegido com criptografia de ponta a ponta</span>
+                </li>
+                <li class="d-flex align-items-center gap-3">
+                    <span class="login-feature-icon"><i class="bi bi-grid-1x2-fill"></i></span>
+                    <span class="text-on-surface-variant">Painel unificado para apps, marketplace e suporte</span>
+                </li>
+                <li class="d-flex align-items-center gap-3">
+                    <span class="login-feature-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+                    <span class="text-on-surface-variant">Acesso rápido às ferramentas do seu plano</span>
+                </li>
+            </ul>
+        </div>
 
-                        <button type="submit" class="dev-btn dev-btn-primary w-100 py-3 d-flex align-items-center justify-content-center gap-2" data-btn-text-default="Entrar">
-                            <span class="login-btn-text">Entrar</span>
-                            <div class="spinner-border spinner-border-sm login-spinner" role="status" style="display: none;"></div>
-                        </button>
-                    </form>
+        <p class="text-muted extra-small position-relative z-1 m-0">© 2025 Miranda Soft. Todos os direitos reservados.</p>
+    </div>
 
-                    <div class="mt-5 pt-4 border-top border-white border-opacity-5 d-flex flex-column gap-3">
-                        <a href="/recovery" class="text-decoration-none text-on-surface-variant small hover-white transition-all">Esqueceu sua senha?</a>
-                        <p class="text-muted extra-small m-0">Protegido por criptografia de ponta a ponta.</p>
+    <!-- Coluna do formulário -->
+    <div class="login-form-column d-flex align-items-center justify-content-center position-relative flex-grow-1">
+        <div class="orb-secondary d-lg-none" style="top: 10%; right: -20%;"></div>
+
+        <div class="login-panel position-relative z-1 w-100 px-4 px-sm-5">
+            <div class="text-center mb-4">
+                <h2 class="h4 text-white fw-semibold m-0">Acesso da Plataforma</h2>
+                <p class="text-on-surface-variant small mt-2 mb-0">
+                    Entre com suas credenciais para acessar seu ambiente com segurança.
+                </p>
+            </div>
+
+            <div class="ms-login-surface p-4 p-md-5 animate__animated animate__fadeInUp">
+                <form id="login-form">
+                    <div class="mb-3">
+                        <label for="email" class="text-muted small d-block mb-2">E-mail ou Usuário</label>
+                        <input type="text" class="form-control" id="email" placeholder="nome@exemplo.com" required>
                     </div>
-                </div>
 
-                <div class="mt-4 animate__animated animate__fadeIn animate__delay-1s">
-                    <a href="/" class="text-decoration-none text-muted small d-inline-flex align-items-center gap-2 hover-white transition-all">
-                        <i class="bi bi-house"></i> Voltar para o Site Principal
-                    </a>
+                    <div class="mb-4">
+                        <label for="password" class="text-muted small d-block mb-2">Senha de Acesso</label>
+                        <input type="password" class="form-control" id="password" placeholder="Senha" required>
+                    </div>
+
+                    <button type="submit" class="dev-btn dev-btn-primary w-100 py-3 d-flex align-items-center justify-content-center gap-2" data-btn-text-default="Entrar">
+                        <span class="login-btn-text">Entrar</span>
+                        <div class="spinner-border spinner-border-sm login-spinner" role="status" style="display: none;"></div>
+                    </button>
+                </form>
+
+                <div class="mt-5 pt-4 border-top border-white border-opacity-5 d-flex flex-column gap-3">
+                    <a href="/recovery" class="text-decoration-none text-on-surface-variant small hover-white transition-all">Esqueceu sua senha?</a>
+                    <p class="text-muted extra-small m-0">Protegido por criptografia de ponta a ponta.</p>
                 </div>
+            </div>
+
+            <div class="mt-4 text-center animate__animated animate__fadeIn animate__delay-1s">
+                <a href="/" class="text-decoration-none text-muted small d-inline-flex align-items-center gap-2 hover-white transition-all">
+                    <i class="bi bi-house"></i> Voltar para o Site Principal
+                </a>
             </div>
         </div>
     </div>
 </section>
 
 <style>
+    /* Layout de duas colunas: composição visual + formulário */
+    .login-screen {
+        min-height: 100vh;
+        padding-top: 80px; /* compensa o header fixed-top */
+    }
+
+    .login-showcase {
+        width: 45%;
+        max-width: 640px;
+        padding: 3rem 4vw;
+        background: linear-gradient(180deg, var(--ms-surface-container-low) 0%, var(--ms-surface) 100%);
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+        overflow-x: hidden;
+    }
+
+    .login-form-column {
+        background: var(--ms-surface);
+        overflow-x: hidden;
+        padding: 2rem 0;
+    }
+
+    .login-panel {
+        max-width: 26rem;
+    }
+
+    .login-feature-icon {
+        flex-shrink: 0;
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        background: rgba(59, 130, 246, 0.12);
+        color: var(--ms-primary);
+        font-size: 1.1rem;
+    }
+
     /* Luminous Login Surface */
     .ms-login-surface {
         background: rgba(31, 31, 37, 0.4);
@@ -92,8 +165,36 @@
     }
 
     @media (max-width: 991.98px) {
+        .login-screen {
+            padding-top: 96px;
+        }
+
+        .login-form-column {
+            padding: 2rem 0 3rem;
+        }
+
         .ms-login-surface {
             border-radius: 24px;
+        }
+    }
+
+    /* Telas de baixa altura (ex.: laptops 13"): reduz respiro vertical */
+    @media (min-height: 700px) and (max-height: 860px) {
+        .login-showcase {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        .login-showcase h1 {
+            font-size: 2rem;
+        }
+
+        .login-showcase ul {
+            gap: 0.75rem !important;
+        }
+
+        .ms-login-surface {
+            padding: 2rem !important;
         }
     }
 

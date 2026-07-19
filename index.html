@@ -50,8 +50,6 @@
 </head>
 
 <body data-bs-theme="dark" class="d-flex flex-column min-vh-100">
-  <a href="#root" class="visually-hidden-focusable skip-link">Pular para o conteúdo</a>
-  
   <!-- Layout Wrapper Global -->
   <div class="container-lg d-flex flex-column flex-grow-1 p-0" style="max-width: 1140px;">
     <div id="toast"></div>
@@ -73,6 +71,13 @@
 
   <!-- Critical Orchestration Scripts -->
   <script src="/src/config/config.js"></script>
+
+  <!-- Component System: Core.init() usa Skeleton no primeiro render, -->
+  <!-- por isso precisa carregar de forma síncrona antes de core.js -->
+  <script src="/src/core/component.js"></script>
+  <script src="/src/core/helpers.js"></script>
+  <script src="/src/core/skeleton.js"></script>
+
   <script src="/src/core/core.js"></script>
 
   <!-- Vendor Scripts (Deferred) -->
@@ -88,11 +93,6 @@
   <script src="/src/services/auth-service.js" defer></script>
   <script src="/src/services/audit-service.js" defer></script>
   <script src="/src/services/healthtech-service.js" defer></script>
-
-  <!-- Component System (Deferred) -->
-  <script src="/src/core/component.js" defer></script>
-  <script src="/src/core/helpers.js" defer></script>
-  <script src="/src/core/skeleton.js" defer></script>
 
   <!-- AdSense (Async, Non-blocking) -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7844284078845131" crossorigin="anonymous"></script>
