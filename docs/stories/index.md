@@ -1,14 +1,14 @@
 # Story Index
 
 **Generated:** 2026-07-19T22:06:50.956Z
-**Total Stories:** 5
-**Epics:** 4
+**Total Stories:** 7
+**Epics:** 5
 
 ---
 
 ## 📊 Summary by Status
 
-- 👀 **Ready for Review**: 4
+- 👀 **Ready for Review**: 6
 - ✅ **Completed**: 1
 
 ---
@@ -39,6 +39,13 @@
 | Story ID | Title | Status | Priority | Owner | Estimate |
 |----------|-------|--------|----------|-------|----------|
 | 4.1 | [Adicionar seletor global de idiomas](4.1.seletor-global-de-idiomas.md) | 👀 Ready for Review | 🟠 High | dev-agent | 5 |
+
+### EPIC-5 (2 stories)
+
+| Story ID | Title | Status | Priority | Owner | Estimate |
+|----------|-------|--------|----------|-------|----------|
+| 5.1 | [Instalacao real de apps gratuitos](5.1.instalacao-real-de-apps-gratuitos.md) | 👀 Ready for Review | 🔴 Critical | dev-agent | 5 |
+| 5.2 | [Marketplace e dashboard premium dinamicos](5.2.marketplace-e-premium-dinamicos.md) | 👀 Ready for Review | 🟠 High | dev-agent | 8 |
 
 ---
 

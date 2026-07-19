@@ -30,7 +30,7 @@
 
             <!-- Quick Stats -->
             <div class="row g-4 mb-5">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card h-100" style="background: transparent !important; border: 1px solid rgba(255, 255, 255, 0.03) !important;">
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between mb-3">
@@ -40,47 +40,32 @@
                                 <span
                                     class="badge bg-success bg-opacity-10 text-success h-auto align-self-start">Ativo</span>
                             </div>
-                            <h3 class="fw-bold mb-1" id="stats-apps">3</h3>
+                            <h3 class="fw-bold mb-1" id="stats-apps">0</h3>
                             <p class="text-muted small mb-0">Apps Instalados</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card h-100" style="background: transparent !important; border: 1px solid rgba(255, 255, 255, 0.03) !important;">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between mb-3">
-                                <div class="bg-info bg-opacity-10 p-3 rounded-3 text-info">
-                                    <i class="bi bi-hdd-network fs-4"></i>
-                                </div>
-                                <span class="badge bg-info bg-opacity-10 text-info h-auto align-self-start">+12%</span>
-                            </div>
-                            <h3 class="fw-bold mb-1">1.2k</h3>
-                            <p class="text-muted small mb-0">Requisições API/mês</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card h-100" style="background: transparent !important; border: 1px solid rgba(255, 255, 255, 0.03) !important;">
                         <div class="card-body p-4">
                             <div class="d-flex justify-content-between mb-3">
                                 <div class="bg-warning bg-opacity-10 p-3 rounded-3 text-warning">
-                                    <i class="bi bi-cloud-check fs-4"></i>
+                                    <i class="bi bi-star-fill fs-4"></i>
                                 </div>
-                                <span class="text-muted small">50GB Max</span>
                             </div>
-                            <h3 class="fw-bold mb-1">45%</h3>
-                            <p class="text-muted small mb-0">Armazenamento Usado</p>
+                            <h3 class="fw-bold mb-1" id="stats-purchased">0</h3>
+                            <p class="text-muted small mb-0">Apps Premium Adquiridos</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card bg-gradient-primary text-white border-0 h-100">
                         <div class="card-body p-4 position-relative overflow-hidden">
                             <div class="position-absolute top-0 end-0 p-4 opacity-25">
                                 <i class="bi bi-stars display-4"></i>
                             </div>
                             <h5 class="fw-bold mb-3">Plano Premium</h5>
-                            <p class="small mb-4 opacity-75">Sua assinatura expira em 18 de Fev, 2026.</p>
+                            <p class="small mb-4 opacity-75">Gerencie sua assinatura ou fale com o time.</p>
                             <a href="/#contact" class="btn btn-sm btn-light text-primary fw-bold rounded-pill px-3">
                                 Gerenciar Plano
                             </a>
@@ -199,9 +184,10 @@
         const content = document.getElementById('premium-content');
         const denied = document.getElementById('access-denied');
 
-        // Catálogo de exibição: como renderizar cada appKey conhecido.
-        // Apps que não estiverem aqui ainda aparecem com um card genérico.
-        const APP_DISPLAY = {
+        // Overrides para apps com comportamento próprio (rota dedicada, cor, etc.)
+        // que não vem do catálogo. Nome/descrição/ícone padrão vêm de GET /catalog;
+        // isso só cobre o que o catálogo não sabe expressar (ex: onOpen customizado).
+        const APP_OVERRIDES = {
             healthtech_os_v1: {
                 name: 'HealthTech OS',
                 description: 'Sistema completo para gestão de clínicas e pacientes com dashboard preditivo.',
@@ -222,15 +208,33 @@
             }
         };
 
+        // Cache do catálogo (GET /catalog), indexado por appKey
+        let catalogByKey = {};
+
+        async function loadCatalog() {
+            try {
+                const res = await window.core.fetchAPI('/catalog', 'GET');
+                if (res && res.success && Array.isArray(res.data)) {
+                    catalogByKey = {};
+                    res.data.forEach(item => { catalogByKey[item.appKey] = item; });
+                }
+            } catch (e) {
+                console.warn('Failed to load catalog', e);
+            }
+        }
+
         function renderAppCard(app) {
-            const meta = APP_DISPLAY[app.appKey] || {
-                name: app.name || app.appKey,
-                description: 'Aplicativo instalado na sua conta.',
-                icon: 'bi-box-seam',
+            const override = APP_OVERRIDES[app.appKey];
+            const fromCatalog = catalogByKey[app.appKey];
+
+            const meta = override || {
+                name: (fromCatalog && fromCatalog.name) || app.name || app.appKey,
+                description: (fromCatalog && fromCatalog.description) || 'Aplicativo instalado na sua conta.',
+                icon: (fromCatalog && fromCatalog.icon) || 'bi-box-seam',
                 color: 'secondary',
                 statusLabel: 'Ativo',
                 openLabel: 'Abrir',
-                onOpen: () => {}
+                onOpen: () => window.location.href = `/apps?tool=${encodeURIComponent(app.appKey)}`
             };
             const btnId = `btn-open-${app.appKey}`;
             // Expõe o handler de forma segura, sem inline scripts com dados do usuário
@@ -276,6 +280,8 @@
         async function loadMyApps() {
             const grid = document.getElementById('my-apps-grid');
             try {
+                await loadCatalog();
+
                 // Apps vinculados ao usuário autenticado: admin, com ?all=1, vê o catálogo inteiro instalado por todos.
                 const isAdmin = auth.hasRole('admin');
                 const endpoint = isAdmin ? '/apps?all=1' : '/apps';
@@ -285,6 +291,12 @@
 
                 grid.innerHTML = apps.map(renderAppCard).join('') + ADD_NEW_CARD;
                 document.getElementById('stats-apps').textContent = apps.length;
+
+                const purchased = apps.filter(app => {
+                    const catalogItem = catalogByKey[app.appKey];
+                    return catalogItem && catalogItem.type !== 'free';
+                });
+                document.getElementById('stats-purchased').textContent = purchased.length;
             } catch (e) {
                 console.warn('Failed to load apps', e);
                 grid.innerHTML = ADD_NEW_CARD;

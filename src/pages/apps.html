@@ -289,20 +289,44 @@
             return this.getApps().includes(appId);
         },
 
-        install: function (appId) {
-            const apps = this.getApps();
-            if (!apps.includes(appId)) {
-                apps.push(appId);
-                localStorage.setItem(this.key, JSON.stringify(apps));
-                this.syncWithApi();
-                return true;
-            }
-            return false;
+        // Nomes exibidos ao usuário, usados como `name` no POST /apps/install.
+        toolNames: {
+            'password-gen': 'Gerador de Senha',
+            'percentage-calc': 'Calculadora de Porcentagem',
+            'doc-gen': 'Gerador CPF/CNPJ',
+            'nfe-xml-json': 'Conversor XML NFe para JSON',
+            'json-formatter': 'Formatador & Validador JSON',
+            'base64-converter': 'Conversor Base64',
+            'depara-transform': 'De/Para - Transformador Universal'
         },
 
-        syncWithApi: function () {
-            if (window.authService && window.authService.getUser()) {
-                console.log('Syncing installed apps with API...', this.getApps());
+        // Instala de fato via API (requer sessão). Só marca localmente após confirmação do backend.
+        install: async function (appId) {
+            if (this.isInstalled(appId)) return true;
+
+            if (!window.authService || !window.authService.isAuthenticated()) {
+                return false;
+            }
+
+            try {
+                const name = this.toolNames[appId] || appId;
+                const res = await window.core.fetchAPI('/apps/install', 'POST', { name, appKey: appId });
+                if (!res || !res.success) {
+                    throw new Error(res && res.error ? res.error : 'Falha ao instalar');
+                }
+
+                const apps = this.getApps();
+                if (!apps.includes(appId)) {
+                    apps.push(appId);
+                    localStorage.setItem(this.key, JSON.stringify(apps));
+                }
+                return true;
+            } catch (e) {
+                console.error('Error installing app', e);
+                if (window.core && window.core.toast) {
+                    window.core.toast('Não foi possível instalar o app. Tente novamente.', 'error');
+                }
+                return false;
             }
         },
 
@@ -368,9 +392,7 @@
     }
 
     // Inicializar UI
-    document.addEventListener('DOMContentLoaded', () => {
-        window.AppState.updateUI();
-    });
+    window.AppState.updateUI();
 
     // Premium Logic & Install Effect
     window.checkPremium = function () {
@@ -387,6 +409,16 @@
             return;
         }
 
+        // Visitante anônimo: ferramenta abre direto, sem tentar instalar (exige sessão).
+        const isLoggedIn = window.authService && window.authService.isAuthenticated();
+        if (!isLoggedIn) {
+            if (window.core && window.core.toast) {
+                window.core.toast('Faça login para salvar este app na sua conta.', 'info');
+            }
+            if (callback) callback();
+            return;
+        }
+
         const overlay = document.getElementById('premium-install-overlay');
         const progressBar = document.getElementById('install-progress');
         const statusText = document.getElementById('install-status');
@@ -394,43 +426,56 @@
 
         overlay.style.display = 'flex';
         let progress = 0;
+        let installDone = false;
+        let installOk = false;
 
         const steps = [
             { pct: 15, text: 'Verificando licença e compatibilidade...' },
             { pct: 40, text: 'Baixando recursos...' },
             { pct: 75, text: 'Configurando preferências do usuário...' },
-            { pct: 90, text: 'Salvando no histórico...' },
+            { pct: 90, text: 'Salvando no servidor...' },
             { pct: 100, text: 'Instalação Concluída!' }
         ];
 
+        // Dispara a instalação real em paralelo à animação.
+        const installPromise = appId ? window.AppState.install(appId) : Promise.resolve(true);
+        installPromise.then((ok) => {
+            installDone = true;
+            installOk = ok;
+        });
+
+        const finish = () => {
+            window.AppState.updateUI(); // Atualiza badges
+
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                if (installOk && callback) callback();
+                // Reset for next time
+                setTimeout(() => {
+                    progressBar.style.width = '0%';
+                    percentText.textContent = '0%';
+                    statusText.textContent = 'Aguardando...';
+                }, 500);
+            }, 600);
+        };
+
         const interval = setInterval(() => {
-            progress += Math.floor(Math.random() * 5) + 1;
-            if (progress > 100) progress = 100;
+            // Anima até 90% livremente; os últimos 10% só avançam após a API responder.
+            const cap = installDone ? 100 : 90;
+            progress = Math.min(progress + Math.floor(Math.random() * 5) + 1, cap);
 
             progressBar.style.width = `${progress}%`;
             percentText.textContent = `${progress}%`;
 
-            // Update status text based on progress
             const step = steps.find(s => progress >= s.pct && progress < s.pct + 20); // rough range
             if (step) statusText.textContent = step.text;
 
             if (progress >= 100) {
                 clearInterval(interval);
-
-                // Salvar estado
-                if (appId) window.AppState.install(appId);
-                window.AppState.updateUI(); // Atualiza badges
-
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                    if (callback) callback();
-                    // Reset for next time
-                    setTimeout(() => {
-                        progressBar.style.width = '0%';
-                        percentText.textContent = '0%';
-                        statusText.textContent = 'Aguardando...';
-                    }, 500);
-                }, 600);
+                if (!installOk) {
+                    statusText.textContent = 'Falha na instalação.';
+                }
+                finish();
             }
         }, 30); // Speed of animation
     }
@@ -1359,4 +1404,11 @@
         document.getElementById('depara-rules-container').innerHTML = '';
         window.addDeparaRule();
     }
+
+    // Abre a ferramenta automaticamente se veio de um deep link (ex: /apps?tool=json-formatter)
+    (function openToolFromQueryString() {
+        const params = new URLSearchParams(window.location.search);
+        const tool = params.get('tool');
+        if (tool) window.openTool(tool);
+    })();
 </script>
