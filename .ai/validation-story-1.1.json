@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "validated_on": "2026-07-18",
+  "validator": "@po",
+  "mode": "autonomous",
+  "target": "docs/stories/1.1.alinhar-readme-ao-produto-miranda-soft.md",
+  "epic": "docs/PRD/epic-1-identidade-e-configuracao-segura.md",
+  "verdict": "GO",
+  "implementation_readiness_score": 9,
+  "confidence": "High",
+  "status_transition": {
+    "from": "Draft",
+    "to": "Ready",
+    "index_status": "Ready for Dev"
+  },
+  "checks": {
+    "template_completeness": "PASS",
+    "executor_assignment": "PASS",
+    "file_structure_and_source_tree": "PASS",
+    "acceptance_criteria_and_task_coverage": "PASS",
+    "testing_instructions": "PASS",
+    "security_considerations": "PASS",
+    "task_sequence": "PASS",
+    "coderabbit_integration": "PASS",
+    "anti_hallucination": "PASS",
+    "code_intelligence": "NOT_AVAILABLE"
+  },
+  "critical_issues": [],
+  "should_fix": [
+    {
+      "id": "DOC-ARCH-001",
+      "severity": "Low",
+      "detail": "No docs/architecture or docs/framework artifact exists. The story is documentation-only and cites current source files, so this does not block implementation."
+    }
+  ],
+  "information": [
+    {
+      "id": "CR-001",
+      "detail": "The story uses the project-level CodeRabbit full self-healing configuration (3 iterations, 30 minutes), which takes precedence over the generic task default."
+    },
+    {
+      "id": "PM-001",
+      "detail": "No PM tool adapter is configured. The local story and epic files remain the source of truth."
+    }
+  ],
+  "source_evidence": [
+    "docs/PRD/m-site.md",
+    "src/config/config.js",
+    "index.html",
+    "Dockerfile",
+    "serve.json"
+  ],
+  "next_handoff": {
+    "agent": "@dev",
+    "command": "*develop 1.1",
+    "scope": "Update README.md only, then execute the documented browser and content checks."
+  }
+}

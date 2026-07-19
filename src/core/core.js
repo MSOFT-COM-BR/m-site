@@ -32,8 +32,16 @@ class Core {
     return this.components.get(name);
   }
 
+  applyTranslations(container) {
+    if (window.i18n && typeof window.i18n.apply === 'function') {
+      window.i18n.apply(container);
+    }
+  }
+
   // Inicialização principal
   async init() {
+    // Aplica o locale persistido na shell estatica, incluindo o titulo do documento.
+    this.applyTranslations(document);
     this.initRouter();
     this.initializeComponents(document.body);
   }
@@ -84,6 +92,7 @@ class Core {
               this.loadedHtmlComponents.add(name);
               // Execute any inline scripts
               this.executeScripts(el);
+              this.applyTranslations(el);
             });
           } else {
             el.innerHTML = content;
@@ -91,6 +100,7 @@ class Core {
             el.setAttribute('data-loaded', 'true');
             this.loadedHtmlComponents.add(name);
             this.executeScripts(el);
+            this.applyTranslations(el);
           }
           return;
         }
@@ -110,11 +120,13 @@ class Core {
             Skeleton.hide(el, tempDiv.innerHTML, () => {
               this._activeLoads.delete(el);
               el.setAttribute('data-loaded', 'true');
+              this.applyTranslations(el);
             });
           } else {
             instance.render(el);
             this._activeLoads.delete(el);
             el.setAttribute('data-loaded', 'true');
+            this.applyTranslations(el);
           }
         }
       } else {
@@ -195,6 +207,7 @@ class Core {
 
         // Execute all scripts in the loaded content
         self.executeScripts(root);
+        self.applyTranslations(root);
 
         // Initialize any components inside the loaded content
         self.initializeComponents(root);

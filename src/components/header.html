@@ -1,6 +1,6 @@
 <!-- Main Header -->
 <header class="dev-header">
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
       <!-- Logo -->
       <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="/">
@@ -8,22 +8,35 @@
       </a>
 
       <!-- Mobile Toggle Button -->
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="navbarNav">
+      <button id="mobile-nav-toggle" class="navbar-toggler border-0" type="button" data-mobile-nav-toggle aria-label="Abrir menu de navegação" data-i18n-aria-label="navigation.open" aria-expanded="false" aria-controls="navbarNav">
         <i class="bi bi-list" style="font-size: 1.75rem;" aria-hidden="true"></i>
       </button>
 
       <!-- Navigation Menu -->
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-4">
-          <li class="nav-item"><a class="nav-link" href="/expertise">Soluções</a></li>
-          <li class="nav-item"><a class="nav-link" href="/apps">Apps</a></li>
-          <li class="nav-item"><a class="nav-link" href="/marketplace">Marketplace</a></li>
-          <li class="nav-item"><a class="nav-link" href="/blog">Blog</a></li>
-          <li class="nav-item"><a class="nav-link" href="/about">Sobre</a></li>
+          <li class="nav-item"><a class="nav-link" href="/ecossistema" data-i18n="nav.ecosystem">Ecossistema</a></li>
+          <li class="nav-item"><a class="nav-link" href="/expertise" data-i18n="nav.solutions">Soluções</a></li>
+          <li class="nav-item"><a class="nav-link" href="/blog" data-i18n="nav.content">Conteúdo</a></li>
+          <li class="nav-item"><a class="nav-link" href="/about" data-i18n="nav.about">Sobre</a></li>
           <li class="nav-item ms-lg-2" id="header-contact-action">
-            <a class="dev-btn dev-btn-primary" href="/#contact">
+            <a class="dev-btn dev-btn-primary" href="/#contact" data-i18n="nav.contact">
               Fale Conosco
             </a>
+          </li>
+          <li class="nav-item ms-lg-2" id="header-language-action">
+            <div class="dropdown">
+              <button class="header-language-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" data-language-toggle aria-expanded="false" aria-label="Selecionar idioma" data-i18n-aria-label="language.select">
+                <span class="header-language-flag" data-language-current-flag aria-hidden="true">🇧🇷</span>
+                <span class="header-language-code" data-language-current-code>PT</span>
+                <i class="bi bi-chevron-down header-language-caret" aria-hidden="true"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end bg-dark border-secondary shadow-lg header-language-menu" aria-label="Selecionar idioma" data-i18n-aria-label="language.select">
+                <li><button class="dropdown-item header-language-option" type="button" data-language-option="pt-BR" aria-pressed="true"><span class="header-language-option-flag" aria-hidden="true">🇧🇷</span><span data-i18n="language.pt-BR">Português</span></button></li>
+                <li><button class="dropdown-item header-language-option" type="button" data-language-option="es" aria-pressed="false"><span class="header-language-option-flag" aria-hidden="true">🇪🇸</span><span data-i18n="language.es">Espanhol</span></button></li>
+                <li><button class="dropdown-item header-language-option" type="button" data-language-option="en" aria-pressed="false"><span class="header-language-option-flag" aria-hidden="true">🇺🇸</span><span data-i18n="language.en">Inglês</span></button></li>
+              </ul>
+            </div>
           </li>
           <li class="nav-item ms-lg-2" id="header-auth-action"></li>
         </ul>
@@ -33,39 +46,91 @@
 </header>
 
 <style>
+  .dev-header {
+    --header-navbar-background: rgba(10, 10, 15, 0.85);
+    --header-navbar-scrolled-background: rgba(10, 10, 15, 0.95);
+    --header-border-color: rgba(59, 130, 246, 0.1);
+    --header-brand-color: #ffffff;
+    --header-link-color: #94a3b8;
+    --header-link-hover-color: #f8fafc;
+    --header-link-hover-background: rgba(59, 130, 246, 0.1);
+    --header-user-background: rgba(59, 130, 246, 0.1);
+    --header-user-border: rgba(59, 130, 246, 0.3);
+    --header-user-hover-background: rgba(59, 130, 246, 0.2);
+    --header-user-hover-border: #3b82f6;
+    --header-toggle-color: #f8fafc;
+    --header-menu-background: rgba(26, 26, 37, 0.98);
+    --header-menu-border: rgba(59, 130, 246, 0.25);
+    --header-menu-shadow: 0 24px 48px rgba(0, 0, 0, 0.36);
+    --header-dropdown-background: rgba(20, 20, 25, 0.95);
+    --header-dropdown-border: rgba(59, 130, 246, 0.2);
+    --header-dropdown-item-color: #ffffff;
+    --header-dropdown-hover-background: rgba(59, 130, 246, 0.1);
+    --header-dropdown-hover-color: #ffffff;
+    --header-dropdown-divider-color: rgba(148, 163, 184, 0.25);
+  }
+
+  :is(
+    body[data-bs-theme="light"],
+    html[data-bs-theme="light"] body:not([data-bs-theme])
+  ) .dev-header {
+    --header-navbar-background: rgba(255, 255, 255, 0.88);
+    --header-navbar-scrolled-background: rgba(255, 255, 255, 0.97);
+    --header-border-color: rgba(15, 23, 42, 0.12);
+    --header-brand-color: #0f172a;
+    --header-link-color: #475569;
+    --header-link-hover-color: #0f172a;
+    --header-link-hover-background: rgba(37, 99, 235, 0.1);
+    --header-user-background: rgba(37, 99, 235, 0.09);
+    --header-user-border: rgba(37, 99, 235, 0.28);
+    --header-user-hover-background: rgba(37, 99, 235, 0.16);
+    --header-user-hover-border: #2563eb;
+    --header-toggle-color: #0f172a;
+    --header-menu-background: rgba(255, 255, 255, 0.98);
+    --header-menu-border: rgba(37, 99, 235, 0.2);
+    --header-menu-shadow: 0 24px 48px rgba(15, 23, 42, 0.16);
+    --header-dropdown-background: rgba(255, 255, 255, 0.98);
+    --header-dropdown-border: rgba(15, 23, 42, 0.14);
+    --header-dropdown-item-color: #1e293b;
+    --header-dropdown-hover-background: rgba(37, 99, 235, 0.1);
+    --header-dropdown-hover-color: #0f172a;
+    --header-dropdown-divider-color: rgba(15, 23, 42, 0.12);
+  }
+
   .dev-header .navbar {
-    background: rgba(10, 10, 15, 0.85);
+    background: var(--header-navbar-background);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+    border-bottom: 1px solid var(--header-border-color);
     padding: 16px 0;
     transition: all 0.3s ease;
+    z-index: 1030;
   }
 
   .dev-header .navbar.scrolled {
-    background: rgba(10, 10, 15, 0.95);
+    background: var(--header-navbar-scrolled-background);
     padding: 12px 0;
   }
 
   .dev-header .navbar-brand {
     font-size: 1.4rem;
     letter-spacing: -0.03em;
-    color: #ffffff !important;
+    color: var(--header-brand-color) !important;
     display: flex;
     align-items: center;
   }
 
   .dev-header .nav-link {
     font-weight: 500;
-    color: #94a3b8 !important;
+    color: var(--header-link-color) !important;
     padding: 8px 16px !important;
     border-radius: 8px;
     transition: all 0.2s ease;
   }
 
   .dev-header .nav-link:hover {
-    color: #f8fafc !important;
-    background: rgba(59, 130, 246, 0.1);
+    color: var(--header-link-hover-color) !important;
+    background: var(--header-link-hover-background);
   }
 
   .dev-header .dev-btn {
@@ -86,7 +151,7 @@
     opacity: 0.9;
   }
 
-  /* User Menu specific styles */
+  /* Header account and language controls */
   .header-user-btn {
     display: inline-flex;
     align-items: center;
@@ -95,10 +160,10 @@
     max-width: 100%;
     min-width: 0;
     padding: 8px 12px;
-    border: 1px solid rgba(59, 130, 246, 0.3);
+    border: 1px solid var(--header-user-border);
     border-radius: 50px;
-    background: rgba(59, 130, 246, 0.1);
-    color: white !important;
+    background: var(--header-user-background);
+    color: var(--header-brand-color) !important;
     text-decoration: none;
     transition: background 0.3s ease, border-color 0.3s ease;
     box-sizing: border-box;
@@ -123,36 +188,172 @@
   }
 
   .header-user-btn:hover {
-    background: rgba(59, 130, 246, 0.2);
-    border-color: #3b82f6;
+    background: var(--header-user-hover-background);
+    border-color: var(--header-user-hover-border);
+  }
+
+  .dev-header .header-language-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 10px;
+    border: 1px solid var(--header-user-border);
+    border-radius: 50px;
+    background: var(--header-user-background);
+    color: var(--header-brand-color);
+    font: inherit;
+    line-height: 1;
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+
+  .dev-header .header-language-btn:hover,
+  .dev-header .header-language-btn:focus-visible {
+    background: var(--header-user-hover-background);
+    border-color: var(--header-user-hover-border);
+  }
+
+  .dev-header .header-language-btn:focus-visible {
+    outline: 2px solid #38bdf8;
+    outline-offset: 3px;
+  }
+
+  .header-language-btn.dropdown-toggle::after {
+    display: none !important;
+  }
+
+  .header-language-flag,
+  .header-language-option-flag {
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  .header-language-code {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .header-language-caret {
+    font-size: 0.65rem;
+    opacity: 0.85;
+  }
+
+  .dev-header .header-language-menu {
+    min-width: 11.5rem;
+  }
+
+  .dev-header .header-language-menu .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .dev-header .header-language-menu .dropdown-item[aria-pressed="true"] {
+    background: var(--header-dropdown-hover-background) !important;
+    color: var(--header-dropdown-hover-color) !important;
   }
 
   @media (max-width: 991.98px) {
-    .dev-header .navbar-collapse {
-      background: rgba(26, 26, 37, 0.98);
+    .dev-header .navbar > .container {
+      position: relative;
+    }
+
+    .dev-header .navbar-toggler {
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--header-toggle-color);
+    }
+
+    .dev-header .navbar-toggler:focus-visible {
+      outline: 2px solid #38bdf8;
+      outline-offset: 3px;
+    }
+
+    .dev-header .navbar.fixed-top .navbar-collapse {
+      position: absolute;
+      top: calc(100% + 24px);
+      right: 12px;
+      left: 12px;
+      width: auto;
+      background: var(--header-menu-background);
       backdrop-filter: blur(20px);
-      padding: 24px;
+      -webkit-backdrop-filter: blur(20px);
+      padding: 14px;
       border-radius: 16px;
-      margin-top: 16px;
-      border: 1px solid rgba(59, 130, 246, 0.1);
+      margin: 0 !important;
+      max-height: calc(100vh - 92px);
+      max-height: calc(100dvh - 92px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      border: 1px solid var(--header-menu-border);
+      box-shadow: var(--header-menu-shadow);
+    }
+
+    .dev-header .navbar-collapse.show {
+      display: block;
+      animation: header-menu-in 0.18s ease-out;
+    }
+
+    .dev-header .navbar-nav {
+      align-items: stretch !important;
+      gap: 4px !important;
+    }
+
+    .dev-header .navbar-collapse .nav-item {
+      width: 100%;
+      margin-left: 0 !important;
     }
 
     .dev-header .nav-link {
       padding: 12px 16px !important;
+      width: 100%;
     }
 
-    .dev-header .dev-btn {
+    .dev-header .navbar-collapse .dev-btn,
+    .dev-header .header-user-btn,
+    .dev-header .header-language-btn {
       width: 100%;
       justify-content: center;
-      margin-top: 12px;
+      margin-top: 8px;
+    }
+
+    .dev-header .navbar-collapse .dropdown-menu {
+      position: static !important;
+      width: 100%;
+      margin: 8px 0 0 !important;
+      transform: none !important;
+    }
+  }
+
+  @keyframes header-menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dev-header .navbar-collapse.show {
+      animation: none;
     }
   }
 
   /* Dropdown Overrides */
   .dropdown-menu {
-    background: rgba(20, 20, 25, 0.95) !important;
+    background: var(--header-dropdown-background, rgba(20, 20, 25, 0.95)) !important;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(59, 130, 246, 0.2) !important;
+    border: 1px solid var(--header-dropdown-border, rgba(59, 130, 246, 0.2)) !important;
     margin-top: 10px !important;
   }
 
@@ -161,50 +362,190 @@
   }
 
   .dropdown-item:hover {
-    background: rgba(59, 130, 246, 0.1) !important;
-    color: #fff !important;
+    background: var(--header-dropdown-hover-background, rgba(59, 130, 246, 0.1)) !important;
+    color: var(--header-dropdown-hover-color, #fff) !important;
+  }
+
+  .dev-header .dropdown-menu .dropdown-item.text-white:not(.bg-primary) {
+    color: var(--header-dropdown-item-color) !important;
+  }
+
+  .dev-header .dropdown-menu .dropdown-item.text-danger:hover {
+    color: var(--bs-danger) !important;
+  }
+
+  .dev-header .dropdown-divider {
+    border-color: var(--header-dropdown-divider-color);
   }
 </style>
 
 <script>
-  // Navbar scroll effect
-  window.addEventListener('scroll', function () {
-    const navbar = document.querySelector('.dev-header .navbar');
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  });
-
-  // SPA: collapse stays open on internal nav — close on mobile after link/action
-  (function closeNavbarCollapseOnNavigate() {
-    const navbarNav = document.getElementById('navbarNav');
-    if (!navbarNav || typeof bootstrap === 'undefined') return;
-
-    const mq = window.matchMedia('(max-width: 991.98px)');
-
-    function hideCollapse() {
-      if (!mq.matches) return;
-      const el = document.getElementById('navbarNav');
-      if (!el) return;
-      const inst = bootstrap.Collapse.getOrCreateInstance(el, { toggle: false });
-      inst.hide();
+  (function initHeaderNavigation() {
+    if (typeof window.__msoftHeaderTeardown === 'function') {
+      window.__msoftHeaderTeardown();
     }
 
-    navbarNav.addEventListener('click', function (e) {
-      const link = e.target.closest('a[href]');
+    const header = document.querySelector('.dev-header');
+    const navbar = header && header.querySelector('.navbar');
+    const navbarNav = header && header.querySelector('#navbarNav');
+    const navToggle = header && header.querySelector('[data-mobile-nav-toggle]');
+    if (!header || !navbar || !navbarNav || !navToggle) return;
+
+    const mobileQuery = window.matchMedia('(max-width: 991.98px)');
+    const languageOptions = {
+      'pt-BR': { code: 'PT', flag: '🇧🇷' },
+      es: { code: 'ES', flag: '🇪🇸' },
+      en: { code: 'EN', flag: '🇺🇸' }
+    };
+
+    function translate(key, fallback) {
+      if (window.i18n && typeof window.i18n.t === 'function') {
+        return window.i18n.t(key, fallback);
+      }
+      return fallback;
+    }
+
+    function syncNavigationLabels() {
+      const isOpen = navbarNav.classList.contains('show');
+      navToggle.setAttribute('aria-label', isOpen
+        ? translate('navigation.close', 'Fechar menu de navegação')
+        : translate('navigation.open', 'Abrir menu de navegação'));
+    }
+
+    function renderLanguageSelector() {
+      const locale = window.i18n && typeof window.i18n.getLocale === 'function'
+        ? window.i18n.getLocale()
+        : 'pt-BR';
+      const info = window.i18n && typeof window.i18n.getLocaleInfo === 'function'
+        ? window.i18n.getLocaleInfo(locale)
+        : languageOptions[locale] || languageOptions['pt-BR'];
+      const languageName = translate(`language.${locale}`, locale);
+      const languageToggle = header.querySelector('[data-language-toggle]');
+      const currentFlag = header.querySelector('[data-language-current-flag]');
+      const currentCode = header.querySelector('[data-language-current-code]');
+
+      if (currentFlag) currentFlag.textContent = info.flag;
+      if (currentCode) currentCode.textContent = info.code;
+      if (languageToggle) {
+        const label = `${translate('language.select', 'Selecionar idioma')}: ${languageName}`;
+        languageToggle.setAttribute('aria-label', label);
+        languageToggle.setAttribute('title', label);
+      }
+
+      header.querySelectorAll('[data-language-option]').forEach((option) => {
+        const selected = option.getAttribute('data-language-option') === locale;
+        option.classList.toggle('active', selected);
+        option.setAttribute('aria-pressed', String(selected));
+      });
+    }
+
+    function closeHeaderDropdowns() {
+      const dropdownToggles = header.querySelectorAll('[data-bs-toggle="dropdown"]');
+      const dropdownMenus = header.querySelectorAll('.dropdown-menu.show');
+      dropdownToggles.forEach((dropdownToggle) => {
+        if (window.bootstrap && window.bootstrap.Dropdown) {
+          const instance = window.bootstrap.Dropdown.getInstance(dropdownToggle);
+          if (instance) instance.hide();
+        }
+        dropdownToggle.setAttribute('aria-expanded', 'false');
+      });
+      dropdownMenus.forEach((dropdownMenu) => dropdownMenu.classList.remove('show'));
+    }
+
+    function setMenuOpen(open, restoreFocus = false) {
+      const shouldOpen = Boolean(open && mobileQuery.matches);
+      navbarNav.classList.toggle('show', shouldOpen);
+      navbar.classList.toggle('mobile-menu-open', shouldOpen);
+      navToggle.setAttribute('aria-expanded', String(shouldOpen));
+      syncNavigationLabels();
+      if (!shouldOpen) closeHeaderDropdowns();
+      if (!shouldOpen && restoreFocus) navToggle.focus({ preventScroll: true });
+    }
+
+    function handleToggle(event) {
+      event.preventDefault();
+      setMenuOpen(!navbarNav.classList.contains('show'));
+    }
+
+    function handleOutsidePointer(event) {
+      if (!mobileQuery.matches || !navbarNav.classList.contains('show')) return;
+      if (navbarNav.contains(event.target) || navToggle.contains(event.target)) return;
+      setMenuOpen(false);
+    }
+
+    function handleKeydown(event) {
+      if (event.key !== 'Escape' || !mobileQuery.matches || !navbarNav.classList.contains('show')) return;
+      event.preventDefault();
+      setMenuOpen(false, true);
+    }
+
+    function handleNavigationClick(event) {
+      if (!mobileQuery.matches || !(event.target instanceof Element)) return;
+      const link = event.target.closest('a[href]');
       if (link) {
-        if (link.hasAttribute('data-bs-toggle')) return;
-        const href = link.getAttribute('href');
-        if (href === '#' || (href && href.startsWith('javascript:'))) return;
-        hideCollapse();
+        const href = link.getAttribute('href') || '';
+        if (href !== '#' && !href.startsWith('javascript:') && !link.hasAttribute('data-bs-toggle')) {
+          setMenuOpen(false);
+        }
         return;
       }
-      if (e.target.closest('button.dropdown-item')) {
-        hideCollapse();
+      if (event.target.closest('button.dropdown-item')) setMenuOpen(false);
+    }
+
+    function handleLanguageSelection(event) {
+      if (!(event.target instanceof Element)) return;
+      const option = event.target.closest('[data-language-option]');
+      if (!option || !header.contains(option)) return;
+      const locale = option.getAttribute('data-language-option');
+      if (window.i18n && typeof window.i18n.setLocale === 'function') {
+        window.i18n.setLocale(locale);
       }
-    });
+      closeHeaderDropdowns();
+    }
+
+    function handleLocaleChange() {
+      renderLanguageSelector();
+      syncNavigationLabels();
+    }
+
+    function handleViewportChange() {
+      if (!mobileQuery.matches) setMenuOpen(false);
+    }
+
+    function handleScroll() {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    }
+
+    navToggle.addEventListener('click', handleToggle);
+    navbarNav.addEventListener('click', handleNavigationClick);
+    header.addEventListener('click', handleLanguageSelection);
+    document.addEventListener('pointerdown', handleOutsidePointer);
+    document.addEventListener('keydown', handleKeydown);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('i18n:locale-change', handleLocaleChange);
+    if (typeof mobileQuery.addEventListener === 'function') {
+      mobileQuery.addEventListener('change', handleViewportChange);
+    } else {
+      mobileQuery.addListener(handleViewportChange);
+    }
+    renderLanguageSelector();
+    syncNavigationLabels();
+    handleScroll();
+
+    window.__msoftHeaderTeardown = function () {
+      navToggle.removeEventListener('click', handleToggle);
+      navbarNav.removeEventListener('click', handleNavigationClick);
+      header.removeEventListener('click', handleLanguageSelection);
+      document.removeEventListener('pointerdown', handleOutsidePointer);
+      document.removeEventListener('keydown', handleKeydown);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('i18n:locale-change', handleLocaleChange);
+      if (typeof mobileQuery.removeEventListener === 'function') {
+        mobileQuery.removeEventListener('change', handleViewportChange);
+      } else {
+        mobileQuery.removeListener(handleViewportChange);
+      }
+    };
   })();
 
   // Auth Header Logic
@@ -212,15 +553,24 @@
     const headerAuthItem = document.getElementById('header-auth-action');
     if (!headerAuthItem) return;
 
-    const auth = window.authService;
-
     // Check immediately
     render();
 
     // Listen for changes
     window.addEventListener('auth-change', render);
 
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (character) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      })[character]);
+    }
+
     function render() {
+      const auth = window.authService;
       const contactAction = document.getElementById('header-contact-action');
       const isAuthenticated = auth && auth.isAuthenticated();
       
@@ -231,38 +581,44 @@
       if (isAuthenticated) {
         headerAuthItem.style.display = 'block';
         const user = auth.getUser();
+        const userName = user && typeof user.name === 'string' && user.name.trim()
+          ? escapeHtml(user.name.trim().split(/\s+/)[0])
+          : '';
         let menuItems = '';
 
         const isActive = (path) => window.location.pathname.startsWith(path) ? 'active bg-primary' : '';
 
         if (auth.hasRole('admin')) {
-          menuItems += `<li><a class="dropdown-item text-white ${isActive('/admin')}" href="/admin"><i class="bi bi-shield-lock me-2"></i>Painel Admin</a></li>`;
+          menuItems += `<li><a class="dropdown-item text-white ${isActive('/admin')}" href="/admin"><i class="bi bi-shield-lock me-2"></i><span data-i18n="account.admin">Painel Admin</span></a></li>`;
         }
 
         if (auth.hasRole('premium')) {
-          menuItems += `<li><a class="dropdown-item text-white ${isActive('/premium')}" href="/premium"><i class="bi bi-star-fill me-2"></i>Dashboard Premium</a></li>`;
+          menuItems += `<li><a class="dropdown-item text-white ${isActive('/premium')}" href="/premium"><i class="bi bi-star-fill me-2"></i><span data-i18n="account.premium">Dashboard Premium</span></a></li>`;
         }
 
         if (!auth.hasRole('admin') && !auth.hasRole('premium')) {
-          menuItems += `<li><a class="dropdown-item text-white ${isActive('/premium')}" href="/premium"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>`;
+          menuItems += `<li><a class="dropdown-item text-white ${isActive('/premium')}" href="/premium"><i class="bi bi-speedometer2 me-2"></i><span data-i18n="account.dashboard">Dashboard</span></a></li>`;
         }
 
         headerAuthItem.innerHTML = `
           <div class="dropdown">
-            <button class="header-user-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Menu da conta">
+            <button class="header-user-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Menu da conta" data-i18n-aria-label="account.menu">
               <i class="bi bi-person-circle flex-shrink-0" aria-hidden="true"></i>
-              <span class="header-user-name">${user.name ? user.name.split(' ')[0] : 'Conta'}</span>
+              <span class="header-user-name"${userName ? '' : ' data-i18n="account.default"'}>${userName || 'Conta'}</span>
               <i class="bi bi-chevron-down header-user-caret" aria-hidden="true"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-end bg-dark border-secondary shadow-lg">
-              <li class="dropdown-header text-muted small text-uppercase">Meus Acessos</li>
+              <li class="dropdown-header text-muted small text-uppercase" data-i18n="account.accesses">Meus acessos</li>
               ${menuItems}
               <li><hr class="dropdown-divider bg-secondary"></li>
-              <li><a class="dropdown-item text-white" href="/profile"><i class="bi bi-person-gear me-2"></i>Meu Perfil</a></li>
-              <li><button class="dropdown-item text-danger" onclick="window.authService.logout()"><i class="bi bi-box-arrow-right me-2"></i>Sair</button></li>
+              <li><a class="dropdown-item text-white" href="/profile"><i class="bi bi-person-gear me-2"></i><span data-i18n="account.profile">Meu perfil</span></a></li>
+              <li><button class="dropdown-item text-danger" onclick="window.authService.logout()"><i class="bi bi-box-arrow-right me-2"></i><span data-i18n="account.logout">Sair</span></button></li>
             </ul>
           </div>
         `;
+        if (window.i18n && typeof window.i18n.apply === 'function') {
+          window.i18n.apply(headerAuthItem);
+        }
       } else {
         headerAuthItem.innerHTML = '';
         headerAuthItem.style.display = 'none';

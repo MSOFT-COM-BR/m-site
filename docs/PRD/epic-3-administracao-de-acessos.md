@@ -25,3 +25,4 @@ Permitir que o Admin Master provisione contas comuns para uma aplicacao especifi
 | ID | Title | Priority | Status |
 | --- | --- | --- | --- |
 | [3.1](../stories/3.1.criar-usuario-por-aplicacao.md) | Criar usuario com acesso por aplicacao | Critical | Ready for Review |
+| [3.2](../stories/3.2.crud-seguro-de-usuarios-por-aplicacao.md) | Gerir usuarios e acessos por aplicacao | Critical | Ready for Review |

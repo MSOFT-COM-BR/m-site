@@ -33,6 +33,7 @@ Site público que apresenta a empresa, serviços e produtos digitais, com navega
 - **Rotas SPA** definidas em configuração (`validPages`): home, sobre, contato, expertise, apps, materiais, suporte, FAQ, políticas (privacidade, termos, LGPD, cookies), 404.  
 - **Blog** (incl. variantes review, ads, conteúdo custom) com conteúdo suportado por serviços/CMS no front.  
 - **Marketplace**, **games**, **premium**, **materiais**, **mcredential**, **profile** conforme implementação atual nas páginas e serviços.
+- **Internacionalização inicial da navegação:** português do Brasil como padrão e seletor de espanhol e inglês na camada global, sem tradução automática ou alteração de contratos de conteúdo nesta primeira etapa.
 
 ### 4.2 Vertical Healthtech
 
@@ -60,6 +61,7 @@ Site público que apresenta a empresa, serviços e produtos digitais, com navega
 |------|-----------|
 | Performance | Carregamento lazy de componentes onde aplicável; vendors (Bootstrap, Swiper, etc.) já empacotados localmente. |
 | UX | Tema escuro, layout responsivo, skeleton de loading nas áreas configuradas. |
+| Internacionalização | A escolha explícita de idioma deve ser acessível, persistir no navegador sem depender de API e preservar português do Brasil como fallback seguro. |
 | Acessibilidade | Skip link para conteúdo; uso de `main`, `role`; meta `theme-color`. Evolução contínua (auditorias WCAG recomendadas). |
 | Segurança | Não expor tokens ou segredos em repositório público; credenciais apenas via backend/variáveis de ambiente no deploy. CORS e headers descritos na config devem refletir produção. |
 | Manutenção | Versão da app em `config.js`; comentários de versão em HTML onde existirem. |

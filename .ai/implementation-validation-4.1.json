@@ -1,0 +1,50 @@
+{
+  "story_id": "4.1",
+  "validated_at": "2026-07-19T19:06:04-03:00",
+  "result": "PASS_WITH_VISUAL_REVIEW_PENDING",
+  "implementation_digest": "sha256:2291e850abe7cc4b7f49da6ab4e06c57adf0b024a7bdb7dcba1a9b5437b344f3",
+  "implementation_files": [
+    "index.html",
+    "src/core/i18n.js",
+    "src/core/core.js",
+    "src/components/header.html",
+    "tests/i18n.test.js",
+    "tests/header-i18n.test.js"
+  ],
+  "checks": [
+    {
+      "name": "unit_and_integration_tests",
+      "result": "PASS",
+      "evidence": "node --test tests/*.test.js passed 7 tests covering locale validation, persistence, initial shell reload, blocked storage, DOM attributes and header dictionary coverage."
+    },
+    {
+      "name": "javascript_syntax",
+      "result": "PASS",
+      "evidence": "node --check passed for src/core/i18n.js and src/core/core.js; all inline header scripts parsed with new Function."
+    },
+    {
+      "name": "security_and_scope",
+      "result": "PASS",
+      "evidence": "Static scan found no fetch, XMLHttpRequest or innerHTML usage in src/core/i18n.js. The header uses only local Bootstrap and escaped account names."
+    },
+    {
+      "name": "http_smoke",
+      "result": "PASS",
+      "evidence": "npx --no-install serve -s . -l 8082 returned HTTP 200 for /, /ecossistema, /src/core/i18n.js and /src/components/header.html."
+    },
+    {
+      "name": "html_fragment_validation",
+      "result": "PASS_WITH_EXPECTED_WARNINGS",
+      "evidence": "tidy -q -e reported only expected fragment warnings for missing doctype/title, inline style placement and empty Bootstrap icon elements; it reported no malformed language-selector markup."
+    },
+    {
+      "name": "diff_quality",
+      "result": "PASS",
+      "evidence": "git diff --check passed. No dependency or API configuration was added."
+    }
+  ],
+  "known_limitations": [
+    "No browser automation or display is available in this environment for a captured desktop/mobile visual inspection.",
+    "Story 4.1 intentionally translates only the title and header shell; page, CMS and blog content remain in Portuguese."
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "story_id": "4.1",
+  "story_path": "docs/stories/4.1.seletor-global-de-idiomas.md",
+  "validated_at": "2026-07-19T21:48:04.959Z",
+  "validator": "Pax (Product Owner) / Codex",
+  "validation_method": "Manual frontmatter and artifact validation; js-yaml is unavailable in this workspace.",
+  "verdict": "GO",
+  "implementation_readiness_score": 9,
+  "confidence": "High",
+  "checks": [
+    {
+      "category": "Story structure and metadata",
+      "result": "PASS",
+      "notes": "All required frontmatter fields and AIOX story sections are present without placeholders."
+    },
+    {
+      "category": "Acceptance criteria and tasks",
+      "result": "PASS",
+      "notes": "Eight testable acceptance criteria are mapped to implementation, testing and documentation tasks."
+    },
+    {
+      "category": "Source verification",
+      "result": "PASS",
+      "notes": "The SPA entrypoint, core loader, header, config, Bootstrap location and existing storage module were verified."
+    },
+    {
+      "category": "Scope control",
+      "result": "PASS",
+      "notes": "The story explicitly limits translation coverage to the global shell and excludes API, CMS, legal pages and automatic translation."
+    },
+    {
+      "category": "Code intelligence",
+      "result": "N/A",
+      "notes": "The configured code intelligence provider is unavailable; duplicate and file suggestions returned null."
+    }
+  ],
+  "critical_issues": [],
+  "should_fix": [],
+  "known_limitations": [
+    "The standard AIOX validator dependency js-yaml is not installed in this workspace, so an equivalent manual validation was used without adding dependencies.",
+    "Only shell-level text is covered by Story 4.1; page and CMS translations require subsequent scoped stories."
+  ]
+}
