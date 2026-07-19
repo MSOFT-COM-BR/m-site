@@ -220,7 +220,7 @@
             </div>
             <div>
                 <span class="badge" style="background: rgba(250, 250, 250, 0.1); color: #fafafa; border: 1px solid rgba(250, 250, 250, 0.2); padding: 6px 12px; border-radius: 6px; font-weight: 400;">
-                    <i class="bi bi-shield-check me-1"></i> Admin
+                    <i class="bi bi-shield-check me-1"></i> Admin Master
                 </span>
             </div>
         </div>
@@ -250,6 +250,10 @@
                         <button class="list-group-item cms-sidebar-btn"
                             onclick="loadTab('logs')">
                             <i class="bi bi-activity me-3"></i> System Logs
+                        </button>
+                        <button class="list-group-item cms-sidebar-btn"
+                            onclick="loadTab('users')">
+                            <i class="bi bi-person-plus me-3"></i> Usuários
                         </button>
                     </div>
                 </div>
@@ -284,9 +288,9 @@
         const denied = document.getElementById('access-denied');
 
         const CMS_LAST_TAB_KEY = 'msoft_cms_last_tab';
-        const CMS_VALID_TABS = ['theme', 'mjson', 'images', 'blog', 'logs'];
-        /** Ordem igual aos botões da sidebar (theme → mjson → images → blog → logs) */
-        const CMS_TAB_BTN_INDEX = { theme: 0, mjson: 1, images: 2, blog: 3, logs: 4 };
+        const CMS_VALID_TABS = ['theme', 'mjson', 'images', 'blog', 'logs', 'users'];
+        /** Ordem igual aos botões da sidebar. */
+        const CMS_TAB_BTN_INDEX = { theme: 0, mjson: 1, images: 2, blog: 3, logs: 4, users: 5 };
 
         window.loadTab = async function (tab) {
             if (!CMS_VALID_TABS.includes(tab)) tab = 'theme';
@@ -306,7 +310,132 @@
             container.style.opacity = '0';
             
             setTimeout(async () => {
-            if (tab === 'theme') {
+            if (tab === 'users') {
+                container.innerHTML = `
+                    <h4 class="mb-4 text-white fw-bold fs-3">Usuários por aplicação</h4>
+                    <div class="alert cms-alert mb-4">
+                        <i class="bi bi-shield-lock me-2 text-info"></i>
+                        A conta será criada como <strong>usuário comum</strong>. Escolha somente o acesso necessário para uma aplicação; papéis globais não são concedidos por este formulário.
+                    </div>
+                    <form id="app-user-form" class="row g-4" novalidate>
+                        <div class="col-md-6">
+                            <label class="form-label text-light mb-2" for="app-user-name">Nome completo</label>
+                            <input id="app-user-name" type="text" class="form-control cms-input" autocomplete="name" maxlength="120" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-light mb-2" for="app-user-email">E-mail</label>
+                            <input id="app-user-email" type="email" class="form-control cms-input" autocomplete="email" maxlength="254" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-light mb-2" for="app-user-password">Senha inicial</label>
+                            <input id="app-user-password" type="password" class="form-control cms-input" autocomplete="new-password" minlength="12" maxlength="128" aria-describedby="app-user-password-help" required>
+                            <div id="app-user-password-help" class="form-text text-secondary small mt-2">Use ao menos 12 caracteres. A senha não será exibida nem armazenada pelo painel.</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-light mb-2" for="app-user-app-key">Aplicação</label>
+                            <input id="app-user-app-key" type="text" class="form-control cms-input" list="app-user-app-options" autocomplete="off" pattern="[a-z0-9][a-z0-9-]{0,63}" placeholder="Ex.: bva" aria-describedby="app-user-app-help" required>
+                            <datalist id="app-user-app-options"></datalist>
+                            <div id="app-user-app-help" class="form-text text-secondary small mt-2">Use a chave da aplicação. As chaves já provisionadas aparecem como sugestão.</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-light mb-2" for="app-user-role">Permissão na aplicação</label>
+                            <select id="app-user-role" class="form-select cms-input" required>
+                                <option value="viewer">Visualizador</option>
+                                <option value="editor">Editor</option>
+                                <option value="owner">Proprietário</option>
+                            </select>
+                        </div>
+                        <div class="col-12 d-flex flex-wrap align-items-center gap-3 mt-2">
+                            <button id="app-user-submit" type="submit" class="btn cms-btn-primary">
+                                <i class="bi bi-person-plus me-2"></i>Criar usuário e conceder acesso
+                            </button>
+                            <div id="app-user-feedback" class="small" role="status" aria-live="polite" hidden></div>
+                        </div>
+                    </form>
+                `;
+
+                const form = document.getElementById('app-user-form');
+                const nameInput = document.getElementById('app-user-name');
+                const emailInput = document.getElementById('app-user-email');
+                const passwordInput = document.getElementById('app-user-password');
+                const appKeyInput = document.getElementById('app-user-app-key');
+                const appRoleInput = document.getElementById('app-user-role');
+                const appOptions = document.getElementById('app-user-app-options');
+                const submitButton = document.getElementById('app-user-submit');
+                const feedback = document.getElementById('app-user-feedback');
+
+                const showUserFeedback = (message, type) => {
+                    if (!feedback) return;
+                    feedback.hidden = false;
+                    feedback.className = type === 'success' ? 'small text-success' : 'small text-danger';
+                    feedback.textContent = message;
+                };
+
+                const loadApplicationSuggestions = async () => {
+                    if (!appOptions) return;
+                    try {
+                        const response = await window.core.fetchAPI('/auth/admin/applications', 'GET', {}, { silent: true });
+                        if (!response || !response.success || !Array.isArray(response.data)) return;
+
+                        response.data.forEach((item) => {
+                            const appKey = String(item && item.appKey ? item.appKey : '').trim().toLowerCase();
+                            if (!appKey) return;
+                            const option = document.createElement('option');
+                            option.value = appKey;
+                            appOptions.appendChild(option);
+                        });
+                    } catch (_error) {
+                        // O campo continua disponível para a primeira conta de uma nova aplicação.
+                    }
+                };
+
+                if (appKeyInput) {
+                    appKeyInput.addEventListener('change', () => {
+                        appKeyInput.value = String(appKeyInput.value || '').trim().toLowerCase();
+                    });
+                }
+
+                if (form && nameInput && emailInput && passwordInput && appKeyInput && appRoleInput && submitButton) {
+                    form.addEventListener('submit', async (event) => {
+                        event.preventDefault();
+                        appKeyInput.value = String(appKeyInput.value || '').trim().toLowerCase();
+                        if (!form.checkValidity()) {
+                            form.reportValidity();
+                            return;
+                        }
+
+                        const originalContent = submitButton.innerHTML;
+                        submitButton.disabled = true;
+                        submitButton.innerHTML = '<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Criando...';
+                        if (feedback) feedback.hidden = true;
+
+                        try {
+                            const response = await window.core.fetchAPI('/auth/admin/users', 'POST', {
+                                name: nameInput.value.trim(),
+                                email: emailInput.value.trim(),
+                                password: passwordInput.value,
+                                appKey: appKeyInput.value.trim().toLowerCase(),
+                                appRole: appRoleInput.value,
+                            }, { silent: true });
+
+                            if (!response || !response.success) {
+                                throw new Error(response && response.error ? response.error : 'Não foi possível criar o usuário.');
+                            }
+
+                            form.reset();
+                            showUserFeedback('Usuário criado e acesso concedido com sucesso.', 'success');
+                            nameInput.focus();
+                        } catch (error) {
+                            showUserFeedback(error && error.message ? error.message : 'Não foi possível criar o usuário.', 'error');
+                        } finally {
+                            submitButton.disabled = false;
+                            submitButton.innerHTML = originalContent;
+                        }
+                    });
+                }
+
+                loadApplicationSuggestions();
+            } else if (tab === 'theme') {
                 container.innerHTML = `
                     <h4 class="mb-4 text-white fw-bold fs-3">Personalização Visual</h4>
                     <div class="alert cms-alert mb-5"><i class="bi bi-stars me-2 text-info"></i> Ajuste as cores vitais da sua identidade visual refletida no site inteiro.</div>
