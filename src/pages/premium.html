@@ -105,115 +105,10 @@
                 </div>
             </div>
 
-            <div class="row g-4">
-
-                <!-- HealthTech App -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 hover-card" style="background: transparent !important; border: 1px solid rgba(255, 255, 255, 0.03) !important;">
-                        <div
-                            class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-start">
-                            <div class="bg-warning bg-opacity-10 p-3 rounded-3 text-warning">
-                                <i class="bi bi-activity fs-3"></i>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn btn-link text-secondary p-0" data-bs-toggle="dropdown"><i
-                                        class="bi bi-three-dots-vertical"></i></button>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-                                    <li><a class="dropdown-item" href="#"><i
-                                                class="bi bi-gear me-2"></i>Configurações</a></li>
-                                    <li><a class="dropdown-item text-danger" href="#"><i
-                                                class="bi bi-trash me-2"></i>Desinstalar</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body px-4 pb-4">
-                            <h4 class="fw-bold mb-2">HealthTech OS</h4>
-                            <p class="text-secondary small mb-4">Sistema completo para gestão de clínicas e pacientes
-                                com dashboard preditivo.</p>
-
-                            <div class="d-flex align-items-center justify-content-between mt-auto">
-                                <small class="text-success"><i class="bi bi-circle-fill me-1"
-                                        style="font-size: 6px;"></i> Online</small>
-                                <button id="btn-open-healthtech" class="btn btn-warning rounded-pill px-4"
-                                    onclick="window.openDashboard()">
-                                    <i class="bi bi-play-circle-fill me-2"></i>Abrir
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+            <div class="row g-4" id="my-apps-grid">
+                <div class="col-12 text-center py-5 text-muted" id="my-apps-loading">
+                    <div class="spinner-border spinner-border-sm me-2" role="status"></div>
                 </div>
-
-                <!-- MCredential App -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 hover-card" style="background: transparent !important; border: 1px solid rgba(255, 255, 255, 0.03) !important;">
-                        <div
-                            class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-start">
-                            <div class="bg-success bg-opacity-10 p-3 rounded-3 text-success">
-                                <i class="bi bi-shield-lock fs-3"></i>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn btn-link text-secondary p-0" data-bs-toggle="dropdown"><i
-                                        class="bi bi-three-dots-vertical"></i></button>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-                                    <li><a class="dropdown-item" href="#"><i
-                                                class="bi bi-gear me-2"></i>Configurações</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body px-4 pb-4">
-                            <h4 class="fw-bold mb-2">MCredential</h4>
-                            <p class="text-secondary small mb-4">Gerenciador de senhas corporativo com criptografia de
-                                ponta a ponta.</p>
-
-                            <div class="d-flex align-items-center justify-content-between mt-auto">
-                                <small class="text-success"><i class="bi bi-circle-fill me-1"
-                                        style="font-size: 6px;"></i> Protegido</small>
-                                <button class="btn btn-success rounded-pill px-4"
-                                    onclick="window.location.href='/mcredential'">
-                                    <i class="bi bi-play-circle-fill me-2"></i>Abrir
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CodeGen App (Coming Soon) -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100 opacity-75" style="background: transparent !important; border: 1px solid rgba(255, 255, 255, 0.03) !important;">
-                        <div
-                            class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-start">
-                            <div class="bg-info bg-opacity-10 p-3 rounded-3 text-info">
-                                <i class="bi bi-cpu fs-3"></i>
-                            </div>
-                            <span class="badge bg-secondary">Em Manutenção</span>
-                        </div>
-                        <div class="card-body px-4 pb-4">
-                            <h4 class="fw-bold mb-2">IA CodeGen</h4>
-                            <p class="text-secondary small mb-4">Gerador de código inteligente para React e Node.js.</p>
-
-                            <div class="d-flex align-items-center justify-content-between mt-auto">
-                                <small class="text-warning"><i class="bi bi-cone-striped me-1"></i> Offline</small>
-                                <button class="btn btn-outline-secondary rounded-pill px-4" disabled>
-                                    <i class="bi bi-clock me-2"></i>Aguarde
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Add New -->
-                <div class="col-lg-4 col-md-6">
-                    <a href="/marketplace"
-                        class="card h-100 text-decoration-none border-dashed d-flex flex-column align-items-center justify-content-center p-5 transition-all" 
-                        style="background: transparent !important; border: 1px dashed rgba(255, 255, 255, 0.1) !important; min-height: 350px;">
-                        <div class="ms-plus-circle d-flex align-items-center justify-content-center mb-3">
-                            <i class="bi bi-plus-lg fs-3"></i>
-                        </div>
-                        <h5 class="fw-bold text-white mb-2">Adicionar Novo App</h5>
-                        <p class="text-center text-muted small px-3 mb-0">Explore o marketplace para turbinar seu workflow.</p>
-                    </a>
-                </div>
-
             </div>
         </div>
 
@@ -234,31 +129,6 @@
 
     </div>
 </section>
-
-<!-- Install Overlay (Preserved Logic) -->
-<div id="premium-install-overlay" class="fade-in"
-    style="display: none; position: fixed; inset: 0; background: rgba(5, 5, 10, 0.95); backdrop-filter: blur(15px); z-index: 9999; flex-direction: column; align-items: center; justify-content: center;">
-    <div class="text-center p-5 rounded-4 border border-secondary border-opacity-25"
-        style="background: rgba(20, 20, 30, 0.8); max-width: 400px; width: 90%;">
-        <div class="mb-4 position-relative d-inline-block">
-            <i class="bi bi-hexagon-fill text-primary text-opacity-25" style="font-size: 6rem;"></i>
-            <i class="bi bi-cloud-arrow-down-fill text-primary position-absolute top-50 start-50 translate-middle"
-                style="font-size: 3rem;"></i>
-        </div>
-        <h3 class="text-white mb-2 fw-bold">Instalando Módulo...</h3>
-        <p class="text-secondary small mb-4" id="install-status">Inicializando HealthTech OS</p>
-
-        <div class="progress bg-dark border border-secondary border-opacity-25"
-            style="height: 6px; border-radius: 10px;">
-            <div id="install-progress" class="progress-bar bg-gradient-primary" role="progressbar" style="width: 0%">
-            </div>
-        </div>
-        <div class="d-flex justify-content-between text-muted small mt-2">
-            <span>0%</span>
-            <span id="install-percent">0%</span>
-        </div>
-    </div>
-</div>
 
 <style>
     .border-dashed {
@@ -328,96 +198,103 @@
         const auth = window.authService;
         const content = document.getElementById('premium-content');
         const denied = document.getElementById('access-denied');
-        const APP_KEY = 'healthtech_os_v1';
-        const APP_NAME = 'HealthTech Analytics';
 
-        let isAppInstalled = false;
-
-        // Install Effect Logic (Preserved)
-        window.openDashboard = async function () {
-            if (isAppInstalled) {
-                window.location.href = '/healthtech-dashboard';
-                return;
+        // Catálogo de exibição: como renderizar cada appKey conhecido.
+        // Apps que não estiverem aqui ainda aparecem com um card genérico.
+        const APP_DISPLAY = {
+            healthtech_os_v1: {
+                name: 'HealthTech OS',
+                description: 'Sistema completo para gestão de clínicas e pacientes com dashboard preditivo.',
+                icon: 'bi-activity',
+                color: 'warning',
+                statusLabel: 'Online',
+                openLabel: 'Abrir',
+                onOpen: () => window.openDashboard()
+            },
+            mcredential: {
+                name: 'MCredential',
+                description: 'Gerenciador de senhas corporativo com criptografia de ponta a ponta.',
+                icon: 'bi-shield-lock',
+                color: 'success',
+                statusLabel: 'Protegido',
+                openLabel: 'Abrir',
+                onOpen: () => window.location.href = '/mcredential'
             }
+        };
 
-            const overlay = document.getElementById('premium-install-overlay');
-            const progressBar = document.getElementById('install-progress');
-            const statusText = document.getElementById('install-status');
-            const percentText = document.getElementById('install-percent');
+        function renderAppCard(app) {
+            const meta = APP_DISPLAY[app.appKey] || {
+                name: app.name || app.appKey,
+                description: 'Aplicativo instalado na sua conta.',
+                icon: 'bi-box-seam',
+                color: 'secondary',
+                statusLabel: 'Ativo',
+                openLabel: 'Abrir',
+                onOpen: () => {}
+            };
+            const btnId = `btn-open-${app.appKey}`;
+            // Expõe o handler de forma segura, sem inline scripts com dados do usuário
+            window[`__openApp_${app.appKey}`] = meta.onOpen;
 
-            overlay.style.display = 'flex';
-            let progress = 0;
-
-            const steps = [
-                { pct: 10, text: 'Validando credenciais...' },
-                { pct: 30, text: 'Carregando dados de pacientes...' },
-                { pct: 60, text: 'Sincronizando fórmulas...' },
-                { pct: 85, text: 'Gerando analytics...' },
-                { pct: 100, text: 'Instalação concluída!' }
-            ];
-
-            const interval = setInterval(async () => {
-                progress += Math.floor(Math.random() * 8) + 2;
-                if (progress > 100) progress = 100;
-
-                progressBar.style.width = `${progress}%`;
-                percentText.textContent = `${progress}%`;
-
-                const step = steps.find(s => progress >= s.pct && progress < s.pct + 25);
-                if (step) statusText.textContent = step.text;
-
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    try {
-                        const user = auth.getUser();
-                        await window.core.fetchAPI('/apps/install', 'POST', {
-                            name: APP_NAME,
-                            appKey: APP_KEY,
-                            userId: user.id || user._id
-                        });
-                        isAppInstalled = true;
-                        updateButtonState();
-                        setTimeout(() => {
-                            window.location.href = '/healthtech-dashboard';
-                        }, 500);
-                    } catch (err) {
-                        console.error('Install failed', err);
-                        window.core.toast('Erro ao registrar instalação.', 'error');
-                        overlay.style.display = 'none';
-                    }
-                }
-            }, 50);
+            return `
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 hover-card" style="background: transparent !important; border: 1px solid rgba(255, 255, 255, 0.03) !important;">
+                        <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-start">
+                            <div class="bg-${meta.color} bg-opacity-10 p-3 rounded-3 text-${meta.color}">
+                                <i class="bi ${meta.icon} fs-3"></i>
+                            </div>
+                        </div>
+                        <div class="card-body px-4 pb-4">
+                            <h4 class="fw-bold mb-2">${meta.name}</h4>
+                            <p class="text-secondary small mb-4">${meta.description}</p>
+                            <div class="d-flex align-items-center justify-content-between mt-auto">
+                                <small class="text-success"><i class="bi bi-circle-fill me-1" style="font-size: 6px;"></i> ${meta.statusLabel}</small>
+                                <button id="${btnId}" class="btn btn-${meta.color} rounded-pill px-4" onclick="window.__openApp_${app.appKey}()">
+                                    <i class="bi bi-play-circle-fill me-2"></i>${meta.openLabel}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
-        function updateButtonState() {
-            const btn = document.getElementById('btn-open-healthtech');
-            if (!btn) return;
+        const ADD_NEW_CARD = `
+            <div class="col-lg-4 col-md-6">
+                <a href="/marketplace"
+                    class="card h-100 text-decoration-none border-dashed d-flex flex-column align-items-center justify-content-center p-5 transition-all"
+                    style="background: transparent !important; border: 1px dashed rgba(255, 255, 255, 0.1) !important; min-height: 350px;">
+                    <div class="ms-plus-circle d-flex align-items-center justify-content-center mb-3">
+                        <i class="bi bi-plus-lg fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold text-white mb-2">Adicionar Novo App</h5>
+                    <p class="text-center text-muted small px-3 mb-0">Explore o marketplace para turbinar seu workflow.</p>
+                </a>
+            </div>
+        `;
 
-            if (isAppInstalled) {
-                btn.innerHTML = '<i class="bi bi-play-circle-fill me-2"></i>Abrir';
-                btn.classList.remove('btn-outline-warning');
-                btn.classList.add('btn-warning');
-            } else {
-                btn.innerHTML = '<i class="bi bi-cloud-arrow-down-fill me-2"></i>Instalar';
-                btn.classList.add('btn-warning');
-            }
-        }
-
-        async function checkInstalledApps() {
-            if (!auth.isAuthenticated()) return;
-            const user = auth.getUser();
+        async function loadMyApps() {
+            const grid = document.getElementById('my-apps-grid');
             try {
-                const response = await window.core.fetchAPI(`/apps?userId=${user.id || user._id}`);
-                if (response && response.success && Array.isArray(response.data)) {
-                    if (response.data.find(app => app.appKey === APP_KEY)) {
-                        isAppInstalled = true;
-                    }
-                }
-                updateButtonState();
+                // Apps vinculados ao usuário autenticado: admin, com ?all=1, vê o catálogo inteiro instalado por todos.
+                const isAdmin = auth.hasRole('admin');
+                const endpoint = isAdmin ? '/apps?all=1' : '/apps';
+                const response = await window.core.fetchAPI(endpoint, 'GET');
+
+                const apps = (response && response.success && Array.isArray(response.data)) ? response.data : [];
+
+                grid.innerHTML = apps.map(renderAppCard).join('') + ADD_NEW_CARD;
+                document.getElementById('stats-apps').textContent = apps.length;
             } catch (e) {
-                console.warn('Failed to check apps', e);
+                console.warn('Failed to load apps', e);
+                grid.innerHTML = ADD_NEW_CARD;
             }
         }
+
+        // Abre o dashboard do HealthTech (app já instalado e vinculado ao usuário)
+        window.openDashboard = function () {
+            window.location.href = '/healthtech-dashboard';
+        };
 
         // Init
         if (auth && auth.isAuthenticated()) {
@@ -426,7 +303,7 @@
 
             if (user.role === 'premium' || user.role === 'admin') {
                 content.style.display = 'block';
-                checkInstalledApps();
+                loadMyApps();
             } else {
                 denied.style.display = 'block';
             }

@@ -327,10 +327,8 @@
 
         async function fetchUserApps() {
             try {
-                const user = auth.getUser();
-                if (!user || !user.id) return [];
-
-                const res = await window.core.fetchAPI(`/apps?userId=${user.id}`, 'GET');
+                // A API resolve o dono via token de sessão; não depende de parâmetro do cliente.
+                const res = await window.core.fetchAPI('/apps', 'GET');
                 if (res && res.success) {
                     return res.data;
                 }
