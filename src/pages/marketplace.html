@@ -37,373 +37,11 @@
                 </div>
             </div>
 
-            <!-- Apps Grid -->
+            <!-- Apps Grid (renderizado dinamicamente a partir de GET /catalog) -->
             <div class="row g-4" id="apps-grid">
-
-                <!-- FREE APPS SECTION -->
-                <!-- Password Generator - Free -->
-                <div class="col-lg-4 col-md-6 app-card" data-type="free">
-                    <div class="card bg-dark border-0 h-100 marketplace-card free-card">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div class="app-icon bg-primary bg-opacity-25 rounded-3 p-3">
-                                    <i class="bi bi-key fs-2 text-primary"></i>
-                                </div>
-                                <span
-                                    class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25">
-                                    <i class="bi bi-gift-fill"></i> Gratuito
-                                </span>
-                            </div>
-                            <h4 class="card-title text-white fw-bold mb-2">Gerador de Senha</h4>
-                            <p class="card-text text-muted small mb-3">
-                                Crie senhas fortes e seguras com opções personalizáveis.
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="text-success fs-4 fw-bold">Grátis</span>
-                                </div>
-                                <a href="/apps?tool=password-gen" class="btn btn-outline-success rounded-pill px-4">
-                                    <i class="bi bi-box-arrow-up-right"></i> Usar
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-12 text-center py-5 text-muted" id="apps-grid-loading">
+                    <div class="spinner-border spinner-border-sm me-2" role="status"></div> Carregando catálogo...
                 </div>
-
-                <!-- Percentage Calculator - Free -->
-                <div class="col-lg-4 col-md-6 app-card" data-type="free">
-                    <div class="card bg-dark border-0 h-100 marketplace-card free-card">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div class="app-icon bg-success bg-opacity-25 rounded-3 p-3">
-                                    <i class="bi bi-percent fs-2 text-success"></i>
-                                </div>
-                                <span
-                                    class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25">
-                                    <i class="bi bi-gift-fill"></i> Gratuito
-                                </span>
-                            </div>
-                            <h4 class="card-title text-white fw-bold mb-2">Calculadora de %</h4>
-                            <p class="card-text text-muted small mb-3">
-                                Cálculos rápidos de porcentagem, desconto e aumento.
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="text-success fs-4 fw-bold">Grátis</span>
-                                </div>
-                                <a href="/apps?tool=percentage-calc" class="btn btn-outline-success rounded-pill px-4">
-                                    <i class="bi bi-box-arrow-up-right"></i> Usar
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CPF/CNPJ Generator - Free -->
-                <div class="col-lg-4 col-md-6 app-card" data-type="free">
-                    <div class="card bg-dark border-0 h-100 marketplace-card free-card">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div class="app-icon bg-info bg-opacity-25 rounded-3 p-3">
-                                    <i class="bi bi-person-badge fs-2 text-info"></i>
-                                </div>
-                                <span
-                                    class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25">
-                                    <i class="bi bi-gift-fill"></i> Gratuito
-                                </span>
-                            </div>
-                            <h4 class="card-title text-white fw-bold mb-2">Gerador CPF/CNPJ</h4>
-                            <p class="card-text text-muted small mb-3">
-                                Gere e valide documentos para testes de desenvolvimento.
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="text-success fs-4 fw-bold">Grátis</span>
-                                </div>
-                                <a href="/apps?tool=doc-gen" class="btn btn-outline-success rounded-pill px-4">
-                                    <i class="bi bi-box-arrow-up-right"></i> Usar
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- JSON Formatter - Free -->
-                <div class="col-lg-4 col-md-6 app-card" data-type="free">
-                    <div class="card bg-dark border-0 h-100 marketplace-card free-card">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div class="app-icon bg-danger bg-opacity-25 rounded-3 p-3">
-                                    <i class="bi bi-braces fs-2 text-danger"></i>
-                                </div>
-                                <span
-                                    class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25">
-                                    <i class="bi bi-gift-fill"></i> Gratuito
-                                </span>
-                            </div>
-                            <h4 class="card-title text-white fw-bold mb-2">JSON Formatter</h4>
-                            <p class="card-text text-muted small mb-3">
-                                Valide e formate arquivos JSON desorganizados ou minificados.
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="text-success fs-4 fw-bold">Grátis</span>
-                                </div>
-                                <a href="/apps?tool=json-formatter" class="btn btn-outline-success rounded-pill px-4">
-                                    <i class="bi bi-box-arrow-up-right"></i> Usar
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Base64 Converter - Free -->
-                <div class="col-lg-4 col-md-6 app-card" data-type="free">
-                    <div class="card bg-dark border-0 h-100 marketplace-card free-card">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div class="app-icon bg-secondary bg-opacity-50 rounded-3 p-3">
-                                    <i class="bi bi-shield-lock fs-2 text-light"></i>
-                                </div>
-                                <span
-                                    class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25">
-                                    <i class="bi bi-gift-fill"></i> Gratuito
-                                </span>
-                            </div>
-                            <h4 class="card-title text-white fw-bold mb-2">Base64 Converter</h4>
-                            <p class="card-text text-muted small mb-3">
-                                Codifique e decodifique textos em Base64 facilmente.
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="text-success fs-4 fw-bold">Grátis</span>
-                                </div>
-                                <a href="/apps?tool=base64-converter" class="btn btn-outline-success rounded-pill px-4">
-                                    <i class="bi bi-box-arrow-up-right"></i> Usar
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- De/Para Universal - Free -->
-                <div class="col-lg-4 col-md-6 app-card" data-type="free">
-                    <div class="card bg-dark border-0 h-100 marketplace-card free-card">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div class="app-icon bg-info bg-opacity-25 rounded-3 p-3">
-                                    <i class="bi bi-arrow-left-right fs-2 text-info"></i>
-                                </div>
-                                <span
-                                    class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25">
-                                    <i class="bi bi-gift-fill"></i> Gratuito
-                                </span>
-                            </div>
-                            <h4 class="card-title text-white fw-bold mb-2">De/Para Universal</h4>
-                            <p class="card-text text-muted small mb-3">
-                                Substituição em massa e mapeamento direto de textos e JSON.
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="text-success fs-4 fw-bold">Grátis</span>
-                                </div>
-                                <a href="/apps?tool=depara-transform" class="btn btn-outline-success rounded-pill px-4">
-                                    <i class="bi bi-box-arrow-up-right"></i> Usar
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PREMIUM APPS SECTION -->
-
-                <!-- Analytics Pro - Assinatura -->
-                <div class="col-lg-4 col-md-6 app-card" data-type="subscription">
-                    <div class="card bg-dark border-0 h-100 marketplace-card">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div class="app-icon bg-primary bg-opacity-25 rounded-3 p-3">
-                                    <i class="bi bi-graph-up-arrow fs-2 text-primary"></i>
-                                </div>
-                                <span
-                                    class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25">
-                                    <i class="bi bi-arrow-repeat"></i> Assinatura
-                                </span>
-                            </div>
-                            <h4 class="card-title text-white fw-bold mb-2">Analytics Pro</h4>
-                            <p class="card-text text-muted small mb-3">
-                                Dashboard avançado com métricas em tempo real, relatórios customizados e insights de IA.
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="text-white fs-4 fw-bold">R$ 49,90</span>
-                                    <span class="text-muted small">/mês</span>
-                                </div>
-                                <button class="btn btn-primary rounded-pill px-4"
-                                    onclick="openPurchaseModal('Analytics Pro', 49.90, 'subscription')">
-                                    <i class="bi bi-cart-plus"></i> Assinar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- E-commerce Builder - Assinatura -->
-                <div class="col-lg-4 col-md-6 app-card" data-type="subscription">
-                    <div class="card bg-dark border-0 h-100 marketplace-card">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div class="app-icon bg-success bg-opacity-25 rounded-3 p-3">
-                                    <i class="bi bi-cart4 fs-2 text-success"></i>
-                                </div>
-                                <span
-                                    class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25">
-                                    <i class="bi bi-arrow-repeat"></i> Assinatura
-                                </span>
-                            </div>
-                            <h4 class="card-title text-white fw-bold mb-2">E-commerce Builder</h4>
-                            <p class="card-text text-muted small mb-3">
-                                Lojas virtuais simples e eficientes que geram lista de pedidos diretamente para o seu
-                                WhatsApp.
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="text-white fs-4 fw-bold">R$ 199,00</span>
-                                    <span class="text-muted small">/mês</span>
-                                </div>
-                                <button class="btn btn-primary rounded-pill px-4"
-                                    onclick="openPurchaseModal('E-commerce Builder', 199.00, 'subscription')">
-                                    <i class="bi bi-cart-plus"></i> Assinar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SEO Toolkit - Assinatura -->
-                <div class="col-lg-4 col-md-6 app-card" data-type="subscription">
-                    <div class="card bg-dark border-0 h-100 marketplace-card">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div class="app-icon bg-info bg-opacity-25 rounded-3 p-3">
-                                    <i class="bi bi-search fs-2 text-info"></i>
-                                </div>
-                                <span
-                                    class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25">
-                                    <i class="bi bi-arrow-repeat"></i> Assinatura
-                                </span>
-                            </div>
-                            <h4 class="card-title text-white fw-bold mb-2">SEO Toolkit</h4>
-                            <p class="card-text text-muted small mb-3">
-                                Otimização de páginas, análise de keywords, monitoramento de ranking e sugestões IA.
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="text-white fs-4 fw-bold">R$ 29,90</span>
-                                    <span class="text-muted small">/mês</span>
-                                </div>
-                                <button class="btn btn-primary rounded-pill px-4"
-                                    onclick="openPurchaseModal('SEO Toolkit', 29.90, 'subscription')">
-                                    <i class="bi bi-cart-plus"></i> Assinar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- API Gateway Plus - Assinatura -->
-                <div class="col-lg-4 col-md-6 app-card" data-type="subscription">
-                    <div class="card bg-dark border-0 h-100 marketplace-card">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div class="app-icon bg-warning bg-opacity-25 rounded-3 p-3">
-                                    <i class="bi bi-hdd-network fs-2 text-warning"></i>
-                                </div>
-                                <span
-                                    class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25">
-                                    <i class="bi bi-arrow-repeat"></i> Assinatura
-                                </span>
-                            </div>
-                            <h4 class="card-title text-white fw-bold mb-2">API Gateway Plus</h4>
-                            <p class="card-text text-muted small mb-3">
-                                Gerencie suas APIs com rate limiting, autenticação JWT e logs detalhados.
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="text-white fs-4 fw-bold">R$ 149,00</span>
-                                    <span class="text-muted small">/mês</span>
-                                </div>
-                                <button class="btn btn-primary rounded-pill px-4"
-                                    onclick="openPurchaseModal('API Gateway Plus', 149.00, 'subscription')">
-                                    <i class="bi bi-cart-plus"></i> Assinar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CRM Enterprise - Assinatura -->
-                <div class="col-lg-4 col-md-6 app-card" data-type="subscription">
-                    <div class="card bg-dark border-0 h-100 marketplace-card">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div class="app-icon bg-danger bg-opacity-25 rounded-3 p-3">
-                                    <i class="bi bi-people fs-2 text-danger"></i>
-                                </div>
-                                <span
-                                    class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25">
-                                    <i class="bi bi-arrow-repeat"></i> Assinatura
-                                </span>
-                            </div>
-                            <h4 class="card-title text-white fw-bold mb-2">CRM Enterprise</h4>
-                            <p class="card-text text-muted small mb-3">
-                                Gestão completa de clientes, funil de vendas, automações e integrações.
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="text-white fs-4 fw-bold">R$ 79,90</span>
-                                    <span class="text-muted small">/mês</span>
-                                </div>
-                                <button class="btn btn-primary rounded-pill px-4"
-                                    onclick="openPurchaseModal('CRM Enterprise', 79.90, 'subscription')">
-                                    <i class="bi bi-cart-plus"></i> Assinar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Landing Page Kit - Assinatura -->
-                <div class="col-lg-4 col-md-6 app-card" data-type="subscription">
-                    <div class="card bg-dark border-0 h-100 marketplace-card">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-start mb-3">
-                                <div class="app-icon bg-secondary bg-opacity-50 rounded-3 p-3">
-                                    <i class="bi bi-layout-text-window-reverse fs-2 text-light"></i>
-                                </div>
-                                <span
-                                    class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25">
-                                    <i class="bi bi-arrow-repeat"></i> Assinatura
-                                </span>
-                            </div>
-                            <h4 class="card-title text-white fw-bold mb-2">Landing Page Kit</h4>
-                            <p class="card-text text-muted small mb-3">
-                                +50 templates responsivas. Inclui desenvolvimento.
-                            </p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="text-white fs-4 fw-bold">R$ 89,00</span>
-                                    <span class="text-muted small">/mês</span>
-                                </div>
-                                <button class="btn btn-primary rounded-pill px-4"
-                                    onclick="openPurchaseModal('Landing Page Kit', 89.00, 'subscription')">
-                                    <i class="bi bi-cart-plus"></i> Assinar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
             <div class="text-center mt-5">
@@ -503,6 +141,81 @@
     (function () {
         const auth = window.authService;
         let currentPurchase = null;
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str == null ? '' : String(str);
+            return div.innerHTML;
+        }
+
+        function renderCatalogCard(item) {
+            const isFree = item.type === 'free';
+            const priceFormatted = (item.price || 0).toLocaleString('pt-BR', { style: 'currency', currency: item.currency || 'BRL' });
+
+            const badge = isFree
+                ? `<span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25"><i class="bi bi-gift-fill"></i> Gratuito</span>`
+                : `<span class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25"><i class="bi bi-arrow-repeat"></i> ${item.type === 'subscription' ? 'Assinatura' : 'Compra Única'}</span>`;
+
+            const priceBlock = isFree
+                ? `<span class="text-success fs-4 fw-bold">Grátis</span>`
+                : `<span class="text-white fs-4 fw-bold">${priceFormatted}</span>${item.type === 'subscription' ? '<span class="text-muted small">/mês</span>' : ''}`;
+
+            const action = isFree
+                ? `<a href="/apps?tool=${encodeURIComponent(item.appKey)}" class="btn btn-outline-success rounded-pill px-4">
+                        <i class="bi bi-box-arrow-up-right"></i> Usar
+                   </a>`
+                : `<button class="btn btn-primary rounded-pill px-4"
+                        onclick="openPurchaseModal('${escapeHtml(item.name).replace(/'/g, "\\'")}', ${Number(item.price) || 0}, '${item.type}')">
+                        <i class="bi bi-cart-plus"></i> Assinar
+                   </button>`;
+
+            return `
+                <div class="col-lg-4 col-md-6 app-card" data-type="${escapeHtml(item.type)}">
+                    <div class="card bg-dark border-0 h-100 marketplace-card ${isFree ? 'free-card' : ''}">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="app-icon bg-primary bg-opacity-25 rounded-3 p-3">
+                                    <i class="bi ${escapeHtml(item.icon || 'bi-box')} fs-2 text-primary"></i>
+                                </div>
+                                ${badge}
+                            </div>
+                            <h4 class="card-title text-white fw-bold mb-2">${escapeHtml(item.name)}</h4>
+                            <p class="card-text text-muted small mb-3">${escapeHtml(item.description)}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>${priceBlock}</div>
+                                ${action}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function loadCatalog() {
+            const grid = document.getElementById('apps-grid');
+            try {
+                const res = await window.core.fetchAPI('/catalog', 'GET');
+                const items = (res && res.success && Array.isArray(res.data)) ? res.data : [];
+
+                if (items.length === 0) {
+                    grid.innerHTML = `
+                        <div class="col-12 text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-2 d-block mb-2"></i> Nenhum app disponível no momento.
+                        </div>`;
+                    return;
+                }
+
+                grid.innerHTML = items.map(renderCatalogCard).join('');
+            } catch (e) {
+                console.error('Failed to load catalog', e);
+                grid.innerHTML = `
+                    <div class="col-12 text-center py-5 text-muted">
+                        <i class="bi bi-exclamation-triangle fs-2 d-block mb-2"></i> Não foi possível carregar o catálogo.
+                    </div>`;
+            }
+        }
+
+        loadCatalog();
 
         // Filter Apps
         window.filterApps = function (type, btn) {
