@@ -95,4 +95,5 @@ O `Dockerfile` usa `serve -s` e expoe a porta `8080`. Em outra plataforma, repli
 - Mantenha o projeto em HTML, CSS e JavaScript vanilla, sem adicionar dependencias ou build step sem uma necessidade aprovada.
 - Atualize o versionamento em `src/config/config.js` quando uma mudanca de produto exigir isso.
 - Preserve a compatibilidade entre o fallback de producao e o roteamento SPA.
+- **Sempre que `src/config/config.js` ou qualquer arquivo em `src/core/` mudar** (nova rota em `validPages`, config de API, etc.), bump a versao em tres lugares e mantenha-os iguais: o comentario `<!-- Version: VX.Y.Z -->` no topo de `index.html`, `app.version` em `src/config/config.js`, e a query string `?v=X.Y.Z` nos `<script src>` desses arquivos no `index.html`. Sem isso, CDNs (Cloudflare, etc.) podem continuar servindo uma copia em cache do arquivo antigo por horas/dias apos o deploy, mesmo com o servidor de origem correto — foi a causa de `/ecossistema` retornar 404 por meses com o codigo ja correto em producao.
 - Documente requisitos novos em `docs/` e trabalhe por historias em `docs/stories/`.
