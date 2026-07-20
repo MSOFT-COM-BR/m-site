@@ -1,14 +1,14 @@
 # Story Index
 
 **Generated:** 2026-07-19T22:06:50.956Z
-**Total Stories:** 12
+**Total Stories:** 13
 **Epics:** 7
 
 ---
 
 ## 📊 Summary by Status
 
-- 👀 **Ready for Review**: 8
+- 👀 **Ready for Review**: 9
 - ✅ **Completed**: 1
 - 📝 **Draft**: 2
 - 🚫 **Blocked**: 1
@@ -58,11 +58,12 @@
 | 6.1 | [Unificar tokens de design para suportar temas claro e escuro](6.1.unificar-tokens-de-design-para-suportar-temas.md) | 📝 Draft | 🟠 High | dev-agent | 5 |
 | 6.2 | [Toggle de tema claro/escuro com persistencia](6.2.toggle-de-tema-claro-escuro.md) | 📝 Draft | 🟠 High | dev-agent | 3 |
 
-### EPIC-7 (1 stories)
+### EPIC-7 (2 stories)
 
 | Story ID | Title | Status | Priority | Owner | Estimate |
 |----------|-------|--------|----------|-------|----------|
 | 7.1 | [Cache-busting por versao nos scripts criticos do shell](7.1.cache-busting-por-versao-nos-scripts-criticos.md) | 👀 Ready for Review | 🟠 High | dev-agent | 2 |
+| 7.2 | [Perfil do usuario real e dinamico](7.2.perfil-do-usuario-real-e-dinamico.md) | 👀 Ready for Review | 🔴 Critical | dev-agent | 5 |
 
 ---
 

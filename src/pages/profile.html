@@ -54,11 +54,6 @@
                                     <div class="form-text text-muted small"><i class="bi bi-lock"></i> O email não pode
                                         ser alterado.</div>
                                 </div>
-                                <div class="col-12">
-                                    <label class="form-label text-muted small">Bio / Cargo</label>
-                                    <input type="text" class="form-control bg-dark text-white border-secondary"
-                                        id="input-bio" placeholder="Ex: Desenvolvedor Senior">
-                                </div>
                             </div>
 
                             <hr class="border-secondary my-4">
@@ -96,16 +91,12 @@
                         <div class="mb-3">
                             <i class="bi bi-trophy-fill text-warning display-4"></i>
                         </div>
-                        <h4 class="text-white">Plano Premium</h4>
-                        <p class="text-muted small">Acesso total a todas as ferramentas e suporte prioritário.</p>
+                        <h4 class="text-white" id="plan-title">Plano</h4>
+                        <p class="text-muted small" id="plan-description"></p>
                         <hr class="border-secondary opacity-25">
-                        <div class="d-flex justify-content-between text-muted small mb-2">
+                        <div class="d-flex justify-content-between text-muted small">
                             <span>Status</span>
                             <span class="text-success fw-bold">Ativo</span>
-                        </div>
-                        <div class="d-flex justify-content-between text-muted small">
-                            <span>Renovação</span>
-                            <span class="text-white">18/02/2026</span>
                         </div>
                     </div>
                 </div>
@@ -117,31 +108,10 @@
                         <h5 class="mb-0"><i class="bi bi-activity me-2"></i>Uso da Conta</h5>
                     </div>
                     <div class="card-body p-4">
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between mb-1">
-                                <span class="text-muted small">Apps Instalados</span>
-                                <span class="text-white small">3/10</span>
-                            </div>
-                            <div class="progress bg-dark border border-secondary" style="height: 6px;">
-                                <div class="progress-bar bg-info" style="width: 30%"></div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between mb-1">
-                                <span class="text-muted small">Armazenamento</span>
-                                <span class="text-white small">45%</span>
-                            </div>
-                            <div class="progress bg-dark border border-secondary" style="height: 6px;">
-                                <div class="progress-bar bg-warning" style="width: 45%"></div>
-                            </div>
-                        </div>
                         <div>
                             <div class="d-flex justify-content-between mb-1">
-                                <span class="text-muted small">Chamadas API</span>
-                                <span class="text-white small">1.2k/5k</span>
-                            </div>
-                            <div class="progress bg-dark border border-secondary" style="height: 6px;">
-                                <div class="progress-bar bg-success" style="width: 24%"></div>
+                                <span class="text-muted small">Apps Instalados</span>
+                                <span class="text-white small" id="stat-apps-count">--</span>
                             </div>
                         </div>
                     </div>
@@ -160,26 +130,72 @@
             return;
         }
 
-        const user = auth.getUser();
+        function renderUser(user) {
+            document.getElementById('profile-name').textContent = user.name || 'Usuário';
+            document.getElementById('profile-email').textContent = user.email || '';
+            document.getElementById('input-name').value = user.name || '';
+            document.getElementById('input-email').value = user.email || '';
 
-        // Populate Data
-        document.getElementById('profile-name').textContent = user.name || 'Usuário';
-        document.getElementById('profile-email').textContent = user.email || 'email@exemplo.com';
-        document.getElementById('input-name').value = user.name || '';
-        document.getElementById('input-email').value = user.email || '';
-        document.getElementById('input-bio').value = user.bio || '';
+            const roleBadge = document.getElementById('profile-role');
+            roleBadge.classList.remove('text-warning', 'border-warning', 'bg-warning', 'text-primary', 'border-primary', 'bg-primary');
+            if (user.role === 'admin') {
+                roleBadge.innerHTML = '<i class="bi bi-shield-lock-fill me-1"></i> Administrador';
+                roleBadge.classList.add('text-warning', 'border-warning', 'bg-warning', 'bg-opacity-10', 'border-opacity-25');
+            } else if (user.role === 'premium') {
+                roleBadge.innerHTML = '<i class="bi bi-star-fill me-1"></i> Premium';
+                roleBadge.classList.add('text-primary', 'border-primary', 'bg-primary', 'bg-opacity-10', 'border-opacity-25');
+            } else {
+                roleBadge.innerHTML = '<i class="bi bi-person-fill me-1"></i> Usuário';
+                roleBadge.classList.add('text-primary', 'border-primary', 'bg-primary', 'bg-opacity-10', 'border-opacity-25');
+            }
 
-        if (user.role === 'admin') {
-            document.getElementById('profile-role').innerHTML = '<i class="bi bi-shield-lock-fill me-1"></i> Administrador';
-            document.getElementById('profile-role').classList.replace('text-primary', 'text-warning');
-            document.getElementById('profile-role').classList.replace('border-primary', 'border-warning');
-            document.getElementById('profile-role').classList.replace('bg-primary', 'bg-warning');
+            const planTitle = document.getElementById('plan-title');
+            const planDescription = document.getElementById('plan-description');
+            if (user.role === 'admin') {
+                planTitle.textContent = 'Administrador';
+                planDescription.textContent = 'Acesso total à plataforma e ao painel administrativo.';
+            } else if (user.role === 'premium') {
+                planTitle.textContent = 'Plano Premium';
+                planDescription.textContent = 'Acesso total a todas as ferramentas e suporte prioritário.';
+            } else {
+                planTitle.textContent = 'Plano Gratuito';
+                planDescription.textContent = 'Acesso às ferramentas gratuitas do marketplace.';
+            }
+
+            // Avatar
+            const avatarUrl = user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || 'User')}&background=6366f1&color=fff`;
+            document.getElementById('profile-img').src = avatarUrl;
         }
 
-        // Avatar
-        const avatarUrl = user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || 'User')}&background=6366f1&color=fff`;
-        document.getElementById('profile-img').src = avatarUrl;
+        async function loadAppsCount() {
+            const statEl = document.getElementById('stat-apps-count');
+            try {
+                const response = await window.core.fetchAPI('/apps', 'GET');
+                const apps = (response && response.success && Array.isArray(response.data)) ? response.data : [];
+                statEl.textContent = String(apps.length);
+            } catch (e) {
+                console.warn('Failed to load apps count', e);
+                statEl.textContent = '--';
+            }
+        }
 
+        // Carrega o usuário real do backend (localStorage pode estar desatualizado
+        // se o perfil foi editado em outra aba/dispositivo).
+        async function loadProfile() {
+            renderUser(auth.getUser() || {});
+            try {
+                const response = await window.core.fetchAPI('/auth/me', 'GET');
+                if (response && response.success && response.user) {
+                    localStorage.setItem(auth.userKey, JSON.stringify(response.user));
+                    renderUser(response.user);
+                }
+            } catch (e) {
+                console.warn('Failed to load profile', e);
+            }
+        }
+
+        loadProfile();
+        loadAppsCount();
 
         // Form Handler
         document.getElementById('profile-form').addEventListener('submit', async (e) => {
@@ -190,36 +206,51 @@
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Salvando...';
 
-            const name = document.getElementById('input-name').value;
-            const bio = document.getElementById('input-bio').value;
+            const name = document.getElementById('input-name').value.trim();
             const pass = document.getElementById('input-pass').value;
             const passConfirm = document.getElementById('input-pass-confirm').value;
 
-            // Simple Validation
             if (pass && pass !== passConfirm) {
                 window.core.toast('As senhas não conferem!', 'warning');
                 btn.disabled = false;
                 btn.innerHTML = originalText;
                 return;
             }
-
-            // Simulate API Call
-            setTimeout(() => {
-                // Update Local User Object
-                const updatedUser = { ...user, name, bio };
-                localStorage.setItem(auth.userKey, JSON.stringify(updatedUser));
-
-                // Update UI
-                document.getElementById('profile-name').textContent = name;
-
-                window.core.toast('Perfil atualizado com sucesso!', 'success');
+            if (pass && pass.length < 12) {
+                window.core.toast('A senha deve ter ao menos 12 caracteres.', 'warning');
                 btn.disabled = false;
                 btn.innerHTML = originalText;
+                return;
+            }
 
-                // Clear password fields
+            const payload = { name };
+            if (pass) payload.password = pass;
+
+            try {
+                const response = await window.core.fetchAPI('/auth/me', 'PUT', payload);
+                if (!response || !response.success) {
+                    throw new Error((response && response.error) || 'Não foi possível salvar.');
+                }
+
                 document.getElementById('input-pass').value = '';
                 document.getElementById('input-pass-confirm').value = '';
-            }, 1000);
+
+                if (pass) {
+                    // Troca de senha invalida a sessão no backend — força novo login.
+                    window.core.toast('Senha alterada. Faça login novamente.', 'success');
+                    auth.logout();
+                    return;
+                }
+
+                localStorage.setItem(auth.userKey, JSON.stringify(response.user));
+                renderUser(response.user);
+                window.core.toast('Perfil atualizado com sucesso!', 'success');
+            } catch (error) {
+                window.core.toast(error.message || 'Não foi possível atualizar o perfil.', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
         });
     })();
 </script>
