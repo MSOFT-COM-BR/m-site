@@ -481,6 +481,31 @@
                     }
                 };
 
+                // Catalogo real (GET /catalog, publico) usado para o select de "instalar app" —
+                // diferente da lista de sugestoes de mAppAccess acima, aqui so entram appKeys
+                // que realmente existem no catalogo, porque instalar exige o app cadastrado.
+                let catalogAppsCache = [];
+
+                const loadCatalogApps = async () => {
+                    try {
+                        const response = await window.core.fetchAPI('/catalog', 'GET');
+                        catalogAppsCache = (response && response.success && Array.isArray(response.data)) ? response.data : [];
+                    } catch (_error) {
+                        catalogAppsCache = [];
+                    }
+                };
+
+                const catalogAppOptions = (installedKeys) => {
+                    const installed = new Set(installedKeys);
+                    const available = catalogAppsCache.filter((item) => !installed.has(normalizeAppKey(item.appKey)));
+                    if (!available.length) {
+                        return '<option value="">Nenhum app disponível no catálogo</option>';
+                    }
+                    return '<option value="">Selecione um app...</option>' + available
+                        .map((item) => `<option value="${encodeValue(normalizeAppKey(item.appKey))}">${escapeHtml(item.name)} (${escapeHtml(item.appKey)})</option>`)
+                        .join('');
+                };
+
                 const renderUserList = (users) => {
                     if (!userList) return;
                     if (userCount) userCount.textContent = `(${users.length})`;
@@ -564,6 +589,22 @@
                         ? '<span class="badge text-bg-success-subtle text-success-emphasis">Ativo</span>'
                         : '<span class="badge text-bg-secondary">Inativo</span>';
 
+                    const installedApps = Array.isArray(user.installedApps) ? user.installedApps : [];
+                    const installedKeys = installedApps.map((app) => normalizeAppKey(app.appKey));
+                    const installedAppsHtml = installedApps.length
+                        ? installedApps.map((app) => `
+                            <div class="border rounded-3 p-3" data-installed-app data-app-key="${encodeValue(app.appKey)}" style="border-color: #3f3f46 !important; background: rgba(9, 9, 11, 0.28);">
+                                <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                                    <div>
+                                        <div class="text-white fw-semibold">${escapeHtml(app.name || app.appKey)}</div>
+                                        <div class="small text-secondary">${escapeHtml(app.appKey)} <span class="opacity-50 mx-1">|</span> instalado em ${escapeHtml(formatDate(app.createdAt, 'data indisponível'))}</div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" data-installed-app-action="remove"><i class="bi bi-trash me-1"></i>Remover</button>
+                                </div>
+                            </div>
+                        `).join('')
+                        : '<div class="text-secondary small border rounded-3 p-3" style="border-color: #3f3f46 !important;">Nenhum app instalado nesta conta.</div>';
+
                     editorSection.hidden = false;
                     editorSection.innerHTML = `
                         <div class="d-flex flex-column flex-md-row align-items-md-start justify-content-between gap-3 mb-4">
@@ -595,6 +636,27 @@
                                 <button id="app-user-edit-submit" type="submit" class="btn cms-btn-primary w-100"><i class="bi bi-save me-2"></i>Salvar perfil</button>
                             </div>
                         </form>
+                        <hr class="border-secondary opacity-25 my-4">
+                        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mb-3">
+                            <div>
+                                <h6 class="text-white fw-semibold mb-1">Apps instalados</h6>
+                                <p class="text-secondary small mb-0">Controla o que aparece em "Meus Aplicativos" no painel do usuário. Independente das permissões abaixo.</p>
+                            </div>
+                        </div>
+                        ${active ? `
+                            <form id="app-user-install-form" class="row g-3 mb-3" novalidate>
+                                <div class="col-md-8">
+                                    <label class="form-label text-light mb-2" for="app-user-install-key">App do catálogo</label>
+                                    <select id="app-user-install-key" class="form-select cms-input" required>${catalogAppOptions(installedKeys)}</select>
+                                </div>
+                                <div class="col-md-4 d-flex align-items-end">
+                                    <button id="app-user-install-submit" type="submit" class="btn btn-outline-info w-100"><i class="bi bi-plus-lg me-1"></i>Instalar</button>
+                                </div>
+                            </form>
+                        ` : `
+                            <div class="alert cms-alert small mb-3"><i class="bi bi-lock me-2 text-warning"></i>Reative a conta antes de instalar novos apps.</div>
+                        `}
+                        <div id="app-user-installed-list" class="d-flex flex-column gap-2">${installedAppsHtml}</div>
                         <hr class="border-secondary opacity-25 my-4">
                         <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2 mb-3">
                             <div>
@@ -639,9 +701,14 @@
                     editorSection.hidden = false;
                     editorSection.innerHTML = '<div class="text-center py-4 text-secondary"><span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Carregando dados do usuário...</div>';
                     try {
-                        const response = await callUserApi(`/auth/admin/users/${encodeURIComponent(userId)}`);
+                        const [userResponse, appsResponse] = await Promise.all([
+                            callUserApi(`/auth/admin/users/${encodeURIComponent(userId)}`),
+                            callUserApi(`/auth/admin/users/${encodeURIComponent(userId)}/apps`).catch(() => ({ data: [] })),
+                            catalogAppsCache.length ? Promise.resolve() : loadCatalogApps(),
+                        ]);
                         if (!container.contains(editorSection)) return;
-                        renderEditor(response.user, feedbackMessage, feedbackType);
+                        const user = { ...userResponse.user, installedApps: Array.isArray(appsResponse.data) ? appsResponse.data : [] };
+                        renderEditor(user, feedbackMessage, feedbackType);
                     } catch (error) {
                         if (container.contains(editorSection)) {
                             editorSection.innerHTML = `<div class="text-danger">${escapeHtml(getErrorMessage(error, 'Não foi possível carregar este usuário.'))}</div>`;
@@ -662,6 +729,10 @@
                     const accessRole = getUserElement('app-user-access-role');
                     const accessButton = getUserElement('app-user-access-submit');
                     const accessList = getUserElement('app-user-access-list');
+                    const installForm = getUserElement('app-user-install-form');
+                    const installKey = getUserElement('app-user-install-key');
+                    const installButton = getUserElement('app-user-install-submit');
+                    const installedList = getUserElement('app-user-installed-list');
                     const deactivateButton = getUserElement('app-user-deactivate');
                     const reactivateButton = getUserElement('app-user-reactivate');
 
@@ -760,6 +831,48 @@
                         });
                     }
 
+                    if (installForm && installKey && installButton) {
+                        installForm.addEventListener('submit', async (event) => {
+                            event.preventDefault();
+                            if (!selectedUser) return;
+                            if (!installKey.value) {
+                                setFeedback(editorFeedback, 'Selecione um app do catálogo para instalar.', 'error');
+                                return;
+                            }
+                            const restoreButton = setButtonBusy(installButton, 'Instalando...');
+                            try {
+                                await callUserApi(`/auth/admin/users/${encodeURIComponent(selectedUser.id)}/apps/${encodeURIComponent(installKey.value)}`, 'PUT');
+                                await loadManagedUser(selectedUser.id, 'App instalado.', 'success');
+                                await refreshUsers();
+                            } catch (error) {
+                                setFeedback(editorFeedback, getErrorMessage(error, 'Não foi possível instalar o app.'), 'error');
+                            } finally {
+                                restoreButton();
+                            }
+                        });
+                    }
+
+                    if (installedList) {
+                        installedList.addEventListener('click', async (event) => {
+                            const button = event.target.closest('button[data-installed-app-action="remove"]');
+                            const appRow = button && button.closest('[data-installed-app]');
+                            if (!button || !appRow || !selectedUser) return;
+                            const appKey = decodeValue(appRow.dataset.appKey);
+                            if (!appKey) return;
+                            if (!window.confirm(`Remover o app ${appKey} da conta de ${selectedUser.email}?`)) return;
+                            const restoreButton = setButtonBusy(button, 'Removendo...');
+                            try {
+                                await callUserApi(`/auth/admin/users/${encodeURIComponent(selectedUser.id)}/apps/${encodeURIComponent(appKey)}`, 'DELETE');
+                                await loadManagedUser(selectedUser.id, 'App removido.', 'success');
+                                await refreshUsers();
+                            } catch (error) {
+                                setFeedback(editorFeedback, getErrorMessage(error, 'Não foi possível remover o app.'), 'error');
+                            } finally {
+                                restoreButton();
+                            }
+                        });
+                    }
+
                     if (deactivateButton) {
                         deactivateButton.addEventListener('click', async () => {
                             if (!selectedUser || !window.confirm(`Desativar ${selectedUser.email} e revogar todos os acessos às aplicações?`)) return;
@@ -850,6 +963,7 @@
                 }
 
                 loadApplicationSuggestions();
+                loadCatalogApps();
                 refreshUsers();
             } else if (tab === 'theme') {
                 container.innerHTML = `

@@ -1,15 +1,17 @@
 # Story Index
 
 **Generated:** 2026-07-19T22:06:50.956Z
-**Total Stories:** 7
-**Epics:** 5
+**Total Stories:** 12
+**Epics:** 7
 
 ---
 
 ## 📊 Summary by Status
 
-- 👀 **Ready for Review**: 6
+- 👀 **Ready for Review**: 8
 - ✅ **Completed**: 1
+- 📝 **Draft**: 2
+- 🚫 **Blocked**: 1
 
 ---
 
@@ -27,12 +29,14 @@
 |----------|-------|--------|----------|-------|----------|
 | 2.1 | [Criar portal do ecossistema Miranda Soft](2.1.criar-portal-do-ecossistema-miranda-soft.md) | 👀 Ready for Review | 🟠 High | ux-design-expert | 5 |
 
-### EPIC-3 (2 stories)
+### EPIC-3 (4 stories)
 
 | Story ID | Title | Status | Priority | Owner | Estimate |
 |----------|-------|--------|----------|-------|----------|
 | 3.1 | [Criar usuario com acesso por aplicacao](3.1.criar-usuario-por-aplicacao.md) | 👀 Ready for Review | 🔴 Critical | dev-agent | 5 |
-| 3.2 | [CRUD seguro de usuarios por aplicacao](3.2.crud-seguro-de-usuarios-por-aplicacao.md) | 👀 Ready for Review | 🔴 Critical | dev-agent | 8 |
+| 3.2 | [CRUD seguro de usuarios por aplicacao](3.2.crud-seguro-de-usuarios-por-aplicacao.md) | 🚫 Blocked | 🔴 Critical | dev-agent | 8 |
+| 3.3 | [Mergear backend de gestao de usuarios por aplicacao (regressao critica)](3.3.mergear-backend-de-gestao-de-usuarios-por-aplicacao.md) | 👀 Ready for Review | 🔴 Critical | dev-agent | 3 |
+| 3.4 | [Painel admin de apps instalados e catalogo (controle total)](3.4.painel-admin-de-apps-instalados-e-catalogo.md) | 👀 Ready for Review | 🔴 Critical | dev-agent | 8 |
 
 ### EPIC-4 (1 stories)
 
@@ -47,6 +51,19 @@
 | 5.1 | [Instalacao real de apps gratuitos](5.1.instalacao-real-de-apps-gratuitos.md) | 👀 Ready for Review | 🔴 Critical | dev-agent | 5 |
 | 5.2 | [Marketplace e dashboard premium dinamicos](5.2.marketplace-e-premium-dinamicos.md) | 👀 Ready for Review | 🟠 High | dev-agent | 8 |
 
+### EPIC-6 (2 stories)
+
+| Story ID | Title | Status | Priority | Owner | Estimate |
+|----------|-------|--------|----------|-------|----------|
+| 6.1 | [Unificar tokens de design para suportar temas claro e escuro](6.1.unificar-tokens-de-design-para-suportar-temas.md) | 📝 Draft | 🟠 High | dev-agent | 5 |
+| 6.2 | [Toggle de tema claro/escuro com persistencia](6.2.toggle-de-tema-claro-escuro.md) | 📝 Draft | 🟠 High | dev-agent | 3 |
+
+### EPIC-7 (1 stories)
+
+| Story ID | Title | Status | Priority | Owner | Estimate |
+|----------|-------|--------|----------|-------|----------|
+| 7.1 | [Cache-busting por versao nos scripts criticos do shell](7.1.cache-busting-por-versao-nos-scripts-criticos.md) | 👀 Ready for Review | 🟠 High | dev-agent | 2 |
+
 ---
 
 ## 🔍 Legend
@@ -59,6 +76,7 @@
 - 👀 **Ready for Review**
 - ✅ **Completed**
 - ⏸️ **On Hold**
+- 🚫 **Blocked**
 - ❌ **Cancelled**
 
 ### Priority
