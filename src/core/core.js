@@ -21,6 +21,32 @@ class Core {
     this.registerPages = config.routes.validPages;
     // inicializa o core
     this.init();
+    this.initTracking();
+  }
+
+  // Tracking de eventos de clique (analytics)
+  initTracking() {
+    if (typeof document === 'undefined') return;
+    document.addEventListener('click', (e) => {
+      const el = e.target.closest('[data-track]');
+      if (!el) return;
+      const eventName = el.getAttribute('data-track');
+      const eventParams = {};
+      el.querySelectorAll('[data-track-param]').forEach(paramEl => {
+        const key = paramEl.getAttribute('data-track-param');
+        const value = paramEl.getAttribute('data-track-value') || paramEl.textContent.trim();
+        if (key) eventParams[key] = value;
+      });
+      Array.from(el.attributes).forEach(attr => {
+        if (attr.name.startsWith('data-track-') && attr.name !== 'data-track') {
+          const key = attr.name.replace('data-track-', '');
+          eventParams[key] = attr.value;
+        }
+      });
+      if (typeof window.trackEvent === 'function') {
+        window.trackEvent(eventName, eventParams);
+      }
+    });
   }
 
   // Registro de componentes JS
@@ -264,6 +290,15 @@ class Core {
 
       // Atualiza SEO dinâmico (título, meta description, canonical, noindex)
       this.updatePageSEO(pageName, newPath);
+
+      // Analytics: page_view em navegacao SPA (se consentimento aceito)
+      if (typeof window.trackEvent === 'function') {
+        window.trackEvent('page_view', {
+          page_path: newPath,
+          page_title: document.title,
+          page_location: window.location.href
+        });
+      }
     } catch (error) {
       // Redireciona para 404
       try {

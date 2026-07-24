@@ -180,6 +180,10 @@
 
 <script>
     (function () {
+        if (typeof window.trackEvent === 'function') {
+            window.trackEvent('premium_access', { page: '/premium' });
+        }
+
         const auth = window.authService;
         const content = document.getElementById('premium-content');
         const denied = document.getElementById('access-denied');

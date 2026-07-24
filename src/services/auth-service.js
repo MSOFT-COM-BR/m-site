@@ -27,6 +27,13 @@ class AuthService {
                 window.auditService.track('LOGIN', `User login: ${response.user?.email || response.user?.name || 'unknown'}`);
             }
 
+            if (typeof window.trackEvent === 'function') {
+                window.trackEvent('login', {
+                    method: 'email',
+                    user_id: response.user?.id || response.user?.email || 'unknown'
+                });
+            }
+
             // Dispatch auth change event
             window.dispatchEvent(new CustomEvent('auth-change', { detail: { isAuthenticated: true, user: response.user } }));
 

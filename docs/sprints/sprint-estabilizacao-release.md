@@ -23,15 +23,16 @@
 | 6 | Story nova: smoke de release das jornadas criticas | 5 | itens 1-5 | roteiro repetivel automatizado ou scriptado para SPA, login, admin, perfil, marketplace/premium e verificacao de rotas removidas; executado antes do deploy e apos o deploy. |
 | 7 | Remocao de paginas e componentes mortos - Story 7.5 | 2 | - | `faq`, `policy`, `my-apps`, `tutorial-caricatura` e `cta-tutorial` removidos; rotas retornam 404. |
 | 8 | Correcao de SEO tecnico - Story 7.6 | 5 | - | Sitemap valido, robots.txt com sitemap, titulos e descriptions unicos por pagina, canonical tags, noindex em areas logadas. |
+| 9 | Implementar Google Analytics 4 e banner LGPD - Story 7.7 | 5 | - | GA4 carregado com consentimento, eventos de conversao, banner LGPD funcional. |
 
-**Capacidade comprometida:** 28 pontos remanescentes. Nao iniciar item 6 antes de o contrato publicado dos itens 1-5 estar confirmado; ele deve automatizar a validacao que fecha as stories, nao competir com o release.
+**Capacidade comprometida:** 33 pontos remanescentes. Nao iniciar item 6 antes de o contrato publicado dos itens 1-5 estar confirmado; ele deve automatizar a validacao que fecha as stories, nao competir com o release.
 
 ## Sequencia de execucao
 
 1. Congelar o escopo do `m-manage`, revisar o diff da branch contra `master` e resolver a alteracao local nao relacionada em `src/middleware/requireAuth.ts` antes de abrir o PR.
 2. Executar `bun test` e `bun build` no commit candidato; aprovar, mergear e publicar com plano de rollback para o commit anterior.
 3. Executar o smoke autenticado em producao com contas de teste segregadas: Admin Master e usuario sem apps. A aplicacao HealthTech nao deve estar disponivel no m-site, mas seu backend deve continuar protegido por `requireAppAccess('healthtech_os_v1')`.
-4. Fechar 3.3; desbloquear e fechar 3.2 somente com evidencia da validacao em producao. Fechar 3.1, 3.4, 5.1, 5.2, 7.2, 7.3, 7.4, 7.5 e 7.6 quando seus fluxos forem aprovados.
+4. Fechar 3.3; desbloquear e fechar 3.2 somente com evidencia da validacao em producao. Fechar 3.1, 3.4, 5.1, 5.2, 7.2, 7.3, 7.4, 7.5, 7.6 e 7.7 quando seus fluxos forem aprovados.
 5. Transformar o roteiro aprovado no item 6 em check obrigatorio de release e anexar suas evidencias as stories.
 
 ## Fora do escopo

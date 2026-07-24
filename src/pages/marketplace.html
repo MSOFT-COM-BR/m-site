@@ -139,6 +139,10 @@
 
 <script>
     (function () {
+        if (typeof window.trackEvent === 'function') {
+            window.trackEvent('marketplace_view', { page: '/marketplace' });
+        }
+
         const auth = window.authService;
         let currentPurchase = null;
 

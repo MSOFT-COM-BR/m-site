@@ -18,7 +18,7 @@ function resolveApiBaseUrl() {
 const config = {
   app: {
     name: "Miranda Soft",
-    version: "0.11.59",
+    version: "0.11.60",
     environment: "production",
     debug: false
   },
@@ -84,7 +84,8 @@ const config = {
   ],
   analytics: {
     enabled: false,
-    trackingId: "UA-XXXXXXXXX-X"
+    ga4MeasurementId: "G-XXXXXXXXXX",
+    consentRequired: true
   },
   cache: {
     enabled: true,
