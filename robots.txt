@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://mirandasoft.com.br/sitemap.xml

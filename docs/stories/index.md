@@ -58,7 +58,7 @@
 | 6.1 | [Unificar tokens de design para suportar temas claro e escuro](6.1.unificar-tokens-de-design-para-suportar-temas.md) | 📝 Draft | 🟠 High | dev-agent | 5 |
 | 6.2 | [Toggle de tema claro/escuro com persistencia](6.2.toggle-de-tema-claro-escuro.md) | 📝 Draft | 🟠 High | dev-agent | 3 |
 
-### EPIC-7 (5 stories)
+### EPIC-7 (6 stories)
 
 | Story ID | Title | Status | Priority | Owner | Estimate |
 |----------|-------|--------|----------|-------|----------|
@@ -67,6 +67,7 @@
 | 7.3 | [Remover exposicao publica do HealthTech e restringir acesso por app instalado](7.3.remover-exposicao-publica-do-healthtech-e-restringir-acesso.md) | 👀 Ready for Review | 🔴 Critical | dev-agent | 3 |
 | 7.4 | [Remover aplicacao HealthTech do m-site](7.4.remover-aplicacao-healthtech-do-m-site.md) | 👀 Ready for Review | 🔴 Critical | dev-agent | 3 |
 | 7.5 | [Remover paginas e componentes nao utilizados](7.5.remover-paginas-e-componentes-nao-utilizados.md) | 👀 Ready for Review | 🟠 High | dev-agent | 2 |
+| 7.6 | [Corrigir SEO tecnico do m-site](7.6.corrigir-seo-tecnico-do-m-site.md) | 👀 Ready for Review | 🔴 Critical | dev-agent | 5 |
 
 ---
 

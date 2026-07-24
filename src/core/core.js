@@ -261,6 +261,9 @@ class Core {
       const paramsString = this.params.length > 0 ? `/${this.params.join('/')}` : '';
       const newPath = pageName === 'home' ? '/' : `/${pageName}${paramsString}`;
       window.history.replaceState({}, '', newPath);
+
+      // Atualiza SEO dinâmico (título, meta description, canonical, noindex)
+      this.updatePageSEO(pageName, newPath);
     } catch (error) {
       // Redireciona para 404
       try {
@@ -319,6 +322,73 @@ class Core {
       window.history.pushState({}, '', path);
       this.handleRoute(path);
     }
+  }
+
+  // SEO: Atualiza title, meta description, canonical e noindex conforme a página
+  updatePageSEO(pageName, path) {
+    const seo = (typeof window !== 'undefined' && window.SEO_CONFIG) ? window.SEO_CONFIG[pageName] : null;
+    if (!seo) return;
+
+    const origin = window.location.origin;
+    const canonicalUrl = `${origin}${path === '/' ? '/' : path}`;
+
+    // Title
+    if (seo.title) {
+      document.title = seo.title;
+      const titleEl = document.querySelector('title');
+      if (titleEl) titleEl.textContent = seo.title;
+    }
+
+    // Meta description
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.setAttribute('name', 'description');
+      document.head.appendChild(metaDescription);
+    }
+    if (seo.description) metaDescription.setAttribute('content', seo.description);
+
+    // Canonical
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.setAttribute('href', canonicalUrl);
+
+    // Meta robots (noindex)
+    let metaRobots = document.querySelector('meta[name="robots"]');
+    if (seo.noindex) {
+      if (!metaRobots) {
+        metaRobots = document.createElement('meta');
+        metaRobots.setAttribute('name', 'robots');
+        document.head.appendChild(metaRobots);
+      }
+      metaRobots.setAttribute('content', 'noindex, nofollow');
+    } else if (metaRobots) {
+      metaRobots.remove();
+    }
+
+    // Open Graph e Twitter dinâmicos
+    this.updateMetaTag('og:title', seo.title);
+    this.updateMetaTag('og:description', seo.description);
+    this.updateMetaTag('og:url', canonicalUrl);
+    this.updateMetaTag('twitter:title', seo.title);
+    this.updateMetaTag('twitter:description', seo.description);
+  }
+
+  updateMetaTag(property, content) {
+    if (!content) return;
+    const isTwitter = property.startsWith('twitter:');
+    const selector = isTwitter ? `meta[name="${property}"]` : `meta[property="${property}"]`;
+    let meta = document.querySelector(selector);
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute(isTwitter ? 'name' : 'property', property);
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', content);
   }
 
   // Skeleton universal - Enhanced version
