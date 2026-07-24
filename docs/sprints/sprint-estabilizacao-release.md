@@ -27,15 +27,16 @@
 | 10 | Adicionar Schema.org, OG image e performance - Story 7.8 | 5 | - | JSON-LD Organization/WebSite/LocalBusiness, OG image, preconnect/dns-prefetch. |
 | 11 | Configurar Google Search Console - Story 7.9 | 2 | - | Meta tag de verificacao adicionada, sitemap pronto, documentacao de submissao. |
 | 12 | Menu horizontal com dropdown na area admin - Story 8.1 | 3 | - | Sidebar vertical substituida por menu horizontal com dropdowns (Aparência, Conteúdo, Mídia, Sistema); hamburger no mobile; estado ativo e persistencia intactos. |
+| 13 | Corrigir editor de artigo do admin (Summernote) - Story 8.2 | 3 | - | Editor funcional sem listeners acumulados, destroy/init corretos, CSS escuro completo, toolbar H1-H3/alinhamento/tachado. |
 
-**Capacidade comprometida:** 43 pontos remanescentes. Nao iniciar item 6 antes de o contrato publicado dos itens 1-5 estar confirmado; ele deve automatizar a validacao que fecha as stories, nao competir com o release.
+**Capacidade comprometida:** 46 pontos remanescentes. Nao iniciar item 6 antes de o contrato publicado dos itens 1-5 estar confirmado; ele deve automatizar a validacao que fecha as stories, nao competir com o release.
 
 ## Sequencia de execucao
 
 1. Congelar o escopo do `m-manage`, revisar o diff da branch contra `master` e resolver a alteracao local nao relacionada em `src/middleware/requireAuth.ts` antes de abrir o PR.
 2. Executar `bun test` e `bun build` no commit candidato; aprovar, mergear e publicar com plano de rollback para o commit anterior.
 3. Executar o smoke autenticado em producao com contas de teste segregadas: Admin Master e usuario sem apps. A aplicacao HealthTech nao deve estar disponivel no m-site, mas seu backend deve continuar protegido por `requireAppAccess('healthtech_os_v1')`.
-4. Fechar 3.3; desbloquear e fechar 3.2 somente com evidencia da validacao em producao. Fechar 3.1, 3.4, 5.1, 5.2, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8, 7.9 e 8.1 quando seus fluxos forem aprovados.
+4. Fechar 3.3; desbloquear e fechar 3.2 somente com evidencia da validacao em producao. Fechar 3.1, 3.4, 5.1, 5.2, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8, 7.9, 8.1 e 8.2 quando seus fluxos forem aprovados.
 5. Transformar o roteiro aprovado no item 6 em check obrigatorio de release e anexar suas evidencias as stories.
 
 ## Fora do escopo

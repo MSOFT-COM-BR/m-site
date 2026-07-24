@@ -1,6 +1,3 @@
-<link rel="stylesheet" href="/src/assets/vendor/summernote/summernote-lite.min.css">
-<script src="/src/assets/vendor/summernote/summernote-lite.min.js"></script>
-
 <style>
     .cms-container {
         background: transparent;
@@ -278,13 +275,51 @@
     .note-editor .note-editing-area .note-editable {
         background: #0f0f12 !important;
         color: #fafafa !important;
-        min-height: 360px;
+        min-height: 500px;
+    }
+    .note-editor .note-placeholder {
+        color: #52525b !important;
     }
     .note-editor .note-btn,
     .note-editor .note-color-all .note-dropdown-menu {
         background: #27272a !important;
         color: #fafafa !important;
         border-color: #3f3f46 !important;
+    }
+    .note-editor .note-btn:hover,
+    .note-editor .note-btn.active {
+        background: #3f3f46 !important;
+        color: #fff !important;
+        border-color: #52525b !important;
+    }
+    .note-editor .note-btn-group > .note-btn:hover {
+        background: #3f3f46 !important;
+    }
+    /* Summernote dropdowns (style, fontname, color) */
+    .note-editor .dropdown-menu,
+    .note-editor .note-dropdown-menu {
+        background: #1c1c21 !important;
+        border: 1px solid #3f3f46 !important;
+        color: #fafafa !important;
+        box-shadow: 0 16px 40px rgba(0,0,0,0.6) !important;
+    }
+    .note-editor .dropdown-item,
+    .note-editor .dropdown-style > li > a,
+    .note-editor .dropdown-fontname > li > a {
+        color: #d4d4d8 !important;
+        background: transparent !important;
+    }
+    .note-editor .dropdown-item:hover,
+    .note-editor .dropdown-style > li > a:hover,
+    .note-editor .dropdown-fontname > li > a:hover {
+        background: #27272a !important;
+        color: #fafafa !important;
+    }
+    .note-editor .dropdown-item.active,
+    .note-editor .dropdown-style > li > a.active,
+    .note-editor .dropdown-fontname > li > a.active {
+        background: #3f3f46 !important;
+        color: #fff !important;
     }
     /* Summernote Modals (Insert Link, Image, etc) */
     .note-modal-content {
@@ -1532,8 +1567,8 @@
                         const ta = document.getElementById('blog-content-html');
                         return ta ? String(ta.value).trim() : '';
                     }
-                    if (window.quillEditorInstance) {
-                        document.getElementById('blog-content').value = window.quillEditorInstance.root.innerHTML;
+                    if (window.summernoteEditor) {
+                        document.getElementById('blog-content').value = window.summernoteEditor.root.innerHTML;
                     }
                     return String(document.getElementById('blog-content').value || '').trim();
                 }
@@ -1545,8 +1580,8 @@
                     const ta = document.getElementById('blog-content-html');
                     if (!visualWrap || !htmlWrap) return;
                     if (mode === 'html') {
-                        if (window.quillEditorInstance && ta) {
-                            ta.value = window.quillEditorInstance.root.innerHTML;
+                        if (window.summernoteEditor && ta) {
+                            ta.value = window.summernoteEditor.root.innerHTML;
                         }
                         visualWrap.classList.add('d-none');
                         htmlWrap.classList.remove('d-none');
@@ -1564,12 +1599,12 @@
                             if (hRadio) hRadio.checked = true;
                             return;
                         }
-                        if (window.quillEditorInstance && ta) {
-                            window.quillEditorInstance.root.innerHTML = ta.value || '<p><br></p>';
+                        if (window.summernoteEditor && ta) {
+                            window.summernoteEditor.root.innerHTML = ta.value || '<p><br></p>';
                         }
                         const hidden = document.getElementById('blog-content');
-                        if (hidden && window.quillEditorInstance) {
-                            hidden.value = window.quillEditorInstance.root.innerHTML;
+                        if (hidden && window.summernoteEditor) {
+                            hidden.value = window.summernoteEditor.root.innerHTML;
                         }
                         visualWrap.classList.remove('d-none');
                         htmlWrap.classList.add('d-none');
@@ -1672,6 +1707,16 @@
                     }
                 };
 
+                // Destroi o Summernote antes de reinicializar (Story 8.2)
+                function destroyBlogEditor() {
+                    try {
+                        if (window.summernoteEditor && window.summernoteEditor._editor) {
+                            window.summernoteEditor._editor.summernote('destroy');
+                        }
+                    } catch(e) { /* ignore */ }
+                    window.summernoteEditor = null;
+                }
+
                 window.showBlogForm = async function() {
                     const formStr = document.getElementById('new-blog-form');
                     if (formStr) formStr.reset();
@@ -1686,51 +1731,51 @@
                     setBlogSlugMode(true);
                     window.generateSlug(document.getElementById('blog-title').value);
 
-                    // Inicializando o Summernote (free, sem token)
-                    if (!window.quillEditorInstance || !window.jQuery || !window.jQuery('#blog-editor-container').next('.note-editor').length) {
-                        try {
-                            const $editor = window.jQuery('#blog-editor-container');
-                            $editor.summernote({
-                                height: 360,
-                                placeholder: 'A mágica começa agora. Escreva seu artigo...',
-                                dialogsInBody: true,
-                                tabsize: 2,
-                                toolbar: [
-                                    ['style', ['style']],
-                                    ['font', ['bold', 'italic', 'underline', 'clear']],
-                                    ['fontname', ['fontname']],
-                                    ['color', ['color']],
-                                    ['para', ['ul', 'ol', 'paragraph']],
-                                    ['table', ['table']],
-                                    ['insert', ['link', 'picture', 'video', 'hr']],
-                                    ['view', ['fullscreen', 'codeview', 'help']],
-                                    ['misc', ['undo', 'redo']]
-                                ]
-                            });
-                            const editor = $editor;
-                            window.quillEditorInstance = {
-                                _editor: editor,
-                                root: {
-                                    get innerHTML() {
-                                        return editor.summernote('code') || '<p><br></p>';
-                                    },
-                                    set innerHTML(value) {
-                                        editor.summernote('code', value || '<p><br></p>');
-                                    }
+                    // Destroi editor anterior antes de reinicializar (Story 8.2)
+                    destroyBlogEditor();
+
+                    try {
+                        const $editor = window.jQuery('#blog-editor-container');
+                        $editor.summernote({
+                            height: 500,
+                            placeholder: 'A mágica começa agora. Escreva seu artigo...',
+                            dialogsInBody: true,
+                            tabsize: 2,
+                            toolbar: [
+                                ['style', ['style']],
+                                ['heading', ['h1', 'h2', 'h3']],
+                                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+                                ['fontname', ['fontname']],
+                                ['color', ['color']],
+                                ['para', ['ul', 'ol', 'paragraph']],
+                                ['alignment', ['left', 'center', 'right', 'justify']],
+                                ['table', ['table']],
+                                ['insert', ['link', 'picture', 'video', 'hr']],
+                                ['view', ['fullscreen', 'codeview', 'help']],
+                                ['misc', ['undo', 'redo']]
+                            ]
+                        });
+                        const editor = $editor;
+                        window.summernoteEditor = {
+                            _editor: editor,
+                            root: {
+                                get innerHTML() {
+                                    return editor.summernote('code') || '<p><br></p>';
                                 },
-                                on(eventName, callback) {
-                                    if (eventName === 'text-change') {
-                                        editor.on('summernote.change', callback);
-                                    }
+                                set innerHTML(value) {
+                                    editor.summernote('code', value || '<p><br></p>');
                                 }
-                            };
-                            window.quillEditorInstance.on('text-change', function() {
-                                document.getElementById('blog-content').value = window.quillEditorInstance.root.innerHTML;
-                            });
-                        } catch(e) { console.error('Summernote não iniciou: ', e); }
-                    } else {
-                        window.quillEditorInstance.root.innerHTML = '';
-                    }
+                            }
+                        };
+                        // Sincroniza o hidden input com o editor em cada mudanca
+                        editor.on('summernote.change', function() {
+                            var ed = window.summernoteEditor;
+                            if (ed && ed.root) {
+                                document.getElementById('blog-content').value = ed.root.innerHTML;
+                            }
+                        });
+                    } catch(e) { console.error('Summernote não iniciou: ', e); }
+
                     document.getElementById('blog-content').value = '';
                     window.scrollTo({ top: document.getElementById('blog-form-container').offsetTop - 100, behavior: 'smooth' });
                 };
@@ -1772,13 +1817,13 @@
                         if (visualWrap) visualWrap.classList.add('d-none');
                         if (htmlWrap) htmlWrap.classList.remove('d-none');
                         if (hint) hint.classList.remove('d-none');
-                        if (window.quillEditorInstance) {
-                            window.quillEditorInstance.root.innerHTML = '';
+                        if (window.summernoteEditor) {
+                            window.summernoteEditor.root.innerHTML = '';
                         }
                     } else {
                         resetBlogEditorChrome();
-                        if (window.quillEditorInstance) {
-                            window.quillEditorInstance.root.innerHTML = raw;
+                        if (window.summernoteEditor) {
+                            window.summernoteEditor.root.innerHTML = raw;
                         }
                     }
                     document.getElementById('blog-content').value = raw;

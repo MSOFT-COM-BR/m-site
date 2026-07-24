@@ -77,6 +77,7 @@
 | Story ID | Title | Status | Priority | Owner | Estimate |
 |----------|-------|--------|----------|-------|----------|
 | 8.1 | [Menu horizontal com dropdown na area admin](8.1.menu-horizontal-dropdown-admin.md) | 👀 Ready for Review | 🟠 High | dev-agent | 3 |
+| 8.2 | [Corrigir editor de artigo do admin (Summernote)](8.2.corrigir-editor-de-artigo-summernote.md) | 👀 Ready for Review | 🟠 High | dev-agent | 3 |
 
 ---
 
