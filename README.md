@@ -1,6 +1,6 @@
 # m-site | Miranda Soft
 
-Site institucional e vitrine digital da Miranda Soft. O projeto apresenta a empresa, suas solucoes, produtos e conteudo, com jornadas publicas, areas de conta e rotas da vertical healthtech.
+Site institucional e vitrine digital da Miranda Soft. O projeto apresenta a empresa, suas solucoes, produtos e conteudo, com jornadas publicas e areas de conta.
 
 O runtime e uma SPA estatica: JavaScript vanilla, HTML e CSS, com paginas e componentes HTML carregados dinamicamente no navegador. A aplicacao integra com a API da Miranda Soft quando a jornada exige conteudo ou autenticacao.
 
@@ -11,7 +11,6 @@ O runtime e uma SPA estatica: JavaScript vanilla, HTML e CSS, com paginas e comp
 | Institucional | `/`, `/about`, `/expertise`, `/contact`, `/support` |
 | Conteudo | `/blog`, `/blog-ads`, `/blog-review`, `/materials` |
 | Produtos | `/apps`, `/marketplace`, `/games`, `/premium`, `/mcredential` |
-| Healthtech | `/healthtech-dashboard`, `/healthtech-patients`, `/healthtech-formulas` |
 | Conta | `/login`, `/admin`, `/profile` |
 | Legal | `/privacy`, `/terms`, `/lgpd`, `/cookies` |
 
@@ -26,7 +25,7 @@ index.html
 ├── src/components/          Partiais HTML reutilizaveis
 ├── src/pages/               Paginas carregadas pela SPA
 ├── src/data/                Conteudo local do frontend
-├── src/services/            Integracoes de conteudo, autenticacao, auditoria e healthtech
+├── src/services/            Integracoes de conteudo, autenticacao e auditoria
 └── src/assets/              CSS, imagens, favicons e dependencias locais
 
 Dockerfile                   Servidor estatico na porta 8080

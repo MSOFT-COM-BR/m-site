@@ -18,7 +18,7 @@ function resolveApiBaseUrl() {
 const config = {
   app: {
     name: "Miranda Soft",
-    version: "0.11.56",
+    version: "0.11.57",
     environment: "production",
     debug: false
   },
@@ -53,9 +53,6 @@ const config = {
       'lgpd',
       'cookies',
       '404',
-      'healthtech-dashboard',
-      'healthtech-patients',
-      'healthtech-formulas',
       'marketplace',
       'expertise',
       'ecossistema',

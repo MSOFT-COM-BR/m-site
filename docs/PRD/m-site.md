@@ -8,7 +8,7 @@
 
 ## 1. Visão
 
-Site público que apresenta a empresa, serviços e produtos digitais, com navegação fluida (SPA), conteúdo institucional e áreas temáticas (blog, marketplace, healthtech, credenciais, etc.), preparado para SEO e monetização opcional (anúncios).
+Site público que apresenta a empresa, serviços e produtos digitais, com navegação fluida (SPA), conteúdo institucional e áreas temáticas (blog, marketplace, credenciais, etc.), preparado para SEO e monetização opcional (anúncios).
 
 ## 2. Objetivos de negócio
 
@@ -17,12 +17,12 @@ Site público que apresenta a empresa, serviços e produtos digitais, com navega
 | Gerar contato qualificado (leads) | Envios / cliques em CTAs de contato |
 | Reforçar credibilidade da marca | Tempo na página, páginas por sessão |
 | Divulgar ofertas e conteúdo | Visitas em blog, marketplace, materiais |
-| Suportar jornadas de produto (ex.: healthtech) | Uso das rotas dedicadas e conversões definidas pelo negócio |
+| Suportar jornadas de produto (marketplace, apps, credenciais) | Uso das rotas dedicadas e conversões definidas pelo negócio |
 
 ## 3. Público-alvo
 
 - **Decisores de TI e negócio** à procura de fábrica de software, apps e consultoria.  
-- **Usuários finais** em jornadas específicas (ex.: healthtech, credenciais, suporte).  
+- **Usuários finais** em jornadas específicas (ex.: credenciais, suporte).  
 - **Visitantes** buscando conteúdo (blog) e transparência (LGPD, termos, privacidade).
 
 ## 4. Escopo funcional (alto nível)
@@ -35,12 +35,7 @@ Site público que apresenta a empresa, serviços e produtos digitais, com navega
 - **Marketplace**, **games**, **premium**, **materiais**, **mcredential**, **profile** conforme implementação atual nas páginas e serviços.
 - **Internacionalização inicial da navegação:** português do Brasil como padrão e seletor de espanhol e inglês na camada global, sem tradução automática ou alteração de contratos de conteúdo nesta primeira etapa.
 
-### 4.2 Vertical Healthtech
-
-- Rotas: dashboard, pacientes, fórmulas (nomes alinhados ao router).  
-- Objetivo: apoiar narrativa e fluxos do produto healthtech definidos pelo negócio.
-
-### 4.3 Conta e áreas restritas
+### 4.2 Conta e áreas restritas
 
 - Rotas `login`, `admin`, `profile`: comportamento e regras de autorização devem estar alinhados à API e à política de segurança (detalhes operacionais fora deste PRD se forem só backend).
 
@@ -71,7 +66,7 @@ Site público que apresenta a empresa, serviços e produtos digitais, com navega
 - **Entrada:** `index.html` → núcleo SPA (`core.js` / rotas).  
 - **Componentes:** HTML parciais em `src/components/`.  
 - **Páginas:** `src/pages/*.html`.  
-- **Serviços:** autenticação, conteúdo, auditoria, healthtech, etc., consumindo a API.  
+- **Serviços:** autenticação, conteúdo, auditoria, etc., consumindo a API.  
 - **Deploy:** estático + regras de servidor para SPA; `Dockerfile` e `serve.json` disponíveis para ambientes compatíveis.
 
 ## 7. Fora de escopo (neste PRD)

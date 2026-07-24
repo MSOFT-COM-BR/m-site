@@ -27,7 +27,7 @@ Visitantes passam a entender rapidamente o ecossistema da Miranda Soft e encontr
 
 ## Existing System Context
 
-- A SPA em JavaScript vanilla ja possui paginas para solucoes, apps, marketplace, blog, materiais, healthtech, mcredential, suporte e conta.
+- A SPA em JavaScript vanilla ja possui paginas para solucoes, apps, marketplace, blog, materiais, mcredential, suporte e conta.
 - O header atual expoe parte dessas areas como links independentes, mas nao apresenta um mapa unico do ecossistema.
 - `src/core/core.js` carrega paginas HTML parciais a partir de `config.routes.validPages`; a primeira entrega deve respeitar esse padrao e nao criar uma nova aplicacao ou backend.
 - `src/services/content-service.js` oferece uma base futura para conteudo administravel, mas o catalogo central inicial deve usar somente ofertas e rotas existentes.
@@ -71,7 +71,7 @@ Conectar blog, materiais e paginas de oferta com descoberta interna, SEO tecnico
 
 - [ ] Um visitante encontra todas as familias de oferta no hub em no maximo um nivel de navegacao a partir do header.
 - [ ] Cada CTA do hub aponta apenas para uma rota existente ou para o fluxo de contato existente.
-- [ ] As rotas atuais de apps, marketplace, blog, healthtech e conta continuam acessiveis.
+- [ ] As rotas atuais de apps, marketplace, blog e conta continuam acessiveis.
 - [ ] O catalogo futuro tem uma fonte de dados definida, sem acoplamento de dominio ou duplicacao descontrolada.
 - [ ] Conteudo e ofertas podem ser medidos e descobertos sem expor dados sensiveis no frontend.
 

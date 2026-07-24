@@ -188,15 +188,6 @@
         // que não vem do catálogo. Nome/descrição/ícone padrão vêm de GET /catalog;
         // isso só cobre o que o catálogo não sabe expressar (ex: onOpen customizado).
         const APP_OVERRIDES = {
-            healthtech_os_v1: {
-                name: 'HealthTech OS',
-                description: 'Sistema completo para gestão de clínicas e pacientes com dashboard preditivo.',
-                icon: 'bi-activity',
-                color: 'warning',
-                statusLabel: 'Online',
-                openLabel: 'Abrir',
-                onOpen: () => window.openDashboard()
-            },
             mcredential: {
                 name: 'MCredential',
                 description: 'Gerenciador de senhas corporativo com criptografia de ponta a ponta.',
@@ -302,11 +293,6 @@
                 grid.innerHTML = ADD_NEW_CARD;
             }
         }
-
-        // Abre o dashboard do HealthTech (app já instalado e vinculado ao usuário)
-        window.openDashboard = function () {
-            window.location.href = '/healthtech-dashboard';
-        };
 
         // Init
         if (auth && auth.isAuthenticated()) {
