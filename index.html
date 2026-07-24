@@ -1,4 +1,4 @@
-<!-- Version: V0.11.60 -->
+<!-- Version: V0.11.61 -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -34,6 +34,76 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/src/assets/favicon/favicon-16x16.png">
   <link rel="manifest" href="/src/assets/favicon/site.webmanifest">
   <meta name="theme-color" content="#0a0a0f">
+
+  <!-- Performance: preconnect e dns-prefetch -->
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="dns-prefetch" href="https://images.unsplash.com">
+
+  <!-- Open Graph / Twitter Image -->
+  <meta property="og:image" content="https://mirandasoft.com.br/src/assets/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="MSoft - Soluções Digitais que Transformam Negócios">
+  <meta property="twitter:image" content="https://mirandasoft.com.br/src/assets/images/og-image.png">
+
+  <!-- Structured Data: Organization, WebSite e LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "Miranda Soft",
+        "alternateName": "MSoft",
+        "url": "https://mirandasoft.com.br",
+        "logo": "https://mirandasoft.com.br/src/assets/images/logo.png",
+        "sameAs": [
+          "https://wa.me/5584988330532"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+55-84-98833-0532",
+          "contactType": "customer service",
+          "availableLanguage": ["Portuguese", "English", "Spanish"]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "name": "Miranda Soft",
+        "url": "https://mirandasoft.com.br",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://mirandasoft.com.br/blog?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "LocalBusiness",
+        "name": "Miranda Soft",
+        "image": "https://mirandasoft.com.br/src/assets/images/logo.png",
+        "url": "https://mirandasoft.com.br",
+        "telephone": "+55-84-98833-0532",
+        "email": "contato@mirandasoft.com.br",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "BR",
+          "addressRegion": "RN",
+          "addressLocality": "Natal"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "-5.7793",
+          "longitude": "-35.2009"
+        }
+      }
+    ]
+  }
+  </script>
 
   <!-- Styles -->
   <link href="/src/assets/css/design-system.css" rel="stylesheet">
@@ -75,9 +145,9 @@
   <!-- Critical Orchestration Scripts -->
   <!-- ?v= invalida cache de CDN/navegador a cada bump de versao (ver README > Desenvolvimento). -->
   <!-- Sem isso, mudancas em config.js/core podem ficar presas em cache mesmo apos o deploy. -->
-  <script src="/src/config/config.js?v=0.11.60"></script>
-  <script src="/src/config/seo.js?v=0.11.60"></script>
-  <script src="/src/core/consent.js?v=0.11.60"></script>
+  <script src="/src/config/config.js?v=0.11.61"></script>
+  <script src="/src/config/seo.js?v=0.11.61"></script>
+  <script src="/src/core/consent.js?v=0.11.61"></script>
 
   <!-- Google Analytics 4 (carregado apenas apos consentimento LGPD) -->
   <script>
@@ -113,12 +183,12 @@
 
   <!-- Component System: Core.init() usa Skeleton no primeiro render, -->
   <!-- por isso precisa carregar de forma síncrona antes de core.js -->
-  <script src="/src/core/component.js?v=0.11.60"></script>
-  <script src="/src/core/i18n.js?v=0.11.60"></script>
-  <script src="/src/core/helpers.js?v=0.11.60"></script>
-  <script src="/src/core/skeleton.js?v=0.11.60"></script>
+  <script src="/src/core/component.js?v=0.11.61"></script>
+  <script src="/src/core/i18n.js?v=0.11.61"></script>
+  <script src="/src/core/helpers.js?v=0.11.61"></script>
+  <script src="/src/core/skeleton.js?v=0.11.61"></script>
 
-  <script src="/src/core/core.js?v=0.11.60"></script>
+  <script src="/src/core/core.js?v=0.11.61"></script>
 
   <!-- Vendor Scripts (Deferred) -->
   <script src="/src/assets/vendor/jquery/jquery-3.7.1.min.js" defer></script>
