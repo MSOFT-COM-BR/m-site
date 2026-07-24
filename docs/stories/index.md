@@ -70,6 +70,7 @@
 | 7.6 | [Corrigir SEO tecnico do m-site](7.6.corrigir-seo-tecnico-do-m-site.md) | 👀 Ready for Review | 🔴 Critical | dev-agent | 5 |
 | 7.7 | [Implementar Google Analytics 4 e banner LGPD](7.7.implementar-google-analytics-4-e-banner-lgpd.md) | 👀 Ready for Review | 🔴 Critical | dev-agent | 5 |
 | 7.8 | [Adicionar Schema.org, OG image e otimizar performance](7.8.adicionar-schema-org-og-image-e-performance.md) | 👀 Ready for Review | 🟠 High | dev-agent | 5 |
+| 7.9 | [Configurar Google Search Console](7.9.configurar-google-search-console.md) | 👀 Ready for Review | 🟠 High | dev-agent | 2 |
 
 ---
 

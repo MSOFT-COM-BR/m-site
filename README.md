@@ -81,12 +81,27 @@ docker run --rm -p 8080:8080 m-site
 
 O `Dockerfile` usa `serve -s` e expoe a porta `8080`. Em outra plataforma, replique esse fallback e aplique os headers definidos em `serve.json` quando a hospedagem os suportar.
 
+## SEO e Analytics
+
+- `index.html` concentra metatags, Open Graph, Twitter Cards, JSON-LD (Schema.org) e a verificacao do Google Search Console.
+- `robots.txt` e `ads.txt` ficam na raiz do projeto; `robots.txt` aponta para `sitemap.xml`.
+- `sitemap.xml` contem as URLs publicas do site e deve ser submetido ao Google Search Console apos o deploy.
+- Titulo, meta description e canonical tag sao atualizados dinamicamente pelo roteador SPA (`src/core/core.js` e `src/config/seo.js`).
+- Analytics (Google Analytics 4) esta desabilitado por padrao em `src/config/config.js`; configure `ga4MeasurementId` com o ID real da propriedade e ative `analytics.enabled`.
+- O banner de consentimento de cookies (LGPD) so carrega o GA4 apos aceite explicito do usuario.
+
+### Checklist pos-deploy
+
+1. Acesse [Google Search Console](https://search.google.com/search-console) e verifique a propriedade `mirandasoft.com.br`.
+2. Submeta o sitemap: `https://mirandasoft.com.br/sitemap.xml`.
+3. Configure o ID de medicao do GA4 em `src/config/config.js` e ative `analytics.enabled`.
+4. Valide a tag de verificacao do Search Console em `index.html` (meta `google-site-verification`).
+
 ## Operacao e Qualidade
 
 - O tema e escuro e responsivo; a SPA usa skeletons durante os carregamentos configurados.
 - `index.html` concentra metatags, Open Graph, Twitter Cards e o script de AdSense.
 - `robots.txt` e `ads.txt` ficam na raiz do projeto.
-- Analytics esta desabilitado por padrao em `src/config/config.js`; IDs reais e metricas devem ser definidos antes de qualquer ativacao.
 - Para validar uma alteracao, sirva o site localmente, navegue pela home e por uma rota principal, e confirme que os recursos em `src/pages/` e `src/components/` continuam carregando.
 
 ## Desenvolvimento

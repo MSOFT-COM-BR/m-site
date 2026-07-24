@@ -1,4 +1,4 @@
-<!-- Version: V0.11.61 -->
+<!-- Version: V0.11.62 -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -34,6 +34,9 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/src/assets/favicon/favicon-16x16.png">
   <link rel="manifest" href="/src/assets/favicon/site.webmanifest">
   <meta name="theme-color" content="#0a0a0f">
+
+  <!-- Google Search Console verification (substituir pelo valor real da propriedade) -->
+  <meta name="google-site-verification" content="SUBSTITUIR_PELO_CODIGO_DO_SEARCH_CONSOLE" />
 
   <!-- Performance: preconnect e dns-prefetch -->
   <link rel="preconnect" href="https://www.googletagmanager.com">
@@ -145,9 +148,9 @@
   <!-- Critical Orchestration Scripts -->
   <!-- ?v= invalida cache de CDN/navegador a cada bump de versao (ver README > Desenvolvimento). -->
   <!-- Sem isso, mudancas em config.js/core podem ficar presas em cache mesmo apos o deploy. -->
-  <script src="/src/config/config.js?v=0.11.61"></script>
-  <script src="/src/config/seo.js?v=0.11.61"></script>
-  <script src="/src/core/consent.js?v=0.11.61"></script>
+  <script src="/src/config/config.js?v=0.11.62"></script>
+  <script src="/src/config/seo.js?v=0.11.62"></script>
+  <script src="/src/core/consent.js?v=0.11.62"></script>
 
   <!-- Google Analytics 4 (carregado apenas apos consentimento LGPD) -->
   <script>
@@ -183,12 +186,12 @@
 
   <!-- Component System: Core.init() usa Skeleton no primeiro render, -->
   <!-- por isso precisa carregar de forma síncrona antes de core.js -->
-  <script src="/src/core/component.js?v=0.11.61"></script>
-  <script src="/src/core/i18n.js?v=0.11.61"></script>
-  <script src="/src/core/helpers.js?v=0.11.61"></script>
-  <script src="/src/core/skeleton.js?v=0.11.61"></script>
+  <script src="/src/core/component.js?v=0.11.62"></script>
+  <script src="/src/core/i18n.js?v=0.11.62"></script>
+  <script src="/src/core/helpers.js?v=0.11.62"></script>
+  <script src="/src/core/skeleton.js?v=0.11.62"></script>
 
-  <script src="/src/core/core.js?v=0.11.61"></script>
+  <script src="/src/core/core.js?v=0.11.62"></script>
 
   <!-- Vendor Scripts (Deferred) -->
   <script src="/src/assets/vendor/jquery/jquery-3.7.1.min.js" defer></script>
