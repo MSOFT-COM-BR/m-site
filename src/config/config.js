@@ -18,7 +18,7 @@ function resolveApiBaseUrl() {
 const config = {
   app: {
     name: "Miranda Soft",
-    version: "0.11.57",
+    version: "0.11.58",
     environment: "production",
     debug: false
   },
