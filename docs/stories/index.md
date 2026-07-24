@@ -72,6 +72,12 @@
 | 7.8 | [Adicionar Schema.org, OG image e otimizar performance](7.8.adicionar-schema-org-og-image-e-performance.md) | 👀 Ready for Review | 🟠 High | dev-agent | 5 |
 | 7.9 | [Configurar Google Search Console](7.9.configurar-google-search-console.md) | 👀 Ready for Review | 🟠 High | dev-agent | 2 |
 
+### EPIC-8 (1 stories)
+
+| Story ID | Title | Status | Priority | Owner | Estimate |
+|----------|-------|--------|----------|-------|----------|
+| 8.1 | [Menu horizontal com dropdown na area admin](8.1.menu-horizontal-dropdown-admin.md) | 👀 Ready for Review | 🟠 High | dev-agent | 3 |
+
 ---
 
 ## 🔍 Legend

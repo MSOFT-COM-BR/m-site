@@ -62,35 +62,165 @@
         border: none !important;
         border-radius: 12px;
     }
-    .cms-sidebar {
-        background: transparent !important;
-        border: none !important;
-    }
-    .cms-sidebar-btn {
-        background: transparent !important;
-        border: none !important;
-        color: #a1a1aa !important; /* Zinc 400 */
-        padding: 10px 16px;
-        margin-bottom: 4px;
-        border-radius: 8px !important;
-        transition: all 0.2s ease-in-out;
+
+    /* ===== Admin horizontal nav (Story 8.1) ===== */
+    .admin-nav {
         display: flex;
         align-items: center;
+        gap: 4px;
+        flex-wrap: wrap;
+        padding: 6px;
+        margin-bottom: 20px;
+        background: #18181b;
+        border: 1px solid #27272a;
+        border-radius: 12px;
+        position: relative;
+    }
+    .admin-nav-item,
+    .admin-nav-dropdown-toggle {
+        background: transparent;
+        border: none;
+        color: #a1a1aa; /* Zinc 400 */
+        padding: 9px 16px;
+        border-radius: 8px;
         font-weight: 500;
-        font-size: 0.95rem;
+        font-size: 0.92rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background 0.18s ease, color 0.18s ease;
+        white-space: nowrap;
     }
-    .cms-sidebar-btn:hover {
-        background: #27272a !important;
-        color: #fafafa !important;
+    .admin-nav-item:hover,
+    .admin-nav-dropdown-toggle:hover {
+        background: #27272a;
+        color: #fafafa;
     }
-    .cms-sidebar-btn.active {
-        background: #fafafa !important; /* Zinc 50 */
-        color: #09090b !important;
+    .admin-nav-item.active,
+    .admin-nav-dropdown-toggle.active {
+        background: #fafafa; /* Zinc 50 */
+        color: #09090b;
         font-weight: 600;
     }
-    .cms-sidebar-btn i {
-        font-size: 1.1rem;
+    .admin-nav-item:focus-visible,
+    .admin-nav-dropdown-toggle:focus-visible {
+        outline: 2px solid #38bdf8;
+        outline-offset: 2px;
     }
+    .admin-nav-item i,
+    .admin-nav-dropdown-toggle i {
+        font-size: 1.05rem;
+    }
+    .admin-nav-group {
+        position: relative;
+    }
+    .admin-nav-desktop {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .admin-nav-dropdown-toggle .admin-nav-caret {
+        font-size: 0.65rem;
+        opacity: 0.7;
+        transition: transform 0.18s ease;
+    }
+    .admin-nav-group.show > .admin-nav-dropdown-toggle .admin-nav-caret {
+        transform: rotate(180deg);
+    }
+    .admin-nav-menu {
+        background: #1c1c21 !important;
+        border: 1px solid #3f3f46 !important;
+        border-radius: 10px !important;
+        padding: 6px !important;
+        margin-top: 6px !important;
+        min-width: 12rem;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+    .admin-nav-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 9px 12px;
+        border: none;
+        border-radius: 7px;
+        background: transparent;
+        color: #d4d4d8;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-align: left;
+        cursor: pointer;
+        transition: background 0.15s ease, color 0.15s ease;
+    }
+    .admin-nav-menu-item:hover {
+        background: #27272a;
+        color: #fafafa;
+    }
+    .admin-nav-menu-item.active {
+        background: rgba(250, 250, 250, 0.12);
+        color: #fafafa;
+        font-weight: 600;
+    }
+    .admin-nav-hamburger {
+        display: none;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 10px 14px;
+        background: transparent;
+        border: none;
+        color: #fafafa;
+        font-size: 0.95rem;
+        font-weight: 500;
+        cursor: pointer;
+        border-radius: 8px;
+    }
+    .admin-nav-hamburger:hover {
+        background: #27272a;
+    }
+    .admin-nav-hamburger i {
+        font-size: 1.3rem;
+    }
+    .admin-nav-hamburger .admin-nav-hamburger-label {
+        color: #a1a1aa;
+    }
+    @media (max-width: 991.98px) {
+        .admin-nav {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .admin-nav-hamburger {
+            display: inline-flex;
+        }
+        .admin-nav-desktop {
+            display: none;
+        }
+        .admin-nav.open .admin-nav-desktop {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 4px;
+            padding-top: 8px;
+            border-top: 1px solid #27272a;
+        }
+        .admin-nav.open .admin-nav-item,
+        .admin-nav.open .admin-nav-dropdown-toggle {
+            width: 100%;
+            justify-content: flex-start;
+        }
+        .admin-nav-group .admin-nav-menu {
+            position: static !important;
+            transform: none !important;
+            width: 100%;
+            box-shadow: none;
+            margin-top: 4px !important;
+            background: #141418 !important;
+        }
+    }
+    /* ===== Fim admin nav ===== */
+
     .cms-input {
         background: #18181b !important;
         border: 1px solid #3f3f46 !important; /* Zinc 700 */
@@ -226,44 +356,58 @@
 
         <!-- Protected Content -->
         <div id="admin-content" style="display: none;">
-            <div class="row g-5">
-                <!-- Sidebar -->
-                <div class="col-md-3">
-                    <div class="list-group cms-sidebar pe-3">
-                        <button class="list-group-item cms-sidebar-btn active"
-                            onclick="loadTab('theme')">
-                            <i class="bi bi-palette me-3"></i> Aparência
+            <!-- Horizontal Nav (Story 8.1) -->
+            <nav class="admin-nav" aria-label="Navegacao do painel admin">
+                <button type="button" class="admin-nav-hamburger" id="admin-nav-toggle" aria-expanded="false" aria-controls="admin-nav-desktop">
+                    <i class="bi bi-list" aria-hidden="true"></i>
+                    <span class="admin-nav-hamburger-label">Menu do painel</span>
+                </button>
+
+                <div class="admin-nav-desktop" id="admin-nav-desktop">
+                    <button type="button" class="admin-nav-item active" data-tab="theme" onclick="loadTab('theme')">
+                        <i class="bi bi-palette" aria-hidden="true"></i> Aparência
+                    </button>
+
+                    <div class="admin-nav-group dropdown" data-group="content">
+                        <button type="button" class="admin-nav-dropdown-toggle dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-file-text" aria-hidden="true"></i> Conteúdo
+                            <i class="bi bi-chevron-down admin-nav-caret" aria-hidden="true"></i>
                         </button>
-                        <button class="list-group-item cms-sidebar-btn"
-                            onclick="loadTab('mjson')">
-                            <i class="bi bi-file-text me-3"></i> MJSON
+                        <ul class="dropdown-menu admin-nav-menu">
+                            <li><button type="button" class="admin-nav-menu-item" data-tab="mjson" onclick="loadTab('mjson')">
+                                <i class="bi bi-braces" aria-hidden="true"></i> MJSON
+                            </button></li>
+                            <li><button type="button" class="admin-nav-menu-item" data-tab="blog" onclick="loadTab('blog')">
+                                <i class="bi bi-journal-richtext" aria-hidden="true"></i> Módulo Blog
+                            </button></li>
+                        </ul>
+                    </div>
+
+                    <button type="button" class="admin-nav-item" data-tab="images" onclick="loadTab('images')">
+                        <i class="bi bi-image" aria-hidden="true"></i> Mídia
+                    </button>
+
+                    <div class="admin-nav-group dropdown" data-group="system">
+                        <button type="button" class="admin-nav-dropdown-toggle dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-gear" aria-hidden="true"></i> Sistema
+                            <i class="bi bi-chevron-down admin-nav-caret" aria-hidden="true"></i>
                         </button>
-                        <button class="list-group-item cms-sidebar-btn"
-                            onclick="loadTab('images')">
-                            <i class="bi bi-image me-3"></i> Mídia
-                        </button>
-                        <button class="list-group-item cms-sidebar-btn"
-                            onclick="loadTab('blog')">
-                            <i class="bi bi-journal-richtext me-3"></i> Módulo Blog
-                        </button>
-                        <button class="list-group-item cms-sidebar-btn"
-                            onclick="loadTab('logs')">
-                            <i class="bi bi-activity me-3"></i> System Logs
-                        </button>
-                        <button class="list-group-item cms-sidebar-btn"
-                            onclick="loadTab('users')">
-                            <i class="bi bi-person-plus me-3"></i> Usuários
-                        </button>
+                        <ul class="dropdown-menu admin-nav-menu">
+                            <li><button type="button" class="admin-nav-menu-item" data-tab="logs" onclick="loadTab('logs')">
+                                <i class="bi bi-activity" aria-hidden="true"></i> System Logs
+                            </button></li>
+                            <li><button type="button" class="admin-nav-menu-item" data-tab="users" onclick="loadTab('users')">
+                                <i class="bi bi-person-plus" aria-hidden="true"></i> Usuários
+                            </button></li>
+                        </ul>
                     </div>
                 </div>
+            </nav>
 
-                <!-- Main Area -->
-                <div class="col-md-9">
-                    <div class="card border-0 cms-inner-panel h-100">
-                        <div class="card-body p-0 ps-md-2" id="tab-content">
-                            <!-- Injeção via JS -->
-                        </div>
-                    </div>
+            <!-- Main Area -->
+            <div class="card border-0 cms-inner-panel">
+                <div class="card-body p-0" id="tab-content">
+                    <!-- Injeção via JS -->
                 </div>
             </div>
         </div>
@@ -288,8 +432,53 @@
 
         const CMS_LAST_TAB_KEY = 'msoft_cms_last_tab';
         const CMS_VALID_TABS = ['theme', 'mjson', 'images', 'blog', 'logs', 'users'];
-        /** Ordem igual aos botões da sidebar. */
-        const CMS_TAB_BTN_INDEX = { theme: 0, mjson: 1, images: 2, blog: 3, logs: 4, users: 5 };
+        /** Mapeia aba -> grupo do menu (Story 8.1). */
+        const CMS_TAB_GROUP = { theme: null, mjson: 'content', blog: 'content', images: null, logs: 'system', users: 'system' };
+
+        // ===== Mobile nav toggle (Story 8.1) =====
+        const adminNav = document.querySelector('.admin-nav');
+        const adminNavToggle = document.getElementById('admin-nav-toggle');
+
+        function closeAdminMobileNav() {
+            if (adminNav) adminNav.classList.remove('open');
+            if (adminNavToggle) adminNavToggle.setAttribute('aria-expanded', 'false');
+        }
+
+        if (adminNav && adminNavToggle) {
+            adminNavToggle.addEventListener('click', () => {
+                const isOpen = adminNav.classList.toggle('open');
+                adminNavToggle.setAttribute('aria-expanded', String(isOpen));
+            });
+
+            document.addEventListener('pointerdown', (e) => {
+                if (window.innerWidth < 992 && adminNav.classList.contains('open') && !adminNav.contains(e.target)) {
+                    closeAdminMobileNav();
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && adminNav.classList.contains('open')) {
+                    e.preventDefault();
+                    closeAdminMobileNav();
+                    adminNavToggle.focus({ preventScroll: true });
+                }
+            });
+        }
+        // ===== Fim mobile nav =====
+
+        function updateAdminNavActiveState(tab) {
+            // Itens de menu (diretos e de dropdown)
+            document.querySelectorAll('.admin-nav [data-tab]').forEach(el => {
+                el.classList.toggle('active', el.getAttribute('data-tab') === tab);
+            });
+            // Grupo pai (Conteúdo / Sistema)
+            document.querySelectorAll('.admin-nav-group').forEach(group => {
+                const toggle = group.querySelector('.admin-nav-dropdown-toggle');
+                if (toggle) {
+                    toggle.classList.toggle('active', group.getAttribute('data-group') === CMS_TAB_GROUP[tab]);
+                }
+            });
+        }
 
         window.loadTab = async function (tab) {
             if (!CMS_VALID_TABS.includes(tab)) tab = 'theme';
@@ -297,13 +486,8 @@
                 localStorage.setItem(CMS_LAST_TAB_KEY, tab);
             } catch (e) { /* ignore */ }
 
-            // Update Active State (sempre pelo id da aba — evita erro quando loadTab vem de botão interno)
-            const btns = document.querySelectorAll('.cms-sidebar-btn');
-            btns.forEach(el => el.classList.remove('active'));
-            const idx = CMS_TAB_BTN_INDEX[tab];
-            if (idx !== undefined && btns[idx]) {
-                btns[idx].classList.add('active');
-            }
+            updateAdminNavActiveState(tab);
+            closeAdminMobileNav();
 
             const container = document.getElementById('tab-content');
             container.style.opacity = '0';
