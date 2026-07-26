@@ -1,17 +1,17 @@
 # Story Index
 
-**Generated:** 2026-07-19T22:06:50.956Z
-**Total Stories:** 14
-**Epics:** 7
+**Generated:** 2026-07-26T05:25:52Z
+**Total Stories:** 27
+**Epics:** 9
 
 ---
 
 ## 📊 Summary by Status
 
-- 👀 **Ready for Review**: 10
+- 👀 **Ready for Review**: 18
 - ✅ **Completed**: 1
-- 📝 **Draft**: 2
-- 🚫 **Blocked**: 1
+- 📝 **Draft**: 4
+- 🚫 **Blocked**: 4
 
 ---
 
@@ -58,7 +58,7 @@
 | 6.1 | [Unificar tokens de design para suportar temas claro e escuro](6.1.unificar-tokens-de-design-para-suportar-temas.md) | 📝 Draft | 🟠 High | dev-agent | 5 |
 | 6.2 | [Toggle de tema claro/escuro com persistencia](6.2.toggle-de-tema-claro-escuro.md) | 📝 Draft | 🟠 High | dev-agent | 3 |
 
-### EPIC-7 (7 stories)
+### EPIC-7 (9 stories)
 
 | Story ID | Title | Status | Priority | Owner | Estimate |
 |----------|-------|--------|----------|-------|----------|
@@ -72,12 +72,22 @@
 | 7.8 | [Adicionar Schema.org, OG image e otimizar performance](7.8.adicionar-schema-org-og-image-e-performance.md) | 👀 Ready for Review | 🟠 High | dev-agent | 5 |
 | 7.9 | [Configurar Google Search Console](7.9.configurar-google-search-console.md) | 👀 Ready for Review | 🟠 High | dev-agent | 2 |
 
-### EPIC-8 (1 stories)
+### EPIC-8 (2 stories)
 
 | Story ID | Title | Status | Priority | Owner | Estimate |
 |----------|-------|--------|----------|-------|----------|
 | 8.1 | [Menu horizontal com dropdown na area admin](8.1.menu-horizontal-dropdown-admin.md) | 👀 Ready for Review | 🟠 High | dev-agent | 3 |
 | 8.2 | [Corrigir editor de artigo do admin (Summernote)](8.2.corrigir-editor-de-artigo-summernote.md) | 👀 Ready for Review | 🟠 High | dev-agent | 3 |
+
+### EPIC-9 (5 stories)
+
+| Story ID | Title | Status | Priority | Owner | Estimate |
+|----------|-------|--------|----------|-------|----------|
+| 9.1 | [Validar decisoes comerciais e de mensuracao da iniciativa](9.1.validar-decisoes-comerciais-e-de-mensuracao-da-iniciativa.md) | 📝 Draft | 🔴 Critical | pm-agent | 3 |
+| 9.2 | [Restaurar arquitetura de conteudo confiavel nas superficies publicas](9.2.restaurar-arquitetura-de-conteudo-confiavel-nas-superficies-publicas.md) | 📝 Draft | 🔴 Critical | dev-agent | 5 |
+| 9.3 | [Estruturar paginas de servico aprovadas e metadados comerciais minimos](9.3.estruturar-paginas-de-servico-aprovadas-e-metadados-comerciais-minimos.md) | 🚫 Blocked | 🟠 High | ux-design-expert | 5 |
+| 9.4 | [Implantar captacao real de lead e instrumentacao consentida](9.4.implantar-captacao-real-de-lead-e-instrumentacao-consentida.md) | 🚫 Blocked | 🟠 High | dev-agent | 5 |
+| 9.5 | [Iniciar rollout editorial orientado por arquitetura e backlog validado](9.5.iniciar-rollout-editorial-orientado-por-arquitetura-e-backlog-validado.md) | 🚫 Blocked | 🟡 Medium | dev-agent | 5 |
 
 ---
 

@@ -19,6 +19,16 @@ const SEO_CONFIG = {
     description: 'Descubra como a MSoft acelera produto, escala e resultado com desenvolvimento web, apps mobile, cloud e consultoria estratégica.',
     noindex: false
   },
+  'criacao-de-sites': {
+    title: 'Criação de Sites | Miranda Soft',
+    description: 'Planejamento e desenvolvimento de sites institucionais e páginas de campanha para empresas.',
+    noindex: false
+  },
+  'desenvolvimento-de-sistemas': {
+    title: 'Desenvolvimento de Sistemas | Miranda Soft',
+    description: 'Desenvolvimento de sistemas sob medida para apoiar processos, fluxos de trabalho e produtos digitais.',
+    noindex: false
+  },
   'ecossistema': {
     title: 'Ecossistema MSoft | Serviços, Produtos e Conteúdo',
     description: 'Explore o ecossistema Miranda Soft: soluções digitais, produtos, conteúdo e suporte em uma única porta de entrada.',

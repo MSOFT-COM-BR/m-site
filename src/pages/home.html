@@ -34,45 +34,21 @@
     </div>
     
     <div class="row g-4" id="features-grid">
-      <!-- Solution 1 -->
-      <div class="col-lg-4">
+      <!-- Approved services fallback. ContentService may replace these cards at runtime. -->
+      <div class="col-lg-6">
         <div class="dev-skill-card h-100">
-          <div class="dev-skill-icon">
-            <i class="bi bi-terminal fs-2"></i>
-          </div>
-          <h3 class="h4 fw-bold text-white mb-3">Fábrica de Software</h3>
-          <p class="text-on-surface-variant mb-4">Desenvolvimento sob medida com metodologias ágeis e foco em escalabilidade global.</p>
-          <a href="/expertise#desenvolvimento-web" class="mt-auto d-inline-flex align-items-center text-primary fw-bold gap-2 text-decoration-none">
-            Saber mais <i class="bi bi-arrow-right"></i>
-          </a>
+          <div class="dev-skill-icon"><i class="bi bi-window-stack fs-2"></i></div>
+          <h3 class="h4 fw-bold text-white mb-3">Criação de Sites</h3>
+          <p class="text-on-surface-variant mb-4">Sites institucionais e páginas de campanha para comunicar sua oferta com clareza.</p>
+          <a href="/criacao-de-sites" class="mt-auto d-inline-flex align-items-center text-primary fw-bold gap-2 text-decoration-none">Saber mais <i class="bi bi-arrow-right"></i></a>
         </div>
       </div>
-      
-      <!-- Solution 2 -->
-      <div class="col-lg-4">
+      <div class="col-lg-6">
         <div class="dev-skill-card h-100">
-          <div class="dev-skill-icon" style="color: var(--ms-secondary); background: rgba(76, 215, 246, 0.1);">
-            <i class="bi bi-phone fs-2"></i>
-          </div>
-          <h3 class="h4 fw-bold text-white mb-3">Aplicativos Mobile</h3>
-          <p class="text-on-surface-variant mb-4">Experiências nativas e híbridas que colocam o seu negócio na palma da mão do cliente.</p>
-          <a href="/expertise#apps-mobile" class="mt-auto d-inline-flex align-items-center text-info fw-bold gap-2 text-decoration-none">
-            Saber mais <i class="bi bi-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-      
-      <!-- Solution 3 -->
-      <div class="col-lg-4">
-        <div class="dev-skill-card h-100">
-          <div class="dev-skill-icon" style="color: var(--ms-tertiary); background: rgba(78, 222, 163, 0.1);">
-            <i class="bi bi-graph-up-arrow fs-2"></i>
-          </div>
-          <h3 class="h4 fw-bold text-white mb-3">Consultoria Tech</h3>
-          <p class="text-on-surface-variant mb-4">Diagnóstico e planejamento arquitetural para modernização de sistemas legados.</p>
-          <a href="/expertise#consultoria-ti" class="mt-auto d-inline-flex align-items-center text-tertiary fw-bold gap-2 text-decoration-none">
-            Saber mais <i class="bi bi-arrow-right"></i>
-          </a>
+          <div class="dev-skill-icon" style="color: var(--ms-secondary); background: rgba(76, 215, 246, 0.1);"><i class="bi bi-code-square fs-2"></i></div>
+          <h3 class="h4 fw-bold text-white mb-3">Desenvolvimento de Sistemas</h3>
+          <p class="text-on-surface-variant mb-4">Sistemas sob medida para apoiar processos e necessidades específicas da operação.</p>
+          <a href="/desenvolvimento-de-sistemas" class="mt-auto d-inline-flex align-items-center text-info fw-bold gap-2 text-decoration-none">Saber mais <i class="bi bi-arrow-right"></i></a>
         </div>
       </div>
     </div>
@@ -274,20 +250,16 @@
       // Features
       const grid = document.getElementById('features-grid');
       if (grid && content.features) {
-        const expertiseHrefByTitle = {
-          'Fábrica de Software': '/expertise#desenvolvimento-web',
-          'Aplicativos Mobile': '/expertise#apps-mobile',
-          'Consultoria Tech': '/expertise#consultoria-ti'
-        };
+        const featureColumnClass = content.features.length === 2 ? 'col-lg-6' : 'col-lg-4';
         grid.innerHTML = content.features.map(f => `
-          <div class="col-lg-4">
+          <div class="${featureColumnClass}">
             <div class="dev-skill-card h-100">
               <div class="dev-skill-icon">
                 <i class="bi ${f.icon}"></i>
               </div>
               <h3 class="h4 fw-bold text-white mb-3">${f.title}</h3>
               <p class="text-on-surface-variant mb-4">${f.description}</p>
-              <a href="${f.href && f.href !== '/#solucoes' ? f.href : (expertiseHrefByTitle[f.title] || '/expertise')}" class="mt-auto d-inline-flex align-items-center text-primary fw-bold gap-2 text-decoration-none">
+              <a href="${f.href || '/expertise'}" class="mt-auto d-inline-flex align-items-center text-primary fw-bold gap-2 text-decoration-none">
                 ${f.ctaLabel || 'Saber mais'} <i class="bi bi-arrow-right"></i>
               </a>
             </div>

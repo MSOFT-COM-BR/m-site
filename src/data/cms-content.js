@@ -24,32 +24,24 @@
     },
     features: [
       {
-        title: "Fábrica de Software",
-        description: "Desenvolvimento de software sob medida para atender as necessidades específicas do seu negócio.",
-        href: "/expertise#desenvolvimento-web",
-        icon: "bi-code-square",
+        title: "Criação de Sites",
+        description: "Sites institucionais e páginas de campanha para comunicar sua oferta com clareza.",
+        href: "/criacao-de-sites",
+        icon: "bi-window-stack",
         theme: "primary",
         ctaLabel: "Saber mais",
-        bullets: ["Sistemas Web", "Plataformas SaaS", "APIs RESTful", "Dashboards & BI"]
+        bullets: ["Site institucional", "Página de serviço", "Página de campanha", "Conteúdo organizado"]
       },
       {
-        title: "Aplicativos Mobile",
-        description: "Apps nativos e híbridos com a melhor experiência de usuário para iOS e Android.",
-        href: "/expertise#apps-mobile",
-        icon: "bi-phone",
+        title: "Desenvolvimento de Sistemas",
+        description: "Sistemas sob medida para apoiar processos e necessidades específicas da operação.",
+        href: "/desenvolvimento-de-sistemas",
+        icon: "bi-code-square",
         theme: "secondary",
         ctaLabel: "Ver detalhes",
-        bullets: ["React Native", "Flutter", "Apps Corporativos", "Marketplaces"]
+        bullets: ["Sistemas internos", "Portais digitais", "Regras de negócio", "Evolução contínua"]
       },
-      {
-        title: "Consultoria Tech",
-        description: "Assessoria especializada para modernização tecnológica e transformação digital.",
-        href: "/expertise#consultoria-ti",
-        icon: "bi-diagram-3",
-        theme: "info",
-        ctaLabel: "Consultar",
-        bullets: ["Arquitetura de Software", "DevOps & Cloud", "Gestão de Projetos Ágeis", "Segurança da Informação"]
-      },
+
     ],
     about: {
       title: "Nossa Essência",

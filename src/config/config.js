@@ -55,6 +55,8 @@ const config = {
       '404',
       'marketplace',
       'expertise',
+      'criacao-de-sites',
+      'desenvolvimento-de-sistemas',
       'ecossistema',
       'mcredential',
       'profile',
