@@ -26,6 +26,16 @@ class ServicePagesContractTests(unittest.TestCase):
                 self.assertRegex(seo, rf"'{re.escape(slug)}':\s*\{{")
                 self.assertIn(f"https://mirandasoft.com.br/{slug}", sitemap)
 
+    def test_service_route_release_invalidates_cached_router_configuration(self) -> None:
+        index = (ROOT / "index.html").read_text(encoding="utf-8")
+        config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
+
+        self.assertIn('<!-- Version: V0.11.65 -->', index)
+        self.assertIn('version: "0.11.65"', config)
+        self.assertIn('/src/config/config.js?v=0.11.65', index)
+        self.assertIn('/src/config/seo.js?v=0.11.65', index)
+        self.assertIn('/src/core/core.js?v=0.11.65', index)
+
     def test_each_service_page_has_safe_conversion_and_schema_contract(self) -> None:
         for slug, service_name in PAGES.items():
             with self.subTest(slug=slug):
