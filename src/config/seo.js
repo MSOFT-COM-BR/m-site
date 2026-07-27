@@ -39,6 +39,11 @@ const SEO_CONFIG = {
     description: 'Conte o que sua empresa precisa e receba uma proposta para sites, sistemas, aplicativos e soluções digitais da Miranda Soft.',
     noindex: false
   },
+  'mercado': {
+    title: 'Mercado | Dólar, Euro e Bitcoin em BRL | Miranda Soft',
+    description: 'Consulte cotações informativas de dólar, euro e bitcoin em reais brasileiros na Miranda Soft.',
+    noindex: false
+  },
   'apps': {
     title: 'Apps MSoft | Utilitários e Ferramentas Digitais',
     description: 'Acesse utilitários, apps e ferramentas digitais desenvolvidos pela MSoft para resolver desafios do dia a dia.',

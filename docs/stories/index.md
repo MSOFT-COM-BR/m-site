@@ -1,14 +1,15 @@
 # Story Index
 
-**Generated:** 2026-07-26T22:38:50Z
-**Total Stories:** 32
-**Epics:** 10
+**Generated:** 2026-07-27T03:10:00Z
+**Total Stories:** 34
+**Epics:** 12
 
 ---
 
 ## 📊 Summary by Status
 
-- 👀 **Ready for Review**: 18
+- 👀 **Ready for Review**: 19
+- 🚀 **Ready for Dev**: 1
 - ✅ **Completed**: 1
 - 📝 **Draft**: 9
 - 🚫 **Blocked**: 4
@@ -98,6 +99,18 @@
 | 10.3 | [Registrar receitas e despesas genericas com trilha auditavel](10.3-registrar-receitas-e-despesas-auditaveis.md) | 📝 Draft | 🔴 Critical | dev-agent | 8 |
 | 10.4 | [Consultar financeiro por unidade e consolidado autorizado](10.4-consultar-financeiro-consolidado-autorizado.md) | 📝 Draft | 🟠 High | dev-agent | 5 |
 | 10.5 | [Configurar classificacoes genericas por organizacao](10.5-configurar-classificacoes-por-organizacao.md) | 📝 Draft | 🟠 High | dev-agent | 5 |
+
+### EPIC-11 (1 stories)
+
+| Story ID | Title | Status | Priority | Owner | Estimate |
+|----------|-------|--------|----------|-------|----------|
+| 11.1 | [Criar página pública de cotações financeiras](11.1-criar-pagina-de-cotacoes-financeiras.md) | 👀 Ready for Review | 🟠 High | dev-agent | 5 |
+
+### EPIC-12 (1 stories)
+
+| Story ID | Title | Status | Priority | Owner | Estimate |
+|----------|-------|--------|----------|-------|----------|
+| 12.1 | [Carregar vendors globais sob demanda por rota](12.1-carregar-vendors-sob-demanda.md) | 🚀 Ready for Dev | 🟠 High | dev-agent | 5 |
 
 ---
 

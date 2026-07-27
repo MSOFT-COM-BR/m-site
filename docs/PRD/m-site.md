@@ -31,6 +31,7 @@ Site público que apresenta a empresa, serviços e produtos digitais, com navega
 
 - **Home** com proposta de valor, soluções, CTAs e navegação para áreas principais.  
 - **Rotas SPA** definidas em configuração (`validPages`): home, sobre, contato, expertise, apps, materiais, suporte, FAQ, políticas (privacidade, termos, LGPD, cookies), 404.  
+- **Consulta pública de mercado:** rota informativa distinta da cotação comercial, para dólar, euro e bitcoin em BRL quando a fonte externa estiver disponível; sem negociação, recomendação financeira ou persistência de preços.
 - **Blog** (incl. variantes review, ads, conteúdo custom) com conteúdo suportado por serviços/CMS no front.  
 - **Marketplace**, **games**, **premium**, **materiais**, **mcredential**, **profile** conforme implementação atual nas páginas e serviços.
 - **Internacionalização inicial da navegação:** português do Brasil como padrão e seletor de espanhol e inglês na camada global, sem tradução automática ou alteração de contratos de conteúdo nesta primeira etapa.

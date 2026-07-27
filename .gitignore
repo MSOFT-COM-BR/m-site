@@ -11,6 +11,10 @@
 node_modules/
 node_modules
 
+# Python test artifacts
+__pycache__/
+*.py[cod]
+
 # Build & Logs (AIOX)
 dist/
 build/
