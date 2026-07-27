@@ -25,7 +25,74 @@
   <div class="position-absolute bottom-0 start-0 w-100 h-25" style="background: linear-gradient(transparent, var(--ms-surface));"></div>
 </section>
 
+<!-- Hub entry points -->
+<section class="home-hub-section dev-section pt-0" aria-labelledby="hub-title">
+  <div class="container">
+    <div class="home-hub-shell">
+      <div class="row g-4 align-items-center mb-4 mb-lg-5">
+        <div class="col-lg-7">
+          <span class="label-pill d-inline-block mb-3">UM HUB, VÁRIAS FORMAS DE AVANÇAR</span>
+          <h2 class="display-md text-white tracking-tight mb-3" id="hub-title">Comece pelo que faz sentido para o seu momento.</h2>
+          <p class="body-lg text-on-surface-variant mb-0">Da primeira ideia ao produto em operação: encontre uma solução, explore ferramentas ou aprofunde seu repertório com conteúdos que ajudam a decidir melhor.</p>
+        </div>
+        <div class="col-lg-5 d-lg-flex justify-content-lg-end">
+          <a class="dev-btn dev-btn-primary text-decoration-none home-hub-cta" href="/cotacoes" data-track="quote_open" data-track-location="home_hub">
+            <i class="bi bi-lightning-charge-fill me-2" aria-hidden="true"></i>Pedir uma cotação
+          </a>
+        </div>
+      </div>
+
+      <div class="row g-3 g-lg-4">
+        <div class="col-md-4">
+          <a class="home-hub-card home-hub-card-featured" href="/cotacoes" data-track="quote_open" data-track-location="home_hub_card">
+            <span class="home-hub-icon"><i class="bi bi-chat-square-text" aria-hidden="true"></i></span>
+            <span class="home-hub-eyebrow">Para sua empresa</span>
+            <h3>Transforme uma necessidade em plano de ação.</h3>
+            <p>Conte o contexto do seu negócio e receba uma proposta orientada ao que precisa ser resolvido.</p>
+            <span class="home-hub-link">Montar minha cotação <i class="bi bi-arrow-up-right" aria-hidden="true"></i></span>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a class="home-hub-card" href="/ecossistema" data-track="ecosystem_open" data-track-location="home_hub_card">
+            <span class="home-hub-icon"><i class="bi bi-grid-1x2" aria-hidden="true"></i></span>
+            <span class="home-hub-eyebrow">Produtos e serviços</span>
+            <h3>Explore caminhos já prontos para evoluir.</h3>
+            <p>Conheça soluções, aplicativos e serviços que se conectam a diferentes jornadas digitais.</p>
+            <span class="home-hub-link">Ver ecossistema <i class="bi bi-arrow-up-right" aria-hidden="true"></i></span>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a class="home-hub-card" href="/blog" data-track="blog_open" data-track-location="home_hub_card">
+            <span class="home-hub-icon"><i class="bi bi-journal-richtext" aria-hidden="true"></i></span>
+            <span class="home-hub-eyebrow">Conteúdo e notícias</span>
+            <h3>Leve mais clareza para a próxima decisão.</h3>
+            <p>Acompanhe análises, aprendizados e referências para quem constrói produtos e operações digitais.</p>
+            <span class="home-hub-link">Ler conteúdos <i class="bi bi-arrow-up-right" aria-hidden="true"></i></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Nossas Soluções (Bento Grid) -->
+<style>
+  .home-hub-section { position: relative; z-index: 2; }
+  .home-hub-shell { padding: clamp(1.5rem, 4vw, 3rem); border: 1px solid rgba(148, 163, 184, .16); border-radius: 24px; background: linear-gradient(135deg, rgba(15, 23, 42, .9), rgba(15, 23, 42, .54)); box-shadow: 0 24px 72px rgba(2, 6, 23, .2); }
+  .home-hub-cta { white-space: nowrap; }
+  .home-hub-card { display: flex; min-height: 100%; flex-direction: column; align-items: flex-start; padding: 1.5rem; border: 1px solid rgba(148, 163, 184, .15); border-radius: 18px; background: rgba(2, 6, 23, .24); color: #e2e8f0; text-decoration: none; transition: transform .25s ease, border-color .25s ease, background .25s ease; }
+  .home-hub-card:hover { transform: translateY(-5px); border-color: rgba(56, 189, 248, .55); background: rgba(14, 165, 233, .08); color: #fff; }
+  .home-hub-card-featured { border-color: rgba(56, 189, 248, .32); background: linear-gradient(145deg, rgba(14, 165, 233, .16), rgba(30, 41, 59, .58)); }
+  .home-hub-icon { display: grid; width: 2.7rem; height: 2.7rem; margin-bottom: 1.3rem; place-items: center; border-radius: 12px; background: rgba(56, 189, 248, .13); color: #7dd3fc; font-size: 1.2rem; }
+  .home-hub-eyebrow { margin-bottom: .6rem; color: #38bdf8; font-size: .69rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+  .home-hub-card h3 { margin: 0 0 .8rem; color: #f8fafc; font-size: 1.15rem; font-weight: 700; line-height: 1.25; }
+  .home-hub-card p { margin: 0 0 1.4rem; color: #94a3b8; font-size: .9rem; line-height: 1.6; }
+  .home-hub-link { margin-top: auto; color: #7dd3fc; font-size: .88rem; font-weight: 700; }
+  .home-hub-link i { margin-left: .25rem; transition: transform .2s ease; }
+  .home-hub-card:hover .home-hub-link i { transform: translate(2px, -2px); }
+  @media (max-width: 575.98px) { .home-hub-shell { padding: 1.25rem; border-radius: 18px; } .home-hub-cta { width: 100%; text-align: center; } }
+</style>
+
 <section id="solucoes" class="dev-section">
   <div class="container">
     <div class="mb-5">

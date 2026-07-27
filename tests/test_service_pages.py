@@ -30,11 +30,22 @@ class ServicePagesContractTests(unittest.TestCase):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
 
-        self.assertIn('<!-- Version: V0.11.65 -->', index)
-        self.assertIn('version: "0.11.65"', config)
-        self.assertIn('/src/config/config.js?v=0.11.65', index)
-        self.assertIn('/src/config/seo.js?v=0.11.65', index)
-        self.assertIn('/src/core/core.js?v=0.11.65', index)
+        self.assertIn('<!-- Version: V0.11.66 -->', index)
+        self.assertIn('version: "0.11.66"', config)
+        self.assertIn('/src/config/config.js?v=0.11.66', index)
+        self.assertIn('/src/config/seo.js?v=0.11.66', index)
+        self.assertIn('/src/core/core.js?v=0.11.66', index)
+
+    def test_quote_route_is_indexable_and_has_spa_fallback(self) -> None:
+        config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
+        seo = (ROOT / "src/config/seo.js").read_text(encoding="utf-8")
+        sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+        dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
+
+        self.assertIn("'cotacoes'", config)
+        self.assertRegex(seo, r"'cotacoes':\s*\{")
+        self.assertIn("https://mirandasoft.com.br/cotacoes", sitemap)
+        self.assertIn('CMD ["serve", "-s", ".", "-p", "8080"]', dockerfile)
 
     def test_each_service_page_has_safe_conversion_and_schema_contract(self) -> None:
         for slug, service_name in PAGES.items():
@@ -71,6 +82,16 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertNotIn("Fábrica de Software", home)
         self.assertNotIn("Aplicativos Mobile", home)
         self.assertNotIn("Consultoria Tech", home)
+
+    def test_login_page_has_accessible_credential_controls(self) -> None:
+        login = (ROOT / "src/pages/login.html").read_text(encoding="utf-8")
+
+        self.assertIn('autocomplete="username"', login)
+        self.assertIn('autocomplete="current-password"', login)
+        self.assertIn('aria-controls="password"', login)
+        self.assertIn('id="login-form-feedback"', login)
+        self.assertIn('role="status"', login)
+        self.assertIn("passwordToggle?.addEventListener('click'", login)
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
-<section class="login-screen d-flex position-relative">
+<section class="login-screen d-flex position-relative" aria-labelledby="login-title">
     <!-- Coluna de composição visual (somente desktop) -->
-    <div class="login-showcase d-none d-lg-flex flex-column justify-content-between position-relative">
+    <aside class="login-showcase d-none d-lg-flex flex-column justify-content-between position-relative" aria-label="Benefícios da plataforma">
         <div class="orb-primary" style="top: 15%; left: -15%;"></div>
         <div class="orb-secondary" style="bottom: -10%; right: -10%;"></div>
 
@@ -11,71 +11,87 @@
         </div>
 
         <div class="position-relative z-1">
-            <h1 class="display-6 fw-semibold text-white mb-3">
-                Tecnologia sob medida para o seu negócio.
+            <span class="login-eyebrow">PORTAL DO CLIENTE</span>
+            <h1 class="display-6 fw-semibold text-white mb-3 mt-3">
+                Seu ambiente para acompanhar o que importa.
             </h1>
             <p class="text-on-surface-variant fs-5 mb-4" style="max-width: 32rem;">
-                Acesse sua área exclusiva para acompanhar projetos, produtos e credenciais em um só lugar.
+                Centralize seus produtos, projetos e acessos em uma experiência feita para a sua operação.
             </p>
 
             <ul class="list-unstyled d-flex flex-column gap-3 m-0">
                 <li class="d-flex align-items-center gap-3">
-                    <span class="login-feature-icon"><i class="bi bi-shield-lock-fill"></i></span>
-                    <span class="text-on-surface-variant">Ambiente protegido com criptografia de ponta a ponta</span>
+                    <span class="login-feature-icon"><i class="bi bi-shield-lock-fill" aria-hidden="true"></i></span>
+                    <span class="text-on-surface-variant">Acesso protegido à sua área exclusiva</span>
                 </li>
                 <li class="d-flex align-items-center gap-3">
-                    <span class="login-feature-icon"><i class="bi bi-grid-1x2-fill"></i></span>
+                    <span class="login-feature-icon"><i class="bi bi-grid-1x2-fill" aria-hidden="true"></i></span>
                     <span class="text-on-surface-variant">Painel unificado para apps, marketplace e suporte</span>
                 </li>
                 <li class="d-flex align-items-center gap-3">
-                    <span class="login-feature-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+                    <span class="login-feature-icon"><i class="bi bi-lightning-charge-fill" aria-hidden="true"></i></span>
                     <span class="text-on-surface-variant">Acesso rápido às ferramentas do seu plano</span>
                 </li>
             </ul>
         </div>
 
         <p class="text-muted extra-small position-relative z-1 m-0">© 2025 Miranda Soft. Todos os direitos reservados.</p>
-    </div>
+    </aside>
 
     <!-- Coluna do formulário -->
     <div class="login-form-column d-flex align-items-center justify-content-center position-relative flex-grow-1">
         <div class="orb-secondary d-lg-none" style="top: 10%; right: -20%;"></div>
 
         <div class="login-panel position-relative z-1 w-100 px-4 px-sm-5">
+            <a href="/" class="login-mobile-brand d-inline-flex d-lg-none text-decoration-none align-items-center fw-bold fs-4 mb-5">
+                <span class="text-white">Miranda<span class="brand-soft text-mono">Soft</span></span>
+            </a>
+
             <div class="text-center mb-4">
-                <h2 class="h4 text-white fw-semibold m-0">Acesso da Plataforma</h2>
+                <span class="login-eyebrow">ACESSO SEGURO</span>
+                <h2 id="login-title" class="h3 text-white fw-semibold mt-3 mb-0">Boas-vindas de volta</h2>
                 <p class="text-on-surface-variant small mt-2 mb-0">
-                    Entre com suas credenciais para acessar seu ambiente com segurança.
+                    Entre com suas credenciais para continuar.
                 </p>
             </div>
 
             <div class="ms-login-surface p-4 p-md-5 animate__animated animate__fadeInUp">
-                <form id="login-form">
+                <form id="login-form" aria-describedby="login-form-feedback">
                     <div class="mb-3">
-                        <label for="email" class="text-muted small d-block mb-2">E-mail ou Usuário</label>
-                        <input type="text" class="form-control" id="email" placeholder="nome@exemplo.com" required>
+                        <label for="email" class="text-muted small d-block mb-2">E-mail ou usuário</label>
+                        <div class="login-input-group">
+                            <i class="bi bi-person" aria-hidden="true"></i>
+                            <input type="text" class="form-control" id="email" name="email" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="nome@exemplo.com" required>
+                        </div>
                     </div>
 
                     <div class="mb-4">
-                        <label for="password" class="text-muted small d-block mb-2">Senha de Acesso</label>
-                        <input type="password" class="form-control" id="password" placeholder="Senha" required>
+                        <label for="password" class="text-muted small d-block mb-2">Senha de acesso</label>
+                        <div class="login-input-group">
+                            <i class="bi bi-lock" aria-hidden="true"></i>
+                            <input type="password" class="form-control" id="password" name="password" autocomplete="current-password" placeholder="Sua senha" required>
+                            <button class="password-visibility-toggle" type="button" aria-label="Mostrar senha" aria-controls="password" aria-pressed="false">
+                                <i class="bi bi-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <button type="submit" class="dev-btn dev-btn-primary w-100 py-3 d-flex align-items-center justify-content-center gap-2" data-btn-text-default="Entrar">
                         <span class="login-btn-text">Entrar</span>
-                        <div class="spinner-border spinner-border-sm login-spinner" role="status" style="display: none;"></div>
+                        <span class="spinner-border spinner-border-sm login-spinner" aria-hidden="true" style="display: none;"></span>
                     </button>
+                    <p id="login-form-feedback" class="login-form-feedback mb-0" role="status" aria-live="polite"></p>
                 </form>
 
-                <div class="mt-5 pt-4 border-top border-white border-opacity-5 d-flex flex-column gap-3">
+                <div class="login-assistance mt-4 pt-4 border-top border-white border-opacity-5 d-flex flex-column gap-3">
                     <a href="/recovery" class="text-decoration-none text-on-surface-variant small hover-white transition-all">Esqueceu sua senha?</a>
-                    <p class="text-muted extra-small m-0">Protegido por criptografia de ponta a ponta.</p>
+                    <p class="text-muted extra-small m-0"><i class="bi bi-shield-check me-1" aria-hidden="true"></i> Use apenas um dispositivo confiável para acessar sua conta.</p>
                 </div>
             </div>
 
             <div class="mt-4 text-center animate__animated animate__fadeIn animate__delay-1s">
                 <a href="/" class="text-decoration-none text-muted small d-inline-flex align-items-center gap-2 hover-white transition-all">
-                    <i class="bi bi-house"></i> Voltar para o Site Principal
+                    <i class="bi bi-arrow-left" aria-hidden="true"></i> Voltar para o Site Principal
                 </a>
             </div>
         </div>
@@ -83,16 +99,24 @@
 </section>
 
 <style>
-    /* Layout de duas colunas: composição visual + formulário */
+    body:has(.login-screen) #head,
+    body:has(.login-screen) #footer {
+        display: none !important;
+    }
+
+    body:has(.login-screen) .container-lg {
+        max-width: none !important;
+    }
+
     .login-screen {
         min-height: 100vh;
-        padding-top: 80px; /* compensa o header fixed-top */
+        isolation: isolate;
     }
 
     .login-showcase {
-        width: 45%;
-        max-width: 640px;
-        padding: 3rem 4vw;
+        width: 48%;
+        max-width: 720px;
+        padding: 3.5rem clamp(3rem, 7vw, 7rem);
         background: linear-gradient(180deg, var(--ms-surface-container-low) 0%, var(--ms-surface) 100%);
         border-right: 1px solid rgba(255, 255, 255, 0.05);
         overflow-x: hidden;
@@ -101,11 +125,19 @@
     .login-form-column {
         background: var(--ms-surface);
         overflow-x: hidden;
-        padding: 2rem 0;
+        padding: 3rem 0;
     }
 
     .login-panel {
-        max-width: 26rem;
+        max-width: 28rem;
+        position: relative;
+    }
+
+    .login-eyebrow {
+        color: #38bdf8;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
     }
 
     .login-feature-icon {
@@ -121,14 +153,27 @@
         font-size: 1.1rem;
     }
 
-    /* Luminous Login Surface */
     .ms-login-surface {
-        background: rgba(31, 31, 37, 0.4);
+        background: rgba(20, 20, 28, 0.72);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border-radius: 32px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(148, 163, 184, 0.16);
         box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+    }
+
+    .login-input-group {
+        position: relative;
+    }
+
+    .login-input-group > i {
+        color: #94a3b8;
+        left: 1rem;
+        pointer-events: none;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
     }
 
     .ms-login-surface .form-control {
@@ -136,14 +181,54 @@
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 16px;
         color: white;
-        padding: 0.95rem 1rem;
+        min-height: 3.5rem;
+        padding: 0.95rem 3rem;
         transition: all 0.3s ease;
+    }
+
+    .ms-login-surface .form-control::placeholder {
+        color: #64748b;
     }
 
     .ms-login-surface .form-control:focus {
         background: rgba(14, 14, 19, 0.8);
         border-color: var(--ms-primary);
         box-shadow: 0 0 0 4px rgba(173, 198, 255, 0.1);
+    }
+
+    .password-visibility-toggle {
+        align-items: center;
+        background: transparent;
+        border: 0;
+        border-radius: 8px;
+        color: #94a3b8;
+        display: flex;
+        height: 2.5rem;
+        justify-content: center;
+        position: absolute;
+        right: 0.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 2.5rem;
+        z-index: 3;
+    }
+
+    .password-visibility-toggle:hover {
+        color: #f8fafc;
+    }
+
+    .password-visibility-toggle:focus-visible {
+        outline: 2px solid #38bdf8;
+        outline-offset: 2px;
+    }
+
+    .login-form-feedback {
+        color: #fda4af;
+        font-size: 0.8125rem;
+        line-height: 1.4;
+        min-height: 1.4em;
+        padding-top: 1rem;
+        text-align: center;
     }
 
     .extra-small {
@@ -159,21 +244,32 @@
         transition: all 0.3s ease;
     }
 
-    .login-panel {
-        position: relative;
-    }
-
     @media (max-width: 991.98px) {
         .login-screen {
-            padding-top: 96px;
+            min-height: 100svh;
         }
 
         .login-form-column {
+            align-items: flex-start !important;
             padding: 2rem 0 3rem;
+        }
+
+        .login-mobile-brand {
+            color: #fff;
         }
 
         .ms-login-surface {
             border-radius: 24px;
+        }
+    }
+
+    @media (max-width: 575.98px) {
+        .login-panel {
+            max-width: 100%;
+        }
+
+        .ms-login-surface {
+            padding: 1.5rem !important;
         }
     }
 
@@ -270,16 +366,35 @@
             const submitBtn = targetForm.querySelector('button[type="submit"]');
             const emailInput = targetForm.querySelector('#email');
             const passwordInput = targetForm.querySelector('#password');
+            const passwordToggle = targetForm.querySelector('.password-visibility-toggle');
+            const feedback = targetForm.querySelector('#login-form-feedback');
 
-            if (!targetForm) return;
-            targetForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
+            function setFormFeedback(message) {
+                feedback.textContent = message || '';
+            }
+
+            passwordToggle?.addEventListener('click', () => {
+                const isVisible = passwordInput.type === 'text';
+                passwordInput.type = isVisible ? 'password' : 'text';
+                passwordToggle.setAttribute('aria-pressed', String(!isVisible));
+                passwordToggle.setAttribute('aria-label', isVisible ? 'Mostrar senha' : 'Ocultar senha');
+                passwordToggle.querySelector('i').className = isVisible ? 'bi bi-eye' : 'bi bi-eye-slash';
+            });
+
+            [emailInput, passwordInput].forEach((input) => {
+                input.addEventListener('input', () => setFormFeedback(''));
+            });
+
+            targetForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
                 const email = emailInput.value;
                 const password = passwordInput.value;
 
+                setFormFeedback('');
                 btnText.textContent = 'Autenticando...';
                 spinner.style.display = 'inline-block';
                 submitBtn.disabled = true;
+                submitBtn.setAttribute('aria-busy', 'true');
 
                 try {
                     const loginResponse = await window.authService.login(email, password);
@@ -290,7 +405,7 @@
                     if (Array.isArray(user.roles)) rolesList = [...user.roles];
                     if (user.role && typeof user.role === 'string') {
                         if (user.role.includes(',')) {
-                            rolesList = [...rolesList, ...user.role.split(',').map(r => r.trim())];
+                            rolesList = [...rolesList, ...user.role.split(',').map(role => role.trim())];
                         } else {
                             rolesList.push(user.role);
                         }
@@ -330,10 +445,13 @@
                     }
                 } catch (error) {
                     console.error(error);
-                    window.core.toast(error.message || 'Credenciais inválidas', 'error');
+                    const message = error.message || 'Não foi possível entrar. Confira suas credenciais e tente novamente.';
+                    setFormFeedback(message);
+                    window.core.toast(message, 'error');
                     btnText.textContent = submitBtn.getAttribute('data-btn-text-default') || 'Entrar';
                     spinner.style.display = 'none';
                     submitBtn.disabled = false;
+                    submitBtn.removeAttribute('aria-busy');
                 }
             });
         }

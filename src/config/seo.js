@@ -34,6 +34,11 @@ const SEO_CONFIG = {
     description: 'Explore o ecossistema Miranda Soft: soluções digitais, produtos, conteúdo e suporte em uma única porta de entrada.',
     noindex: false
   },
+  'cotacoes': {
+    title: 'Cotações | Soluções Digitais para o seu Negócio | Miranda Soft',
+    description: 'Conte o que sua empresa precisa e receba uma proposta para sites, sistemas, aplicativos e soluções digitais da Miranda Soft.',
+    noindex: false
+  },
   'apps': {
     title: 'Apps MSoft | Utilitários e Ferramentas Digitais',
     description: 'Acesse utilitários, apps e ferramentas digitais desenvolvidos pela MSoft para resolver desafios do dia a dia.',

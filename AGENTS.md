@@ -15,7 +15,7 @@ Este arquivo define as instrucoes do projeto para o Codex CLI.
 ## Quality Gates
 
 - Valide HTML/CSS/JS manualmente no navegador ou via servidor local.
-- Rode `npx serve .` ou `python -m http.server 3000` para testar a SPA.
+- Rode `npx serve -s .` para testar a SPA e seus deep links.
 - Nao introduza build step ou dependencias sem necessidade explicita.
 - Atualize checklist e file list da story antes de concluir quando estiver trabalhando via AIOX.
 <!-- AIOX-MANAGED-END: quality -->
@@ -35,8 +35,7 @@ Este arquivo define as instrucoes do projeto para o Codex CLI.
 <!-- AIOX-MANAGED-START: commands -->
 ## Common Commands
 
-- `npx serve .`
-- `python -m http.server 3000`
+- `npx serve -s .`
 - `npx aiox-core@latest doctor`
 - `npx aiox-core@latest install`
 <!-- AIOX-MANAGED-END: commands -->
