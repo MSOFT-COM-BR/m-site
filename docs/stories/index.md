@@ -1,8 +1,8 @@
 # Story Index
 
-**Generated:** 2026-07-26T05:25:52Z
-**Total Stories:** 27
-**Epics:** 9
+**Generated:** 2026-07-26T22:38:50Z
+**Total Stories:** 32
+**Epics:** 10
 
 ---
 
@@ -10,7 +10,7 @@
 
 - 👀 **Ready for Review**: 18
 - ✅ **Completed**: 1
-- 📝 **Draft**: 4
+- 📝 **Draft**: 9
 - 🚫 **Blocked**: 4
 
 ---
@@ -88,6 +88,16 @@
 | 9.3 | [Estruturar paginas de servico aprovadas e metadados comerciais minimos](9.3.estruturar-paginas-de-servico-aprovadas-e-metadados-comerciais-minimos.md) | 🚫 Blocked | 🟠 High | ux-design-expert | 5 |
 | 9.4 | [Implantar captacao real de lead e instrumentacao consentida](9.4.implantar-captacao-real-de-lead-e-instrumentacao-consentida.md) | 🚫 Blocked | 🟠 High | dev-agent | 5 |
 | 9.5 | [Iniciar rollout editorial orientado por arquitetura e backlog validado](9.5.iniciar-rollout-editorial-orientado-por-arquitetura-e-backlog-validado.md) | 🚫 Blocked | 🟡 Medium | dev-agent | 5 |
+
+### EPIC-10 (5 stories)
+
+| Story ID | Title | Status | Priority | Owner | Estimate |
+|----------|-------|--------|----------|-------|----------|
+| 10.1 | [Delimitar organizacao, matriz, filial e vinculos de acesso](10.1-delimitar-organizacao-unidade-e-vinculos.md) | 📝 Draft | 🔴 Critical | @architect | 5 |
+| 10.2 | [Proteger o contexto financeiro multitenant no backend](10.2-proteger-contexto-financeiro-multitenant.md) | 📝 Draft | 🔴 Critical | dev-agent | 5 |
+| 10.3 | [Registrar receitas e despesas genericas com trilha auditavel](10.3-registrar-receitas-e-despesas-auditaveis.md) | 📝 Draft | 🔴 Critical | dev-agent | 8 |
+| 10.4 | [Consultar financeiro por unidade e consolidado autorizado](10.4-consultar-financeiro-consolidado-autorizado.md) | 📝 Draft | 🟠 High | dev-agent | 5 |
+| 10.5 | [Configurar classificacoes genericas por organizacao](10.5-configurar-classificacoes-por-organizacao.md) | 📝 Draft | 🟠 High | dev-agent | 5 |
 
 ---
 
