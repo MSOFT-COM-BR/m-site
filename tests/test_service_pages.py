@@ -30,8 +30,8 @@ class ServicePagesContractTests(unittest.TestCase):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
 
-        self.assertIn('<!-- Version: V0.11.68 -->', index)
-        self.assertIn('version: "0.11.68"', config)
+        self.assertIn('<!-- Version: V0.11.70 -->', index)
+        self.assertIn('version: "0.11.70"', config)
         for asset in (
             'config/config.js',
             'config/seo.js',
@@ -42,7 +42,7 @@ class ServicePagesContractTests(unittest.TestCase):
             'core/skeleton.js',
             'core/core.js',
         ):
-            self.assertIn(f'/src/{asset}?v=0.11.68', index)
+            self.assertIn(f'/src/{asset}?v=0.11.70', index)
 
     def test_quote_route_is_indexable_and_has_spa_fallback(self) -> None:
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
@@ -89,12 +89,36 @@ class ServicePagesContractTests(unittest.TestCase):
             "marked.min.js",
         ):
             self.assertNotIn(asset, index)
-        self.assertIn('/src/core/vendor-loader.js?v=0.11.68', index)
+        self.assertIn('/src/core/vendor-loader.js?v=0.11.70', index)
         self.assertIn('loadAdminEditorVendors', loader)
         self.assertIn('window.jQuery', loader)
         self.assertIn('summernote-lite.min.js', loader)
         self.assertIn('await window.vendorLoader.loadAdminEditorVendors()', admin)
         self.assertIn('const filePath = `/src/pages/${pageName}.html?v=${config.app.version}`;', core)
+
+    def test_products_route_is_a_versioned_marketplace_destination(self) -> None:
+        config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
+        seo = (ROOT / "src/config/seo.js").read_text(encoding="utf-8")
+        sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+        header = (ROOT / "src/components/header.html").read_text(encoding="utf-8")
+
+        self.assertIn("'produtos'", config)
+        self.assertRegex(seo, r"'produtos':\s*\{")
+        self.assertIn("https://mirandasoft.com.br/produtos", sitemap)
+        self.assertIn('href="/produtos"', header)
+
+    def test_marketplace_tool_handoff_preserves_the_query_string(self) -> None:
+        core = (ROOT / "src/core/core.js").read_text(encoding="utf-8")
+        marketplace = (ROOT / "src/pages/marketplace.html").read_text(encoding="utf-8")
+
+        self.assertIn('href="/apps?tool=${encodeURIComponent(item.appKey)}"', marketplace)
+        self.assertIn('this.navigate(`${link.pathname}${link.search}${link.hash}`);', core)
+        self.assertIn('const routeSearch = window.location.search;', core)
+        self.assertIn("const canonicalPath = pageName === 'home' ? '/' : `/${pageName}${paramsString}`;", core)
+        self.assertIn('const newPath = `${canonicalPath}${routeSearch}${routeHash}`;', core)
+        self.assertIn("if (pageName === 'apps' && tool && typeof window.openTool === 'function')", core)
+        self.assertIn('this.updatePageSEO(pageName, canonicalPath);', core)
+        self.assertNotIn('this.updatePageSEO(pageName, newPath);', core)
 
     def test_each_service_page_has_safe_conversion_and_schema_contract(self) -> None:
         for slug, service_name in PAGES.items():

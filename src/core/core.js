@@ -233,6 +233,10 @@ class Core {
 
         // Execute all scripts in the loaded content
         self.executeScripts(root);
+        const tool = new URLSearchParams(window.location.search).get('tool');
+        if (pageName === 'apps' && tool && typeof window.openTool === 'function') {
+          window.openTool(tool);
+        }
         self.applyTranslations(root);
 
         // Initialize any components inside the loaded content
@@ -285,11 +289,14 @@ class Core {
 
       // Atualiza a URL mantendo os parâmetros
       const paramsString = this.params.length > 0 ? `/${this.params.join('/')}` : '';
-      const newPath = pageName === 'home' ? '/' : `/${pageName}${paramsString}`;
+      const canonicalPath = pageName === 'home' ? '/' : `/${pageName}${paramsString}`;
+      const routeSearch = window.location.search;
+      const routeHash = window.location.hash;
+      const newPath = `${canonicalPath}${routeSearch}${routeHash}`;
       window.history.replaceState({}, '', newPath);
 
       // Atualiza SEO dinâmico (título, meta description, canonical, noindex)
-      this.updatePageSEO(pageName, newPath);
+      this.updatePageSEO(pageName, canonicalPath);
 
       // Analytics: page_view em navegacao SPA (se consentimento aceito)
       if (typeof window.trackEvent === 'function') {
@@ -332,7 +339,7 @@ class Core {
 
   // SPA: Navegação e roteamento
   initRouter() {
-    window.addEventListener('popstate', () => this.handleRoute(window.location.pathname));
+    window.addEventListener('popstate', () => this.handleRoute(`${window.location.pathname}${window.location.search}${window.location.hash}`));
     document.addEventListener('click', e => {
       const link = e.target.closest('a');
       if (link && link.href.startsWith(window.location.origin) && !link.hasAttribute('target')) {
@@ -340,10 +347,10 @@ class Core {
           return; // allow default anchor scroll for same-page links
         }
         e.preventDefault();
-        this.navigate(link.pathname);
+        this.navigate(`${link.pathname}${link.search}${link.hash}`);
       }
     });
-    this.handleRoute(window.location.pathname);
+    this.handleRoute(`${window.location.pathname}${window.location.search}${window.location.hash}`);
   }
 
   handleRoute(path) {
@@ -353,7 +360,8 @@ class Core {
   }
 
   navigate(path) {
-    if (window.location.pathname !== path) {
+    const currentRoute = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+    if (currentRoute !== path) {
       window.history.pushState({}, '', path);
       this.handleRoute(path);
     }
