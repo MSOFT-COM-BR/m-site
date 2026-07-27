@@ -8,8 +8,8 @@
 
 ## 📊 Summary by Status
 
-- 👀 **Ready for Review**: 19
-- 🚀 **Ready for Dev**: 1
+- 👀 **Ready for Review**: 20
+- 🚀 **Ready for Dev**: 0
 - ✅ **Completed**: 1
 - 📝 **Draft**: 9
 - 🚫 **Blocked**: 4
@@ -110,7 +110,7 @@
 
 | Story ID | Title | Status | Priority | Owner | Estimate |
 |----------|-------|--------|----------|-------|----------|
-| 12.1 | [Carregar vendors globais sob demanda por rota](12.1-carregar-vendors-sob-demanda.md) | 🚀 Ready for Dev | 🟠 High | dev-agent | 5 |
+| 12.1 | [Carregar vendors globais sob demanda por rota](12.1-carregar-vendors-sob-demanda.md) | 👀 Ready for Review | 🟠 High | dev-agent | 5 |
 
 ---
 

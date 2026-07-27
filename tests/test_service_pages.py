@@ -30,8 +30,8 @@ class ServicePagesContractTests(unittest.TestCase):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
 
-        self.assertIn('<!-- Version: V0.11.67 -->', index)
-        self.assertIn('version: "0.11.67"', config)
+        self.assertIn('<!-- Version: V0.11.68 -->', index)
+        self.assertIn('version: "0.11.68"', config)
         for asset in (
             'config/config.js',
             'config/seo.js',
@@ -42,7 +42,7 @@ class ServicePagesContractTests(unittest.TestCase):
             'core/skeleton.js',
             'core/core.js',
         ):
-            self.assertIn(f'/src/{asset}?v=0.11.67', index)
+            self.assertIn(f'/src/{asset}?v=0.11.68', index)
 
     def test_quote_route_is_indexable_and_has_spa_fallback(self) -> None:
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
@@ -73,6 +73,28 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertIn("time.dateTime = sourceTime.datetime", page)
         for quote_code in ("USDBRL", "EURBRL", "BTCBRL"):
             self.assertIn(quote_code, page)
+
+    def test_public_shell_defers_admin_only_vendor_stack(self) -> None:
+        index = (ROOT / "index.html").read_text(encoding="utf-8")
+        loader = (ROOT / "src/core/vendor-loader.js").read_text(encoding="utf-8")
+        admin = (ROOT / "src/pages/admin.html").read_text(encoding="utf-8")
+        core = (ROOT / "src/core/core.js").read_text(encoding="utf-8")
+
+        for asset in (
+            "jquery.min.js",
+            "summernote-lite.min.js",
+            "summernote-lite.min.css",
+            "swiper-bundle.min.js",
+            "papaparse.min.js",
+            "marked.min.js",
+        ):
+            self.assertNotIn(asset, index)
+        self.assertIn('/src/core/vendor-loader.js?v=0.11.68', index)
+        self.assertIn('loadAdminEditorVendors', loader)
+        self.assertIn('window.jQuery', loader)
+        self.assertIn('summernote-lite.min.js', loader)
+        self.assertIn('await window.vendorLoader.loadAdminEditorVendors()', admin)
+        self.assertIn('const filePath = `/src/pages/${pageName}.html?v=${config.app.version}`;', core)
 
     def test_each_service_page_has_safe_conversion_and_schema_contract(self) -> None:
         for slug, service_name in PAGES.items():

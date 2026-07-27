@@ -1437,6 +1437,7 @@
                                 </div>
                                 <p class="text-secondary small mb-2 d-none" id="blog-html-mode-hint">Use este modo para colar blocos Google AdSense no meio do texto. Os scripts são executados na página pública do blog.</p>
                                 <div id="blog-editor-visual-wrap">
+                                    <p id="blog-editor-vendor-feedback" class="alert alert-warning d-none" role="alert"></p>
                                     <div style="box-shadow: 0 5px 15px rgba(0,0,0,0.2); border-radius: 10px;">
                                         <textarea id="blog-editor-container"></textarea>
                                     </div>
@@ -1730,6 +1731,16 @@
                     document.getElementById('blog-form-container').style.display = 'block';
                     setBlogSlugMode(true);
                     window.generateSlug(document.getElementById('blog-title').value);
+
+                    try {
+                        await window.vendorLoader.loadAdminEditorVendors();
+                    } catch (error) {
+                        console.error('Dependências do editor indisponíveis:', error);
+                        const feedback = document.getElementById('blog-editor-vendor-feedback');
+                        feedback.textContent = 'O editor não está disponível agora. Atualize a página e tente novamente.';
+                        feedback.classList.remove('d-none');
+                        return;
+                    }
 
                     // Destroi editor anterior antes de reinicializar (Story 8.2)
                     destroyBlogEditor();

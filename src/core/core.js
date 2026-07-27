@@ -201,7 +201,7 @@ class Core {
 
     try {
       // Verifica se o arquivo existe no path
-      const filePath = `/src/pages/${pageName}.html`;
+      const filePath = `/src/pages/${pageName}.html?v=${config.app.version}`;
 
       if (config?.app?.debug) console.log(`filePath`, filePath);
 
