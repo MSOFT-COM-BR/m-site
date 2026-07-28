@@ -54,7 +54,6 @@ const config = {
       'cookies',
       '404',
       'marketplace',
-      'produtos',
       'expertise',
       'criacao-de-sites',
       'desenvolvimento-de-sistemas',

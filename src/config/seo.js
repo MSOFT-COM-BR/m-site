@@ -54,11 +54,6 @@ const SEO_CONFIG = {
     description: 'Encontre produtos e recursos no marketplace da MSoft para ampliar sua operação e produtividade.',
     noindex: false
   },
-  'produtos': {
-    title: 'Produtos MSoft | Soluções Físicas e Digitais',
-    description: 'Conheça os produtos da MSoft: soluções físicas e digitais desenvolvidas para impulsionar seu negócio.',
-    noindex: false
-  },
   'mcredential': {
     title: 'MCredential | Gerenciador de Senhas MSoft',
     description: 'Protetor de senhas corporativo com criptografia de ponta a ponta. Segurança para credenciais da sua empresa.',
