@@ -434,6 +434,9 @@
                             <li><button type="button" class="admin-nav-menu-item" data-tab="users" onclick="loadTab('users')">
                                 <i class="bi bi-person-plus" aria-hidden="true"></i> Usuários
                             </button></li>
+                            <li><button type="button" class="admin-nav-menu-item" data-tab="apps" onclick="loadTab('apps')">
+                                <i class="bi bi-grid-3x3-gap" aria-hidden="true"></i> Apps
+                            </button></li>
                         </ul>
                     </div>
                 </div>
@@ -466,9 +469,9 @@
         const denied = document.getElementById('access-denied');
 
         const CMS_LAST_TAB_KEY = 'msoft_cms_last_tab';
-        const CMS_VALID_TABS = ['theme', 'mjson', 'images', 'blog', 'logs', 'users'];
+        const CMS_VALID_TABS = ['theme', 'mjson', 'images', 'blog', 'logs', 'users', 'apps'];
         /** Mapeia aba -> grupo do menu (Story 8.1). */
-        const CMS_TAB_GROUP = { theme: null, mjson: 'content', blog: 'content', images: null, logs: 'system', users: 'system' };
+        const CMS_TAB_GROUP = { theme: null, mjson: 'content', blog: 'content', images: null, logs: 'system', users: 'system', apps: 'system' };
 
         // ===== Mobile nav toggle (Story 8.1) =====
         const adminNav = document.querySelector('.admin-nav');
@@ -1183,6 +1186,366 @@
                 loadApplicationSuggestions();
                 loadCatalogApps();
                 refreshUsers();
+            } else if (tab === 'apps') {
+                container.innerHTML = `
+                    <div class="d-flex flex-column flex-md-row align-items-md-start justify-content-between gap-3 mb-4">
+                        <div>
+                            <h4 class="mb-1 text-white fw-bold fs-3">Catálogo de aplicativos</h4>
+                            <p class="text-secondary small mb-0">Apps exibidos no marketplace, com tipo de cobrança e preço.</p>
+                        </div>
+                        <span class="badge align-self-md-center" style="background: rgba(56, 189, 248, 0.12); color: #bae6fd; border: 1px solid rgba(56, 189, 248, 0.3); padding: 7px 10px;">
+                            <i class="bi bi-grid-3x3-gap me-1"></i> Marketplace
+                        </span>
+                    </div>
+                    <div class="alert cms-alert mb-4">
+                        <i class="bi bi-info-circle me-2 text-info"></i>
+                        Desativar um app apenas o oculta do catálogo público; os acessos já concedidos aos usuários não são alterados.
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-lg-5">
+                            <section class="border rounded-3 p-3 p-md-4 h-100" style="border-color: #27272a !important; background: rgba(24, 24, 27, 0.4);">
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <i class="bi bi-plus-square text-info"></i>
+                                    <h5 class="text-white fw-semibold mb-0" id="catalog-form-title">Novo app</h5>
+                                </div>
+                                <p class="text-secondary small mb-4" id="catalog-form-subtitle">Cadastre um app para disponibilizá-lo no marketplace.</p>
+                                <form id="catalog-app-form" class="row g-3" novalidate>
+                                    <div class="col-12">
+                                        <label class="form-label text-light mb-2" for="catalog-app-name">Nome</label>
+                                        <input id="catalog-app-name" type="text" class="form-control cms-input" maxlength="120" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label text-light mb-2" for="catalog-app-key">Chave (appKey)</label>
+                                        <input id="catalog-app-key" type="text" class="form-control cms-input" autocomplete="off" pattern="[a-z0-9][a-z0-9-]{0,63}" placeholder="Ex.: bva" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label text-light mb-2" for="catalog-app-category">Categoria</label>
+                                        <input id="catalog-app-category" type="text" class="form-control cms-input" maxlength="80" placeholder="Ex.: Gestão">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label text-light mb-2" for="catalog-app-description">Descrição</label>
+                                        <textarea id="catalog-app-description" class="form-control cms-input" rows="3" maxlength="500" required></textarea>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label text-light mb-2" for="catalog-app-type">Cobrança</label>
+                                        <select id="catalog-app-type" class="form-select cms-input" required>
+                                            <option value="free">Grátis</option>
+                                            <option value="subscription">Assinatura</option>
+                                            <option value="one-time">Pagamento único</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label text-light mb-2" for="catalog-app-price">Preço</label>
+                                        <input id="catalog-app-price" type="number" class="form-control cms-input" min="0" step="0.01" value="0" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label text-light mb-2" for="catalog-app-currency">Moeda</label>
+                                        <input id="catalog-app-currency" type="text" class="form-control cms-input" maxlength="3" value="BRL" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label text-light mb-2" for="catalog-app-icon">Ícone (Bootstrap Icons)</label>
+                                        <input id="catalog-app-icon" type="text" class="form-control cms-input" maxlength="60" placeholder="bi-box">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label text-light mb-2" for="catalog-app-features">Recursos (um por linha)</label>
+                                        <textarea id="catalog-app-features" class="form-control cms-input" rows="3" maxlength="1000" placeholder="Relatórios em tempo real&#10;Multiusuário"></textarea>
+                                    </div>
+                                    <div class="col-12 d-flex flex-wrap align-items-center gap-3 mt-2">
+                                        <button id="catalog-app-submit" type="submit" class="btn cms-btn-primary">
+                                            <i class="bi bi-plus-lg me-2"></i>Cadastrar app
+                                        </button>
+                                        <button id="catalog-app-cancel" type="button" class="btn btn-outline-light" hidden>Cancelar edição</button>
+                                        <div id="catalog-app-feedback" class="small" role="status" aria-live="polite" hidden></div>
+                                    </div>
+                                </form>
+                            </section>
+                        </div>
+                        <div class="col-lg-7">
+                            <section class="border rounded-3 p-3 p-md-4 h-100" style="border-color: #27272a !important; background: rgba(24, 24, 27, 0.4);">
+                                <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-3">
+                                    <div>
+                                        <h5 class="text-white fw-semibold mb-1">Apps cadastrados <span id="catalog-app-count" class="text-secondary small fw-normal"></span></h5>
+                                        <p class="text-secondary small mb-0">Inclui apps inativos, ocultos do marketplace.</p>
+                                    </div>
+                                    <button id="catalog-app-refresh" type="button" class="btn btn-sm btn-outline-light">
+                                        <i class="bi bi-arrow-clockwise me-1"></i> Atualizar
+                                    </button>
+                                </div>
+                                <div id="catalog-app-list" class="d-flex flex-column gap-2" aria-live="polite">
+                                    <div class="text-center py-5 text-secondary"><span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Carregando apps...</div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                `;
+
+                const getCatalogElement = (id) => document.getElementById(id);
+                const catalogForm = getCatalogElement('catalog-app-form');
+                const formTitle = getCatalogElement('catalog-form-title');
+                const formSubtitle = getCatalogElement('catalog-form-subtitle');
+                const nameInput = getCatalogElement('catalog-app-name');
+                const appKeyInput = getCatalogElement('catalog-app-key');
+                const categoryInput = getCatalogElement('catalog-app-category');
+                const descriptionInput = getCatalogElement('catalog-app-description');
+                const typeInput = getCatalogElement('catalog-app-type');
+                const priceInput = getCatalogElement('catalog-app-price');
+                const currencyInput = getCatalogElement('catalog-app-currency');
+                const iconInput = getCatalogElement('catalog-app-icon');
+                const featuresInput = getCatalogElement('catalog-app-features');
+                const submitButton = getCatalogElement('catalog-app-submit');
+                const cancelButton = getCatalogElement('catalog-app-cancel');
+                const formFeedback = getCatalogElement('catalog-app-feedback');
+                const refreshButton = getCatalogElement('catalog-app-refresh');
+                const catalogList = getCatalogElement('catalog-app-list');
+                const catalogCount = getCatalogElement('catalog-app-count');
+                let editingAppKey = null;
+
+                const escapeHtml = (value) => String(value ?? '')
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+                const encodeValue = (value) => encodeURIComponent(String(value ?? ''));
+                const decodeValue = (value) => {
+                    try { return decodeURIComponent(String(value || '')); } catch (_error) { return ''; }
+                };
+                const normalizeAppKey = (value) => String(value || '').trim().toLowerCase();
+                const getErrorMessage = (error, fallback) => {
+                    const message = String(error && error.message ? error.message : '').trim();
+                    return message && !message.startsWith('API Error:') ? message : fallback;
+                };
+                const setFeedback = (element, message, type = 'error') => {
+                    if (!element) return;
+                    element.hidden = false;
+                    element.className = type === 'success' ? 'small text-success' : type === 'info' ? 'small text-info' : 'small text-danger';
+                    element.textContent = message;
+                };
+                const callCatalogApi = async (url, method = 'GET', payload = {}) => {
+                    if (!window.core || typeof window.core.fetchAPI !== 'function') {
+                        throw new Error('A comunicação com o servidor não está disponível.');
+                    }
+                    const response = await window.core.fetchAPI(url, method, payload, { silent: true });
+                    if (!response || !response.success) {
+                        const message = typeof (response && response.error) === 'string' ? response.error : 'A operação não foi concluída.';
+                        throw new Error(message);
+                    }
+                    return response;
+                };
+                const setButtonBusy = (button, label) => {
+                    if (!button) return () => {};
+                    const originalContent = button.innerHTML;
+                    button.disabled = true;
+                    button.innerHTML = `<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>${label}`;
+                    return () => {
+                        button.disabled = false;
+                        button.innerHTML = originalContent;
+                    };
+                };
+                const CATALOG_TYPE_LABELS = { free: 'Grátis', subscription: 'Assinatura', 'one-time': 'Pagamento único' };
+                const formatPrice = (item) => {
+                    const price = Number(item && item.price);
+                    if (!Number.isFinite(price) || price <= 0) return 'Grátis';
+                    try {
+                        return price.toLocaleString('pt-BR', { style: 'currency', currency: String(item.currency || 'BRL') });
+                    } catch (_error) {
+                        return `R$ ${price.toFixed(2)}`;
+                    }
+                };
+                const parseFeatures = (value) => String(value || '')
+                    .split('\n')
+                    .map((line) => line.trim())
+                    .filter(Boolean);
+
+                const resetCatalogForm = () => {
+                    editingAppKey = null;
+                    if (catalogForm) catalogForm.reset();
+                    if (appKeyInput) appKeyInput.disabled = false;
+                    if (priceInput) priceInput.value = '0';
+                    if (currencyInput) currencyInput.value = 'BRL';
+                    if (formTitle) formTitle.textContent = 'Novo app';
+                    if (formSubtitle) formSubtitle.textContent = 'Cadastre um app para disponibilizá-lo no marketplace.';
+                    if (submitButton) submitButton.innerHTML = '<i class="bi bi-plus-lg me-2"></i>Cadastrar app';
+                    if (cancelButton) cancelButton.hidden = true;
+                };
+
+                const startEditing = (item) => {
+                    if (!item) return;
+                    editingAppKey = normalizeAppKey(item.appKey);
+                    if (nameInput) nameInput.value = item.name || '';
+                    if (appKeyInput) {
+                        appKeyInput.value = editingAppKey;
+                        appKeyInput.disabled = true;
+                    }
+                    if (categoryInput) categoryInput.value = item.category || '';
+                    if (descriptionInput) descriptionInput.value = item.description || '';
+                    if (typeInput) typeInput.value = item.type || 'free';
+                    if (priceInput) priceInput.value = String(Number(item.price) || 0);
+                    if (currencyInput) currencyInput.value = item.currency || 'BRL';
+                    if (iconInput) iconInput.value = item.icon || '';
+                    if (featuresInput) featuresInput.value = (Array.isArray(item.features) ? item.features : []).join('\n');
+                    if (formTitle) formTitle.textContent = `Editando: ${item.name || editingAppKey}`;
+                    if (formSubtitle) formSubtitle.textContent = 'A chave (appKey) não pode ser alterada após o cadastro.';
+                    if (submitButton) submitButton.innerHTML = '<i class="bi bi-check-lg me-2"></i>Salvar alterações';
+                    if (cancelButton) cancelButton.hidden = false;
+                    if (formFeedback) formFeedback.hidden = true;
+                    if (nameInput) nameInput.focus();
+                };
+
+                let catalogItemsCache = [];
+
+                const renderCatalogList = (items) => {
+                    if (!catalogList) return;
+                    if (catalogCount) catalogCount.textContent = `(${items.length})`;
+                    if (!items.length) {
+                        catalogList.innerHTML = '<div class="text-center text-secondary border rounded-3 py-4 px-3" style="border-color: #27272a !important;">Nenhum app cadastrado no catálogo.</div>';
+                        return;
+                    }
+                    catalogList.innerHTML = items.map((item) => {
+                        const active = item.active !== false;
+                        const status = active
+                            ? '<span class="badge text-bg-success-subtle text-success-emphasis">Ativo</span>'
+                            : '<span class="badge text-bg-secondary">Inativo</span>';
+                        const typeLabel = CATALOG_TYPE_LABELS[item.type] || item.type || 'Grátis';
+                        const toggleButton = active
+                            ? `<button type="button" class="btn btn-sm btn-outline-danger" data-catalog-action="deactivate" data-app-key="${encodeValue(item.appKey)}"><i class="bi bi-eye-slash me-1"></i> Desativar</button>`
+                            : `<button type="button" class="btn btn-sm btn-outline-success" data-catalog-action="reactivate" data-app-key="${encodeValue(item.appKey)}"><i class="bi bi-eye me-1"></i> Reativar</button>`;
+                        return `
+                            <article class="border rounded-3 p-3" style="border-color: #3f3f46 !important; background: rgba(9, 9, 11, 0.28);">
+                                <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
+                                    <div class="min-w-0">
+                                        <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                                            <i class="bi ${escapeHtml(item.icon || 'bi-box')} text-info"></i>
+                                            <h6 class="text-white mb-0 text-truncate">${escapeHtml(item.name || 'Sem nome')}</h6>
+                                            ${status}
+                                            <span class="badge text-bg-info-subtle text-info-emphasis">${escapeHtml(typeLabel)}</span>
+                                        </div>
+                                        <div class="small text-secondary text-truncate">${escapeHtml(item.description || '')}</div>
+                                        <div class="small text-secondary mt-2">
+                                            <i class="bi bi-key me-1"></i>${escapeHtml(item.appKey || '')}
+                                            <span class="opacity-50 mx-1">|</span> ${escapeHtml(formatPrice(item))}
+                                            ${item.category ? `<span class="opacity-50 mx-1">|</span> <i class="bi bi-tag me-1"></i>${escapeHtml(item.category)}` : ''}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-sm-column gap-2 align-self-sm-center">
+                                        <button type="button" class="btn btn-sm btn-outline-light" data-catalog-action="edit" data-app-key="${encodeValue(item.appKey)}">
+                                            <i class="bi bi-pencil me-1"></i> Editar
+                                        </button>
+                                        ${toggleButton}
+                                    </div>
+                                </div>
+                            </article>
+                        `;
+                    }).join('');
+                };
+
+                const refreshCatalog = async () => {
+                    if (!catalogList) return;
+                    catalogList.innerHTML = '<div class="text-center py-4 text-secondary"><span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Atualizando apps...</div>';
+                    try {
+                        const response = await callCatalogApi('/catalog/admin');
+                        if (!container.contains(catalogList)) return;
+                        catalogItemsCache = Array.isArray(response.data) ? response.data : [];
+                        renderCatalogList(catalogItemsCache);
+                    } catch (error) {
+                        if (catalogCount) catalogCount.textContent = '';
+                        if (container.contains(catalogList)) {
+                            catalogList.innerHTML = `<div class="text-danger border rounded-3 py-4 px-3" style="border-color: rgba(239, 68, 68, 0.35) !important;">${escapeHtml(getErrorMessage(error, 'Não foi possível carregar o catálogo.'))}</div>`;
+                        }
+                    }
+                };
+
+                if (appKeyInput) {
+                    appKeyInput.addEventListener('change', () => {
+                        appKeyInput.value = normalizeAppKey(appKeyInput.value);
+                    });
+                }
+
+                if (catalogForm && submitButton) {
+                    catalogForm.addEventListener('submit', async (event) => {
+                        event.preventDefault();
+                        appKeyInput.value = normalizeAppKey(appKeyInput.value);
+                        if (!catalogForm.checkValidity()) {
+                            catalogForm.reportValidity();
+                            return;
+                        }
+                        const editing = Boolean(editingAppKey);
+                        const restoreButton = setButtonBusy(submitButton, editing ? 'Salvando...' : 'Cadastrando...');
+                        if (formFeedback) formFeedback.hidden = true;
+                        const payload = {
+                            name: nameInput.value.trim(),
+                            description: descriptionInput.value.trim(),
+                            price: Number(priceInput.value) || 0,
+                            currency: String(currencyInput.value || 'BRL').trim().toUpperCase(),
+                            type: typeInput.value,
+                            icon: iconInput.value.trim() || 'bi-box',
+                            category: categoryInput.value.trim(),
+                            features: parseFeatures(featuresInput.value),
+                        };
+                        try {
+                            if (editing) {
+                                await callCatalogApi(`/catalog/admin/${encodeURIComponent(editingAppKey)}`, 'PUT', payload);
+                                setFeedback(formFeedback, 'App atualizado com sucesso.', 'success');
+                            } else {
+                                await callCatalogApi('/catalog/admin', 'POST', { ...payload, appKey: appKeyInput.value });
+                                setFeedback(formFeedback, 'App cadastrado e disponível no marketplace.', 'success');
+                            }
+                            resetCatalogForm();
+                            await refreshCatalog();
+                        } catch (error) {
+                            setFeedback(formFeedback, getErrorMessage(error, editing ? 'Não foi possível atualizar o app.' : 'Não foi possível cadastrar o app.'), 'error');
+                        } finally {
+                            restoreButton();
+                        }
+                    });
+                }
+
+                if (cancelButton) {
+                    cancelButton.addEventListener('click', () => {
+                        resetCatalogForm();
+                        if (formFeedback) formFeedback.hidden = true;
+                    });
+                }
+                if (refreshButton) refreshButton.addEventListener('click', refreshCatalog);
+                if (catalogList) {
+                    catalogList.addEventListener('click', async (event) => {
+                        const button = event.target.closest('button[data-catalog-action]');
+                        if (!button) return;
+                        const action = button.dataset.catalogAction;
+                        const appKey = decodeValue(button.dataset.appKey);
+                        const item = catalogItemsCache.find((entry) => normalizeAppKey(entry.appKey) === appKey);
+                        if (action === 'edit') {
+                            startEditing(item);
+                            return;
+                        }
+                        if (action === 'deactivate') {
+                            if (!window.confirm(`Desativar o app "${item && item.name ? item.name : appKey}"? Ele some do marketplace, mas os acessos já concedidos continuam.`)) return;
+                            const restoreButton = setButtonBusy(button, 'Desativando...');
+                            try {
+                                await callCatalogApi(`/catalog/admin/${encodeURIComponent(appKey)}`, 'DELETE');
+                                await refreshCatalog();
+                            } catch (error) {
+                                setFeedback(formFeedback, getErrorMessage(error, 'Não foi possível desativar o app.'), 'error');
+                            } finally {
+                                restoreButton();
+                            }
+                            return;
+                        }
+                        if (action === 'reactivate') {
+                            const restoreButton = setButtonBusy(button, 'Reativando...');
+                            try {
+                                await callCatalogApi(`/catalog/admin/${encodeURIComponent(appKey)}`, 'PUT', { active: true });
+                                await refreshCatalog();
+                            } catch (error) {
+                                setFeedback(formFeedback, getErrorMessage(error, 'Não foi possível reativar o app.'), 'error');
+                            } finally {
+                                restoreButton();
+                            }
+                        }
+                    });
+                }
+
+                refreshCatalog();
             } else if (tab === 'theme') {
                 container.innerHTML = `
                     <h4 class="mb-4 text-white fw-bold fs-3">Personalização Visual</h4>

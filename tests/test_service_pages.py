@@ -108,6 +108,17 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertNotIn('href="/produtos"', header)
         self.assertIn('href="/marketplace"', header)
 
+    def test_admin_apps_tab_drives_the_catalog_crud(self) -> None:
+        admin = (ROOT / "src/pages/admin.html").read_text(encoding="utf-8")
+
+        self.assertIn('data-tab="apps"', admin)
+        self.assertIn("tab === 'apps'", admin)
+        self.assertIn("'/catalog/admin'", admin)
+        self.assertIn("`/catalog/admin/${encodeURIComponent(editingAppKey)}`", admin)
+        self.assertIn("`/catalog/admin/${encodeURIComponent(appKey)}`", admin)
+        self.assertIn("'catalog-app-form'", admin)
+        self.assertIn("'catalog-app-list'", admin)
+
     def test_marketplace_tool_handoff_preserves_the_query_string(self) -> None:
         core = (ROOT / "src/core/core.js").read_text(encoding="utf-8")
         marketplace = (ROOT / "src/pages/marketplace.html").read_text(encoding="utf-8")
