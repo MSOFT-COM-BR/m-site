@@ -1401,13 +1401,16 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label text-light mb-2" for="blog-category">Área / Categoria</label>
-                                <select class="form-select cms-input" id="blog-category" name="categories" multiple size="5" aria-describedby="blog-category-hint">
-                                    <option value="Tecnologia">Tecnologia</option>
-                                    <option value="White Label">White Label</option>
-                                    <option value="Produtividade">Produtividade</option>
-                                    <option value="Design">Design</option>
-                                    <option value="Negócios">Negócios</option>
-                                </select>
+                                <div class="d-flex gap-2">
+                                    <select class="form-select cms-input" id="blog-category" name="categories" multiple size="5" aria-describedby="blog-category-hint" style="flex: 1;">
+                                        <option value="Tecnologia">Tecnologia</option>
+                                        <option value="White Label">White Label</option>
+                                        <option value="Produtividade">Produtividade</option>
+                                        <option value="Design">Design</option>
+                                        <option value="Negócios">Negócios</option>
+                                    </select>
+                                    <button type="button" class="btn btn-outline-info align-self-start" onclick="window.addDynamicBlogCategory()" title="Adicionar Nova Categoria"><i class="bi bi-plus-lg"></i></button>
+                                </div>
                                 <div id="blog-category-hint" class="form-text text-secondary small mt-1">Segure Ctrl (Windows) ou Cmd (Mac) para selecionar várias.</div>
                             </div>
                             <div class="col-md-4">
@@ -1459,6 +1462,89 @@
                 `;
 
                 // Funções auxiliares pro Blog
+                window.loadBlogCategories = async function() {
+                    const sel = document.getElementById('blog-category');
+                    if (!sel) return;
+                    const defaultCats = ['Tecnologia', 'White Label', 'Produtividade', 'Design', 'Negócios'];
+                    let customCats = [];
+                    
+                    try {
+                        if (window.core && window.core.fetchAPI) {
+                            const res = await window.core.fetchAPI('/mjson/blog-categories');
+                            if (res && res.success && res.data && res.data.data) {
+                                customCats = Array.isArray(res.data.data) ? res.data.data : [];
+                            }
+                        }
+                    } catch(e) {
+                        console.warn('Falha ao buscar categorias dinâmicas do servidor:', e);
+                    }
+                    
+                    const allCats = [...new Set([...defaultCats, ...customCats])];
+                    
+                    // Como a função getBlogCategorySelections é definida depois, precisamos replicar sua lógica aqui para evitar 'is not defined' na inicialização
+                    const currentSelections = Array.from(sel.selectedOptions).map((o) => o.value).filter(Boolean);
+                    
+                    sel.innerHTML = '';
+                    allCats.forEach(cat => {
+                        const opt = document.createElement('option');
+                        opt.value = cat;
+                        opt.textContent = cat;
+                        if (currentSelections.includes(cat)) opt.selected = true;
+                        sel.appendChild(opt);
+                    });
+                };
+
+                window.addDynamicBlogCategory = async function() {
+                    const cat = prompt('Digite o nome da nova categoria:');
+                    if (!cat || !cat.trim()) return;
+                    const newCat = cat.trim();
+                    
+                    let customCats = [];
+                    try {
+                        if (window.core && window.core.fetchAPI) {
+                            const res = await window.core.fetchAPI('/mjson/blog-categories');
+                            if (res && res.success && res.data && res.data.data) {
+                                customCats = Array.isArray(res.data.data) ? res.data.data : [];
+                            }
+                        }
+                    } catch(e) {}
+                    
+                    if (!customCats.includes(newCat) && !['Tecnologia', 'White Label', 'Produtividade', 'Design', 'Negócios'].includes(newCat)) {
+                        customCats.push(newCat);
+                        
+                        try {
+                            if (window.core && window.core.fetchAPI) {
+                                const saveRes = await window.core.fetchAPI('/mjson', 'POST', {
+                                    key: 'blog-categories',
+                                    description: 'Categorias Dinâmicas do Blog',
+                                    data: customCats
+                                });
+                                if (saveRes && saveRes.success) {
+                                    if (window.core.toast) window.core.toast('Categoria salva no servidor.', 'success');
+                                } else {
+                                    if (window.core.toast) window.core.toast('Erro ao salvar no servidor.', 'error');
+                                }
+                            }
+                        } catch(e) {
+                            if (window.core && window.core.toast) window.core.toast('Falha de rede ao salvar.', 'error');
+                        }
+                        
+                        await window.loadBlogCategories();
+                        
+                        const sel = document.getElementById('blog-category');
+                        if (sel) {
+                            Array.from(sel.options).forEach(opt => {
+                                if (opt.value === newCat) opt.selected = true;
+                            });
+                        }
+                    } else {
+                        alert('Categoria já existe!');
+                    }
+                };
+
+                // Inicializar categorias dinâmicas agora
+                setTimeout(window.loadBlogCategories, 50);
+
                 function getBlogCategorySelections() {
                     const sel = document.getElementById('blog-category');
                     if (!sel) return [];
