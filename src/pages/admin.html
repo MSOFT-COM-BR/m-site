@@ -1766,13 +1766,14 @@
                                 <label class="form-label text-light mb-2" for="blog-category">Área / Categoria</label>
                                 <div class="d-flex gap-2">
                                     <select class="form-select cms-input" id="blog-category" name="categories" multiple size="5" aria-describedby="blog-category-hint" style="flex: 1;">
-                                        <option value="Tecnologia">Tecnologia</option>
-                                        <option value="White Label">White Label</option>
-                                        <option value="Produtividade">Produtividade</option>
-                                        <option value="Design">Design</option>
-                                        <option value="Negócios">Negócios</option>
                                     </select>
-                                    <button type="button" class="btn btn-outline-info align-self-start" onclick="window.addDynamicBlogCategory()" title="Adicionar Nova Categoria"><i class="bi bi-plus-lg"></i></button>
+                                    <div class="d-flex flex-column gap-2">
+                                        <button type="button" class="btn btn-outline-info" onclick="window.addDynamicBlogCategory()" title="Adicionar Nova Categoria"><i class="bi bi-plus-lg"></i></button>
+                                        <button type="button" class="btn btn-outline-light" onclick="window.toggleBlogCategoryManager()" title="Gerenciar Categorias"><i class="bi bi-gear"></i></button>
+                                    </div>
+                                </div>
+                                <div id="blog-category-manager" class="border rounded-3 p-2 mt-2" style="border-color: #27272a !important; background: rgba(9, 9, 11, 0.4);" hidden>
+                                    <div id="blog-category-manager-list" class="d-flex flex-column gap-1"></div>
                                 </div>
                                 <div id="blog-category-hint" class="form-text text-secondary small mt-1">Segure Ctrl (Windows) ou Cmd (Mac) para selecionar várias.</div>
                             </div>
@@ -1824,35 +1825,36 @@
                     </div>
                 `;
 
-                // Funções auxiliares pro Blog
+                // Funções auxiliares pro Blog — categorias vivem no CRUD /blogs/categories da API
+                let blogCategoriesCache = [];
+
+                const fetchBlogCategories = async () => {
+                    if (!window.core || typeof window.core.fetchAPI !== 'function') return [];
+                    const res = await window.core.fetchAPI('/blogs/categories');
+                    if (res && res.success && Array.isArray(res.data)) return res.data;
+                    throw new Error((res && res.error) || 'Falha ao buscar categorias.');
+                };
+
                 window.loadBlogCategories = async function() {
                     const sel = document.getElementById('blog-category');
                     if (!sel) return;
-                    const defaultCats = ['Tecnologia', 'White Label', 'Produtividade', 'Design', 'Negócios'];
-                    let customCats = [];
-                    
                     try {
-                        if (window.core && window.core.fetchAPI) {
-                            const res = await window.core.fetchAPI('/mjson/blog-categories');
-                            if (res && res.success && res.data && res.data.data) {
-                                customCats = Array.isArray(res.data.data) ? res.data.data : [];
-                            }
-                        }
+                        blogCategoriesCache = await fetchBlogCategories();
                     } catch(e) {
-                        console.warn('Falha ao buscar categorias dinâmicas do servidor:', e);
+                        console.warn('Falha ao buscar categorias do servidor:', e);
+                        if (window.core && window.core.toast) window.core.toast('Não foi possível carregar as categorias.', 'error');
+                        return;
                     }
-                    
-                    const allCats = [...new Set([...defaultCats, ...customCats])];
-                    
-                    // Como a função getBlogCategorySelections é definida depois, precisamos replicar sua lógica aqui para evitar 'is not defined' na inicialização
+
+                    // Preserva seleções atuais ao reconstruir as opções
                     const currentSelections = Array.from(sel.selectedOptions).map((o) => o.value).filter(Boolean);
-                    
+
                     sel.innerHTML = '';
-                    allCats.forEach(cat => {
+                    blogCategoriesCache.forEach(cat => {
                         const opt = document.createElement('option');
-                        opt.value = cat;
-                        opt.textContent = cat;
-                        if (currentSelections.includes(cat)) opt.selected = true;
+                        opt.value = cat.name;
+                        opt.textContent = cat.name;
+                        if (currentSelections.includes(cat.name)) opt.selected = true;
                         sel.appendChild(opt);
                     });
                 };
@@ -1861,48 +1863,102 @@
                     const cat = prompt('Digite o nome da nova categoria:');
                     if (!cat || !cat.trim()) return;
                     const newCat = cat.trim();
-                    
-                    let customCats = [];
+
                     try {
-                        if (window.core && window.core.fetchAPI) {
-                            const res = await window.core.fetchAPI('/mjson/blog-categories');
-                            if (res && res.success && res.data && res.data.data) {
-                                customCats = Array.isArray(res.data.data) ? res.data.data : [];
-                            }
+                        const saveRes = await window.core.fetchAPI('/blogs/categories', 'POST', { name: newCat });
+                        if (!saveRes || !saveRes.success) {
+                            const message = (saveRes && saveRes.error) || 'Erro ao salvar no servidor.';
+                            if (window.core && window.core.toast) window.core.toast(message, 'error');
+                            return;
                         }
-                    } catch(e) {}
-                    
-                    if (!customCats.includes(newCat) && !['Tecnologia', 'White Label', 'Produtividade', 'Design', 'Negócios'].includes(newCat)) {
-                        customCats.push(newCat);
-                        
-                        try {
-                            if (window.core && window.core.fetchAPI) {
-                                const saveRes = await window.core.fetchAPI('/mjson', 'POST', {
-                                    key: 'blog-categories',
-                                    description: 'Categorias Dinâmicas do Blog',
-                                    data: customCats
-                                });
-                                if (saveRes && saveRes.success) {
-                                    if (window.core.toast) window.core.toast('Categoria salva no servidor.', 'success');
-                                } else {
-                                    if (window.core.toast) window.core.toast('Erro ao salvar no servidor.', 'error');
-                                }
-                            }
-                        } catch(e) {
-                            if (window.core && window.core.toast) window.core.toast('Falha de rede ao salvar.', 'error');
-                        }
-                        
-                        await window.loadBlogCategories();
-                        
-                        const sel = document.getElementById('blog-category');
-                        if (sel) {
-                            Array.from(sel.options).forEach(opt => {
-                                if (opt.value === newCat) opt.selected = true;
-                            });
-                        }
-                    } else {
-                        alert('Categoria já existe!');
+                        if (window.core && window.core.toast) window.core.toast('Categoria salva no servidor.', 'success');
+                    } catch(e) {
+                        if (window.core && window.core.toast) window.core.toast('Falha de rede ao salvar.', 'error');
+                        return;
                     }
+
+                    await window.loadBlogCategories();
+                    renderBlogCategoryManager();
+
+                    const sel = document.getElementById('blog-category');
+                    if (sel) {
+                        Array.from(sel.options).forEach(opt => {
+                            if (opt.value === newCat) opt.selected = true;
+                        });
+                    }
+                };
+
+                const renderBlogCategoryManager = () => {
+                    const list = document.getElementById('blog-category-manager-list');
+                    if (!list) return;
+                    if (!blogCategoriesCache.length) {
+                        list.innerHTML = '<div class="text-secondary small text-center py-2">Nenhuma categoria cadastrada.</div>';
+                        return;
+                    }
+                    const escapeCat = (value) => String(value ?? '')
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;')
+                        .replace(/'/g, '&#039;');
+                    list.innerHTML = blogCategoriesCache.map((cat) => `
+                        <div class="d-flex align-items-center justify-content-between gap-2 py-1 px-2 rounded-2" style="background: rgba(24, 24, 27, 0.6);">
+                            <span class="small text-light text-truncate">${escapeCat(cat.name)}</span>
+                            <span class="d-flex gap-1">
+                                <button type="button" class="btn btn-sm btn-outline-light py-0 px-1" title="Renomear" onclick="window.renameBlogCategory('${escapeCat(cat._id || cat.id)}')"><i class="bi bi-pencil"></i></button>
+                                <button type="button" class="btn btn-sm btn-outline-danger py-0 px-1" title="Excluir" onclick="window.deleteBlogCategory('${escapeCat(cat._id || cat.id)}')"><i class="bi bi-trash"></i></button>
+                            </span>
+                        </div>
+                    `).join('');
+                };
+
+                window.toggleBlogCategoryManager = async function() {
+                    const panel = document.getElementById('blog-category-manager');
+                    if (!panel) return;
+                    panel.hidden = !panel.hidden;
+                    if (!panel.hidden) {
+                        await window.loadBlogCategories();
+                        renderBlogCategoryManager();
+                    }
+                };
+
+                window.renameBlogCategory = async function(id) {
+                    const current = blogCategoriesCache.find((cat) => String(cat._id || cat.id) === String(id));
+                    if (!current) return;
+                    const renamed = prompt('Novo nome da categoria:', current.name);
+                    if (!renamed || !renamed.trim() || renamed.trim() === current.name) return;
+                    try {
+                        const res = await window.core.fetchAPI(`/blogs/categories/${encodeURIComponent(id)}`, 'PUT', { name: renamed.trim() });
+                        if (!res || !res.success) {
+                            if (window.core && window.core.toast) window.core.toast((res && res.error) || 'Erro ao renomear.', 'error');
+                            return;
+                        }
+                        if (window.core && window.core.toast) window.core.toast('Categoria renomeada.', 'success');
+                    } catch(e) {
+                        if (window.core && window.core.toast) window.core.toast('Falha de rede ao renomear.', 'error');
+                        return;
+                    }
+                    await window.loadBlogCategories();
+                    renderBlogCategoryManager();
+                };
+
+                window.deleteBlogCategory = async function(id) {
+                    const current = blogCategoriesCache.find((cat) => String(cat._id || cat.id) === String(id));
+                    if (!current) return;
+                    if (!window.confirm(`Excluir a categoria "${current.name}"? Posts que já a utilizam manterão o texto salvo.`)) return;
+                    try {
+                        const res = await window.core.fetchAPI(`/blogs/categories/${encodeURIComponent(id)}`, 'DELETE');
+                        if (!res || !res.success) {
+                            if (window.core && window.core.toast) window.core.toast((res && res.error) || 'Erro ao excluir.', 'error');
+                            return;
+                        }
+                        if (window.core && window.core.toast) window.core.toast('Categoria excluída.', 'success');
+                    } catch(e) {
+                        if (window.core && window.core.toast) window.core.toast('Falha de rede ao excluir.', 'error');
+                        return;
+                    }
+                    await window.loadBlogCategories();
+                    renderBlogCategoryManager();
                 };
 
                 // Inicializar categorias dinâmicas agora

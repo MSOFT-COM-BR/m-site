@@ -119,6 +119,16 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertIn("'catalog-app-form'", admin)
         self.assertIn("'catalog-app-list'", admin)
 
+    def test_admin_blog_categories_use_the_api_crud(self) -> None:
+        admin = (ROOT / "src/pages/admin.html").read_text(encoding="utf-8")
+
+        self.assertIn("'/blogs/categories'", admin)
+        self.assertIn("`/blogs/categories/${encodeURIComponent(id)}`", admin)
+        self.assertIn("window.renameBlogCategory", admin)
+        self.assertIn("window.deleteBlogCategory", admin)
+        self.assertNotIn("defaultCats", admin)
+        self.assertNotIn("/mjson/blog-categories", admin)
+
     def test_marketplace_tool_handoff_preserves_the_query_string(self) -> None:
         core = (ROOT / "src/core/core.js").read_text(encoding="utf-8")
         marketplace = (ROOT / "src/pages/marketplace.html").read_text(encoding="utf-8")
