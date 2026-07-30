@@ -30,8 +30,8 @@ class ServicePagesContractTests(unittest.TestCase):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
 
-        self.assertIn('<!-- Version: V0.11.79 -->', index)
-        self.assertIn('version: "0.11.79"', config)
+        self.assertIn('<!-- Version: V0.11.80 -->', index)
+        self.assertIn('version: "0.11.80"', config)
         for asset in (
             'config/config.js',
             'config/seo.js',
@@ -42,10 +42,10 @@ class ServicePagesContractTests(unittest.TestCase):
             'core/skeleton.js',
             'core/core.js',
         ):
-            self.assertIn(f'/src/{asset}?v=0.11.79', index)
+            self.assertIn(f'/src/{asset}?v=0.11.80', index)
 
         for stylesheet in ('design-system.css', 'style.css', 'developer.css'):
-            self.assertIn(f'/src/assets/css/{stylesheet}?v=0.11.79', index)
+            self.assertIn(f'/src/assets/css/{stylesheet}?v=0.11.80', index)
 
     def test_quote_route_is_indexable_and_has_spa_fallback(self) -> None:
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
@@ -138,7 +138,7 @@ class ServicePagesContractTests(unittest.TestCase):
             "marked.min.js",
         ):
             self.assertNotIn(asset, index)
-        self.assertIn('/src/core/vendor-loader.js?v=0.11.79', index)
+        self.assertIn('/src/core/vendor-loader.js?v=0.11.80', index)
         self.assertIn('loadAdminEditorVendors', loader)
         self.assertIn('window.jQuery', loader)
         self.assertIn('summernote-lite.min.js', loader)
@@ -201,6 +201,37 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertIn("Gostaria de receber informações sobre o produto", marketplace)
         self.assertNotIn("toLocaleString('pt-BR', { style: 'currency'", marketplace)
         self.assertNotIn('R$ 0,00', marketplace)
+
+    def test_free_marketplace_apps_are_explicitly_marked_as_free(self) -> None:
+        marketplace = (ROOT / "src/pages/marketplace.html").read_text(encoding="utf-8")
+
+        self.assertIn("const priceBlock = isFree", marketplace)
+        self.assertIn('bi-gift-fill"></i> Grátis', marketplace)
+        self.assertIn('</i> Usar', marketplace)
+        self.assertIn('href="/apps?tool=${encodeURIComponent(item.appKey)}"', marketplace)
+        self.assertIn('<span class="text-white fs-4 fw-bold">A consultar</span>', marketplace)
+
+    def test_free_apps_page_includes_blog_style_adsense_slots(self) -> None:
+        apps = (ROOT / "src/pages/apps.html").read_text(encoding="utf-8")
+        index = (ROOT / "index.html").read_text(encoding="utf-8")
+
+        self.assertIn('apps-ad-slot', apps)
+        self.assertIn('class="adsbygoogle"', apps)
+        self.assertIn("ca-pub-7844284078845131", apps)
+        self.assertIn('data-ad-slot="4406317970"', apps)
+        self.assertIn("pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", index)
+        self.assertNotIn("pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", apps)
+        self.assertNotIn("adsense-script-apps", apps)
+        self.assertNotIn("openToolFromQueryString", apps)
+        self.assertIn("data-full-width-responsive", apps)
+
+    def test_desktop_header_collapses_before_authenticated_controls_overflow(self) -> None:
+        header = (ROOT / "src/components/header.html").read_text(encoding="utf-8")
+
+        self.assertIn('navbar navbar-expand-xl fixed-top', header)
+        self.assertIn("matchMedia('(max-width: 1199.98px)')", header)
+        self.assertIn('@media (max-width: 1199.98px)', header)
+        self.assertIn('max-width: 11.5rem;', header)
 
     def test_each_service_page_has_safe_conversion_and_schema_contract(self) -> None:
         for slug, service_name in PAGES.items():
