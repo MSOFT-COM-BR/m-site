@@ -39,6 +39,11 @@ const SEO_CONFIG = {
     description: 'Conte o que sua empresa precisa e receba uma proposta para sites, sistemas, aplicativos e soluções digitais da Miranda Soft.',
     noindex: false
   },
+  'padrao': {
+    title: 'Aprovação de Padrão | Engenharia | Miranda Soft',
+    description: 'Área privada de aprovação visual para propostas de engenharia da Miranda Soft.',
+    noindex: true
+  },
   'mercado': {
     title: 'Mercado | Dólar, Euro e Bitcoin em BRL | Miranda Soft',
     description: 'Consulte cotações informativas de dólar, euro e bitcoin em reais brasileiros na Miranda Soft.',

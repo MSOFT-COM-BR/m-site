@@ -30,8 +30,8 @@ class ServicePagesContractTests(unittest.TestCase):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
 
-        self.assertIn('<!-- Version: V0.11.70 -->', index)
-        self.assertIn('version: "0.11.70"', config)
+        self.assertIn('<!-- Version: V0.11.77 -->', index)
+        self.assertIn('version: "0.11.77"', config)
         for asset in (
             'config/config.js',
             'config/seo.js',
@@ -42,7 +42,7 @@ class ServicePagesContractTests(unittest.TestCase):
             'core/skeleton.js',
             'core/core.js',
         ):
-            self.assertIn(f'/src/{asset}?v=0.11.70', index)
+            self.assertIn(f'/src/{asset}?v=0.11.77', index)
 
     def test_quote_route_is_indexable_and_has_spa_fallback(self) -> None:
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
@@ -54,6 +54,40 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertRegex(seo, r"'cotacoes':\s*\{")
         self.assertIn("https://mirandasoft.com.br/cotacoes", sitemap)
         self.assertIn('CMD ["serve", "-s", ".", "-p", "8080"]', dockerfile)
+
+    def test_standard_budget_approval_route_opens_a_simplified_whatsapp_report(self) -> None:
+        config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
+        seo = (ROOT / "src/config/seo.js").read_text(encoding="utf-8")
+        sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+        page = (ROOT / "src/pages/padrao.html").read_text(encoding="utf-8")
+
+        self.assertIn("'padrao'", config)
+        self.assertRegex(seo, re.compile(r"'padrao':\s*\{.*?noindex:\s*true", re.DOTALL))
+        self.assertNotIn("https://mirandasoft.com.br/padrao", sitemap)
+        self.assertNotIn('standardBudgetWebhookUrl', config)
+        self.assertEqual(page.count('data-template-select='), 5)
+        self.assertIn('id="standard-preview-dialog"', page)
+        self.assertIn('id="standard-preview-frame"', page)
+        self.assertIn('sandbox', page)
+        self.assertNotIn('allow-same-origin', page)
+        self.assertNotIn('<button>VER CONCEITO</button>', page)
+        self.assertIn('Padrão Engenharia', page)
+        self.assertIn('Aprovar no WhatsApp', page)
+        self.assertNotIn('<html', page)
+        for reference in ('axis.png', 'civic.png', 'atelier.png', 'aureo.png', 'forge.png'):
+            self.assertIn(f'/src/assets/images/padrao-referencias/{reference}', page)
+            self.assertTrue((ROOT / 'src/assets/images/padrao-referencias' / reference).is_file())
+        for color in ('#1E2124', '#A60B0B', '#FFFFFF', '#3A3F45', '#70767D', '#D9D9D9', '#F7F7F7'):
+            self.assertIn(color, page)
+        for field in ('buildWhatsAppReport', 'Layout escolhido:', 'Direção:', 'Tipografia:', 'Tom:', 'Paleta:', 'Página de aprovação:', 'encodeURIComponent'):
+            self.assertIn(field, page)
+        self.assertIn('https://wa.me/5584988330532', page)
+        self.assertIn("window.open(whatsappUrl, '_blank', 'noopener,noreferrer')", page)
+        self.assertIn('a conversa com o relatório será aberta no WhatsApp', page)
+        self.assertNotIn('envia o relatório', page.lower())
+        self.assertNotIn('fetch(', page)
+        self.assertNotIn('n8n', page.lower())
+        self.assertNotIn("innerHTML", page)
 
     def test_market_route_has_a_distinct_public_data_contract(self) -> None:
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
@@ -89,7 +123,7 @@ class ServicePagesContractTests(unittest.TestCase):
             "marked.min.js",
         ):
             self.assertNotIn(asset, index)
-        self.assertIn('/src/core/vendor-loader.js?v=0.11.70', index)
+        self.assertIn('/src/core/vendor-loader.js?v=0.11.77', index)
         self.assertIn('loadAdminEditorVendors', loader)
         self.assertIn('window.jQuery', loader)
         self.assertIn('summernote-lite.min.js', loader)
@@ -141,6 +175,17 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertIn("if (pageName === 'apps' && tool && typeof window.openTool === 'function')", core)
         self.assertIn('this.updatePageSEO(pageName, canonicalPath);', core)
         self.assertNotIn('this.updatePageSEO(pageName, newPath);', core)
+
+    def test_marketplace_public_view_hides_catalog_prices(self) -> None:
+        marketplace = (ROOT / "src/pages/marketplace.html").read_text(encoding="utf-8")
+
+        self.assertIn('id="modal-price">A consultar</span>', marketplace)
+        self.assertIn('<span class="text-white fs-4 fw-bold">A consultar</span>', marketplace)
+        self.assertIn("onclick=\"openPurchaseModal('${escapeHtml(item.name).replace(/'/g, \"\\\\'\")}', '${item.type}')\"", marketplace)
+        self.assertIn("currentPurchase = { name, type };", marketplace)
+        self.assertIn("Gostaria de receber informações sobre o produto", marketplace)
+        self.assertNotIn("toLocaleString('pt-BR', { style: 'currency'", marketplace)
+        self.assertNotIn('R$ 0,00', marketplace)
 
     def test_each_service_page_has_safe_conversion_and_schema_contract(self) -> None:
         for slug, service_name in PAGES.items():

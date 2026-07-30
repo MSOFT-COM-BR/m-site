@@ -63,7 +63,7 @@
             <div class="modal-header border-secondary">
                 <h5 class="modal-title text-white">
                     <i class="bi bi-cart-check me-2"></i>
-                    <span id="modal-app-name">Confirmar Compra</span>
+                    <span id="modal-app-name">Consultar produto</span>
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
@@ -74,8 +74,8 @@
 
                 <div class="card bg-secondary bg-opacity-25 border-0 p-3 mt-4">
                     <div class="d-flex justify-content-between align-items-center">
-                        <span class="text-muted">Valor:</span>
-                        <span class="text-white fs-4 fw-bold" id="modal-price">R$ 0,00</span>
+                        <span class="text-muted">Condições comerciais:</span>
+                        <span class="text-white fs-4 fw-bold" id="modal-price">A consultar</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-2" id="modal-type-row">
                         <span class="text-muted">Tipo:</span>
@@ -86,7 +86,7 @@
             <div class="modal-footer border-secondary justify-content-center gap-2">
                 <button type="button" class="btn btn-outline-light px-4" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-success px-4" onclick="confirmPurchase()">
-                    <i class="bi bi-check-lg"></i> Confirmar
+                    <i class="bi bi-whatsapp"></i> Falar pelo WhatsApp
                 </button>
             </div>
         </div>
@@ -154,23 +154,20 @@
 
         function renderCatalogCard(item) {
             const isFree = item.type === 'free';
-            const priceFormatted = (item.price || 0).toLocaleString('pt-BR', { style: 'currency', currency: item.currency || 'BRL' });
 
             const badge = isFree
                 ? `<span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-25"><i class="bi bi-gift-fill"></i> Gratuito</span>`
                 : `<span class="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-25"><i class="bi bi-arrow-repeat"></i> ${item.type === 'subscription' ? 'Assinatura' : 'Compra Única'}</span>`;
 
-            const priceBlock = isFree
-                ? `<span class="text-success fs-4 fw-bold">Grátis</span>`
-                : `<span class="text-white fs-4 fw-bold">${priceFormatted}</span>${item.type === 'subscription' ? '<span class="text-muted small">/mês</span>' : ''}`;
+            const priceBlock = '<span class="text-white fs-4 fw-bold">A consultar</span>';
 
             const action = isFree
                 ? `<a href="/apps?tool=${encodeURIComponent(item.appKey)}" class="btn btn-outline-success rounded-pill px-4">
                         <i class="bi bi-box-arrow-up-right"></i> Usar
                    </a>`
                 : `<button class="btn btn-primary rounded-pill px-4"
-                        onclick="openPurchaseModal('${escapeHtml(item.name).replace(/'/g, "\\'")}', ${Number(item.price) || 0}, '${item.type}')">
-                        <i class="bi bi-cart-plus"></i> Assinar
+                        onclick="openPurchaseModal('${escapeHtml(item.name).replace(/'/g, "\\'")}', '${item.type}')">
+                        <i class="bi bi-chat-dots"></i> Consultar
                    </button>`;
 
             return `
@@ -239,17 +236,15 @@
         }
 
         // Open Purchase Modal
-        window.openPurchaseModal = function (name, price, type) {
-            currentPurchase = { name, price, type };
+        window.openPurchaseModal = function (name, type) {
+            currentPurchase = { name, type };
 
             const modal = new bootstrap.Modal(document.getElementById('purchase-modal'));
 
             document.getElementById('modal-app-name').textContent = name;
             document.getElementById('modal-title').textContent = name;
 
-            const priceFormatted = price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-            const priceText = type === 'subscription' ? `${priceFormatted}/mês` : priceFormatted;
-            document.getElementById('modal-price').textContent = priceText;
+            document.getElementById('modal-price').textContent = 'A consultar';
 
             const typeBadge = document.getElementById('modal-type-badge');
             if (type === 'subscription') {
@@ -269,11 +264,8 @@
 
             const modalEl = document.getElementById('purchase-modal');
             const appName = currentPurchase.name;
-            const price = currentPurchase.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-            const typeText = currentPurchase.type === 'subscription' ? '/mês' : '';
-
             const phoneNumber = '5584988330532';
-            const message = `Olá! Gostaria de assinar/adquirir o produto: *${appName}* (${price}${typeText}). Posso receber mais informações?`;
+            const message = `Olá! Gostaria de receber informações sobre o produto: *${appName}*. Posso receber uma proposta?`;
 
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
