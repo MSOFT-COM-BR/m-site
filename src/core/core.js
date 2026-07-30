@@ -106,7 +106,8 @@ class Core {
       }
 
       try {
-        const res = await fetch(`/src/components/${name}.html`);
+        const componentVersion = config?.app?.version || '0';
+        const res = await fetch(`/src/components/${name}.html?v=${componentVersion}`);
         if (res.ok) {
           const content = await res.text();
 
