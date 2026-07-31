@@ -30,8 +30,8 @@ class ServicePagesContractTests(unittest.TestCase):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
 
-        self.assertIn('<!-- Version: V0.11.80 -->', index)
-        self.assertIn('version: "0.11.80"', config)
+        self.assertIn('<!-- Version: V0.11.81 -->', index)
+        self.assertIn('version: "0.11.81"', config)
         for asset in (
             'config/config.js',
             'config/seo.js',
@@ -42,10 +42,10 @@ class ServicePagesContractTests(unittest.TestCase):
             'core/skeleton.js',
             'core/core.js',
         ):
-            self.assertIn(f'/src/{asset}?v=0.11.80', index)
+            self.assertIn(f'/src/{asset}?v=0.11.81', index)
 
         for stylesheet in ('design-system.css', 'style.css', 'developer.css'):
-            self.assertIn(f'/src/assets/css/{stylesheet}?v=0.11.80', index)
+            self.assertIn(f'/src/assets/css/{stylesheet}?v=0.11.81', index)
 
     def test_quote_route_is_indexable_and_has_spa_fallback(self) -> None:
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
@@ -138,7 +138,7 @@ class ServicePagesContractTests(unittest.TestCase):
             "marked.min.js",
         ):
             self.assertNotIn(asset, index)
-        self.assertIn('/src/core/vendor-loader.js?v=0.11.80', index)
+        self.assertIn('/src/core/vendor-loader.js?v=0.11.81', index)
         self.assertIn('loadAdminEditorVendors', loader)
         self.assertIn('window.jQuery', loader)
         self.assertIn('summernote-lite.min.js', loader)
@@ -224,6 +224,20 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertNotIn("adsense-script-apps", apps)
         self.assertNotIn("openToolFromQueryString", apps)
         self.assertIn("data-full-width-responsive", apps)
+
+    def test_free_apps_open_without_login_or_installation_flow(self) -> None:
+        apps = (ROOT / "src/pages/apps.html").read_text(encoding="utf-8")
+        effect_start = apps.index("window.runInstallEffect = function")
+        effect_end = apps.index("// Ensure functions are global", effect_start)
+        effect = apps[effect_start:effect_end]
+
+        self.assertNotIn('Faça login para salvar este app na sua conta.', apps)
+        self.assertIn('Ferramentas gratuitas abrem diretamente', apps)
+        self.assertIn('if (callback) callback();', effect)
+        self.assertNotIn('authService', effect)
+        self.assertNotIn('fetchAPI', effect)
+        self.assertNotIn('premium-install-overlay', effect)
+        self.assertIn('window.runInstallEffect(openToolLogic, toolId);', apps)
 
     def test_desktop_header_collapses_before_authenticated_controls_overflow(self) -> None:
         header = (ROOT / "src/components/header.html").read_text(encoding="utf-8")
