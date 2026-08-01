@@ -470,6 +470,9 @@
   .pe-page.pe-theme-light .pe-back-to-top { background: #ffffff; color: var(--pe-gold-soft); border: 1px solid var(--pe-line); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
   .pe-back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
   .pe-back-to-top:hover { background: var(--pe-red); color: #fff; transform: translateY(-0.25rem); }
+
+  .pe-close-filter { filter: invert(1) grayscale(100%) brightness(200%); }
+  .pe-page.pe-theme-light .pe-close-filter { filter: none; }
 </style>
 
 <div class="pe-page">
@@ -480,14 +483,17 @@
       <a href="javascript:void(0)" data-scroll-to="#home" class="d-inline-flex align-items-center">
         <img src="/src/assets/images/padrao-engenharia-logo-dark.png" alt="Padrão Engenharia" class="pe-nav-logo">
       </a>
-      <div class="pe-nav-links">
+      <div class="pe-nav-links d-none d-lg-flex">
         <a href="javascript:void(0)" data-scroll-to="#home" class="active">Home</a>
         <a href="javascript:void(0)" data-scroll-to="#sobre">Sobre nós</a>
         <a href="javascript:void(0)" data-scroll-to="#servicos">Nosso Método</a>
       </div>
       <div class="d-flex align-items-center gap-2">
         <button id="themeToggle" class="pe-theme-toggle" aria-label="Alternar modo de cor"><i class="bi bi-sun"></i></button>
-        <a href="javascript:void(0)" data-scroll-to="#contato" class="pe-btn pe-btn-solid">Contato</a>
+        <a href="javascript:void(0)" data-scroll-to="#contato" class="pe-btn pe-btn-solid d-none d-sm-inline-flex">Contato</a>
+        <button class="btn d-lg-none pe-theme-toggle border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu" style="width: auto; padding: 0.25rem 0.5rem; color: var(--pe-ink);">
+          <i class="bi bi-list fs-2"></i>
+        </button>
       </div>
     </div>
   </nav>
@@ -705,6 +711,21 @@
   <a href="javascript:void(0)" data-scroll-to="#home" class="pe-back-to-top" aria-label="Voltar ao topo">
     <i class="bi bi-chevron-up"></i>
   </a>
+
+  <!-- Mobile Offcanvas Menu -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel" style="background: var(--pe-nav-bg); color: var(--pe-ink); border-left: 1px solid var(--pe-line);">
+    <div class="offcanvas-header border-bottom" style="border-color: var(--pe-line) !important;">
+      <h5 class="offcanvas-title pe-serif" id="mobileMenuLabel" style="color: var(--pe-ink);">Menu</h5>
+      <button type="button" class="btn-close pe-close-filter" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column gap-3 pe-nav-links-mobile">
+      <a href="javascript:void(0)" data-scroll-to="#home" class="nav-link fs-5 text-decoration-none" style="color: var(--pe-ink);" data-bs-dismiss="offcanvas">Home</a>
+      <a href="javascript:void(0)" data-scroll-to="#sobre" class="nav-link fs-5 text-decoration-none" style="color: var(--pe-ink);" data-bs-dismiss="offcanvas">Sobre nós</a>
+      <a href="javascript:void(0)" data-scroll-to="#servicos" class="nav-link fs-5 text-decoration-none" style="color: var(--pe-ink);" data-bs-dismiss="offcanvas">Nosso Método</a>
+      <hr style="border-color: var(--pe-line);">
+      <a href="javascript:void(0)" data-scroll-to="#contato" class="pe-btn pe-btn-solid w-100 text-center" data-bs-dismiss="offcanvas">Contato</a>
+    </div>
+  </div>
 </div>
 
 <script>
