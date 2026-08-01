@@ -30,8 +30,8 @@ class ServicePagesContractTests(unittest.TestCase):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
 
-        self.assertIn('<!-- Version: V0.11.81 -->', index)
-        self.assertIn('version: "0.11.81"', config)
+        self.assertIn('<!-- Version: V0.11.100 -->', index)
+        self.assertIn('version: "0.11.100"', config)
         for asset in (
             'config/config.js',
             'config/seo.js',
@@ -42,10 +42,10 @@ class ServicePagesContractTests(unittest.TestCase):
             'core/skeleton.js',
             'core/core.js',
         ):
-            self.assertIn(f'/src/{asset}?v=0.11.81', index)
+            self.assertIn(f'/src/{asset}?v=0.11.100', index)
 
         for stylesheet in ('design-system.css', 'style.css', 'developer.css'):
-            self.assertIn(f'/src/assets/css/{stylesheet}?v=0.11.81', index)
+            self.assertIn(f'/src/assets/css/{stylesheet}?v=0.11.100', index)
 
     def test_quote_route_is_indexable_and_has_spa_fallback(self) -> None:
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
@@ -138,12 +138,12 @@ class ServicePagesContractTests(unittest.TestCase):
             "marked.min.js",
         ):
             self.assertNotIn(asset, index)
-        self.assertIn('/src/core/vendor-loader.js?v=0.11.81', index)
+        self.assertIn('/src/core/vendor-loader.js?v=0.11.100', index)
         self.assertIn('loadAdminEditorVendors', loader)
         self.assertIn('window.jQuery', loader)
         self.assertIn('summernote-lite.min.js', loader)
         self.assertIn('await window.vendorLoader.loadAdminEditorVendors()', admin)
-        self.assertIn('const filePath = `/src/pages/${pageName}.html?v=${config.app.version}`;', core)
+        self.assertIn('const filePath = `/src/pages/${pagePath}.html?v=${config.app.version}`;', core)
 
     def test_products_route_is_removed_in_favor_of_marketplace(self) -> None:
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
@@ -178,6 +178,52 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertNotIn("defaultCats", admin)
         self.assertNotIn("/mjson/blog-categories", admin)
 
+    def test_padrao_engenharia_route_hides_the_main_frame(self) -> None:
+        config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
+        seo = (ROOT / "src/config/seo.js").read_text(encoding="utf-8")
+        core = (ROOT / "src/core/core.js").read_text(encoding="utf-8")
+        style = (ROOT / "src/assets/css/style.css").read_text(encoding="utf-8")
+        page_path = ROOT / "src/pages/sites/padrao-engenharia/index.html"
+        contact_path = ROOT / "src/pages/sites/padrao-engenharia/consultar.html"
+        self.assertTrue(page_path.is_file())
+        self.assertTrue(contact_path.is_file())
+        page = page_path.read_text(encoding="utf-8")
+        contact_page = contact_path.read_text(encoding="utf-8")
+
+        self.assertIn("'padrao-engenharia'", config)
+        self.assertIn("'padrao-engenharia-contato'", config)
+        self.assertIn("'padrao-engenharia': 'sites/padrao-engenharia/index'", config)
+        self.assertIn("'padrao-engenharia-contato': 'sites/padrao-engenharia/consultar'", config)
+        self.assertRegex(seo, r"'padrao-engenharia':\s*\{")
+        self.assertRegex(seo, r"'padrao-engenharia-contato':\s*\{")
+        self.assertIn("requestedPageName === 'padrao-engenharia' && ['consultar', 'contato'].includes(segments[2])", core)
+        self.assertIn("? 'padrao-engenharia-contato'", core)
+        self.assertIn("config.routes.pagePaths?.[pageName] || pageName;", core)
+        self.assertIn("const filePath = `/src/pages/${pagePath}.html?v=${config.app.version}`;", core)
+        self.assertIn("'/padrao-engenharia/consultar'", core)
+        self.assertIn("const isPadraoEngineeringRoute = ['padrao-engenharia', 'padrao-engenharia-contato'].includes(pageName);", core)
+        self.assertIn("const hideMainFrame = pageName === 'premium' || isPadraoEngineeringRoute;", core)
+        self.assertIn('const fullBleedLayout = isPadraoEngineeringRoute;', core)
+        self.assertIn("layoutWrapper.style.maxWidth = fullBleedLayout ? 'none' : '1140px';", core)
+        self.assertNotIn('root.style.paddingTop', core)
+        self.assertNotIn('padding-top:', style[style.index('#root {'):])
+        self.assertIn('class="pe-page"', page)
+        self.assertIn('href="/padrao-engenharia/consultar"', page)
+        self.assertIn('id="padrao-consultation-form"', contact_page)
+        self.assertIn('name="consent"', contact_page)
+        self.assertIn('form.checkValidity()', contact_page)
+        self.assertIn('canal de envio do agendamento ainda precisa ser configurado', contact_page)
+        self.assertIn('data-scroll-to="#servicos"', page)
+        self.assertIn('id="servicos"', page)
+        self.assertIn('.pe-hero, .pe-section { scroll-margin-top: 5.75rem; }', page)
+        self.assertIn("document.querySelectorAll('.pe-page a[data-scroll-to]')", page)
+        self.assertIn("target.scrollIntoView({ behavior: 'smooth', block: 'start' });", page)
+        self.assertIn('const setActiveNavLink = (hash) => {', page)
+        self.assertIn("navLink.classList.toggle('active', navLink.getAttribute('data-scroll-to') === hash);", page)
+        self.assertIn("window.history.replaceState({}, '', hash);", page)
+        self.assertNotIn('data-component="header"', page)
+        self.assertNotIn('data-component="footer"', page)
+
     def test_marketplace_tool_handoff_preserves_the_query_string(self) -> None:
         core = (ROOT / "src/core/core.js").read_text(encoding="utf-8")
         marketplace = (ROOT / "src/pages/marketplace.html").read_text(encoding="utf-8")
@@ -185,11 +231,35 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertIn('href="/apps?tool=${encodeURIComponent(item.appKey)}"', marketplace)
         self.assertIn('this.navigate(`${link.pathname}${link.search}${link.hash}`);', core)
         self.assertIn('const routeSearch = window.location.search;', core)
-        self.assertIn("const canonicalPath = pageName === 'home' ? '/' : `/${pageName}${paramsString}`;", core)
+        self.assertIn("const canonicalPath = pageName === 'home'", core)
+        self.assertIn("? '/padrao-engenharia/consultar'", core)
+        self.assertIn(": `/${pageName}${paramsString}`;", core)
         self.assertIn('const newPath = `${canonicalPath}${routeSearch}${routeHash}`;', core)
         self.assertIn("if (pageName === 'apps' && tool && typeof window.openTool === 'function')", core)
         self.assertIn('this.updatePageSEO(pageName, canonicalPath);', core)
         self.assertNotIn('this.updatePageSEO(pageName, newPath);', core)
+
+    def test_registered_app_pages_resolve_from_their_directory_index(self) -> None:
+        config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
+        core = (ROOT / "src/core/core.js").read_text(encoding="utf-8")
+
+        self.assertIn('appPages: []', config)
+        self.assertIn("const appSlug = requestedPageName === 'app'", core)
+        self.assertIn("const pagePath = appSlug ? `app/${appSlug}/index`", core)
+        self.assertIn('const isRegisteredPage = appSlug', core)
+        self.assertIn("? `/app/${appSlug}`", core)
+
+    def test_padrao_engenharia_routes_reject_extra_path_segments(self) -> None:
+        core = (ROOT / "src/core/core.js").read_text(encoding="utf-8")
+
+        self.assertIn(
+            "const hasValidPadraoEngineeringPath = !isPadraoEngineeringRoute",
+            core,
+        )
+        self.assertIn(
+            "hasValidPadraoEngineeringPath && this.registerPages.includes(pageName)",
+            core,
+        )
 
     def test_marketplace_public_view_hides_catalog_prices(self) -> None:
         marketplace = (ROOT / "src/pages/marketplace.html").read_text(encoding="utf-8")

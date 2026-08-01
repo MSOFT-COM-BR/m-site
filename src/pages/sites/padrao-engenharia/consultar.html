@@ -1,0 +1,107 @@
+<style>
+  .pe-contact-page {
+    --pe-bg: #0e0e10;
+    --pe-panel: #171719;
+    --pe-ink: #f4f1ea;
+    --pe-gold: #c9a35c;
+    --pe-gold-soft: #d9bc7f;
+    --pe-muted: #a7a194;
+    --pe-line: rgba(201, 163, 92, 0.24);
+    min-height: 100svh;
+    background: radial-gradient(circle at 100% 0, rgba(122, 31, 34, 0.42), transparent 34rem), var(--pe-bg);
+    color: var(--pe-ink);
+    font-family: Inter, "Segoe UI", sans-serif;
+  }
+  .pe-contact-nav { border-bottom: 1px solid var(--pe-line); background: rgba(14, 14, 16, 0.88); }
+  .pe-contact-nav-inner { display:flex; align-items:center; justify-content:space-between; gap:1rem; min-height:76px; }
+  .pe-contact-brand { color:var(--pe-ink); font-weight:800; text-decoration:none; letter-spacing:-.03em; }
+  .pe-contact-brand:hover { color:var(--pe-gold-soft); }
+  .pe-contact-back { color:var(--pe-gold-soft); font-size:.8rem; font-weight:700; letter-spacing:.12em; text-decoration:none; text-transform:uppercase; }
+  .pe-contact-back:hover { color:var(--pe-ink); }
+  .pe-contact-main { padding:clamp(3rem, 8vw, 6rem) 0; }
+  .pe-contact-layout { display:grid; gap:2rem; align-items:start; }
+  .pe-contact-kicker { color:var(--pe-gold); font-size:.72rem; font-weight:700; letter-spacing:.25em; text-transform:uppercase; }
+  .pe-contact-title { margin:.8rem 0 1rem; font-family:Archivo, "Segoe UI", sans-serif; font-size:clamp(2.25rem, 5vw, 4.5rem); font-weight:800; letter-spacing:-.055em; line-height:1.04; }
+  .pe-contact-title em { color:var(--pe-gold-soft); font-style:normal; }
+  .pe-contact-copy { max-width:34rem; color:var(--pe-muted); font-size:1.04rem; line-height:1.8; }
+  .pe-contact-note { display:flex; gap:.8rem; margin-top:2rem; color:var(--pe-muted); font-size:.9rem; }
+  .pe-contact-note i { color:var(--pe-gold); }
+  .pe-contact-card { padding:clamp(1.35rem, 4vw, 2.4rem); border:1px solid var(--pe-line); border-radius:1.4rem; background:rgba(23, 23, 25, .9); box-shadow:0 28px 80px rgba(0, 0, 0, .3); }
+  .pe-contact-card h2 { margin:0; font-family:Archivo, "Segoe UI", sans-serif; font-size:1.5rem; font-weight:700; }
+  .pe-contact-card > p { margin:.55rem 0 1.6rem; color:var(--pe-muted); }
+  .pe-contact-field { display:grid; gap:.45rem; margin-top:1rem; }
+  .pe-contact-field label { color:var(--pe-ink); font-size:.82rem; font-weight:700; letter-spacing:.04em; }
+  .pe-contact-field input, .pe-contact-field textarea { width:100%; padding:.85rem .95rem; border:1px solid rgba(201, 163, 92, .28); border-radius:.7rem; background:#101012; color:var(--pe-ink); font:inherit; outline:none; }
+  .pe-contact-field textarea { min-height:116px; resize:vertical; }
+  .pe-contact-field input:focus, .pe-contact-field textarea:focus { border-color:var(--pe-gold); box-shadow:0 0 0 3px rgba(201, 163, 92, .14); }
+  .pe-contact-consent { display:flex; align-items:flex-start; gap:.7rem; margin-top:1.2rem; color:var(--pe-muted); font-size:.82rem; line-height:1.5; }
+  .pe-contact-consent input { width:1rem; height:1rem; margin-top:.15rem; accent-color:var(--pe-gold); }
+  .pe-contact-submit { width:100%; margin-top:1.3rem; padding:.95rem 1rem; border:1px solid var(--pe-gold); border-radius:999px; background:var(--pe-gold); color:#17120b; cursor:pointer; font:inherit; font-size:.78rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+  .pe-contact-submit:hover { background:var(--pe-gold-soft); }
+  .pe-contact-status { min-height:1.4rem; margin:1rem 0 0; color:var(--pe-muted); font-size:.85rem; }
+  .pe-contact-status[data-state="error"] { color:#f9a8a5; }
+  @media (min-width:992px) { .pe-contact-layout { grid-template-columns:minmax(0, 1fr) minmax(390px, .78fr); gap:5rem; } .pe-contact-card { margin-top:.4rem; } }
+</style>
+
+<div class="pe-contact-page">
+  <nav class="pe-contact-nav" aria-label="Navegação Padrão Engenharia">
+    <div class="container pe-contact-nav-inner">
+      <a class="pe-contact-brand" href="/padrao-engenharia">Padrão Engenharia</a>
+      <a class="pe-contact-back" href="/padrao-engenharia"><i class="bi bi-arrow-left"></i> Voltar para a página inicial</a>
+    </div>
+  </nav>
+
+  <section class="pe-contact-main" aria-labelledby="pe-contact-title">
+    <div class="container pe-contact-layout">
+      <div>
+        <p class="pe-contact-kicker">Agende uma consultoria</p>
+        <h1 class="pe-contact-title" id="pe-contact-title">Vamos conversar sobre <em>a sua obra.</em></h1>
+        <p class="pe-contact-copy">Conte um pouco sobre o momento do seu projeto. Assim, a equipe da Padrão Engenharia poderá entender a sua necessidade antes do contato.</p>
+        <p class="pe-contact-note"><i class="bi bi-shield-check" aria-hidden="true"></i><span>Seus dados serão usados somente para responder a esta solicitação.</span></p>
+      </div>
+
+      <form class="pe-contact-card" id="padrao-consultation-form" novalidate>
+        <h2>Solicite seu agendamento</h2>
+        <p>Preencha os dados abaixo para iniciar a conversa.</p>
+
+        <div class="pe-contact-field">
+          <label for="consultation-name">Nome</label>
+          <input id="consultation-name" name="name" type="text" autocomplete="name" required minlength="2" placeholder="Seu nome completo">
+        </div>
+        <div class="pe-contact-field">
+          <label for="consultation-email">E-mail</label>
+          <input id="consultation-email" name="email" type="email" autocomplete="email" required placeholder="voce@email.com">
+        </div>
+        <div class="pe-contact-field">
+          <label for="consultation-phone">Telefone</label>
+          <input id="consultation-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required placeholder="(00) 00000-0000">
+        </div>
+        <div class="pe-contact-field">
+          <label for="consultation-message">Como podemos ajudar?</label>
+          <textarea id="consultation-message" name="message" required minlength="10" placeholder="Conte brevemente sobre a sua obra ou projeto."></textarea>
+        </div>
+        <label class="pe-contact-consent"><input name="consent" type="checkbox" required><span>Autorizo o uso destes dados para retorno sobre esta solicitação.</span></label>
+        <button class="pe-contact-submit" type="submit">Enviar solicitação</button>
+        <p class="pe-contact-status" id="consultation-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</div>
+
+<script>
+  (() => {
+    const form = document.getElementById('padrao-consultation-form');
+    const status = document.getElementById('consultation-status');
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      status.dataset.state = 'error';
+      status.textContent = 'O canal de envio do agendamento ainda precisa ser configurado.';
+    });
+  })();
+</script>

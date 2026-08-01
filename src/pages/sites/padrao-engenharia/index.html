@@ -1,0 +1,779 @@
+<style>
+  html { scroll-behavior: smooth; }
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+  .pe-page {
+    --pe-bg: #0e0e10;
+    --pe-panel: #141416;
+    --pe-ink: #f4f1ea;
+    --pe-gold: #c9a35c;
+    --pe-gold-soft: #d9bc7f;
+    --pe-muted: #9b9587;
+    --pe-red: #7a1f22;
+    --pe-red-bright: #b3342f;
+    --pe-line: rgba(201, 163, 92, 0.22);
+    --pe-nav-bg: rgba(14, 14, 16, 0.82);
+    --pe-nav-links-bg: rgba(20, 20, 22, 0.7);
+    --pe-btn-ink: #161310;
+    --pe-theme-border: rgba(201, 163, 92, 0.5);
+    --pe-service-bg: rgba(20, 20, 22, 0.55);
+    --pe-tag-bg: rgba(14, 14, 16, 0.9);
+    --pe-hero-shape-bg: linear-gradient(155deg, rgba(122, 31, 34, 0.5) 0%, rgba(43, 13, 15, 0.85) 100%);
+    --pe-panel-bg: radial-gradient(120% 140% at 100% 0%, rgba(122, 31, 34, 0.35) 0%, transparent 55%), var(--pe-panel);
+    background: var(--pe-bg);
+    color: var(--pe-ink);
+    font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    overflow-x: hidden;
+  }
+
+  .pe-page.pe-theme-light {
+    --pe-bg: #f9f9f9;
+    --pe-panel: #ffffff;
+    --pe-ink: #1e1e24;
+    --pe-gold: #b3342f;
+    --pe-gold-soft: #d03d37;
+    --pe-muted: #4a4947;
+    --pe-red: #7a1f22;
+    --pe-red-bright: #d03d37;
+    --pe-line: rgba(179, 52, 47, 0.22);
+    --pe-nav-bg: rgba(255, 255, 255, 0.9);
+    --pe-nav-links-bg: rgba(240, 240, 240, 0.8);
+    --pe-btn-ink: #ffffff;
+    --pe-theme-border: rgba(179, 52, 47, 0.5);
+    --pe-service-bg: rgba(0, 0, 0, 0.04);
+    --pe-tag-bg: #ffffff;
+    --pe-hero-shape-bg: linear-gradient(155deg, rgba(179, 52, 47, 0.04) 0%, rgba(179, 52, 47, 0.01) 100%);
+    --pe-panel-bg: var(--pe-panel);
+  }
+
+  .pe-serif { font-family: 'Archivo', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; }
+
+  /* ===== Nav propria (o header do m-site fica oculto nesta rota) ===== */
+  .pe-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(14px);
+    background: var(--pe-nav-bg);
+    border-bottom: 1px solid var(--pe-line);
+  }
+  .pe-hero, .pe-section { scroll-margin-top: 5.75rem; }
+  .pe-nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 0;
+  }
+  .pe-nav-logo { height: 52px; width: auto; }
+  .pe-nav-links {
+    display: flex;
+    gap: 0.35rem;
+    padding: 0.3rem;
+    border: 1px solid var(--pe-line);
+    border-radius: 999px;
+    background: var(--pe-nav-links-bg);
+  }
+  .pe-nav-links a {
+    color: var(--pe-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    padding: 0.45rem 1.1rem;
+    border-radius: 999px;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .pe-nav-links a:hover,
+  .pe-nav-links a.active { color: var(--pe-ink); background: rgba(201, 163, 92, 0.14); }
+
+  .pe-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.8rem;
+    border: 1px solid var(--pe-gold);
+    border-radius: 999px;
+    color: var(--pe-gold-soft);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+  .pe-btn:hover { background: var(--pe-gold); color: var(--pe-btn-ink); }
+  .pe-btn-solid { background: var(--pe-gold); color: var(--pe-btn-ink); }
+  .pe-btn-solid:hover { background: var(--pe-gold-soft); color: var(--pe-btn-ink); }
+
+  .pe-theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid var(--pe-theme-border);
+    background: transparent;
+    color: var(--pe-gold);
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .pe-theme-toggle:hover {
+    background: var(--pe-gold);
+    color: var(--pe-btn-ink);
+  }
+  .pe-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--pe-gold);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+  }
+  .pe-eyebrow::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: var(--pe-red-bright);
+    transform: rotate(45deg) scale(0.85);
+    flex: 0 0 auto;
+  }
+
+  .pe-display {
+    font-weight: 800;
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    font-size: clamp(2.5rem, 5.6vw, 4.6rem);
+    margin: 0;
+  }
+  .pe-display em { color: var(--pe-gold-soft); font-style: normal; }
+
+  .pe-text { color: var(--pe-muted); line-height: 1.8; }
+
+  /* ===== Hero ===== */
+  .pe-hero { position: relative; padding: 5.5rem 0 4.5rem; isolation: isolate; }
+  .pe-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto auto;
+    width: min(42%, 640px);
+    height: 100%;
+    background: var(--pe-hero-shape-bg);
+    clip-path: polygon(30% 0, 100% 0, 100% 100%, 0% 100%);
+    z-index: -1;
+  }
+
+  /* Cartao visual com foto real da obra/equipe */
+  .pe-visual {
+    position: relative;
+    border-radius: 1.25rem;
+    border: 1px solid var(--pe-line);
+    min-height: 380px;
+    overflow: hidden;
+    background:
+      repeating-linear-gradient(0deg, rgba(201, 163, 92, 0.06) 0 1px, transparent 1px 56px),
+      repeating-linear-gradient(90deg, rgba(201, 163, 92, 0.06) 0 1px, transparent 1px 56px),
+      linear-gradient(150deg, #1c1c1f 0%, #2b0d0f 78%, #3d1113 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pe-visual img { width: min(240px, 55%); opacity: 0.95; filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.5)); }
+  .pe-visual .pe-visual-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1;
+    filter: none;
+  }
+
+  .pe-tag {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 0.95rem;
+    border-radius: 999px;
+    border: 1px solid var(--pe-line);
+    background: var(--pe-tag-bg);
+    color: var(--pe-gold-soft);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+  .pe-tag i { color: var(--pe-red-bright); }
+  .pe-tag-1 { top: 12%; left: -1.25rem; }
+  .pe-tag-2 { top: 44%; right: -1.25rem; }
+  .pe-tag-3 { bottom: 12%; left: 8%; }
+
+  .pe-visual-sobre { min-height: 300px; }
+  .pe-visual-cta { min-height: 220px; }
+  .pe-visual-portrait { min-height: 340px; }
+
+  /* ===== Sobre (card escuro com stat) ===== */
+  .pe-panel {
+    border: 1px solid var(--pe-line);
+    border-radius: 1.5rem;
+    background: var(--pe-panel-bg);
+    padding: clamp(1.5rem, 4vw, 3rem);
+  }
+  .pe-stat {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    text-align: center;
+    padding: 0.9rem 1.2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--pe-line);
+    background: var(--pe-tag-bg);
+  }
+  .pe-stat strong {
+    display: block;
+    color: var(--pe-gold-soft);
+    font-family: 'Archivo', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1.9rem;
+    line-height: 1;
+  }
+  .pe-stat span { color: var(--pe-muted); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; }
+
+  .pe-section { padding: 4.5rem 0; }
+  .pe-section-index {
+    color: var(--pe-gold);
+    font-size: 0.7rem;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    margin-bottom: 1.1rem;
+  }
+  .pe-section-title {
+    font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.14;
+    margin: 0 0 1rem;
+  }
+  .pe-section-title em { color: var(--pe-gold-soft); font-style: normal; }
+
+  /* ===== Servicos (acordeao) ===== */
+  .pe-service {
+    border: 1px solid var(--pe-line);
+    border-radius: 1.1rem;
+    background: var(--pe-service-bg);
+    overflow: hidden;
+  }
+  .pe-service + .pe-service { margin-top: 0.9rem; }
+  .pe-service summary {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    list-style: none;
+    padding: 1.15rem 1.4rem;
+  }
+  .pe-service summary::-webkit-details-marker { display: none; }
+  .pe-service summary::after {
+    content: '\F282';
+    font-family: 'bootstrap-icons';
+    margin-left: auto;
+    color: var(--pe-gold);
+    transition: transform 0.25s ease;
+  }
+  .pe-service[open] summary::after { transform: rotate(180deg); }
+  .pe-service-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 0.8rem;
+    border: 1px solid var(--pe-line);
+    color: var(--pe-gold-soft);
+    background: rgba(201, 163, 92, 0.1);
+    flex: 0 0 auto;
+  }
+  .pe-service-name { font-size: 1.1rem; font-weight: 600; margin: 0; }
+  .pe-service-body { padding: 0 1.4rem 1.4rem; }
+  .pe-service-visual {
+    border-radius: 0.9rem;
+    border: 1px solid var(--pe-line);
+    min-height: 180px;
+    margin-bottom: 1.1rem;
+    overflow: hidden;
+    background:
+      repeating-linear-gradient(45deg, rgba(201, 163, 92, 0.05) 0 2px, transparent 2px 18px),
+      linear-gradient(140deg, #17171a 0%, #2b0d0f 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(201, 163, 92, 0.5);
+    font-size: 2.4rem;
+  }
+
+  /* ===== CTA ===== */
+  .pe-cta {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.5rem;
+    border: 1px solid var(--pe-line);
+    background: linear-gradient(120deg, #17171a 0%, #2b0d0f 70%, #4b1517 100%);
+    padding: clamp(2rem, 5vw, 3.5rem);
+  }
+  .pe-cta .pe-section-title {
+    color: #f4f1ea;
+  }
+  .pe-cta .pe-text {
+    color: #9b9587;
+  }
+
+  /* ===== Diferenciais ===== */
+  .pe-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 1rem 0;
+  }
+  .pe-feature i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 0.7rem;
+    border: 1px solid var(--pe-line);
+    color: var(--pe-gold-soft);
+    background: rgba(201, 163, 92, 0.1);
+    flex: 0 0 auto;
+  }
+  .pe-feature p { margin: 0; color: var(--pe-muted); font-size: 0.92rem; line-height: 1.6; }
+  .pe-feature strong { color: var(--pe-ink); display: block; font-size: 0.95rem; }
+
+  /* ===== Novo Footer Nivel US ===== */
+  .pe-footer {
+    padding: 5.5rem 0 3rem;
+    background: var(--pe-bg);
+    border-top: 1px solid var(--pe-line);
+    position: relative;
+    overflow: hidden;
+  }
+  .pe-footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--pe-gold), transparent);
+    opacity: 0.3;
+  }
+  .pe-footer-brand { margin-bottom: 2rem; }
+  .pe-footer-brand img { height: 48px; width: auto; margin-bottom: 1.5rem; }
+  .pe-footer-desc { color: var(--pe-muted); font-size: 0.9rem; line-height: 1.7; max-width: 320px; }
+
+  .pe-footer-title {
+    color: var(--pe-ink);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    font-family: 'Archivo', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  }
+  .pe-footer-list { list-style: none; padding: 0; margin: 0; }
+  .pe-footer-list li { margin-bottom: 0.85rem; }
+  .pe-footer-list a {
+    color: var(--pe-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.25s ease, padding-left 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+  }
+  .pe-footer-list a:hover { color: var(--pe-gold-soft); padding-left: 5px; }
+
+  .pe-footer-contact { display: flex; flex-direction: column; gap: 1rem; }
+  .pe-contact-item { display: flex; align-items: flex-start; gap: 0.85rem; color: var(--pe-muted); font-size: 0.9rem; }
+  .pe-contact-item i { color: var(--pe-gold); font-size: 1.1rem; line-height: 1.2; }
+
+  .pe-footer-bottom {
+    margin-top: 4.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(201, 163, 92, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  @media (min-width: 768px) {
+    .pe-footer-bottom { flex-direction: row; justify-content: space-between; align-items: center; }
+  }
+  .pe-footer-bottom p { margin: 0; color: rgba(155, 149, 135, 0.7); font-size: 0.8rem; }
+  .pe-footer-legal { display: flex; gap: 1.5rem; }
+  .pe-footer-legal a { color: rgba(155, 149, 135, 0.7); text-decoration: none; font-size: 0.8rem; transition: color 0.2s ease; }
+  .pe-footer-legal a:hover { color: var(--pe-gold); }
+
+  /* ===== Responsividade ===== */
+  @media (max-width: 1199.98px) {
+    .pe-tag-1 { left: -0.5rem; }
+    .pe-tag-2 { right: -0.5rem; }
+  }
+
+  @media (max-width: 991.98px) {
+    .pe-nav-links { display: none; }
+    .pe-hero { padding: 4rem 0 3rem; }
+    .pe-hero::before { width: 100%; clip-path: none; opacity: 0.3; }
+    .pe-section { padding: 3.5rem 0; }
+    .pe-visual { min-height: 320px; }
+    .pe-tag-1 { left: 0.5rem; }
+    .pe-tag-2 { right: 0.5rem; }
+  }
+
+  @media (max-width: 767.98px) {
+    .pe-hero { padding: 3rem 0 2.5rem; }
+    .pe-section { padding: 3rem 0; }
+    .pe-visual { min-height: 260px; }
+    .pe-visual-sobre { min-height: 240px; }
+    .pe-visual-cta { min-height: 200px; }
+    .pe-visual-portrait { min-height: 280px; }
+    .pe-btn { padding: 0.75rem 1.4rem; letter-spacing: 0.16em; }
+    .pe-tag { font-size: 0.66rem; padding: 0.45rem 0.8rem; }
+    .pe-tag-3 { bottom: 8%; left: 0.5rem; }
+    .pe-stat { padding: 0.65rem 0.9rem; right: 0.9rem; bottom: 0.9rem; }
+    .pe-stat strong { font-size: 1.4rem; }
+    .pe-service summary { padding: 1rem 1.1rem; gap: 0.75rem; }
+    .pe-service-body { padding: 0 1.1rem 1.1rem; }
+    .pe-feature { padding: 0.75rem 0; }
+  }
+
+  @media (max-width: 575.98px) {
+    .pe-nav-logo { height: 42px; }
+    .pe-nav .pe-btn { padding: 0.6rem 1rem; font-size: 0.66rem; letter-spacing: 0.12em; }
+    .pe-hero { padding: 2.5rem 0 2rem; }
+    .pe-visual { min-height: 230px; }
+    .pe-display { font-size: clamp(2.1rem, 9vw, 2.6rem); }
+    .pe-eyebrow { font-size: 0.62rem; letter-spacing: 0.28em; }
+    .pe-tag-1 { top: 6%; }
+    .pe-tag-2 { top: auto; bottom: 20%; }
+    .pe-tag-3 { display: none; }
+    .pe-stat span { font-size: 0.6rem; }
+    .pe-cta { padding: 1.75rem 1.25rem; }
+    .pe-footer .pe-marker { letter-spacing: 0.28em; }
+  }
+
+  .pe-back-to-top {
+    position: fixed; bottom: 2rem; right: 2rem; width: 3rem; height: 3rem; border-radius: 50%;
+    background: var(--pe-gold-soft); color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem; z-index: 99; box-shadow: 0 8px 24px rgba(0,0,0,0.3); opacity: 0; visibility: hidden;
+    transform: translateY(1rem); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .pe-page.pe-theme-light .pe-back-to-top { background: #ffffff; color: var(--pe-gold-soft); border: 1px solid var(--pe-line); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+  .pe-back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+  .pe-back-to-top:hover { background: var(--pe-red); color: #fff; transform: translateY(-0.25rem); }
+</style>
+
+<div class="pe-page">
+
+  <!-- Nav propria do tema -->
+  <nav class="pe-nav" aria-label="Navegação Padrão Engenharia">
+    <div class="container pe-nav-inner">
+      <a href="javascript:void(0)" data-scroll-to="#home" class="d-inline-flex align-items-center">
+        <img src="/src/assets/images/padrao-engenharia-logo-dark.png" alt="Padrão Engenharia" class="pe-nav-logo">
+      </a>
+      <div class="pe-nav-links">
+        <a href="javascript:void(0)" data-scroll-to="#home" class="active">Home</a>
+        <a href="javascript:void(0)" data-scroll-to="#sobre">Sobre nós</a>
+        <a href="javascript:void(0)" data-scroll-to="#servicos">Nosso Método</a>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <button id="themeToggle" class="pe-theme-toggle" aria-label="Alternar modo de cor"><i class="bi bi-sun"></i></button>
+        <a href="javascript:void(0)" data-scroll-to="#contato" class="pe-btn pe-btn-solid">Contato</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 01 Hero -->
+  <section class="pe-hero" id="home">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <span class="pe-eyebrow mb-4">Administração de Obras · Residencial</span>
+          <h1 class="pe-display pe-serif mb-4">
+            Construa com<br>
+            <em>segurança.</em>
+          </h1>
+          <p class="pe-text mb-4" style="max-width: 480px;">
+            Nós conduzimos todo o processo enquanto você acompanha seu patrimônio com tranquilidade. Mais de 10 anos de experiência oferecendo planejamento, transparência e alto padrão de execução.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="javascript:void(0)" data-scroll-to="#contato" class="pe-btn pe-btn-solid">Solicitar uma Consultoria</a>
+            <a href="javascript:void(0)" data-scroll-to="#servicos" class="pe-btn">Saiba Como Funciona</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="pe-visual">
+            <img class="pe-visual-photo" src="/src/assets/images/padrao-engenharia/hero.jpg" alt="Casa de alto padrão em construção">
+            <span class="pe-tag pe-tag-1"><i class="bi bi-shield-check"></i> Segurança</span>
+            <span class="pe-tag pe-tag-2"><i class="bi bi-graph-up"></i> Planejamento</span>
+            <span class="pe-tag pe-tag-3"><i class="bi bi-house"></i> Alto Padrão</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 Sobre nos -->
+  <section class="pe-section pt-0" id="sobre">
+    <div class="container">
+      <div class="pe-panel">
+        <div class="row align-items-center g-4 g-lg-5">
+          <div class="col-lg-5">
+            <div class="pe-visual pe-visual-sobre">
+              <img class="pe-visual-photo" src="/src/assets/images/padrao-engenharia/sobre.jpg" alt="Família feliz acompanhando projeto">
+              <div class="pe-stat">
+                <strong>10+</strong>
+                <span>Anos de<br>experiência</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <p class="pe-section-index">Por que a Padrão?</p>
+            <h2 class="pe-section-title pe-serif">Construir não precisa ser sinônimo de <em>estresse.</em></h2>
+            <p class="pe-text">
+              Nosso trabalho é assumir toda a gestão da obra para que você tenha segurança, previsibilidade e tranquilidade durante toda a construção.
+            </p>
+            <p class="pe-text mb-0">
+              Mais do que entregar uma casa, queremos proporcionar uma excelente experiência. Assumimos as preocupações da obra para que nossos clientes vivam apenas a realização do sonho de construir.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 Servicos -->
+  <section class="pe-section pt-0" id="servicos">
+    <div class="container">
+      <div class="row g-5">
+        <div class="col-lg-6">
+          <p class="pe-section-index">Nosso Método</p>
+          <h2 class="pe-section-title pe-serif mb-5">Planejar. Gerenciar.<br><em>Executar. Entregar.</em></h2>
+          <details class="pe-service" open>
+            <summary>
+              <span class="pe-service-icon"><i class="bi bi-clipboard-data"></i></span>
+              <h3 class="pe-service-name pe-serif">Planejamento e Gestão</h3>
+            </summary>
+            <div class="pe-service-body">
+              <p class="pe-text mb-0">
+                Cada decisão é baseada em organização e acompanhamento técnico para reduzir riscos, evitar desperdícios e garantir a máxima qualidade.
+              </p>
+            </div>
+          </details>
+          <details class="pe-service" open>
+            <summary>
+              <span class="pe-service-icon"><i class="bi bi-check-circle"></i></span>
+              <h3 class="pe-service-name pe-serif">Segurança e Transparência</h3>
+            </summary>
+            <div class="pe-service-body">
+              <ul class="pe-text mb-0" style="padding-left: 1rem;">
+                <li>O cliente mantém o controle absoluto dos recursos.</li>
+                <li>Cerca de 80% dos pagamentos são feitos diretamente aos fornecedores.</li>
+                <li>Atuamos como gestores técnicos focados no seu interesse.</li>
+                <li>Total transparência e prestação de contas em todas as etapas.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+        <div class="col-lg-6">
+          <p class="pe-section-index">Portfólio</p>
+          <h2 class="pe-section-title pe-serif mb-5">Casas com <em>alto padrão de acabamento.</em></h2>
+          <div class="pe-visual" style="min-height: 280px; margin-bottom: 1rem;">
+            <img class="pe-visual-photo" src="/src/assets/images/padrao-engenharia/servico-gestao.jpg" alt="Antes e depois da obra">
+          </div>
+          <p class="pe-text">Acompanhe nossas obras, vídeos de evolução e depoimentos de clientes que já vivenciaram a experiência Padrão Engenharia.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 CTA -->
+  <section class="pe-section pt-0">
+    <div class="container">
+      <div class="row align-items-center g-4 g-lg-5">
+        <div class="col-lg-4">
+          <div class="pe-feature"><i class="bi bi-award"></i><p><strong>10+ anos de experiência</strong>em gestão de obras de alto padrão.</p></div>
+          <div class="pe-feature"><i class="bi bi-shield-check"></i><p><strong>Administração completa</strong>com foco em qualidade e prazo.</p></div>
+          <div class="pe-feature"><i class="bi bi-gem"></i><p><strong>Alto padrão de acabamento</strong>cuidado em cada detalhe.</p></div>
+        </div>
+        <div class="col-lg-4">
+          <div class="pe-visual pe-visual-portrait">
+            <img class="pe-visual-photo" src="/src/assets/images/padrao-engenharia/diferenciais.jpg" alt="Equipe focada no planejamento">
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="pe-feature"><i class="bi bi-map"></i><p><strong>Planejamento detalhado</strong>para evitar retrabalho e surpresas.</p></div>
+          <div class="pe-feature"><i class="bi bi-people"></i><p><strong>Gestão de equipe</strong>e coordenação total de fornecedores.</p></div>
+          <div class="pe-feature"><i class="bi bi-star"></i><p><strong>Satisfação de 100%</strong>dos clientes em nosso histórico.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 Diferenciais -->
+  <section class="pe-section pt-0" id="contato">
+    <div class="container">
+      <div class="pe-cta">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-7">
+            <h2 class="pe-section-title pe-serif mb-3">Sua obra merece começar <em>da forma certa.</em></h2>
+            <p class="pe-text mb-4">Receba uma orientação técnica personalizada e descubra o caminho mais seguro para construir. É essa experiência que faz muitos clientes se tornarem amigos.</p>
+            <a href="/padrao-engenharia/consultar" class="pe-btn pe-btn-solid">Agendar uma Consultoria</a>
+          </div>
+          <div class="col-lg-5">
+            <div class="pe-visual pe-visual-cta">
+              <img class="pe-visual-photo" src="/src/assets/images/padrao-engenharia/cta.jpg" alt="Profissional passando segurança">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Novo Footer -->
+  <footer class="pe-footer">
+    <div class="container">
+      <div class="row g-5">
+        <!-- Brand / Coluna 1 -->
+        <div class="col-lg-4">
+          <div class="pe-footer-brand">
+            <img src="/src/assets/images/padrao-engenharia-logo-dark.png" alt="Padrão Engenharia">
+            <p class="pe-footer-desc">
+              Excelência em gestão de obras, orçamentos e laudos técnicos. Construindo residências de alto padrão e projetos com total segurança.
+            </p>
+          </div>
+        </div>
+        <!-- Links Rápidos / Coluna 2 -->
+        <div class="col-lg-2 col-md-6">
+          <h4 class="pe-footer-title">Institucional</h4>
+          <ul class="pe-footer-list">
+            <li><a href="javascript:void(0)" data-scroll-to="#home">Home</a></li>
+            <li><a href="javascript:void(0)" data-scroll-to="#sobre">Sobre Nós</a></li>
+            <li><a href="javascript:void(0)" data-scroll-to="#servicos">Nossos Serviços</a></li>
+            <li><a href="javascript:void(0)" data-scroll-to="#contato">Fale Conosco</a></li>
+          </ul>
+        </div>
+        <!-- Serviços / Coluna 3 -->
+        <div class="col-lg-3 col-md-6">
+          <h4 class="pe-footer-title">Especialidades</h4>
+          <ul class="pe-footer-list">
+            <li><a href="javascript:void(0)" data-scroll-to="#servicos">Gestão de Obras</a></li>
+            <li><a href="javascript:void(0)" data-scroll-to="#servicos">Laudos e Perícias</a></li>
+            <li><a href="javascript:void(0)" data-scroll-to="#servicos">Orçamentos e Planilhas</a></li>
+            <li><a href="javascript:void(0)" data-scroll-to="#servicos">Consultoria Técnica</a></li>
+          </ul>
+        </div>
+        <!-- Contato / Coluna 4 -->
+        <div class="col-lg-3">
+          <h4 class="pe-footer-title">Contato</h4>
+          <div class="pe-footer-contact">
+            <div class="pe-contact-item">
+              <i class="bi bi-geo-alt"></i>
+              <span>Avenida das Tulipas, 1914<br>Capim Macio, Natal - RN, 59.078-220</span>
+            </div>
+            <div class="pe-contact-item">
+              <i class="bi bi-envelope"></i>
+              <span>contato@padraoengenharia.com</span>
+            </div>
+            <div class="pe-contact-item">
+              <i class="bi bi-telephone"></i>
+              <span>+55 (11) 4000-0000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pe-footer-bottom">
+        <p>&copy; 2026 Padrao Prestadora de Servicos de Engenharia Civil Ltda. CNPJ: 33.174.240/0001-61. Todos os direitos reservados. <span>Feito por Miranda Soft</span></p>
+        <div class="pe-footer-legal">
+          <a href="/privacy">Política de Privacidade</a>
+          <a href="/terms">Termos de Uso</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="javascript:void(0)" data-scroll-to="#home" class="pe-back-to-top" aria-label="Voltar ao topo">
+    <i class="bi bi-chevron-up"></i>
+  </a>
+</div>
+
+<script>
+  (() => {
+    const navLinks = document.querySelectorAll('.pe-page a[data-scroll-to]');
+    const setActiveNavLink = (hash) => {
+      document.querySelectorAll('.pe-nav-links a[data-scroll-to]').forEach((navLink) => {
+        navLink.classList.toggle('active', navLink.getAttribute('data-scroll-to') === hash);
+      });
+    };
+
+    navLinks.forEach((anchor) => {
+      anchor.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const hash = anchor.getAttribute('data-scroll-to');
+        const target = document.getElementById(hash.slice(1));
+        if (!target) return;
+
+        setActiveNavLink(hash);
+        window.history.replaceState({}, '', hash);
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    setActiveNavLink(window.location.hash || '#home');
+
+    // Back to top listener
+    const backToTop = document.querySelector('.pe-back-to-top');
+    if (backToTop) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) backToTop.classList.add('show');
+        else backToTop.classList.remove('show');
+      }, { passive: true });
+    }
+
+    // Theme Toggle
+    const toggleBtn = document.getElementById('themeToggle');
+    const pageWrapper = document.querySelector('.pe-page');
+    const toggleIcon = toggleBtn.querySelector('i');
+    const navLogo = document.querySelector('.pe-nav-logo');
+    const footerLogo = document.querySelector('.pe-footer-brand img');
+
+    const logoDarkSrc = '/src/assets/images/padrao-engenharia-logo-dark.png';
+    const logoLightSrc = '/src/assets/images/padrao-engenharia-logo.png';
+
+    const savedTheme = localStorage.getItem('pe-theme') || 'dark';
+    if(savedTheme === 'light') {
+      pageWrapper.classList.add('pe-theme-light');
+      toggleIcon.classList.replace('bi-sun', 'bi-moon-stars');
+      if(navLogo) navLogo.src = logoLightSrc;
+      if(footerLogo) footerLogo.src = logoLightSrc;
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      pageWrapper.classList.toggle('pe-theme-light');
+      const isLight = pageWrapper.classList.contains('pe-theme-light');
+      localStorage.setItem('pe-theme', isLight ? 'light' : 'dark');
+
+      if(isLight) {
+        toggleIcon.classList.replace('bi-sun', 'bi-moon-stars');
+        if(navLogo) navLogo.src = logoLightSrc;
+        if(footerLogo) footerLogo.src = logoLightSrc;
+      } else {
+        toggleIcon.classList.replace('bi-moon-stars', 'bi-sun');
+        if(navLogo) navLogo.src = logoDarkSrc;
+        if(footerLogo) footerLogo.src = logoDarkSrc;
+      }
+    });
+  })();
+</script>

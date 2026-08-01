@@ -59,6 +59,16 @@ const SEO_CONFIG = {
     description: 'Encontre produtos e recursos no marketplace da MSoft para ampliar sua operação e produtividade.',
     noindex: false
   },
+  'padrao-engenharia': {
+    title: 'Padrão Engenharia | Padrão de Excelência em Engenharia',
+    description: 'Orçamentos, laudos e gestão de obras com rigor técnico — tema visual Padrão Engenharia.',
+    noindex: true
+  },
+  'padrao-engenharia-contato': {
+    title: 'Agendar uma Consultoria | Padrão Engenharia',
+    description: 'Solicite uma consultoria com a Padrão Engenharia.',
+    noindex: true
+  },
   'mcredential': {
     title: 'MCredential | Gerenciador de Senhas MSoft',
     description: 'Protetor de senhas corporativo com criptografia de ponta a ponta. Segurança para credenciais da sua empresa.',

@@ -602,7 +602,6 @@ a.btn-link.text-light:after {
   min-height: 60vh;
   width: 100%;
   display: block;
-  padding-top: 20px;
 }
 
 /* Shared responsive safety rails */
@@ -621,7 +620,4 @@ img, svg, video, canvas, iframe {
     --bs-gutter-x: 1.5rem;
   }
 
-  #root {
-    padding-top: 12px;
-  }
 }

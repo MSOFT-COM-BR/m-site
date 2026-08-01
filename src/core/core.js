@@ -184,8 +184,20 @@ class Core {
 
     // Get segments from pathname
     const segments = window.location.pathname.split('/');
-    const pageName = segments[1] || 'home';
-    this.params = segments.slice(2);
+    const requestedPageName = segments[1] || 'home';
+    const isPadraoEngineeringRoute = requestedPageName === 'padrao-engenharia';
+    const hasValidPadraoEngineeringPath = !isPadraoEngineeringRoute
+      || segments.length === 2
+      || (segments.length === 3 && ['consultar', 'contato'].includes(segments[2]));
+    const appSlug = requestedPageName === 'app' && segments.length === 3 && /^[a-z0-9-]+$/.test(segments[2] || '')
+      ? segments[2]
+      : '';
+    const pageName = appSlug
+      ? `app-${appSlug}`
+      : requestedPageName === 'padrao-engenharia' && ['consultar', 'contato'].includes(segments[2])
+        ? 'padrao-engenharia-contato'
+        : requestedPageName;
+    this.params = pageName === 'padrao-engenharia-contato' || appSlug ? [] : segments.slice(2);
 
     if (config?.app?.debug) {
       console.log(`pageName`, pageName);
@@ -202,11 +214,15 @@ class Core {
 
     try {
       // Verifica se o arquivo existe no path
-      const filePath = `/src/pages/${pageName}.html?v=${config.app.version}`;
+      const pagePath = appSlug ? `app/${appSlug}/index` : config.routes.pagePaths?.[pageName] || pageName;
+      const filePath = `/src/pages/${pagePath}.html?v=${config.app.version}`;
 
       if (config?.app?.debug) console.log(`filePath`, filePath);
 
-      if (!this.registerPages.includes(pageName)) {
+      const isRegisteredPage = appSlug
+        ? config.routes.appPages.includes(appSlug)
+        : hasValidPadraoEngineeringPath && this.registerPages.includes(pageName);
+      if (!isRegisteredPage) {
         throw new Error('Page not found');
       }
 
@@ -278,9 +294,15 @@ class Core {
       const footerEl = document.getElementById('footer');
 
       // "dashboard de admin pode apareceer o menu do site.. dash premium nao pode"
-      const hideMainFrame = ['premium'].includes(pageName);
+      const isPadraoEngineeringRoute = ['padrao-engenharia', 'padrao-engenharia-contato'].includes(pageName);
+      const hideMainFrame = pageName === 'premium' || isPadraoEngineeringRoute;
+      const fullBleedLayout = isPadraoEngineeringRoute;
+      const layoutWrapper = root.closest('.container-lg');
       if (headerEl) headerEl.style.display = hideMainFrame ? 'none' : 'block';
       if (footerEl) footerEl.style.display = hideMainFrame ? 'none' : 'block';
+      if (layoutWrapper) {
+        layoutWrapper.style.maxWidth = fullBleedLayout ? 'none' : '1140px';
+      }
       
       if(hideMainFrame) {
          document.body.style.background = '#0a0a0f';
@@ -290,7 +312,13 @@ class Core {
 
       // Atualiza a URL mantendo os parâmetros
       const paramsString = this.params.length > 0 ? `/${this.params.join('/')}` : '';
-      const canonicalPath = pageName === 'home' ? '/' : `/${pageName}${paramsString}`;
+      const canonicalPath = pageName === 'home'
+        ? '/'
+        : appSlug
+          ? `/app/${appSlug}`
+          : pageName === 'padrao-engenharia-contato'
+            ? '/padrao-engenharia/consultar'
+            : `/${pageName}${paramsString}`;
       const routeSearch = window.location.search;
       const routeHash = window.location.hash;
       const newPath = `${canonicalPath}${routeSearch}${routeHash}`;
