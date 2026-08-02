@@ -30,8 +30,8 @@ class ServicePagesContractTests(unittest.TestCase):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
 
-        self.assertIn('<!-- Version: V0.12.0 -->', index)
-        self.assertIn('version: "0.12.0"', config)
+        self.assertIn('<!-- Version: V0.12.8 -->', index)
+        self.assertIn('version: "0.12.8"', config)
         for asset in (
             'config/config.js',
             'config/seo.js',
@@ -42,10 +42,10 @@ class ServicePagesContractTests(unittest.TestCase):
             'core/skeleton.js',
             'core/core.js',
         ):
-            self.assertIn(f'/src/{asset}?v=0.12.0', index)
+            self.assertIn(f'/src/{asset}?v=0.12.8', index)
 
         for stylesheet in ('design-system.css', 'style.css', 'developer.css'):
-            self.assertIn(f'/src/assets/css/{stylesheet}?v=0.12.0', index)
+            self.assertIn(f'/src/assets/css/{stylesheet}?v=0.12.8', index)
 
     def test_quote_route_is_indexable_and_has_spa_fallback(self) -> None:
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
@@ -138,7 +138,7 @@ class ServicePagesContractTests(unittest.TestCase):
             "marked.min.js",
         ):
             self.assertNotIn(asset, index)
-        self.assertIn('/src/core/vendor-loader.js?v=0.12.0', index)
+        self.assertIn('/src/core/vendor-loader.js?v=0.12.8', index)
         self.assertIn('loadAdminEditorVendors', loader)
         self.assertIn('window.jQuery', loader)
         self.assertIn('summernote-lite.min.js', loader)
@@ -209,6 +209,27 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertNotIn('padding-top:', style[style.index('#root {'):])
         self.assertIn('class="pe-page"', page)
         self.assertIn('href="/padrao-engenharia/consultar"', page)
+        self.assertTrue((ROOT / 'src/assets/images/padrao-engenharia/hero-casa-noturna.jpg').is_file())
+        self.assertIn('src="/src/assets/images/padrao-engenharia/hero-casa-noturna.jpg"', page)
+        self.assertIn('class="pe-visual pe-hero-visual"', page)
+        self.assertIn('.pe-hero-visual { min-height: clamp(420px, 48vw, 640px); }', page)
+        self.assertTrue((ROOT / 'src/assets/images/padrao-engenharia/cta-interior.jpg').is_file())
+        self.assertIn('src="/src/assets/images/padrao-engenharia/cta-interior.jpg"', page)
+        self.assertIn('alt="Interior de residência de alto padrão"', page)
+        self.assertTrue((ROOT / 'src/assets/images/padrao-engenharia/sobre-equipe.png').is_file())
+        self.assertIn('src="/src/assets/images/padrao-engenharia/sobre-equipe.png"', page)
+        self.assertIn('class="pe-visual-photo pe-about-team-photo"', page)
+        self.assertIn('alt="Equipe da Padrão Engenharia"', page)
+        self.assertFalse((ROOT / 'src/assets/images/padrao-engenharia/diferenciais-equipe-em-obra.jpg').exists())
+        self.assertNotIn('diferenciais-equipe-em-obra.jpg', page)
+        self.assertIn('class="row g-4 pe-feature-grid"', page)
+        self.assertIn('class="pe-feature pe-feature-centered"', page)
+        self.assertIn('.pe-feature-centered { flex-direction: column; align-items: center; text-align: center; }', page)
+        self.assertIn('id="testimonialCarousel"', page)
+        self.assertIn('class="pe-carousel-toggle"', page)
+        self.assertIn('aria-label="Pausar rotação automática dos depoimentos"', page)
+        self.assertIn('carousel.pause();', page)
+        self.assertIn('width: 44px; height: 44px;', page)
         self.assertIn('id="padrao-consultation-form"', contact_page)
         self.assertIn('name="consent"', contact_page)
         self.assertIn('form.checkValidity()', contact_page)

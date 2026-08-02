@@ -192,6 +192,9 @@
     opacity: 1;
     filter: none;
   }
+  .pe-hero-visual { min-height: clamp(420px, 48vw, 640px); }
+  .pe-hero-visual .pe-visual-photo { object-position: center; }
+  .pe-about-team-photo { object-position: center 35%; }
 
   .pe-tag {
     position: absolute;
@@ -352,6 +355,8 @@
   }
   .pe-feature p { margin: 0; color: var(--pe-muted); font-size: 0.92rem; line-height: 1.6; }
   .pe-feature strong { color: var(--pe-ink); display: block; font-size: 0.95rem; }
+  .pe-feature-centered { flex-direction: column; align-items: center; text-align: center; }
+  .pe-feature-centered p { max-width: 18rem; }
 
   /* ===== Novo Footer Nivel US ===== */
   .pe-footer {
@@ -473,6 +478,10 @@
 
   .pe-close-filter { filter: invert(1) grayscale(100%) brightness(200%); }
   .pe-page.pe-theme-light .pe-close-filter { filter: none; }
+  .pe-carousel-indicators [data-bs-target] { width: 44px; height: 44px; border: none; margin: 0; background: radial-gradient(circle, var(--pe-line) 0 3px, transparent 4px); transition: background 0.3s ease; }
+  .pe-carousel-indicators .active { background: radial-gradient(circle, var(--pe-gold) 0 4px, transparent 5px); }
+  .pe-carousel-toggle { min-width: 44px; min-height: 44px; border: 1px solid var(--pe-line); border-radius: 999px; background: transparent; color: var(--pe-gold-soft); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .pe-carousel-toggle:hover, .pe-carousel-toggle:focus-visible { background: rgba(201, 163, 92, 0.14); color: var(--pe-ink); }
 </style>
 
 <div class="pe-page">
@@ -502,7 +511,7 @@
   <section class="pe-hero" id="home">
     <div class="container">
       <div class="row align-items-center g-5">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
           <span class="pe-eyebrow mb-4">Administração de Obras · Residencial</span>
           <h1 class="pe-display pe-serif mb-4">
             Construa com<br>
@@ -516,9 +525,9 @@
             <a href="javascript:void(0)" data-scroll-to="#servicos" class="pe-btn">Saiba Como Funciona</a>
           </div>
         </div>
-        <div class="col-lg-6">
-          <div class="pe-visual">
-            <img class="pe-visual-photo" src="/src/assets/images/padrao-engenharia/hero.jpg" alt="Casa de alto padrão em construção">
+        <div class="col-lg-7">
+          <div class="pe-visual pe-hero-visual">
+            <img class="pe-visual-photo" src="/src/assets/images/padrao-engenharia/hero-casa-noturna.jpg" alt="Residência de alto padrão iluminada à noite">
             <span class="pe-tag pe-tag-1"><i class="bi bi-shield-check"></i> Segurança</span>
             <span class="pe-tag pe-tag-2"><i class="bi bi-graph-up"></i> Planejamento</span>
             <span class="pe-tag pe-tag-3"><i class="bi bi-house"></i> Alto Padrão</span>
@@ -535,7 +544,7 @@
         <div class="row align-items-center g-4 g-lg-5">
           <div class="col-lg-5">
             <div class="pe-visual pe-visual-sobre">
-              <img class="pe-visual-photo" src="/src/assets/images/padrao-engenharia/sobre.jpg" alt="Família feliz acompanhando projeto">
+              <img class="pe-visual-photo pe-about-team-photo" src="/src/assets/images/padrao-engenharia/sobre-equipe.png" alt="Equipe da Padrão Engenharia">
               <div class="pe-stat">
                 <strong>10+</strong>
                 <span>Anos de<br>experiência</span>
@@ -551,6 +560,64 @@
             <p class="pe-text mb-0">
               Mais do que entregar uma casa, queremos proporcionar uma excelente experiência. Assumimos as preocupações da obra para que nossos clientes vivam apenas a realização do sonho de construir.
             </p>
+          </div>
+        </div>
+        <div class="row mt-5 pt-4 border-top" style="border-color: var(--pe-theme-border) !important;">
+          <div class="col-lg-10 mx-auto">
+            <p class="pe-section-index text-center mb-3">Depoimentos</p>
+            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="7000">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <div class="p-4 rounded-4 h-100" style="background: var(--pe-ms-surface); min-height: 480px;">
+                    <div class="row g-4 align-items-center h-100">
+                      <div class="col-md-6 text-center">
+                        <img src="/src/assets/images/padrao-engenharia/depoimento-viviane.png" class="img-fluid rounded-3 shadow-sm" alt="Instagram Viviane" style="max-height: 440px; width: 100%; object-fit: contain;">
+                      </div>
+                      <div class="col-md-6">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                          <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(201, 163, 92, 0.15);">
+                            <i class="bi bi-person-fill fs-3" style="color: var(--pe-gold);"></i>
+                          </div>
+                          <div>
+                            <strong class="d-block" style="color: var(--pe-ink); font-size: 0.95rem;">@vivianehugowagner</strong>
+                            <span style="font-size: 0.8rem; color: var(--pe-muted);"><i class="bi bi-instagram me-1" style="color: var(--pe-gold-soft);"></i> Cliente Padrão Engenharia</span>
+                          </div>
+                        </div>
+                        <p class="pe-text mb-0 fst-italic" style="font-size: 0.95rem; line-height: 1.6;">"Um agradecimento a <strong>@padraoengenhariarn</strong> por todo o empenho e cuidado ao longo desta obra. Sou profundamente grata a <strong>@elbioclemente.eng</strong> e a minha arquiteta <strong>@_carolpave</strong> pelo seu tempo, dedicação, carinho e paciência durante a construção da nossa casa tornando o processo muito mais leve e especial. Obrigada meu Deus por essa conquista, o sonho se tornou realidade! 🙌"</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <div class="p-4 rounded-4 h-100" style="background: var(--pe-ms-surface); min-height: 480px;">
+                    <div class="row g-4 align-items-center h-100">
+                      <div class="col-md-6 text-center">
+                        <img src="/src/assets/images/padrao-engenharia/depoimento-elaine.png" class="img-fluid rounded-3 shadow-sm" alt="Instagram Elaine" style="max-height: 440px; width: 100%; object-fit: contain;">
+                      </div>
+                      <div class="col-md-6">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                          <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(201, 163, 92, 0.15);">
+                            <i class="bi bi-person-fill fs-3" style="color: var(--pe-gold);"></i>
+                          </div>
+                          <div>
+                            <strong class="d-block" style="color: var(--pe-ink); font-size: 0.95rem;">@elaine_cecilia</strong>
+                            <span style="font-size: 0.8rem; color: var(--pe-muted);"><i class="bi bi-instagram me-1" style="color: var(--pe-gold-soft);"></i> Cliente Padrão Engenharia</span>
+                          </div>
+                        </div>
+                        <p class="pe-text mb-0 fst-italic" style="font-size: 0.95rem; line-height: 1.6;">"A casa fica mais linda do que sonhava, quero agradece a todos os envolvidos desde <strong>@josedafarmacia</strong> que trabalhou todos esses anos duro por essa conquista, pedreiros até o engenheiro <strong>@elbioclemente.eng</strong> que teve toda paciência com meus estresses, a arquiteta <strong>@_carolpave</strong> que sempre teve o cuidado e carinho de saber o que precisávamos na casa, os detalhes da frente, o beiral espetacular e minhas madeiras da frente que nunca abri mão... agradecer a todos em especial ao meu Deus, que nos presenteou com este presente. 🙏Gratidão🙏"</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-indicators pe-carousel-indicators mt-3 mb-0 position-relative">
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Depoimento 1"></button>
+                <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1" aria-label="Depoimento 2"></button>
+              </div>
+              <div class="text-center mt-2">
+                <button type="button" class="pe-carousel-toggle" aria-label="Pausar rotação automática dos depoimentos" aria-pressed="false">Pausar rotação</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -594,7 +661,7 @@
           <p class="pe-section-index">Portfólio</p>
           <h2 class="pe-section-title pe-serif mb-5">Casas com <em>alto padrão de acabamento.</em></h2>
           <div class="pe-visual" style="min-height: 280px; margin-bottom: 1rem;">
-            <img class="pe-visual-photo" src="/src/assets/images/padrao-engenharia/servico-gestao.jpg" alt="Antes e depois da obra">
+            <img class="pe-visual-photo" src="/src/assets/images/padrao-engenharia/hero-v2.png" alt="Casa noturna de alto padrão">
           </div>
           <p class="pe-text">Acompanhe nossas obras, vídeos de evolução e depoimentos de clientes que já vivenciaram a experiência Padrão Engenharia.</p>
         </div>
@@ -605,21 +672,24 @@
   <!-- 04 CTA -->
   <section class="pe-section pt-0">
     <div class="container">
-      <div class="row align-items-center g-4 g-lg-5">
-        <div class="col-lg-4">
-          <div class="pe-feature"><i class="bi bi-award"></i><p><strong>10+ anos de experiência</strong>em gestão de obras de alto padrão.</p></div>
-          <div class="pe-feature"><i class="bi bi-shield-check"></i><p><strong>Administração completa</strong>com foco em qualidade e prazo.</p></div>
-          <div class="pe-feature"><i class="bi bi-gem"></i><p><strong>Alto padrão de acabamento</strong>cuidado em cada detalhe.</p></div>
+      <div class="row g-4 pe-feature-grid">
+        <div class="col-md-6 col-lg-4">
+          <div class="pe-feature pe-feature-centered"><i class="bi bi-award"></i><p><strong>10+ anos de experiência</strong>em gestão de obras de alto padrão.</p></div>
         </div>
-        <div class="col-lg-4">
-          <div class="pe-visual pe-visual-portrait">
-            <img class="pe-visual-photo" src="/src/assets/images/padrao-engenharia/diferenciais.jpg" alt="Equipe focada no planejamento">
-          </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="pe-feature pe-feature-centered"><i class="bi bi-shield-check"></i><p><strong>Administração completa</strong>com foco em qualidade e prazo.</p></div>
         </div>
-        <div class="col-lg-4">
-          <div class="pe-feature"><i class="bi bi-map"></i><p><strong>Planejamento detalhado</strong>para evitar retrabalho e surpresas.</p></div>
-          <div class="pe-feature"><i class="bi bi-people"></i><p><strong>Gestão de equipe</strong>e coordenação total de fornecedores.</p></div>
-          <div class="pe-feature"><i class="bi bi-star"></i><p><strong>Satisfação de 100%</strong>dos clientes em nosso histórico.</p></div>
+        <div class="col-md-6 col-lg-4">
+          <div class="pe-feature pe-feature-centered"><i class="bi bi-gem"></i><p><strong>Alto padrão de acabamento</strong>cuidado em cada detalhe.</p></div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="pe-feature pe-feature-centered"><i class="bi bi-map"></i><p><strong>Planejamento detalhado</strong>para evitar retrabalho e surpresas.</p></div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="pe-feature pe-feature-centered"><i class="bi bi-people"></i><p><strong>Gestão de equipe</strong>e coordenação total de fornecedores.</p></div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="pe-feature pe-feature-centered"><i class="bi bi-star"></i><p><strong>Satisfação de 100%</strong>dos clientes em nosso histórico.</p></div>
         </div>
       </div>
     </div>
@@ -637,7 +707,7 @@
           </div>
           <div class="col-lg-5">
             <div class="pe-visual pe-visual-cta">
-              <img class="pe-visual-photo" src="/src/assets/images/padrao-engenharia/cta.jpg" alt="Profissional passando segurança">
+              <img class="pe-visual-photo" src="/src/assets/images/padrao-engenharia/cta-interior.jpg" alt="Interior de residência de alto padrão">
             </div>
           </div>
         </div>
@@ -753,6 +823,26 @@
     });
 
     setActiveNavLink(window.location.hash || '#home');
+
+    const testimonialCarousel = document.getElementById('testimonialCarousel');
+    const testimonialToggle = document.querySelector('.pe-carousel-toggle');
+    if (testimonialCarousel && testimonialToggle && window.bootstrap?.Carousel) {
+      const carousel = window.bootstrap.Carousel.getOrCreateInstance(testimonialCarousel);
+      testimonialToggle.addEventListener('click', () => {
+        const isPaused = testimonialToggle.getAttribute('aria-pressed') === 'true';
+        if (isPaused) {
+          carousel.cycle();
+          testimonialToggle.setAttribute('aria-pressed', 'false');
+          testimonialToggle.setAttribute('aria-label', 'Pausar rotação automática dos depoimentos');
+          testimonialToggle.textContent = 'Pausar rotação';
+        } else {
+          carousel.pause();
+          testimonialToggle.setAttribute('aria-pressed', 'true');
+          testimonialToggle.setAttribute('aria-label', 'Retomar rotação automática dos depoimentos');
+          testimonialToggle.textContent = 'Retomar rotação';
+        }
+      });
+    }
 
     // Back to top listener
     const backToTop = document.querySelector('.pe-back-to-top');
