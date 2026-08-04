@@ -360,7 +360,7 @@
         const apiBase = (typeof window !== 'undefined' && window.config?.api?.baseUrl)
           ? window.config.api.baseUrl
           : ((typeof window !== 'undefined' && window.location?.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1')
-            ? 'https://api.mirandasoft.com.br'
+            ? 'https://gateway.mirandasoft.com.br/api'
             : 'http://127.0.0.1:3000');
         let res;
         if (window.core && typeof window.core.fetchAPI === 'function') {

@@ -4,27 +4,27 @@
  * Override: window.__MSOFT_API_BASE__
  */
 function resolveApiBaseUrl() {
-  if (typeof window === 'undefined') return 'https://api.mirandasoft.com.br';
+  if (typeof window === 'undefined') return 'https://gateway.mirandasoft.com.br/api';
   const custom = window.__MSOFT_API_BASE__;
   if (typeof custom === 'string' && custom.trim()) {
     return custom.replace(/\/+$/, '');
   }
   const h = window.location.hostname;
   const isLocal = h === 'localhost' || h === '127.0.0.1';
-  if (!isLocal) return 'https://api.mirandasoft.com.br';
+  if (!isLocal) return 'https://gateway.mirandasoft.com.br/api';
   return `http://${h}:3000`;
 }
 
 const config = {
   app: {
     name: "Miranda Soft",
-    version: "0.12.8",
+    version: "0.12.9",
     environment: "production",
     debug: false
   },
   api: {
     baseUrl: resolveApiBaseUrl(),
-    fallbackUrl: "https://api.mirandasoft.com.br",
+    fallbackUrl: "https://gateway.mirandasoft.com.br/api",
     timeout: 30000,
     retryAttempts: 3,
     useProxy: false,
