@@ -151,16 +151,10 @@
 <!-- Blog Grid -->
 <section class="dev-section pt-0">
     <div class="container">
-        <!-- Filter/Search (Optional visual only for now) -->
-        <div class="row mb-5">
+        <!-- Categories are added only after the listing is available. -->
+        <div class="row mb-5" id="blog-filter-row" hidden>
             <div class="col-12">
                 <div class="d-flex justify-content-center gap-3 flex-wrap" id="blog-filters">
-                    <button class="btn btn-outline-light rounded-pill px-4 active" data-filter="todos">Todos</button>
-                    <button class="btn btn-outline-light rounded-pill px-4" data-filter="white label">White Label</button>
-                    <button class="btn btn-outline-light rounded-pill px-4" data-filter="tecnologia">Tecnologia</button>
-                    <button class="btn btn-outline-light rounded-pill px-4" data-filter="produtividade">Produtividade</button>
-                    <button class="btn btn-outline-light rounded-pill px-4" data-filter="design">Design</button>
-                    <button class="btn btn-outline-light rounded-pill px-4" data-filter="negócios">Negócios</button>
                 </div>
             </div>
         </div>
@@ -185,6 +179,7 @@
     (function () {
         const grid = document.getElementById('blog-grid');
         const filterContainer = document.getElementById('blog-filters');
+        const filterRow = document.getElementById('blog-filter-row');
         const heroTitle = document.querySelector('.dev-hero-title');
         const heroSubtitle = document.querySelector('.dev-hero-subtitle');
         const api = window.config?.api?.baseUrl || 'http://127.0.0.1:3000';
@@ -492,19 +487,25 @@
             resetBlogMeta();
             grid.innerHTML = '<div class="col-12 text-center py-5"><div class="spinner-border text-primary"></div></div>';
 
-            const normalizeCategory = (value) => (value || 'geral').toString().trim().toLowerCase();
-            const defaultFilterLabels = ['Todos', 'White Label', 'Tecnologia', 'Produtividade', 'Design', 'Negócios'];
+            const normalizeCategory = (value) => (value || '').toString().trim().toLocaleLowerCase('pt-BR');
+            const getPostCategories = (post) => {
+                const categories = Array.isArray(post.categories) ? post.categories : [post.category];
+                return categories
+                    .map((category) => (typeof category === 'object' ? category?.name : category))
+                    .map((category) => (category || '').toString().trim())
+                    .filter(Boolean);
+            };
             let selectedFilter = 'todos';
             let allPosts = [];
 
             try {
                 if (window.core && window.core.fetchAPI) {
                     const res = await window.core.fetchAPI('/blogs');
-                    if (res && res.success) allPosts = res.data;
+                    if (res && res.success && Array.isArray(res.data)) allPosts = res.data;
                 } else {
                     const res = await fetch(`${api}/blogs`);
                     const json = await res.json();
-                    if (json.success) allPosts = json.data;
+                    if (json.success && Array.isArray(json.data)) allPosts = json.data;
                 }
             } catch (e) {
                 console.warn('Failed to load blogs from API', e);
@@ -518,7 +519,9 @@
             const renderPosts = () => {
                 const posts = selectedFilter === 'todos'
                     ? allPosts
-                    : allPosts.filter((post) => normalizeCategory(post.category) === selectedFilter);
+                    : allPosts.filter((post) => getPostCategories(post).some(
+                        (category) => normalizeCategory(category) === selectedFilter
+                    ));
 
                 if (posts.length === 0) {
                     grid.innerHTML = '<div class="col-12 text-center text-muted py-5">Nenhuma postagem nessa categoria.</div>';
@@ -579,29 +582,28 @@
             const setupFilters = () => {
                 if (!filterContainer) return;
 
-                const existing = new Set(
-                    Array.from(filterContainer.querySelectorAll('[data-filter]')).map((btn) => btn.getAttribute('data-filter'))
-                );
-                const postCategories = Array.from(
-                    new Set(
-                        allPosts
-                            .map((post) => normalizeCategory(post.category))
-                            .filter((cat) => cat && cat !== 'todos')
-                    )
-                );
+                const categoriesByFilter = new Map();
+                allPosts.forEach((post) => getPostCategories(post).forEach((category) => {
+                    const filter = normalizeCategory(category);
+                    if (filter && filter !== 'todos' && !categoriesByFilter.has(filter)) {
+                        categoriesByFilter.set(filter, category);
+                    }
+                }));
 
-                postCategories.forEach((cat) => {
-                    if (existing.has(cat)) return;
+                filterContainer.replaceChildren();
+                const createFilterButton = (filter, label, isActive = false) => {
                     const button = document.createElement('button');
                     button.type = 'button';
-                    button.className = 'btn btn-outline-light rounded-pill px-4';
-                    button.setAttribute('data-filter', cat);
-                    button.textContent = cat
-                        .split(' ')
-                        .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
-                        .join(' ');
+                    button.className = `btn btn-outline-light rounded-pill px-4${isActive ? ' active' : ''}`;
+                    button.setAttribute('data-filter', filter);
+                    button.textContent = label;
                     filterContainer.appendChild(button);
-                });
+                };
+
+                createFilterButton('todos', 'Todos', true);
+                Array.from(categoriesByFilter.entries())
+                    .sort(([, firstLabel], [, secondLabel]) => firstLabel.localeCompare(secondLabel, 'pt-BR'))
+                    .forEach(([filter, label]) => createFilterButton(filter, label));
 
                 const buttons = filterContainer.querySelectorAll('[data-filter]');
                 buttons.forEach((button) => {
@@ -612,15 +614,8 @@
                         renderPosts();
                     });
                 });
+                filterRow.hidden = false;
             };
-
-            if (filterContainer) {
-                filterContainer.querySelectorAll('[data-filter]').forEach((btn) => {
-                    const filterValue = (btn.getAttribute('data-filter') || '').trim().toLowerCase();
-                    if (!filterValue) return;
-                    btn.textContent = defaultFilterLabels.find((label) => label.toLowerCase() === filterValue) || btn.textContent;
-                });
-            }
 
             setupFilters();
             renderPosts();

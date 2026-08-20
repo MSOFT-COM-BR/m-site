@@ -336,7 +336,15 @@ class Core {
         });
       }
     } catch (error) {
-      // Redireciona para 404
+      // Mantém a URL solicitada e apresenta a tela de página não encontrada.
+      this.updatePageSEO('404', '/404');
+      const headerEl = document.getElementById('head');
+      const footerEl = document.getElementById('footer');
+      const layoutWrapper = root.closest('.container-lg');
+      if (headerEl) headerEl.style.display = 'block';
+      if (footerEl) footerEl.style.display = 'block';
+      if (layoutWrapper) layoutWrapper.style.maxWidth = '1140px';
+      document.body.style.background = '';
       try {
         const errorRes = await fetch('/src/pages/404.html');
         if (errorRes.ok) {
@@ -344,8 +352,6 @@ class Core {
           const isSoft404 = errorHtml.includes('<!DOCTYPE html>') || errorHtml.includes('<html');
           if (errorHtml && errorHtml.trim() !== '' && !isSoft404) {
             root.innerHTML = errorHtml;
-            // Atualiza a URL para 404
-            window.history.replaceState({}, '', '/404');
             this.executeScripts(root);
             this.initializeComponents(root);
             return;
@@ -357,12 +363,11 @@ class Core {
       // Fallback se não conseguir carregar a página 404
       root.innerHTML = `
         <section class="dev-section text-center py-5">
-          <h1 class="text-white mb-3">404</h1>
-          <p class="text-muted mb-4">Página não encontrada</p>
+          <h1 class="text-white mb-3">Página não encontrada</h1>
+          <p class="text-muted mb-4">A página solicitada não foi encontrada.</p>
           <a href="/" class="dev-btn dev-btn-primary">Voltar ao Início</a>
         </section>
       `;
-      window.history.replaceState({}, '', '/404');
     }
   }
 

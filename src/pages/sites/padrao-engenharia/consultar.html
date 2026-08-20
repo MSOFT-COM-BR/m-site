@@ -68,10 +68,7 @@
           <label for="consultation-name">Nome</label>
           <input id="consultation-name" name="name" type="text" autocomplete="name" required minlength="2" placeholder="Seu nome completo">
         </div>
-        <div class="pe-contact-field">
-          <label for="consultation-email">E-mail</label>
-          <input id="consultation-email" name="email" type="email" autocomplete="email" required placeholder="voce@email.com">
-        </div>
+
         <div class="pe-contact-field">
           <label for="consultation-phone">Telefone</label>
           <input id="consultation-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required placeholder="(00) 00000-0000">
@@ -93,15 +90,48 @@
     const form = document.getElementById('padrao-consultation-form');
     const status = document.getElementById('consultation-status');
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
 
-      status.dataset.state = 'error';
-      status.textContent = 'O canal de envio do agendamento ainda precisa ser configurado.';
+      const submitButton = form.querySelector('button[type="submit"]');
+      const originalLabel = submitButton?.textContent;
+      status.removeAttribute('data-state');
+      status.textContent = '';
+      if (submitButton) submitButton.disabled = true;
+
+      const formData = new FormData(form);
+      const payload = {
+        name: formData.get('name'),
+        phone: formData.get('phone'),
+        message: formData.get('message'),
+        consent: formData.get('consent') === 'on',
+      };
+
+      try {
+        const gatewayBaseUrl = (window.config?.api?.baseUrl || 'https://gateway.mirandasoft.com.br/api').replace(/\/+$/, '');
+        const response = await fetch(`${gatewayBaseUrl}/client/form/padrao-engenharia`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const result = await response.json().catch(() => null);
+        if (!response.ok || result?.success !== true) {
+          throw new Error(result?.error || 'Não foi possível enviar sua solicitação. Tente novamente.');
+        }
+
+        status.dataset.state = 'success';
+        status.textContent = 'Solicitação recebida. Em breve entraremos em contato.';
+      } catch (error) {
+        status.dataset.state = 'error';
+        status.textContent = error instanceof Error ? error.message : 'Não foi possível enviar sua solicitação. Tente novamente.';
+        if (submitButton) submitButton.disabled = false;
+      } finally {
+        if (submitButton && !submitButton.disabled) submitButton.textContent = originalLabel || 'Enviar solicitação';
+      }
     });
   })();
 </script>

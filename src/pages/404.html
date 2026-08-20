@@ -1,188 +1,55 @@
-<style>
-    /* 404 Specific Styles */
-    .error-page-wrapper {
-        min-height: 80vh;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .error-number {
-        font-size: clamp(8rem, 20vw, 15rem);
-        font-weight: 900;
-        line-height: 0.8;
-        background: var(--dev-gradient-primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        position: relative;
-        z-index: 2;
-        text-shadow: 0 0 80px rgba(59, 130, 246, 0.3);
-        animation: float 6s ease-in-out infinite;
-    }
-
-    .error-number::after {
-        content: '404';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: inherit;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        filter: blur(20px);
-        opacity: 0.5;
-        z-index: -1;
-    }
-
-    .glass-card {
-        background: rgba(18, 18, 26, 0.6);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: var(--dev-radius-xl);
-        padding: 60px 20px;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-        position: relative;
-        z-index: 10;
-        overflow: hidden;
-    }
-
-    .glass-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
-    }
-
-    .bg-shape {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(80px);
-        opacity: 0.4;
-        z-index: 1;
-        animation: pulse 4s infinite alternate;
-    }
-
-    .shape-1 {
-        width: 300px;
-        height: 300px;
-        background: var(--dev-accent-primary);
-        top: 10%;
-        right: 10%;
-        animation-delay: 0s;
-    }
-
-    .shape-2 {
-        width: 400px;
-        height: 400px;
-        background: var(--dev-accent-secondary);
-        bottom: 10%;
-        left: 0%;
-        animation-delay: 2s;
-    }
-
-    .shape-3 {
-        width: 200px;
-        height: 200px;
-        background: var(--dev-accent-tertiary);
-        top: 40%;
-        left: 40%;
-        opacity: 0.2;
-        animation-delay: 4s;
-    }
-
-    @keyframes float {
-
-        0%,
-        100% {
-            transform: translateY(0);
-        }
-
-        50% {
-            transform: translateY(-20px);
-        }
-    }
-
-    @keyframes pulse {
-        0% {
-            transform: scale(1);
-            opacity: 0.3;
-        }
-
-        100% {
-            transform: scale(1.1);
-            opacity: 0.5;
-        }
-    }
-</style>
-
-<section class="dev-section error-page-wrapper d-flex align-items-center justify-content-center">
-    <!-- Animated Background Shapes -->
-    <div class="bg-shape shape-1"></div>
-    <div class="bg-shape shape-2"></div>
-    <div class="bg-shape shape-3"></div>
-
-    <!-- Main Content -->
-    <div class="container position-relative z-index-2">
-        <div class="glass-card max-w-lg mx-auto text-center animate-on-scroll">
-
-            <div class="mb-2 position-relative">
-                <i class="bi bi-exclamation-triangle text-warning display-4 position-absolute top-0 start-50 translate-middle-x opacity-25"
-                    style="filter: blur(2px);"></i>
-                <h1 class="error-number mb-0">404</h1>
-            </div>
-
-            <h2 class="h2 fw-bold text-white mb-3">Página Não Encontrada</h2>
-
-            <p class="text-secondary fs-5 mb-5 mx-auto" style="max-width: 500px;">
-                Parece que você se aventurou muito longe no desconhecido.
-                A página que você procura não existe neste universo.
-            </p>
-
-            <div class="d-flex flex-wrap justify-content-center gap-3">
-                <a href="/" class="dev-btn dev-btn-primary rounded-pill px-5">
-                    <i class="bi bi-arrow-left"></i>
-                    Voltar ao Início
-                </a>
-                <a href="/#contact" class="dev-btn dev-btn-secondary rounded-pill px-5">
-                    <i class="bi bi-headset"></i>
-                    Suporte
-                </a>
-            </div>
-
-            <div class="mt-5 pt-3 border-top border-secondary border-opacity-10">
-                <p class="small text-muted mb-0">
-                    Código de Erro: <span class="font-mono text-warning">404_PAGE_NOT_FOUND</span>
-                </p>
-            </div>
-        </div>
-    </div>
+<section class="ms-404-page d-flex flex-column justify-content-center align-items-center text-center" aria-labelledby="not-found-title">
+    <h1 id="not-found-title" class="ms-404-title mb-3">Página não encontrada</h1>
+    <p class="ms-404-message mb-5">
+        O projeto ou página que você está procurando não existe ou foi movido.<br>
+        Mas não se preocupe, nossas fundações continuam sólidas.
+    </p>
+    <a href="/" class="ms-404-action">Voltar para a Home</a>
 </section>
 
-<script>
-    (function () {
-        const observerOptions = {
-            threshold: 0.1
-        };
+<style>
+    .ms-404-page {
+        background: var(--ms-surface-container-low);
+        color: var(--ms-on-surface);
+        min-height: 60vh;
+        padding: 3rem 1.5rem;
+    }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
+    .ms-404-title {
+        color: var(--ms-primary);
+        font-family: inherit;
+        font-size: clamp(1.75rem, 3vw, 2.5rem);
+        font-weight: 700;
+    }
 
-        setTimeout(() => {
-            document.querySelectorAll('.animate-on-scroll').forEach(el => {
-                observer.observe(el);
-            });
-        }, 100);
-    })();
-</script>
+    .ms-404-message {
+        color: var(--ms-on-surface-variant);
+        line-height: 1.7;
+        margin-inline: auto;
+        max-width: 31.25rem;
+    }
+
+    .ms-404-action {
+        background: linear-gradient(135deg, var(--ms-primary) 0%, var(--ms-primary-container) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--ms-on-primary-container);
+        font-size: 0.8125rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        padding: 0.875rem 1.5rem;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .ms-404-action:hover,
+    .ms-404-action:focus-visible {
+        background: var(--ms-surface-container-high);
+        color: var(--ms-primary);
+    }
+
+    .ms-404-action:focus-visible {
+        outline: 2px solid var(--ms-secondary);
+        outline-offset: 4px;
+    }
+</style>

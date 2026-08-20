@@ -30,11 +30,13 @@ class Skeleton extends Component {
          ============================================ */
       .skeleton-wrapper {
         width: 100%;
+        min-height: 100%;
+        background: var(--ms-surface);
         animation: skeletonFadeIn 0.3s ease-out;
       }
 
       .skeleton-item {
-        background: rgba(99, 102, 241, 0.08);
+        background: rgba(203, 213, 225, 0.14);
         border-radius: 8px;
         position: relative;
         overflow: hidden;
@@ -49,7 +51,7 @@ class Skeleton extends Component {
         background: linear-gradient(
           90deg,
           transparent 0%,
-          rgba(255, 255, 255, 0.14) 50%,
+          rgba(248, 250, 252, 0.2) 50%,
           transparent 100%
         );
         transform: translateX(-100%);
@@ -141,7 +143,7 @@ class Skeleton extends Component {
 
       .skeleton-btn.outline {
         background: transparent;
-        border: 1px solid rgba(99, 102, 241, 0.2);
+        border: 1px solid rgba(203, 213, 225, 0.34);
       }
 
       /* Avatar Skeleton */
@@ -165,8 +167,8 @@ class Skeleton extends Component {
 
       /* Card Skeleton */
       .skeleton-card {
-        background: rgba(26, 26, 37, 0.5);
-        border: 1px solid rgba(99, 102, 241, 0.1);
+        background: var(--ms-surface-container);
+        border: 1px solid rgba(203, 213, 225, 0.22);
         border-radius: 20px;
         padding: 32px;
         height: 100%;
@@ -229,7 +231,7 @@ class Skeleton extends Component {
         top: 0;
         bottom: 0;
         width: 2px;
-        background: linear-gradient(to bottom, rgba(99, 102, 241, 0.3), rgba(6, 182, 212, 0.3));
+        background: linear-gradient(to bottom, rgba(203, 213, 225, 0.48), rgba(203, 213, 225, 0.2));
       }
 
       .skeleton-timeline-item {
@@ -243,13 +245,13 @@ class Skeleton extends Component {
         top: 0;
         width: 18px;
         height: 18px;
-        background: rgba(99, 102, 241, 0.3);
+        background: rgba(203, 213, 225, 0.48);
         border-radius: 50%;
       }
 
       .skeleton-timeline-card {
-        background: rgba(26, 26, 37, 0.5);
-        border: 1px solid rgba(99, 102, 241, 0.1);
+        background: var(--ms-surface-container);
+        border: 1px solid rgba(203, 213, 225, 0.22);
         border-radius: 20px;
         padding: 28px;
       }
@@ -301,8 +303,8 @@ class Skeleton extends Component {
 
       /* Education Card Skeleton */
       .skeleton-edu-card {
-        background: rgba(26, 26, 37, 0.5);
-        border: 1px solid rgba(99, 102, 241, 0.1);
+        background: var(--ms-surface-container);
+        border: 1px solid rgba(203, 213, 225, 0.22);
         border-radius: 20px;
         padding: 28px;
         text-align: center;
@@ -331,8 +333,8 @@ class Skeleton extends Component {
 
       /* Contact Skeleton */
       .skeleton-contact {
-        background: rgba(26, 26, 37, 0.5);
-        border: 1px solid rgba(99, 102, 241, 0.1);
+        background: var(--ms-surface-container);
+        border: 1px solid rgba(203, 213, 225, 0.22);
         border-radius: 30px;
         padding: 60px;
         text-align: center;
@@ -367,9 +369,9 @@ class Skeleton extends Component {
 
       /* Header Skeleton */
       .skeleton-header {
-        background: rgba(10, 10, 15, 0.85);
+        background: rgba(10, 10, 15, 0.92);
         backdrop-filter: blur(20px);
-        border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+        border-bottom: 1px solid rgba(203, 213, 225, 0.22);
         padding: 16px 0;
         position: fixed;
         top: 0;
@@ -413,8 +415,8 @@ class Skeleton extends Component {
 
       /* Footer Skeleton */
       .skeleton-footer {
-        background: rgba(10, 10, 15, 1);
-        border-top: 1px solid rgba(99, 102, 241, 0.1);
+        background: var(--ms-surface-container-lowest);
+        border-top: 1px solid rgba(203, 213, 225, 0.22);
         padding: 80px 0 30px;
       }
 

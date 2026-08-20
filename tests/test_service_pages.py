@@ -30,8 +30,8 @@ class ServicePagesContractTests(unittest.TestCase):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
 
-        self.assertIn('<!-- Version: V0.12.8 -->', index)
-        self.assertIn('version: "0.12.8"', config)
+        self.assertIn('<!-- Version: V0.12.12 -->', index)
+        self.assertIn('version: "0.12.12"', config)
         for asset in (
             'config/config.js',
             'config/seo.js',
@@ -42,10 +42,10 @@ class ServicePagesContractTests(unittest.TestCase):
             'core/skeleton.js',
             'core/core.js',
         ):
-            self.assertIn(f'/src/{asset}?v=0.12.8', index)
+            self.assertIn(f'/src/{asset}?v=0.12.12', index)
 
         for stylesheet in ('design-system.css', 'style.css', 'developer.css'):
-            self.assertIn(f'/src/assets/css/{stylesheet}?v=0.12.8', index)
+            self.assertIn(f'/src/assets/css/{stylesheet}?v=0.12.12', index)
 
     def test_quote_route_is_indexable_and_has_spa_fallback(self) -> None:
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
@@ -118,6 +118,9 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertIn('href="/cotacoes"', header)
         self.assertIn("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL", page)
         self.assertNotIn("innerHTML", page)
+        self.assertNotIn("market-notice", page)
+        self.assertNotIn("Dados fornecidos por", page)
+        self.assertNotIn("recomendação de investimento", page)
         self.assertIn("timestamp > 0", page)
         self.assertIn("time.dateTime = sourceTime.datetime", page)
         for quote_code in ("USDBRL", "EURBRL", "BTCBRL"):
@@ -138,7 +141,7 @@ class ServicePagesContractTests(unittest.TestCase):
             "marked.min.js",
         ):
             self.assertNotIn(asset, index)
-        self.assertIn('/src/core/vendor-loader.js?v=0.12.8', index)
+        self.assertIn('/src/core/vendor-loader.js?v=0.12.12', index)
         self.assertIn('loadAdminEditorVendors', loader)
         self.assertIn('window.jQuery', loader)
         self.assertIn('summernote-lite.min.js', loader)
@@ -233,7 +236,8 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertIn('id="padrao-consultation-form"', contact_page)
         self.assertIn('name="consent"', contact_page)
         self.assertIn('form.checkValidity()', contact_page)
-        self.assertIn('canal de envio do agendamento ainda precisa ser configurado', contact_page)
+        self.assertIn('/client/form/padrao-engenharia', contact_page)
+        self.assertIn("result?.success !== true", contact_page)
         self.assertIn('data-scroll-to="#servicos"', page)
         self.assertIn('id="servicos"', page)
         self.assertIn('.pe-hero, .pe-section { scroll-margin-top: 5.75rem; }', page)
@@ -383,6 +387,133 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertIn('id="login-form-feedback"', login)
         self.assertIn('role="status"', login)
         self.assertIn("passwordToggle?.addEventListener('click'", login)
+
+    def test_login_panel_has_a_comfortable_desktop_width(self) -> None:
+        login = (ROOT / "src/pages/login.html").read_text(encoding="utf-8")
+
+        self.assertIn('class="login-panel position-relative z-1 w-100 px-4 px-sm-5"', login)
+        self.assertIn('.login-panel {\n        max-width: 36rem;', login)
+        self.assertIn('@media (max-width: 575.98px)', login)
+
+    def test_404_uses_the_msite_palette_without_displaying_the_error_code(self) -> None:
+        page = (ROOT / "src/pages/404.html").read_text(encoding="utf-8")
+
+        self.assertIn('class="ms-404-page', page)
+        self.assertIn('ms-404-title', page)
+        self.assertIn('Voltar para a Home', page)
+        self.assertIn('background: var(--ms-surface-container-low);', page)
+        self.assertIn('color: var(--ms-primary);', page)
+        self.assertIn('background: linear-gradient(135deg, var(--ms-primary) 0%, var(--ms-primary-container) 100%);', page)
+        self.assertNotIn('ms-404-code', page)
+        self.assertNotIn('>404<', page)
+        self.assertNotIn('error-page-wrapper', page)
+        self.assertNotIn('404_PAGE_NOT_FOUND', page)
+
+    def test_not_found_screen_preserves_the_invalid_url(self) -> None:
+        core = (ROOT / "src/core/core.js").read_text(encoding="utf-8")
+
+        self.assertNotIn("window.history.replaceState({}, '', '/404');", core)
+        self.assertIn("this.updatePageSEO('404', '/404');", core)
+
+    def test_published_shell_uses_one_coordinated_cache_version(self) -> None:
+        index = (ROOT / "index.html").read_text(encoding="utf-8")
+        config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
+
+        index_version = re.search(r"<!-- Version: V([^ ]+) -->", index)
+        config_version = re.search(r'version: "([^"]+)"', config)
+        assert index_version is not None
+        assert config_version is not None
+        version = config_version.group(1)
+        self.assertEqual(index_version.group(1), version)
+        for asset in (
+            "/src/assets/css/design-system.css",
+            "/src/assets/css/style.css",
+            "/src/assets/css/developer.css",
+            "/src/assets/vendor/bootstrap/css/bootstrap.min.css",
+            "/src/assets/vendor/bootstrap-icons/font/bootstrap-icons.css",
+            "/src/config/config.js",
+            "/src/config/seo.js",
+            "/src/core/consent.js",
+            "/src/core/component.js",
+            "/src/core/i18n.js",
+            "/src/core/helpers.js",
+            "/src/core/skeleton.js",
+            "/src/core/vendor-loader.js",
+            "/src/core/core.js",
+            "/src/assets/vendor/bootstrap/js/bootstrap.bundle.min.js",
+        ):
+            self.assertIn(f'{asset}?v={version}', index)
+
+    def test_padrao_engenharia_defers_noncritical_images_without_layout_shift(self) -> None:
+        page = (ROOT / "src/pages/sites/padrao-engenharia/index.html").read_text(encoding="utf-8")
+
+        self.assertNotIn(
+            'hero-casa-noturna.jpg" alt="Residência de alto padrão iluminada à noite" loading="lazy"',
+            page,
+        )
+        for image in (
+            "sobre-equipe.png",
+            "depoimento-viviane.png",
+            "depoimento-elaine.png",
+            "hero-v2.png",
+            "cta-interior.jpg",
+        ):
+            tag = re.search(rf'<img\b[^>]*{re.escape(image)}[^>]*>', page)
+            assert tag is not None
+            self.assertIn('width="', tag.group(0))
+            self.assertIn('height="', tag.group(0))
+            self.assertIn('loading="lazy"', tag.group(0))
+            self.assertIn('decoding="async"', tag.group(0))
+        self.assertIn('class="col-6 col-md-6 col-lg-4"', page)
+
+    def test_padrao_consultation_form_uses_the_verified_gateway_contract(self) -> None:
+        page = (ROOT / "src/pages/sites/padrao-engenharia/consultar.html").read_text(encoding="utf-8")
+
+        self.assertNotIn('name="email"', page)
+        self.assertIn('name="consent"', page)
+        self.assertIn('role="status"', page)
+        self.assertIn('window.config?.api?.baseUrl', page)
+        self.assertIn('/client/form/padrao-engenharia', page)
+        self.assertIn("'Content-Type': 'application/json'", page)
+        self.assertIn('result?.success !== true', page)
+        self.assertIn('name: formData.get(\'name\')', page)
+        self.assertIn('phone: formData.get(\'phone\')', page)
+        self.assertIn('message: formData.get(\'message\')', page)
+        self.assertIn("consent: formData.get('consent') === 'on'", page)
+
+    def test_skeleton_uses_the_msite_ice_white_palette(self) -> None:
+        skeleton = (ROOT / "src/core/skeleton.js").read_text(encoding="utf-8")
+
+        self.assertIn('background: var(--ms-surface);', skeleton)
+        self.assertIn('rgba(203, 213, 225, 0.14)', skeleton)
+        self.assertIn('rgba(248, 250, 252, 0.2) 50%', skeleton)
+        self.assertIn('rgba(203, 213, 225, 0.22)', skeleton)
+        self.assertNotIn('201, 163, 92', skeleton)
+        self.assertNotIn('217, 188, 127', skeleton)
+
+    def test_footer_miranda_soft_brand_matches_header_brand_treatment(self) -> None:
+        header = (ROOT / "src/components/header.html").read_text(encoding="utf-8")
+        footer = (ROOT / "src/components/footer.html").read_text(encoding="utf-8")
+
+        brand_markup = '<span class="logo-text">Miranda<span class="brand-soft text-mono">Soft</span></span>'
+        self.assertIn(brand_markup, header)
+        self.assertIn(brand_markup, footer)
+        self.assertIn('font-size: 1.5rem;', footer)
+        self.assertIn('letter-spacing: -0.03em;', footer)
+        self.assertIn('color: #ffffff;', footer)
+        self.assertIn('color: var(--ms-primary);', footer)
+        self.assertIn('margin-left: 2px;', footer)
+        self.assertIn('opacity: 0.9;', footer)
+
+    def test_blog_categories_are_created_from_the_loaded_listing(self) -> None:
+        blog = (ROOT / "src/pages/blog.html").read_text(encoding="utf-8")
+
+        self.assertIn('id="blog-filter-row" hidden', blog)
+        self.assertIn('const getPostCategories = (post)', blog)
+        self.assertIn('filterContainer.replaceChildren()', blog)
+        self.assertIn('filterRow.hidden = false;', blog)
+        self.assertIn('getPostCategories(post).some', blog)
+        self.assertNotIn('data-filter="white label"', blog)
 
 
 if __name__ == "__main__":
