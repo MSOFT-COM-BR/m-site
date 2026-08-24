@@ -10,7 +10,7 @@ O runtime e uma SPA estatica: JavaScript vanilla, HTML e CSS, com paginas e comp
 | --- | --- |
 | Institucional | `/`, `/about`, `/expertise`, `/contact`, `/support` |
 | Conteudo | `/blog`, `/blog-ads`, `/blog-review`, `/materials` |
-| Produtos | `/apps`, `/marketplace`, `/games`, `/premium`, `/mcredential` |
+| Produtos | `/apps`, `/marketplace`, `/games`, `/premium`, `/app/mcredential` |
 | Conta | `/login`, `/admin`, `/profile` |
 | Legal | `/privacy`, `/terms`, `/lgpd`, `/cookies` |
 

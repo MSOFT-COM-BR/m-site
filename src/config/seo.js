@@ -69,10 +69,19 @@ const SEO_CONFIG = {
     description: 'Solicite uma consultoria com a Padrão Engenharia.',
     noindex: true
   },
-  'mcredential': {
+  'app-studio-erp-produtos': {
+    title: 'Console Studio BVA | MSoft',
+    description: 'Console interno da Studio BVA para acesso restrito, gestão comercial, contas e operação ERP.',
+    noindex: true
+  },
+  'app-studio-bva': { title: 'Studio BVA | MSoft', description: 'Entrada legada do Console Studio BVA.', noindex: true },
+  'app-studio-crm-radar': { title: 'CRM Studio BVA | MSoft', description: 'Radar e CRM interno Studio BVA.', noindex: true },
+  'app-studio-equipe-consultoras': { title: 'Equipe Studio BVA | MSoft', description: 'Gestão interna de consultoras Studio BVA.', noindex: true },
+  'app-studio-revendas-catalogo': { title: 'Revendas Studio BVA | MSoft', description: 'Catálogo interno de revendas Studio BVA.', noindex: true },
+  'app-mcredential': {
     title: 'MCredential | Gerenciador de Senhas MSoft',
     description: 'Protetor de senhas corporativo com criptografia de ponta a ponta. Segurança para credenciais da sua empresa.',
-    noindex: false
+    noindex: true
   },
   'games': {
     title: 'Games MSoft | Jogos e Experiências Interativas',

@@ -30,8 +30,10 @@ class ServicePagesContractTests(unittest.TestCase):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
 
-        self.assertIn('<!-- Version: V0.12.12 -->', index)
-        self.assertIn('version: "0.12.12"', config)
+        version_match = re.search(r'version: "([^"]+)"', config)
+        assert version_match is not None
+        version = version_match.group(1)
+        self.assertIn(f'<!-- Version: V{version} -->', index)
         for asset in (
             'config/config.js',
             'config/seo.js',
@@ -42,21 +44,24 @@ class ServicePagesContractTests(unittest.TestCase):
             'core/skeleton.js',
             'core/core.js',
         ):
-            self.assertIn(f'/src/{asset}?v=0.12.12', index)
+            self.assertIn(f'/src/{asset}?v={version}', index)
 
         for stylesheet in ('design-system.css', 'style.css', 'developer.css'):
-            self.assertIn(f'/src/assets/css/{stylesheet}?v=0.12.12', index)
+            self.assertIn(f'/src/assets/css/{stylesheet}?v={version}', index)
 
     def test_quote_route_is_indexable_and_has_spa_fallback(self) -> None:
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
         seo = (ROOT / "src/config/seo.js").read_text(encoding="utf-8")
         sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
         dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
+        server = (ROOT / "server.mjs").read_text(encoding="utf-8")
 
         self.assertIn("'cotacoes'", config)
         self.assertRegex(seo, r"'cotacoes':\s*\{")
         self.assertIn("https://mirandasoft.com.br/cotacoes", sitemap)
-        self.assertIn('CMD ["serve", "-s", ".", "-p", "8080"]', dockerfile)
+        self.assertIn('CMD ["node", "server.mjs"]', dockerfile)
+        self.assertIn("if (!extname(pathname)) return resolve(ROOT, 'index.html');", server)
+        self.assertIn("const PRIVATE_FILES = new Set(['/Dockerfile', '/server.mjs', '/serve.json']);", server)
 
     def test_standard_budget_approval_route_opens_a_simplified_whatsapp_report(self) -> None:
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
@@ -141,7 +146,7 @@ class ServicePagesContractTests(unittest.TestCase):
             "marked.min.js",
         ):
             self.assertNotIn(asset, index)
-        self.assertIn('/src/core/vendor-loader.js?v=0.12.12', index)
+        self.assertIn('/src/core/vendor-loader.js?v=' + re.search(r'version: "([^\"]+)"', (ROOT / "src/config/config.js").read_text(encoding="utf-8")).group(1), index)
         self.assertIn('loadAdminEditorVendors', loader)
         self.assertIn('window.jQuery', loader)
         self.assertIn('summernote-lite.min.js', loader)
@@ -201,12 +206,13 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertRegex(seo, r"'padrao-engenharia-contato':\s*\{")
         self.assertIn("requestedPageName === 'padrao-engenharia' && ['consultar', 'contato'].includes(segments[2])", core)
         self.assertIn("? 'padrao-engenharia-contato'", core)
-        self.assertIn("config.routes.pagePaths?.[pageName] || pageName;", core)
+        self.assertIn("const pagePath = studioPagePath ||", core)
         self.assertIn("const filePath = `/src/pages/${pagePath}.html?v=${config.app.version}`;", core)
         self.assertIn("'/padrao-engenharia/consultar'", core)
         self.assertIn("const isPadraoEngineeringRoute = ['padrao-engenharia', 'padrao-engenharia-contato'].includes(pageName);", core)
-        self.assertIn("const hideMainFrame = pageName === 'premium' || isPadraoEngineeringRoute;", core)
-        self.assertIn('const fullBleedLayout = isPadraoEngineeringRoute;', core)
+        self.assertIn("const isBvaConsoleRoute = pageName.startsWith('app-studio-');", core)
+        self.assertIn("const hideMainFrame = pageName === 'premium' || isPadraoEngineeringRoute || isBvaConsoleRoute;", core)
+        self.assertIn('const fullBleedLayout = isPadraoEngineeringRoute || isBvaConsoleRoute;', core)
         self.assertIn("layoutWrapper.style.maxWidth = fullBleedLayout ? 'none' : '1140px';", core)
         self.assertNotIn('root.style.paddingTop', core)
         self.assertNotIn('padding-top:', style[style.index('#root {'):])
@@ -268,10 +274,12 @@ class ServicePagesContractTests(unittest.TestCase):
         config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
         core = (ROOT / "src/core/core.js").read_text(encoding="utf-8")
 
-        self.assertIn('appPages: []', config)
-        self.assertIn("const appSlug = requestedPageName === 'app'", core)
-        self.assertIn("const pagePath = appSlug ? `app/${appSlug}/index`", core)
-        self.assertIn('const isRegisteredPage = appSlug', core)
+        self.assertIn("appPages: ['studio-bva', 'mcredential']", config)
+        self.assertIn("const nestedAppSlug = requestedPageName === 'app'", core)
+        self.assertIn("segments.length === 3", core)
+        self.assertIn("const legacyAppSlug = segments.length === 2", core)
+        self.assertIn("const pagePath = studioPagePath || (appSlug ? `app/${appSlug}/index`", core)
+        self.assertIn('const isRegisteredPage = studioRouteKey', core)
         self.assertIn("? `/app/${appSlug}`", core)
 
     def test_padrao_engenharia_routes_reject_extra_path_segments(self) -> None:
@@ -514,6 +522,68 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertIn('filterRow.hidden = false;', blog)
         self.assertIn('getPostCategories(post).some', blog)
         self.assertNotIn('data-filter="white label"', blog)
+
+    def test_studio_bva_is_a_registered_internal_console(self) -> None:
+        config = (ROOT / "src/config/config.js").read_text(encoding="utf-8")
+        seo = (ROOT / "src/config/seo.js").read_text(encoding="utf-8")
+        sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8")
+        core = (ROOT / "src/core/core.js").read_text(encoding="utf-8")
+        serve_config = json.loads((ROOT / "serve.json").read_text(encoding="utf-8"))
+        server = (ROOT / "server.mjs").read_text(encoding="utf-8")
+        page_path = ROOT / "src/pages/app/studio-bva/index.html"
+
+        self.assertIn("appPages: ['studio-bva', 'mcredential']", config)
+        self.assertTrue(page_path.is_file())
+        self.assertRegex(seo, re.compile(r"'app-studio-bva':\s*\{.*?noindex:\s*true", re.DOTALL))
+        self.assertNotIn("https://mirandasoft.com.br/app/studio-bva", sitemap)
+        self.assertIn("const pagePath = studioPagePath || (appSlug ? `app/${appSlug}/index`", core)
+
+        page = page_path.read_text(encoding="utf-8")
+        self.assertIn('data-bva-console-root', page)
+        self.assertIn('data-studio-console-root', page)
+        self.assertIn('studio-console-router.js', page)
+        self.assertNotIn('id="login-screen"', page)
+        self.assertNotIn('bva_session', page)
+        self.assertNotIn('https://studiobva.com.br/portal', page)
+        self.assertNotIn('<iframe', page.lower())
+        self.assertNotRegex(
+            page,
+            re.compile(r'''on(?:click|submit|input|change)=\\?["'](?!window\.|this\.)[A-Za-z_$]'''),
+        )
+        self.assertTrue((ROOT / 'src/assets/css/studio-bva-portal.css').is_file())
+        self.assertTrue((ROOT / 'src/assets/img/studio-bva-paper-logo.png').is_file())
+
+        studio_bva_headers = next(
+            header_rule["headers"]
+            for header_rule in serve_config["headers"]
+            if header_rule["source"] == "/app/studio/:path*"
+        )
+        self.assertIn(
+            {"key": "X-Robots-Tag", "value": "noindex, nofollow"},
+            studio_bva_headers,
+        )
+        self.assertIn("pathname.startsWith('/app/studio/')", server)
+        self.assertIn("headers['X-Robots-Tag'] = 'noindex, nofollow'", server)
+
+        mcredential_headers = next(
+            header_rule["headers"]
+            for header_rule in serve_config["headers"]
+            if header_rule["source"] == "/app/mcredential"
+        )
+        self.assertIn(
+            {"key": "X-Robots-Tag", "value": "noindex, nofollow"},
+            mcredential_headers,
+        )
+
+        legacy_mcredential_headers = next(
+            header_rule["headers"]
+            for header_rule in serve_config["headers"]
+            if header_rule["source"] == "/mcredential"
+        )
+        self.assertIn(
+            {"key": "X-Robots-Tag", "value": "noindex, nofollow"},
+            legacy_mcredential_headers,
+        )
 
 
 if __name__ == "__main__":

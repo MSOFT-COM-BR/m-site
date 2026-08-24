@@ -1,0 +1,1195 @@
+[
+  {
+    "name": "aiox-validator.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "validate",
+      "validateStoryFile",
+      "runESLint",
+      "runTypeScript",
+      "validateYAML"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "approach-manager.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "ApproachManager",
+      "startApproach",
+      "clearApproach",
+      "getSuggestions",
+      "CONFIG"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "approval-workflow.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "asset-inventory.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "generateInventory",
+      "ASSET_PATHS"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "atomic-layer-classifier.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "classifyTask",
+      "processTaskFile"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "backup-manager.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "batch-creator.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "branch-manager.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "capability-analyzer.js",
+    "status": "FIXABLE",
+    "loadable": false,
+    "exports": [],
+    "testPassed": null,
+    "errors": [
+      "Cannot find module '@babel/parser'\nRequire stack:\n- /Users/brenossan/development/m-setup/apps/m-site/.aiox-core/infrastructure/scripts/capability-analyzer.js\n- /Users/brenossan/development/m-setup/apps/m-site/.aiox-core/infrastructure/scripts/test-utilities.js"
+    ],
+    "integrationCount": 0,
+    "recommendation": "Install missing dependencies"
+  },
+  {
+    "name": "changelog-generator.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "ChangelogGenerator"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "cicd-discovery.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "CICDDiscovery",
+      "ConfigParser",
+      "ProviderDetector",
+      "PipelineAnalyzer",
+      "IntegrationSuggester",
+      "PROVIDERS"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "clickup-helpers.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "updateStoryStatus",
+      "updateEpicStatus",
+      "updateTaskDescription",
+      "addTaskComment",
+      "verifyEpicExists"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "code-quality-improver.js",
+    "status": "FIXABLE",
+    "loadable": false,
+    "exports": [],
+    "testPassed": null,
+    "errors": [
+      "Cannot find module 'eslint'\nRequire stack:\n- /Users/brenossan/development/m-setup/apps/m-site/.aiox-core/infrastructure/scripts/code-quality-improver.js\n- /Users/brenossan/development/m-setup/apps/m-site/.aiox-core/infrastructure/scripts/test-utilities.js"
+    ],
+    "integrationCount": 0,
+    "recommendation": "Install missing dependencies"
+  },
+  {
+    "name": "codebase-mapper.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "CodebaseMapper",
+      "CONFIG",
+      "PatternDetectors"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "collect-tool-usage.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "createEvent",
+      "sanitizeEvent",
+      "validateEvent",
+      "pruneOldEntries",
+      "loadUsageData",
+      "generateSampleData",
+      "RETENTION_DAYS"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "commit-message-generator.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "component-generator.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "component-metadata.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "component-search.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "config-cache.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "ConfigCache",
+      "globalConfigCache",
+      "disposeConfigCacheTimers",
+      "startCacheCleanupTimer"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "config-loader.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "loadAgentConfig",
+      "loadConfigSections",
+      "loadMinimalConfig",
+      "loadFullConfig",
+      "preloadConfig",
+      "clearCache",
+      "getPerformanceMetrics",
+      "validateAgentConfig",
+      "getConfigSection",
+      "agentRequirements",
+      "ALWAYS_LOADED"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "conflict-resolver.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "coverage-analyzer.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "dashboard-status-writer.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "activateAgent",
+      "deactivateAgent",
+      "updateSession",
+      "incrementCommands",
+      "completeStory",
+      "updateRateLimit",
+      "clearStatus",
+      "getStatus",
+      "_ensureStatusDir",
+      "_readStatus",
+      "_writeStatus"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "dependency-analyzer.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "dependency-impact-analyzer.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "diff-generator.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "documentation-synchronizer.js",
+    "status": "FIXABLE",
+    "loadable": false,
+    "exports": [],
+    "testPassed": null,
+    "errors": [
+      "Cannot find module '@babel/parser'\nRequire stack:\n- /Users/brenossan/development/m-setup/apps/m-site/.aiox-core/infrastructure/scripts/documentation-synchronizer.js\n- /Users/brenossan/development/m-setup/apps/m-site/.aiox-core/infrastructure/scripts/test-utilities.js"
+    ],
+    "integrationCount": 0,
+    "recommendation": "Install missing dependencies"
+  },
+  {
+    "name": "framework-3way-diff.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "parseArgs",
+      "resolveSibling",
+      "indexCoreTree",
+      "comparePair",
+      "classifyThreeWay",
+      "classifyByWave",
+      "scanTreeDenylist",
+      "buildResult",
+      "main",
+      "isOssWins",
+      "OSS_WINS_PREFIXES",
+      "WAVE_PREFIXES",
+      "formatReport"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "framework-analyzer.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "generate-optimization-report.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "loadThresholds",
+      "compareBaseline",
+      "generateRecommendations",
+      "generateReport",
+      "aggregateUsage",
+      "DEFAULT_THRESHOLDS"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "generate-settings-json.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "generate",
+      "validateBoundaryPath",
+      "readBoundaryConfig",
+      "expandProtectedPaths",
+      "expandExceptionPaths",
+      "expandOneLevel",
+      "expandSubdirWithExceptions",
+      "generatePermissions",
+      "writeSettingsJson"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "git-config-detector.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "git-wrapper.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "gotchas-documenter.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "GotchasDocumenter",
+      "Category",
+      "Severity",
+      "updateGotchas",
+      "getGotchasForSelfCritique",
+      "CONFIG"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "improvement-engine.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "improvement-validator.js",
+    "status": "FIXABLE",
+    "loadable": false,
+    "exports": [],
+    "testPassed": null,
+    "errors": [
+      "Cannot find module './dependency-manager'\nRequire stack:\n- /Users/brenossan/development/m-setup/apps/m-site/.aiox-core/infrastructure/scripts/improvement-validator.js\n- /Users/brenossan/development/m-setup/apps/m-site/.aiox-core/infrastructure/scripts/test-utilities.js"
+    ],
+    "integrationCount": 0,
+    "recommendation": "Install missing dependencies"
+  },
+  {
+    "name": "migrate-agent.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "migrateAgent",
+      "listAgents",
+      "generateAutoClaudeSection",
+      "AGENT_CAPABILITIES"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "modification-risk-assessment.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "modification-validator.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "output-formatter.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "path-analyzer.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "analyzePaths",
+      "extractReferences",
+      "REFERENCE_PATTERNS",
+      "ASSET_DIRS"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "pattern-extractor.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "performance-analyzer.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "performance-and-error-resolver.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "processTaskFile",
+      "determineErrorStrategy"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "performance-optimizer.js",
+    "status": "FIXABLE",
+    "loadable": false,
+    "exports": [],
+    "testPassed": null,
+    "errors": [
+      "Cannot find module '@babel/parser'\nRequire stack:\n- /Users/brenossan/development/m-setup/apps/m-site/.aiox-core/infrastructure/scripts/performance-optimizer.js\n- /Users/brenossan/development/m-setup/apps/m-site/.aiox-core/infrastructure/scripts/test-utilities.js"
+    ],
+    "integrationCount": 0,
+    "recommendation": "Install missing dependencies"
+  },
+  {
+    "name": "performance-tracker.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "trackConfigLoad",
+      "trackAgentActivation",
+      "startSession",
+      "endSession",
+      "getStatistics",
+      "generateReport",
+      "savePerformanceData",
+      "loadPerformanceData",
+      "reset",
+      "PERFORMANCE_TARGETS",
+      "AGENT_PRIORITIES"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "plan-tracker.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "PlanTracker",
+      "Status",
+      "StatusEmoji",
+      "getPlanProgress",
+      "updateAfterSubtask",
+      "CONFIG"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "pm-adapter-factory.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "getPMAdapter",
+      "clearAdapterCache",
+      "getPMToolType",
+      "isPMToolConfigured"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "pm-adapter.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "PMAdapter"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "pr-review-ai.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "PRReviewAI",
+      "DiffAnalyzer",
+      "SecurityAnalyzer",
+      "PerformanceAnalyzer",
+      "CodeQualityAnalyzer",
+      "RedundancyAnalyzer",
+      "AIReviewer",
+      "ReviewCategory",
+      "Severity",
+      "Verdict"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "pre-dispatch-guard.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "loadContext",
+      "run",
+      "main"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "project-status-loader.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "loadProjectStatus",
+      "clearCache",
+      "formatStatusDisplay",
+      "ProjectStatusLoader",
+      "LOCK_TIMEOUT_MS",
+      "LOCK_STALE_MS",
+      "ACTIVE_SESSION_TTL",
+      "IDLE_TTL"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "qa-loop-orchestrator.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "QALoopOrchestrator",
+      "LoopStatus",
+      "Verdict",
+      "StatusEmoji",
+      "VerdictEmoji",
+      "getLoopStatus",
+      "startLoop",
+      "stopLoop",
+      "resumeLoop",
+      "listLoops",
+      "checkAbandonedLoops",
+      "CONFIG"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "qa-report-generator.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "QAReportGenerator",
+      "Severity",
+      "Category",
+      "Verdict",
+      "BuildStatus",
+      "createQAReport",
+      "generateAndSaveReport",
+      "CONFIG"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "recovery-tracker.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "RecoveryTracker",
+      "AttemptStatus",
+      "SubtaskStatus",
+      "ATTEMPTS_SCHEMA",
+      "validateAttemptsSchema",
+      "trackAttempt",
+      "completeAttempt",
+      "getAttemptHistory",
+      "CONFIG"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "refactoring-suggester.js",
+    "status": "FIXABLE",
+    "loadable": false,
+    "exports": [],
+    "testPassed": null,
+    "errors": [
+      "Cannot find module '@babel/parser'\nRequire stack:\n- /Users/brenossan/development/m-setup/apps/m-site/.aiox-core/infrastructure/scripts/refactoring-suggester.js\n- /Users/brenossan/development/m-setup/apps/m-site/.aiox-core/infrastructure/scripts/test-utilities.js"
+    ],
+    "integrationCount": 0,
+    "recommendation": "Install missing dependencies"
+  },
+  {
+    "name": "repair-agent-references.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "buildLegacyArtifacts",
+      "removeLegacyArtifacts",
+      "validateGeminiCommands",
+      "repairAgentReferences",
+      "parseArgs",
+      "getDefaultOptions",
+      "formatHumanReport"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "repository-detector.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "detectRepositoryContext"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "rollback-manager.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "RollbackManager",
+      "CONFIG"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "sandbox-tester.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "security-checker.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "spot-check-validator.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "validateTask"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "status-mapper.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "mapStatusToClickUp",
+      "mapStatusFromClickUp",
+      "isValidAIOXStatus",
+      "isValidClickUpStatus",
+      "getValidAIOXStatuses",
+      "getValidClickUpStatuses",
+      "STATUS_MAPPING"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "story-worktree-hooks.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "onStoryStart",
+      "onStoryDone",
+      "getWorktreeStatus",
+      "formatWorktreeStatus",
+      "getWorktreeSettings",
+      "extractStoryId"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "stuck-detector.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "StuckDetector",
+      "quickCheck",
+      "loadConfig",
+      "DEFAULT_CONFIG",
+      "ERROR_PATTERNS",
+      "SUGGESTIONS"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "subtask-verifier.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "SubtaskVerifier"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "template-engine.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "template-validator.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "test-discovery.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "TestDiscovery",
+      "FrameworkDetector",
+      "TestFileFinder",
+      "TestAnalyzer",
+      "CoverageAnalyzer",
+      "TestRunner",
+      "FRAMEWORKS"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "test-generator.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "test-quality-assessment.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "test-utilities-fast.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "runFastAudit",
+      "quickTest"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "tool-resolver.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "cache",
+      "basePaths",
+      "resolveTool"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "transaction-manager.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "usage-analytics.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "validate-agents.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "validateAgents",
+      "validateCommandUniqueness",
+      "validateDependencies",
+      "validateAgentFormat",
+      "loadAllAgents"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "validate-claude-integration.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "validateClaudeIntegration",
+      "parseArgs",
+      "countMarkdownFiles",
+      "listMarkdownBasenames",
+      "listClaudeAgentSkillIds",
+      "listTopLevelNames",
+      "ALLOWED_NATIVE_SUBAGENTS",
+      "ALLOWED_CLAUDE_COMMAND_ENTRIES",
+      "ALLOWED_CLAUDE_SKILL_ENTRIES"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "validate-codex-integration.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "validateCodexIntegration",
+      "parseArgs",
+      "getDefaultOptions",
+      "countMarkdownFiles",
+      "countSkillFiles"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "validate-gemini-integration.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "validateGeminiIntegration",
+      "parseArgs",
+      "getDefaultOptions",
+      "countMarkdownFiles"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "validate-output-pattern.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "validate-parity.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "parseArgs",
+      "runSyncValidate",
+      "runParityValidation",
+      "normalizeResult",
+      "formatHumanReport",
+      "diffCompatibilityContracts"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "validate-paths.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "validatePaths",
+      "parseArgs",
+      "getDefaultOptions",
+      "listSkillFiles",
+      "collectAbsolutePathViolations",
+      "validateSkillPathConventions",
+      "extractGeneratedSquadSource"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "validate-user-profile.js",
+    "status": "WORKING",
+    "loadable": true,
+    "exports": [
+      "validateUserProfile",
+      "loadAndValidateUserProfile",
+      "getUserProfile",
+      "isBobMode",
+      "isAdvancedMode",
+      "VALID_USER_PROFILES",
+      "DEFAULT_USER_PROFILE"
+    ],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": "Keep but document usage"
+  },
+  {
+    "name": "visual-impact-generator.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "worktree-manager.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  },
+  {
+    "name": "yaml-validator.js",
+    "status": "UNKNOWN",
+    "loadable": true,
+    "exports": [],
+    "testPassed": null,
+    "errors": [],
+    "integrationCount": 0,
+    "recommendation": ""
+  }
+]

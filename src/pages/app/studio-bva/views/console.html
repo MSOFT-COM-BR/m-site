@@ -1,0 +1,202 @@
+<section class="studio-console-shell">
+  <div class="studio-console-workspace">
+    <aside class="studio-console-sidebar" aria-label="Navegação principal do Studio">
+      <header class="studio-console-brand">
+        <span class="studio-console-kicker text-primary">MSoft · Console</span>
+        <h1 class="fw-bold text-dark">Studio BVA</h1>
+        <p class="text-muted">Operação e fábrica em um só lugar.</p>
+      </header>
+      <nav class="studio-console-nav" aria-label="Módulos do Studio">
+        <div class="mt-1 mb-1 px-2 text-muted small fw-bold text-uppercase">Painel</div>
+        <a data-studio-route="revendas/catalogo" href="/app/studio/revendas/catalogo"><span class="studio-nav-icon"><i class="bi bi-house"></i></span><span><strong>Visão Geral</strong><small>Métricas da conta</small></span></a>
+
+        <div class="mt-3 mb-1 px-2 text-muted small fw-bold text-uppercase">Comercial</div>
+        <a data-studio-route="revendas/pedidos" href="/app/studio/revendas/pedidos"><span class="studio-nav-icon"><i class="bi bi-receipt"></i></span><span><strong>Pedidos</strong><small>Vendas registradas</small></span></a>
+        <a data-studio-route="crm/radar" href="/app/studio/crm/radar"><span class="studio-nav-icon"><i class="bi bi-geo-alt"></i></span><span><strong>Radar B2B</strong><small>Leads e oportunidades</small></span></a>
+        <a data-studio-route="equipe/consultoras" href="/app/studio/equipe/consultoras"><span class="studio-nav-icon"><i class="bi bi-people"></i></span><span><strong>Equipe</strong><small>Consultoras VIP</small></span></a>
+
+        <div class="mt-3 mb-1 px-2 text-muted small fw-bold text-uppercase">Fábrica 3D</div>
+        <a data-studio-route="erp/produtos" href="/app/studio/erp/produtos"><span class="studio-nav-icon"><i class="bi bi-box-seam"></i></span><span><strong>Produtos</strong><small>Vitrine e margens</small></span></a>
+        <a data-studio-route="erp/insumos" href="/app/studio/erp/insumos"><span class="studio-nav-icon"><i class="bi bi-palette"></i></span><span><strong>Insumos</strong><small>Estoque e materiais</small></span></a>
+        <a data-studio-route="erp/kardex" href="/app/studio/erp/kardex"><span class="studio-nav-icon"><i class="bi bi-arrow-left-right"></i></span><span><strong>Kardex</strong><small>Movimentações</small></span></a>
+
+        <div class="mt-3 mb-1 px-2 text-muted small fw-bold text-uppercase">Configurações</div>
+        <a data-studio-route="erp/categorias" href="/app/studio/erp/categorias"><span class="studio-nav-icon"><i class="bi bi-tags"></i></span><span><strong>Categorias</strong><small>Organização do site</small></span></a>
+        <a data-studio-route="erp/maquinas" href="/app/studio/erp/maquinas"><span class="studio-nav-icon"><i class="bi bi-printer"></i></span><span><strong>Máquinas</strong><small>Custos de energia</small></span></a>
+      </nav>
+      <a class="studio-console-exit btn btn-outline-secondary mt-auto" href="/premium">‹ Voltar aos aplicativos</a>
+    </aside>
+    <div class="studio-console-content">
+      <header class="studio-console-header">
+        <div>
+          <span class="studio-console-kicker text-primary">Área de trabalho</span>
+          <p id="studio-console-user" class="fw-medium text-dark mb-0">Carregando sua sessão MSoft…</p>
+        </div>
+        <details class="studio-mobile-menu">
+          <summary class="btn btn-outline-secondary">Menu do Studio <i class="bi bi-chevron-down ms-2"></i></summary>
+          <nav aria-label="Módulos do Studio no mobile" class="shadow">
+            <a data-studio-route="revendas/catalogo" href="/app/studio/revendas/catalogo">Visão Geral</a>
+            <a data-studio-route="revendas/pedidos" href="/app/studio/revendas/pedidos">Pedidos</a>
+            <a data-studio-route="crm/radar" href="/app/studio/crm/radar">Radar B2B</a>
+            <a data-studio-route="equipe/consultoras" href="/app/studio/equipe/consultoras">Equipe</a>
+            <a data-studio-route="erp/produtos" href="/app/studio/erp/produtos">Produtos</a>
+            <a data-studio-route="erp/insumos" href="/app/studio/erp/insumos">Insumos</a>
+            <a data-studio-route="erp/kardex" href="/app/studio/erp/kardex">Kardex</a>
+            <a data-studio-route="erp/categorias" href="/app/studio/erp/categorias">Categorias</a>
+            <a data-studio-route="erp/maquinas" href="/app/studio/erp/maquinas">Máquinas</a>
+          </nav>
+        </details>
+      </header>
+      <main id="studio-console-page" class="studio-console-page" tabindex="-1"></main>
+    </div>
+  </div>
+</section>
+
+<!-- Include Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<style>
+  /*
+   * NEW STANDARD THEME
+   * Translates the custom `.studio-*` classes into a modern, light,
+   * standard Bootstrap-like interface without breaking the SPA router logic.
+   */
+  :root {
+    --studio-bg: #f8f9fa;
+    --studio-surface: #ffffff;
+    --studio-border: #dee2e6;
+    --studio-text: #212529;
+    --studio-muted: #6c757d;
+    --studio-primary: #0d6efd;
+    --studio-primary-soft: #e7f1ff;
+    --studio-hover: #f1f3f5;
+  }
+
+  .studio-console { min-height: 100vh; background: var(--studio-bg); color: var(--studio-text); padding: 2rem; font-family: system-ui, -apple-system, sans-serif; }
+  .studio-console-shell { max-width: 1440px; margin: 0 auto; }
+  .studio-console-workspace { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 2rem; }
+
+  .studio-console-sidebar { background: var(--studio-surface); border: 1px solid var(--studio-border); border-radius: 1rem; display: flex; flex-direction: column; min-height: calc(100vh - 4rem); padding: 1.25rem; position: sticky; top: 1rem; box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); }
+  .studio-console-brand { border-bottom: 1px solid var(--studio-border); margin-bottom: 1rem; padding: .5rem .5rem 1.25rem; }
+  .studio-console-brand h1 { font-size: 1.5rem; margin: .25rem 0; color: var(--studio-text); }
+  .studio-console-brand p { color: var(--studio-muted); font-size: .875rem; line-height: 1.5; margin: 0; }
+
+  .studio-console-content { min-width: 0; }
+  .studio-console-header { align-items: center; border-bottom: 1px solid var(--studio-border); display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 0; margin-bottom: 1rem; }
+  .studio-console-kicker { font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--studio-primary); }
+
+  .studio-console-nav { display: grid; gap: .25rem; }
+  .studio-console-nav a { align-items: center; border: 1px solid transparent; color: var(--studio-text); display: flex; gap: .75rem; padding: .65rem; text-decoration: none; border-radius: .5rem; transition: background 0.15s; }
+  .studio-console-nav a strong { display: block; font-weight: 600; font-size: 0.95rem; }
+  .studio-console-nav a small { display: block; color: var(--studio-muted); font-size: .75rem; margin-top: .15rem; }
+
+  .studio-nav-icon { align-items: center; background: var(--studio-bg); border: 1px solid var(--studio-border); border-radius: .5rem; color: var(--studio-muted); display: inline-flex; font-size: 1rem; height: 2.25rem; justify-content: center; width: 2.25rem; }
+
+  .studio-console-nav a:hover, .studio-console-nav a:focus-visible { background: var(--studio-hover); outline: none; }
+  .studio-console-nav a[aria-current="page"] { background: var(--studio-primary-soft); border-color: rgba(13, 110, 253, 0.2); color: var(--studio-primary); }
+  .studio-console-nav a[aria-current="page"] .studio-nav-icon { background: var(--studio-primary); color: #fff; border-color: var(--studio-primary); }
+
+  .studio-mobile-menu { display: none; }
+  .studio-console-page { padding-bottom: 2rem; }
+
+  .studio-module-card { background: var(--studio-surface); border: 1px solid var(--studio-border); border-radius: 1rem; padding: 2rem; box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); text-align: center; }
+  .studio-module-card h2 { margin-top: 0; margin-bottom: 1rem; color: var(--studio-text); }
+  .studio-module-card p { color: var(--studio-muted); line-height: 1.6; margin-bottom: 1.5rem; }
+
+  .studio-module-heading { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem; margin-bottom: 1rem; }
+  .studio-module-heading h2 { margin: 0 auto 0 0; font-size: 1.75rem; font-weight: 700; }
+  .studio-intro { color: var(--studio-muted); max-width: 70ch; margin: -0.5rem 0 1.5rem; font-size: 1.1rem; }
+
+  /* Buttons */
+  .studio-refresh, .crud-action { background: var(--studio-primary); color: #fff; border: 0; border-radius: .5rem; font-weight: 500; padding: .5rem 1rem; cursor: pointer; transition: opacity 0.15s; }
+  .studio-refresh:hover, .crud-action:hover { opacity: 0.9; }
+  .crud-action { font-size: 0.85rem; padding: 0.35rem 0.75rem; }
+  .crud-action[data-crud-delete] { background: #dc3545; }
+  .crud-icon-action { align-items: center; display: inline-flex; height: 44px; justify-content: center; padding: 0; width: 44px; }
+  .crud-icon-action:focus-visible { outline: 3px solid var(--studio-primary); outline-offset: 2px; }
+
+  .studio-metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .studio-metric, .studio-panel { background: var(--studio-surface); border: 1px solid var(--studio-border); border-radius: .75rem; padding: 1.5rem; box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); }
+  .studio-metric span, .studio-metric small { display: block; color: var(--studio-muted); font-size: .85rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+  .studio-metric strong { display: block; color: var(--studio-text); font-size: 2rem; margin: .5rem 0 0; font-weight: 700; }
+
+  .studio-panel { margin-top: 1rem; overflow: hidden; padding: 0; }
+  .studio-panel h3, .studio-panel h4 { margin-top: 0; padding: 1.25rem 1.25rem 0; color: var(--studio-text); }
+  .studio-panel > p { margin: .75rem 0 1.25rem; padding: 0 1.25rem; }
+  .studio-share-link { align-items: center; display: flex; flex-wrap: wrap; gap: .75rem; padding: 0 1.25rem 1.25rem; }
+  .studio-share-link a { background: var(--studio-bg); border: 1px solid var(--studio-border); border-radius: .5rem; color: var(--studio-text); flex: 1 1 320px; overflow-wrap: anywhere; padding: .75rem; }
+
+  /* Tables */
+  .studio-table-wrap { overflow-x: auto; width: 100%; }
+  .studio-table-wrap table { border-collapse: collapse; min-width: 720px; width: 100%; }
+  .studio-table-wrap th, .studio-table-wrap td { border-bottom: 1px solid var(--studio-border); padding: 1rem 1.25rem; text-align: left; color: var(--studio-text); vertical-align: middle; }
+  .studio-table-wrap th { background: var(--studio-bg); color: var(--studio-muted); font-size: .75rem; text-transform: uppercase; font-weight: 700; }
+  .studio-table-wrap tr:hover td { background: var(--studio-bg); }
+
+  /* Lists */
+  .studio-list { list-style: none; margin: 0; padding: 0; }
+  .studio-list li, .studio-list-item { border-bottom: 1px solid var(--studio-border); padding: 1.25rem; display: flex; justify-content: space-between; align-items: center; }
+  .studio-list li:last-child, .studio-list-item:last-child { border-bottom: 0; }
+  .studio-list strong, .studio-list-item strong { font-size: 1.1rem; color: var(--studio-text); }
+  .studio-list span, .studio-list small, .studio-list-item span, .studio-list-item small { display: block; color: var(--studio-muted); margin-top: .35rem; }
+
+  /* Filters */
+  .studio-filter-row, .studio-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; padding: 1.25rem; border-bottom: 1px solid var(--studio-border); background: var(--studio-bg); }
+  .studio-filter-row label { color: var(--studio-text); font-weight: 600; font-size: .85rem; }
+  .studio-filter-row input, .studio-filter-row select { background: var(--studio-surface); border: 1px solid var(--studio-border); border-radius: .4rem; color: var(--studio-text); display: block; margin-top: .4rem; padding: .65rem; width: 100%; }
+  .studio-filter-row input:focus, .studio-filter-row select:focus { border-color: var(--studio-primary); outline: 0; box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); }
+
+  /* Dialog & Forms */
+  .studio-crud-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .studio-crud-dialog { background: var(--studio-surface); border: 0; border-radius: 1rem; color: var(--studio-text); max-height: min(90vh, 900px); max-width: min(920px, calc(100vw - 2rem)); padding: 0; width: 100%; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); }
+  .studio-crud-dialog::backdrop { background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(2px); }
+
+  .studio-form { max-height: inherit; overflow: auto; padding: 2rem; }
+  .studio-dialog-header { align-items: start; border-bottom: 1px solid var(--studio-border); display: flex; gap: 1rem; justify-content: space-between; margin: -2rem -2rem 1.5rem; padding: 1.5rem 2rem; background: var(--studio-bg); border-radius: 1rem 1rem 0 0; }
+  .studio-dialog-header h2 { margin: .3rem 0; font-weight: 700; font-size: 1.5rem; }
+  .studio-dialog-header p { color: var(--studio-muted); display: block; margin: .25rem 0 0; }
+  .studio-dialog-header button { background: transparent; border: 0; color: var(--studio-muted); cursor: pointer; font-size: 1.5rem; min-height: 44px; min-width: 44px; padding: 0; }
+
+  .studio-dialog-footer button:not(.studio-refresh) { background: var(--studio-bg); border: 1px solid var(--studio-border); border-radius: .5rem; color: var(--studio-text); min-height: 44px; padding: .5rem 1rem; font-weight: 500; cursor: pointer; }
+
+  .studio-form fieldset { border: 1px solid var(--studio-border); border-radius: .75rem; margin: 1.5rem 0; padding: 1.5rem; background: var(--studio-surface); }
+  .studio-form legend { color: var(--studio-primary); font-weight: 700; padding: 0 .75rem; font-size: 1rem; text-transform: uppercase; }
+  .studio-form label { color: var(--studio-text); display: grid; font-weight: 600; font-size: .9rem; gap: .5rem; margin: .75rem 0; }
+  .studio-form input, .studio-form select, .studio-form textarea { background: var(--studio-surface); border: 1px solid var(--studio-border); border-radius: .4rem; color: var(--studio-text); font: inherit; padding: .65rem; width: 100%; box-sizing: border-box; }
+  .studio-form input:focus, .studio-form select:focus, .studio-form textarea:focus { border-color: var(--studio-primary); outline: 0; box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); }
+
+  .studio-form-grid { display: grid; gap: 1rem; }
+  .studio-form-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .studio-form-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .studio-form-grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .studio-materials { border: 1px solid var(--studio-border); border-radius: .5rem; margin: 1rem 0; padding: 1rem; }
+  .studio-materials-heading { align-items: center; display: flex; gap: 1rem; justify-content: space-between; }
+  .studio-field-hint { color: var(--studio-muted); font-size: .875rem; margin: .5rem 0; }
+  .studio-filamento-row { align-items: end; display: grid; gap: .75rem; grid-template-columns: minmax(0, 1fr) minmax(130px, .4fr) 44px; }
+  .studio-filamento-row .crud-icon-action { margin-bottom: .75rem; }
+
+  .studio-switch { align-items: center; display: flex !important; gap: .75rem; font-weight: 500 !important; }
+  .studio-switch input { accent-color: var(--studio-primary); height: 1.25rem; width: 1.25rem; }
+  .studio-cost-preview { color: var(--studio-primary); display: block; font-weight: 600; background: var(--studio-primary-soft); padding: 1rem; border-radius: .5rem; text-align: center; margin-top: 1rem; }
+
+  .studio-dialog-footer { border-top: 1px solid var(--studio-border); display: flex; flex-wrap: wrap; gap: 1rem; justify-content: flex-end; margin: 1.5rem -2rem -2rem; padding: 1.25rem 2rem; position: sticky; bottom: 0; background: var(--studio-bg); border-radius: 0 0 1rem 1rem; }
+
+  @media (max-width: 760px) {
+    .studio-console { padding: 0; }
+    .studio-console-workspace { display: block; }
+    .studio-console-sidebar { display: none; }
+    .studio-console-header { padding: 1rem; background: var(--studio-surface); }
+    .studio-mobile-menu { display: block; position: relative; }
+    .studio-mobile-menu summary { align-items: center; border: 1px solid var(--studio-border); border-radius: .5rem; cursor: pointer; display: flex; font-weight: 600; gap: .75rem; justify-content: space-between; padding: .5rem 1rem; background: var(--studio-surface); }
+    .studio-mobile-menu[open] summary { border-color: var(--studio-primary); }
+    .studio-mobile-menu nav { background: var(--studio-surface); border: 1px solid var(--studio-border); border-radius: .5rem; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); display: grid; gap: .2rem; margin-top: .5rem; min-width: 250px; padding: .5rem; position: absolute; right: 0; z-index: 5; }
+    .studio-mobile-menu a { border-radius: .4rem; color: var(--studio-text); padding: .75rem 1rem; text-decoration: none; }
+    .studio-mobile-menu a[aria-current="page"], .studio-mobile-menu a:hover { background: var(--studio-hover); }
+    .studio-console-page { padding: 1rem; }
+    .studio-form-grid.two, .studio-form-grid.three, .studio-form-grid.four { grid-template-columns: 1fr; }
+    .studio-filamento-row { grid-template-columns: 1fr 1fr 44px; }
+    .studio-form { padding: 1.25rem; }
+    .studio-dialog-header { margin: -1.25rem -1.25rem 1.25rem; padding: 1.25rem; }
+    .studio-dialog-footer { margin: 1.25rem -1.25rem -1.25rem; padding: 1.25rem; }
+  }
+</style>

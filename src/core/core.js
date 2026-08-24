@@ -15,6 +15,8 @@ class Core {
     this.skeleton = null;
     // Caminho atual
     this._currentPath = null;
+    // Sequência usada para descartar carregamentos de rota que chegaram atrasados
+    this._navigationId = 0;
     // Inicialização única
     this._globalComponentsLoaded = false;
     // Lista de páginas válidas
@@ -56,6 +58,15 @@ class Core {
 
   getComponent(name) {
     return this.components.get(name);
+  }
+
+  configureComponentRoot(host, { className, variant } = {}) {
+    const root = host?.querySelector?.('[data-component-root]');
+    if (!root) return null;
+    const classes = String(className || '').split(/\s+/).filter(Boolean);
+    if (classes.length) root.classList.add(...classes);
+    if (variant) root.dataset.componentVariant = variant;
+    return root;
   }
 
   applyTranslations(container) {
@@ -111,21 +122,48 @@ class Core {
         if (res.ok) {
           const content = await res.text();
 
+          let finalContent = content;
+          // Padronização: Extrair <style> para evitar repetição no DOM
+          const styleRegex = /<style\b[^>]*>([\s\S]*?)<\/style>/gi;
+          let match;
+          let extractedStyles = '';
+          while ((match = styleRegex.exec(content)) !== null) {
+            extractedStyles += match[1] + '\n';
+          }
+          if (extractedStyles.trim()) {
+            finalContent = content.replace(styleRegex, '');
+            const styleId = `style-comp-${name}`;
+            if (!document.getElementById(styleId)) {
+              const styleEl = document.createElement('style');
+              styleEl.id = styleId;
+              styleEl.textContent = extractedStyles;
+              document.head.appendChild(styleEl);
+            }
+          }
+
           // Use smooth transition if Skeleton is available
           if (typeof Skeleton !== 'undefined' && Skeleton.hide) {
-            Skeleton.hide(el, content, () => {
+            Skeleton.hide(el, finalContent, () => {
               this._activeLoads.delete(el);
               el.setAttribute('data-loaded', 'true');
               this.loadedHtmlComponents.add(name);
+              this.configureComponentRoot(el, {
+                className: el.dataset.componentClass,
+                variant: el.dataset.componentVariant,
+              });
               // Execute any inline scripts
               this.executeScripts(el);
               this.applyTranslations(el);
             });
           } else {
-            el.innerHTML = content;
+            el.innerHTML = finalContent;
             this._activeLoads.delete(el);
             el.setAttribute('data-loaded', 'true');
             this.loadedHtmlComponents.add(name);
+            this.configureComponentRoot(el, {
+              className: el.dataset.componentClass,
+              variant: el.dataset.componentVariant,
+            });
             this.executeScripts(el);
             this.applyTranslations(el);
           }
@@ -147,12 +185,20 @@ class Core {
             Skeleton.hide(el, tempDiv.innerHTML, () => {
               this._activeLoads.delete(el);
               el.setAttribute('data-loaded', 'true');
+              this.configureComponentRoot(el, {
+                className: el.dataset.componentClass,
+                variant: el.dataset.componentVariant,
+              });
               this.applyTranslations(el);
             });
           } else {
             instance.render(el);
             this._activeLoads.delete(el);
             el.setAttribute('data-loaded', 'true');
+            this.configureComponentRoot(el, {
+              className: el.dataset.componentClass,
+              variant: el.dataset.componentVariant,
+            });
             this.applyTranslations(el);
           }
         }
@@ -180,6 +226,9 @@ class Core {
   async loadPage() {
     const root = document.getElementById('root');
     if (!root) return;
+    const navigationId = ++this._navigationId;
+    const isCurrentNavigation = () => navigationId === this._navigationId;
+    window.dispatchEvent(new CustomEvent('msoft:route-unmount'));
     this.showSkeleton(root);
 
     // Get segments from pathname
@@ -189,15 +238,26 @@ class Core {
     const hasValidPadraoEngineeringPath = !isPadraoEngineeringRoute
       || segments.length === 2
       || (segments.length === 3 && ['consultar', 'contato'].includes(segments[2]));
-    const appSlug = requestedPageName === 'app' && segments.length === 3 && /^[a-z0-9-]+$/.test(segments[2] || '')
+    const nestedAppSlug = requestedPageName === 'app' && segments.length === 3 && /^[a-z0-9-]+$/.test(segments[2] || '')
       ? segments[2]
       : '';
-    const pageName = appSlug
-      ? `app-${appSlug}`
+    const studioRouteKey = requestedPageName === 'app' && segments.length === 5 && segments[2] === 'studio'
+      && /^[a-z0-9-]+$/.test(segments[3] || '') && /^[a-z0-9-]+$/.test(segments[4] || '')
+      ? `${segments[3]}/${segments[4]}`
+      : '';
+    const studioPagePath = studioRouteKey ? config.routes.studioPages?.[studioRouteKey] || '' : '';
+    const legacyAppSlug = segments.length === 2
+      ? config.routes.legacyAppPages?.[requestedPageName] || ''
+      : '';
+    const appSlug = nestedAppSlug || legacyAppSlug;
+    const pageName = studioRouteKey
+      ? `app-studio-${studioRouteKey.replace('/', '-')}`
+      : appSlug
+        ? `app-${appSlug}`
       : requestedPageName === 'padrao-engenharia' && ['consultar', 'contato'].includes(segments[2])
         ? 'padrao-engenharia-contato'
         : requestedPageName;
-    this.params = pageName === 'padrao-engenharia-contato' || appSlug ? [] : segments.slice(2);
+    this.params = pageName === 'padrao-engenharia-contato' || appSlug || studioRouteKey ? [] : segments.slice(2);
 
     if (config?.app?.debug) {
       console.log(`pageName`, pageName);
@@ -214,20 +274,26 @@ class Core {
 
     try {
       // Verifica se o arquivo existe no path
-      const pagePath = appSlug ? `app/${appSlug}/index` : config.routes.pagePaths?.[pageName] || pageName;
+      const pagePath = studioPagePath || (appSlug ? `app/${appSlug}/index` : config.routes.pagePaths?.[pageName] || pageName);
       const filePath = `/src/pages/${pagePath}.html?v=${config.app.version}`;
 
       if (config?.app?.debug) console.log(`filePath`, filePath);
 
-      const isRegisteredPage = appSlug
-        ? config.routes.appPages.includes(appSlug)
+      const isRegisteredPage = studioRouteKey
+        ? Boolean(studioPagePath)
+        : appSlug
+          ? config.routes.appPages.includes(appSlug)
         : hasValidPadraoEngineeringPath && this.registerPages.includes(pageName);
       if (!isRegisteredPage) {
         throw new Error('Page not found');
       }
 
       const res = await fetch(filePath);
+      if (!res.ok) {
+        throw new Error(`Page request failed: ${res.status}`);
+      }
       const html = await res.text();
+      if (!isCurrentNavigation()) return;
 
       // Verifica se a resposta está vazia ou é inválida
       if (!html || html.trim() === '') {
@@ -245,6 +311,8 @@ class Core {
 
       // Function to load content and execute scripts
       const loadContent = () => {
+        if (!isCurrentNavigation()) return;
+
         // Set the HTML content
         root.innerHTML = html;
 
@@ -295,8 +363,9 @@ class Core {
 
       // "dashboard de admin pode apareceer o menu do site.. dash premium nao pode"
       const isPadraoEngineeringRoute = ['padrao-engenharia', 'padrao-engenharia-contato'].includes(pageName);
-      const hideMainFrame = pageName === 'premium' || isPadraoEngineeringRoute;
-      const fullBleedLayout = isPadraoEngineeringRoute;
+      const isBvaConsoleRoute = pageName.startsWith('app-studio-');
+      const hideMainFrame = pageName === 'premium' || isPadraoEngineeringRoute || isBvaConsoleRoute;
+      const fullBleedLayout = isPadraoEngineeringRoute || isBvaConsoleRoute;
       const layoutWrapper = root.closest('.container-lg');
       if (headerEl) headerEl.style.display = hideMainFrame ? 'none' : 'block';
       if (footerEl) footerEl.style.display = hideMainFrame ? 'none' : 'block';
@@ -314,8 +383,10 @@ class Core {
       const paramsString = this.params.length > 0 ? `/${this.params.join('/')}` : '';
       const canonicalPath = pageName === 'home'
         ? '/'
-        : appSlug
-          ? `/app/${appSlug}`
+        : studioRouteKey
+          ? `/app/studio/${studioRouteKey}`
+          : appSlug
+            ? `/app/${appSlug}`
           : pageName === 'padrao-engenharia-contato'
             ? '/padrao-engenharia/consultar'
             : `/${pageName}${paramsString}`;
@@ -336,6 +407,8 @@ class Core {
         });
       }
     } catch (error) {
+      if (!isCurrentNavigation()) return;
+
       // Mantém a URL solicitada e apresenta a tela de página não encontrada.
       this.updatePageSEO('404', '/404');
       const headerEl = document.getElementById('head');
@@ -349,6 +422,7 @@ class Core {
         const errorRes = await fetch('/src/pages/404.html');
         if (errorRes.ok) {
           const errorHtml = await errorRes.text();
+          if (!isCurrentNavigation()) return;
           const isSoft404 = errorHtml.includes('<!DOCTYPE html>') || errorHtml.includes('<html');
           if (errorHtml && errorHtml.trim() !== '' && !isSoft404) {
             root.innerHTML = errorHtml;
@@ -361,6 +435,7 @@ class Core {
         console.error('Erro ao carregar página 404:', error);
       }
       // Fallback se não conseguir carregar a página 404
+      if (!isCurrentNavigation()) return;
       root.innerHTML = `
         <section class="dev-section text-center py-5">
           <h1 class="text-white mb-3">Página não encontrada</h1>

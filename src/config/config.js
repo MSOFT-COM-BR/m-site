@@ -9,16 +9,14 @@ function resolveApiBaseUrl() {
   if (typeof custom === 'string' && custom.trim()) {
     return custom.replace(/\/+$/, '');
   }
-  const h = window.location.hostname;
-  const isLocal = h === 'localhost' || h === '127.0.0.1';
-  if (!isLocal) return 'https://gateway.mirandasoft.com.br/api';
-  return `http://${h}:3000`;
+  // User requested to always point to production API instead of localhost:3000
+  return 'https://gateway.mirandasoft.com.br/api';
 }
 
 const config = {
   app: {
     name: "Miranda Soft",
-    version: "0.12.12",
+    version: "0.12.28",
     environment: "production",
     debug: false
   },
@@ -63,7 +61,7 @@ const config = {
       'cotacoes',
       'padrao',
       'mercado',
-      'mcredential',
+
       'profile',
       'support',
     ],
@@ -71,7 +69,22 @@ const config = {
       'padrao-engenharia': 'sites/padrao-engenharia/index',
       'padrao-engenharia-contato': 'sites/padrao-engenharia/consultar'
     },
-    appPages: []
+    appPages: ['studio-bva', 'mcredential'],
+    studioPages: {
+      'erp/produtos': 'app/studio-bva/index',
+      'erp/insumos': 'app/studio-bva/index',
+      'erp/kardex': 'app/studio-bva/index',
+      'erp/categorias': 'app/studio-bva/index',
+      'erp/maquinas': 'app/studio-bva/index',
+      'crm/radar': 'app/studio-bva/index',
+      'equipe/consultoras': 'app/studio-bva/index',
+      'revendas/catalogo': 'app/studio-bva/index',
+      'revendas/pedidos': 'app/studio-bva/index',
+      'revendas/prospeccoes': 'app/studio-bva/index'
+    },
+    legacyAppPages: {
+      mcredential: 'mcredential'
+    }
   },
   components: {
     path: "/src/components",

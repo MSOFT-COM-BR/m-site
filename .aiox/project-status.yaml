@@ -1,19 +1,21 @@
 status:
   branch: master
   modifiedFiles:
+    - .env.example
+    - Dockerfile
     - README.md
-    - .ai/
-    - .aiox-core/
-    - .aiox/
-    - .antigravity/
-  modifiedFilesTotalCount: 18
+    - index.html
+    - serve.json
+  modifiedFilesTotalCount: 17
   recentCommits:
-    - Merge branch 'feat/premium-apps-per-user'
-    - Merge branch 'fix/login-page-render-and-layout'
+    - 'feat: refine public site experience'
+    - >-
+      refactor(infra): redireciona tráfego central e fallback para o novo api
+      gateway e sobe a versao
   currentEpic: null
   currentStory: null
-  lastUpdate: '2026-07-19T15:53:46.142Z'
+  lastUpdate: '2026-08-22T15:45:40.266Z'
   isGitRepo: true
-timestamp: 1784476426148
+timestamp: 1787413540273
 ttl: 60
-gitFingerprint: 1784400846862.2786:1784428270786.756
+gitFingerprint: 1784512484211.4778:1787198582558.4563

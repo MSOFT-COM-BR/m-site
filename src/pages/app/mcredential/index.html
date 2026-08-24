@@ -70,7 +70,7 @@
                         <div id="view-title" class="text-white fs-4 fw-bold"></div>
                         <div id="view-category-badge" class="badge-tech mt-2"></div>
                     </div>
-                    
+
                     <div class="row g-4">
                         <div class="col-md-6">
                             <label class="text-muted extra-small fw-bold text-uppercase d-block mb-1">Usuário / E-mail</label>
@@ -160,6 +160,9 @@
 </div>
 
 <script>
+    (() => {
+    let isDisposed = false;
+
     /**
      * MCredential - Crypto & API Bridge
      */
@@ -173,7 +176,7 @@
                     return data.data.map(item => {
                         const doc = item.document?.password || {};
                         const rawPass = item.passwordEncrypted || item.password || doc.passwordEncrypted || doc.password || '';
-                        
+
                         let id = item.id || item._id;
                         if (typeof id === 'object' && id !== null) id = id.$oid || id.toString();
                         if (typeof doc.id === 'object' && doc.id !== null) id = doc.id.$numberLong || id;
@@ -232,14 +235,20 @@
         const el = {};
 
         function init() {
+            if (isDisposed) return;
             if (!window.authService || !window.authService.isAuthenticated()) {
                 window.core.navigate('/login');
                 return;
             }
             cacheElements();
+            if (!isMounted()) return;
             bindEvents();
             loadCredentialsFromAPI();
             renderCategories();
+        }
+
+        function isMounted() {
+            return !isDisposed && el.appContainer?.isConnected;
         }
 
         function cacheElements() {
@@ -253,7 +262,7 @@
             el.viewArea = document.getElementById('mcred-view-area');
             el.toastContainer = document.getElementById('mcred-toast-container');
             el.searchInput = document.getElementById('mcred-search-input');
-            
+
             // View Area Elements
             el.viewTitle = document.getElementById('view-title');
             el.viewIcon = document.getElementById('view-icon');
@@ -324,8 +333,10 @@
         }
 
         async function loadCredentialsFromAPI() {
+            if (!isMounted()) return;
             showLoading(true);
             credentials = await MApiService.fetchCredentials();
+            if (!isMounted()) return;
             renderCredentials();
             showLoading(false);
         }
@@ -334,8 +345,8 @@
             let filtered = credentials;
             if (currentFilter !== 'all') filtered = filtered.filter(c => c.category === currentFilter);
             if (searchQuery) {
-                filtered = filtered.filter(c => 
-                    c.title.toLowerCase().includes(searchQuery) || 
+                filtered = filtered.filter(c =>
+                    c.title.toLowerCase().includes(searchQuery) ||
                     c.username.toLowerCase().includes(searchQuery)
                 );
             }
@@ -380,7 +391,7 @@
         function openModal(id = null, mode = 'view') {
             currentCredentialId = id ? String(id) : null;
             el.credentialForm.reset();
-            
+
             // Toggle Areas
             el.viewArea.style.display = mode === 'view' ? 'block' : 'none';
             el.credentialForm.style.display = mode === 'edit' ? 'block' : 'none';
@@ -438,9 +449,9 @@
                 showToast('Salvo com sucesso!', 'success');
                 await loadCredentialsFromAPI();
                 closeModal();
-            } else { 
+            } else {
                 const msg = res.message || 'Erro ao conectar ao servidor';
-                showToast(msg, 'error'); 
+                showToast(msg, 'error');
             }
             showLoading(false);
         }
@@ -467,9 +478,9 @@
         }
 
         async function copyToClipboard(text, btn) {
-            try { 
-                await navigator.clipboard.writeText(text); 
-                showToast('Copiado!', 'success'); 
+            try {
+                await navigator.clipboard.writeText(text);
+                showToast('Copiado!', 'success');
                 if(btn) {
                     const i = btn.querySelector('i');
                     i.classList.replace('bi-copy', 'bi-check');
@@ -478,7 +489,7 @@
             } catch(e) {}
         }
 
-        function showLoading(s) { document.getElementById('mcred-loading').classList.toggle('hidden', !s); }
+        function showLoading(s) { document.getElementById('mcred-loading')?.classList.toggle('hidden', !s); }
         function renderCategories() {
             el.categoryFilter.innerHTML = categories.map(cat => `<button class="category-btn ${cat.id === currentFilter ? 'active' : ''}" onclick="MCredApp.filter('${cat.id}')"><i class="bi ${cat.icon}"></i> ${cat.name}</button>`).join('');
         }
@@ -499,5 +510,16 @@
         return { init, openModal, generateFormPassword, copyFromView, filter: (id) => { currentFilter=id; renderCategories(); renderCredentials(); } };
     })();
 
-    setTimeout(MCredApp.init, 100);
+    window.MCredApp = MCredApp;
+    const mountTimer = setTimeout(() => {
+        if (!isDisposed) MCredApp.init();
+    }, 100);
+    const dispose = () => {
+        isDisposed = true;
+        clearTimeout(mountTimer);
+        window.removeEventListener('msoft:route-unmount', dispose);
+        if (window.MCredApp === MCredApp) delete window.MCredApp;
+    };
+    window.addEventListener('msoft:route-unmount', dispose);
+    })();
 </script>
