@@ -241,10 +241,14 @@ class Core {
     const nestedAppSlug = requestedPageName === 'app' && segments.length === 3 && /^[a-z0-9-]+$/.test(segments[2] || '')
       ? segments[2]
       : '';
-    const studioRouteKey = requestedPageName === 'app' && segments.length === 5 && segments[2] === 'studio'
+    const requestedStudioRouteKey = requestedPageName === 'app' && segments.length === 5 && segments[2] === 'studio'
       && /^[a-z0-9-]+$/.test(segments[3] || '') && /^[a-z0-9-]+$/.test(segments[4] || '')
       ? `${segments[3]}/${segments[4]}`
       : '';
+    const studioRouteKey = requestedStudioRouteKey.replace(/^erp\//, 'fabrica/');
+    if (requestedStudioRouteKey && requestedStudioRouteKey !== studioRouteKey) {
+      window.history.replaceState({}, '', `/app/studio/${studioRouteKey}${window.location.search}${window.location.hash}`);
+    }
     const studioPagePath = studioRouteKey ? config.routes.studioPages?.[studioRouteKey] || '' : '';
     const legacyAppSlug = segments.length === 2
       ? config.routes.legacyAppPages?.[requestedPageName] || ''

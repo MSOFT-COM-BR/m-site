@@ -3,11 +3,11 @@
     'revendas/catalogo': 'revendas/catalogo.html',
     'crm/radar': 'crm/radar.html',
     'equipe/consultoras': 'equipe/consultoras.html',
-    'erp/produtos': 'erp/produtos.html',
-    'erp/insumos': 'erp/insumos.html',
-    'erp/kardex': 'erp/kardex.html',
-    'erp/categorias': 'erp/categorias.html',
-    'erp/maquinas': 'erp/maquinas.html',
+    'fabrica/produtos': 'erp/produtos.html',
+    'fabrica/insumos': 'erp/insumos.html',
+    'fabrica/kardex': 'erp/kardex.html',
+    'fabrica/categorias': 'erp/categorias.html',
+    'fabrica/maquinas': 'erp/maquinas.html',
     'revendas/pedidos': 'revendas/pedidos.html',
   });
   const VIEW_BASE = '/src/pages/app/studio-bva/views/';
@@ -19,6 +19,7 @@
   let crudRecords = {};
   let crudTemplates = null;
   let pageClickHandler = null;
+  let refreshInterval = null;
 
   const escapeHtml = (value) => String(value ?? '')
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -176,13 +177,30 @@
     setHtml('team-tbody', rows.join('') || '<tr><td colspan="7">Nenhuma consultora cadastrada.</td></tr>');
   }
 
+  async function loadAllKardex(query) {
+    const firstPage = await api(`/erp/kardex${query}&limit=200&page=1`);
+    const pages = Number(firstPage.pagination?.pages || 1);
+    if (pages <= 1) return firstPage;
+    const remainingPages = await Promise.all(
+      Array.from({ length: pages - 1 }, (_, index) => api(`/erp/kardex${query}&limit=200&page=${index + 2}`)),
+    );
+    return {
+      ...firstPage,
+      count: Number(firstPage.pagination?.total || firstPage.count || 0),
+      data: [
+        ...(firstPage.data || []),
+        ...remainingPages.flatMap((result) => result.data || []),
+      ],
+    };
+  }
+
   async function loadErp() {
     const query = `?appKey=${APP_KEY}`;
     const results = await Promise.allSettled([
-      api(`/erp/insumos${query}`), api(`/erp/produtos${query}`), api(`/erp/kardex${query}&limit=100`),
+      api(`/erp/insumos${query}`), api(`/erp/produtos${query}`), loadAllKardex(query),
       api(`/erp/kardex/resumo${query}`), api(`/bva/categorias${query}`), api(`/erp/config${query}`), api(`/erp/maquinas${query}`),
     ]);
-    if (activeRoute !== 'erp/produtos' && activeRoute !== 'erp/insumos' && activeRoute !== 'erp/kardex' && activeRoute !== 'erp/categorias' && activeRoute !== 'erp/maquinas') return;
+    if (activeRoute !== 'fabrica/produtos' && activeRoute !== 'fabrica/insumos' && activeRoute !== 'fabrica/kardex' && activeRoute !== 'fabrica/categorias' && activeRoute !== 'fabrica/maquinas') return;
     const [insumos, produtos, kardex, resumo, categorias, config, maquinas] = results.map((result) => result.status === 'fulfilled' ? result.value : {});
 
     const productList = produtos.data || [];
@@ -202,10 +220,20 @@
     const vendas = (kardex.data || []).filter((item) => ['VENDA VAREJO', 'VENDA ATACADO'].includes(item.subtipo));
     setText('erp-total-vendas', money(resumoData.receitaVendas || 0));
     setText('erp-qtd-vendas', `${vendas.length} venda${vendas.length === 1 ? '' : 's'} registrada${vendas.length === 1 ? '' : 's'}`);
+    setText('kardex-total-entradas', money(resumoData.entradas));
+    setText('kardex-total-saidas', money(resumoData.saidas));
+    setText('kardex-total-saldo', money(resumoData.saldo));
+    setText('kardex-total-vendas', money(resumoData.receitaVendas));
+    setText('kardex-total-lancamentos', String(resumoData.totalMovimentacoes ?? kardex.count ?? kardex.data?.length ?? 0));
 
     setHtml('erp-produtos-tbody', productList.map((item) => `<tr><td>${escapeHtml(item.nome || item.name)}</td><td>${escapeHtml(item.pesoGramas || item.consumo || '—')}g</td><td>${money(item.custoTotal || item.custoFabricacao || item.ctf)}</td><td>${money(item.precoAtacado || item.preco_atacado)}</td><td>${money(item.precoVarejo || item.preco_varejo)}</td><td>${escapeHtml(item.estoqueAcabado ?? item.estoque ?? '—')}</td><td><div class="studio-crud-actions"><button type="button" class="crud-action crud-icon-action" data-crud-manufacture="${escapeHtml(item.uuid || item.id)}" aria-label="Fabricar ${escapeHtml(item.nome || item.name)}" title="Registrar fabricação"><i class="bi bi-plus-circle" aria-hidden="true"></i></button>${crudIconAction('edit', 'produto', item.uuid || item.id)}${crudIconAction('delete', 'produto', item.uuid || item.id)}</div></td></tr>`).join('') || '<tr><td colspan="7">Nenhum produto cadastrado.</td></tr>');
     setHtml('erp-insumos-tbody', supplyList.map((item) => `<tr><td>${escapeHtml(item.nome || item.name)}</td><td>${escapeHtml(item.categoria || '—')}</td><td>${escapeHtml(item.qtyEstoque ?? item.estoque ?? item.quantidade ?? '—')} ${escapeHtml(item.unidade || '')}</td><td>${money(item.custoPorUnidade || item.custoUnitario || item.custo_unitario)}</td><td><div class="studio-crud-actions">${crudIconAction('edit', 'insumo', item.uuid || item.id)}${crudIconAction('delete', 'insumo', item.uuid || item.id)}</div></td></tr>`).join('') || '<tr><td colspan="5">Nenhum insumo cadastrado.</td></tr>');
-    setHtml('erp-kardex-list', (kardex.data || []).slice(0, 20).map((item) => `<li><strong>${escapeHtml(item.tipo || item.type || 'Movimentação')}</strong><span>${escapeHtml(item.descricao || item.description || '')} · ${formatDate(item.createdAt || item.data)}</span></li>`).join('') || '<li>Nenhuma movimentação registrada.</li>');
+    setHtml('erp-kardex-list', (kardex.data || []).map((item) => {
+      const tipo = item.tipo || item.type || 'Movimentação';
+      const isEntry = tipo === 'ENTRADA';
+      const quantidade = item.quantidade == null ? '' : ` · ${escapeHtml(item.quantidade)} un.`;
+      return `<li class="studio-kardex-entry"><div><strong>${escapeHtml(tipo)}${item.subtipo ? ` · ${escapeHtml(item.subtipo)}` : ''}</strong><span>${escapeHtml(item.descricao || item.description || '')}</span><small>${formatDate(item.createdAt || item.data)}${quantidade}</small></div><strong class="studio-kardex-value ${isEntry ? 'is-entry' : 'is-exit'}">${isEntry ? '+' : '−'} ${money(item.valor)}</strong></li>`;
+    }).join('') || '<li>Nenhuma movimentação registrada.</li>');
     setHtml('erp-categorias-list', categoryList.map((item) => `<li><strong>${escapeHtml(item.rotulo || item.nome || item.name)}</strong><span>${escapeHtml(item.status || 'Ativa')}</span><span class="studio-crud-actions">${crudIconAction('edit', 'categoria', item.uuid || item.id)}</span></li>`).join('') || '<li>Nenhuma categoria cadastrada.</li>');
 
     setHtml('erp-maquinas-tbody', machineList.map((machine) => `<tr><td>${escapeHtml(machine.nome || machine.name || '—')}</td><td>${escapeHtml(machine.potenciaWatts ?? '—')}</td><td>${money(machine.custoDepreciacaoHora)}</td><td>${money(machine.custoMaquinaHora)}</td><td>${escapeHtml(machine.observacoes || '—')}</td><td><div class="studio-crud-actions">${crudIconAction('edit', 'maquina', machine.uuid || machine.id)}${crudIconAction('delete', 'maquina', machine.uuid || machine.id)}</div></td></tr>`).join('') || '<tr><td colspan="6">Nenhuma máquina cadastrada.</td></tr>');
@@ -214,7 +242,7 @@
   }
 
   async function loadCurrentRoute() {
-    const loaders = { 'revendas/catalogo': loadRevendas, 'revendas/pedidos': loadRevendas, 'crm/radar': loadRadar, 'equipe/consultoras': loadEquipe, 'erp/produtos': loadErp, 'erp/insumos': loadErp, 'erp/categorias': loadErp, 'erp/maquinas': loadErp, 'erp/kardex': loadErp };
+    const loaders = { 'revendas/catalogo': loadRevendas, 'revendas/pedidos': loadRevendas, 'crm/radar': loadRadar, 'equipe/consultoras': loadEquipe, 'fabrica/produtos': loadErp, 'fabrica/insumos': loadErp, 'fabrica/categorias': loadErp, 'fabrica/maquinas': loadErp, 'fabrica/kardex': loadErp };
     try { await loaders[activeRoute]?.(); } catch (error) {
       const destination = activeRoot?.querySelector('#studio-console-page');
       if (destination) destination.insertAdjacentHTML('afterbegin', errorState(error.message));
@@ -308,6 +336,18 @@
 
     const form = content.querySelector('form');
 
+    const categorySelect = form.querySelector('[data-studio-categorias]');
+    if (categorySelect) {
+      const categories = Object.values(crudRecords.categoria || {});
+      const categoryValue = item.categoria || '';
+      const hasCurrentCategory = categories.some((category) => (category.label || category.rotulo || category.nome || category.name) === categoryValue);
+      categorySelect.innerHTML = '<option value="">Selecione uma categoria…</option>' +
+        (!hasCurrentCategory && categoryValue ? `<option value="${escapeHtml(categoryValue)}">${escapeHtml(categoryValue)} (categoria atual)</option>` : '') +
+        categories.map((category) => {
+          const value = category.label || category.rotulo || category.nome || category.name;
+          return `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`;
+        }).join('');
+    }
     const maquinaSelect = form.querySelector('[data-studio-maquinas]');
     if (maquinaSelect) {
       maquinaSelect.innerHTML = '<option value="">Padrão / Nenhuma</option>' +
@@ -452,7 +492,7 @@
     const product = crudRecords.produto?.[id];
     if (!product || !window.MSoftComponents) return;
     const content = document.createElement('div');
-    content.innerHTML = `<form class="studio-form crud-form"><header class="studio-dialog-header"><div><span class="studio-console-kicker">ERP · Produção</span><h2>Registrar fabricação</h2><p>${escapeHtml(product.nome || product.name)}</p></div><button type="button" data-close aria-label="Fechar formulário">×</button></header><fieldset><label>Quantidade produzida<input name="quantidade" type="number" min="1" step="1" required autofocus></label><p class="studio-field-hint">O ERP dará baixa nos filamentos e lançará a movimentação no Kardex.</p></fieldset><footer class="studio-dialog-footer"><button type="button" data-close>Cancelar</button><button class="studio-refresh" type="submit">Registrar produção</button></footer></form>`;
+    content.innerHTML = `<form class="studio-form crud-form"><header class="studio-dialog-header"><div><span class="studio-console-kicker">Fábrica 3D · Produção</span><h2>Registrar fabricação</h2><p>${escapeHtml(product.nome || product.name)}</p></div><button type="button" data-close aria-label="Fechar formulário">×</button></header><fieldset><label>Quantidade produzida<input name="quantidade" type="number" min="1" step="1" required autofocus></label><p class="studio-field-hint">O sistema dará baixa nos filamentos e lançará a movimentação no Kardex.</p></fieldset><footer class="studio-dialog-footer"><button type="button" data-close>Cancelar</button><button class="studio-refresh" type="submit">Registrar produção</button></footer></form>`;
     const form = content.querySelector('form');
     const modal = window.MSoftComponents.createDialog({ content, className: 'studio-crud-dialog', initialFocus: form.elements.quantidade });
     form.onsubmit = async (event) => {
@@ -473,7 +513,7 @@
     };
     modal.open();
   }
-  function renderCrudActions() { const entities = activeRoute === 'crm/radar' ? ['lead'] : activeRoute === 'equipe/consultoras' ? ['consultora'] : activeRoute === 'erp/produtos' ? ['produto'] : activeRoute === 'erp/insumos' ? ['insumo'] : activeRoute === 'erp/categorias' ? ['categoria'] : activeRoute === 'erp/maquinas' ? ['maquina'] : []; const target = activeRoot?.querySelector('.studio-module-heading'); if (target && entities.length) target.insertAdjacentHTML('beforeend', `<div class="studio-crud-actions">${entities.map((entity) => `<button type="button" class="studio-refresh crud-action" data-crud-create="${entity}">Cadastrar ${CRUD[entity][0]}</button>`).join('')}</div>`); }
+  function renderCrudActions() { const entities = activeRoute === 'crm/radar' ? ['lead'] : activeRoute === 'equipe/consultoras' ? ['consultora'] : activeRoute === 'fabrica/produtos' ? ['produto'] : activeRoute === 'fabrica/insumos' ? ['insumo'] : activeRoute === 'fabrica/categorias' ? ['categoria'] : activeRoute === 'fabrica/maquinas' ? ['maquina'] : []; const target = activeRoot?.querySelector('.studio-module-heading'); if (target && entities.length) target.insertAdjacentHTML('beforeend', `<div class="studio-crud-actions">${entities.map((entity) => `<button type="button" class="studio-refresh crud-action" data-crud-create="${entity}">Cadastrar ${CRUD[entity][0]}</button>`).join('')}</div>`); }
 
   function bindPageEvents() {
     renderCrudActions();
@@ -501,7 +541,6 @@
     };
     window.addEventListener('click', pageClickHandler);
 
-    activeRoot?.querySelector('[data-studio-refresh]')?.addEventListener('click', () => loadCurrentRoute());
     activeRoot?.querySelector('[data-copy-reseller-link]')?.addEventListener('click', async (event) => {
       const url = activeRoot?.querySelector('#my-reseller-link')?.href;
       if (!url) return;
@@ -515,6 +554,10 @@
     ['#radar-filter-search', '#radar-filter-category', '#radar-filter-status'].forEach((selector) => activeRoot?.querySelector(selector)?.addEventListener('input', renderRadar));
     activeRoot?.querySelector('#radar-filter-category')?.addEventListener('change', renderRadar);
     activeRoot?.querySelector('#radar-filter-status')?.addEventListener('change', renderRadar);
+    if (refreshInterval) window.clearInterval(refreshInterval);
+    refreshInterval = window.setInterval(() => {
+      if (!document.hidden && !document.querySelector('.studio-crud-dialog[open]')) loadCurrentRoute();
+    }, 25_000);
   }
 
   async function mount(root) {
@@ -542,7 +585,7 @@
     }
   }
 
-  function unmount() { if (pageClickHandler) window.removeEventListener('click', pageClickHandler); pageClickHandler = null; if (activeRoot) activeRoot.innerHTML = ''; activeRoot = null; activeRoute = null; radarLeads = []; }
+  function unmount() { if (pageClickHandler) window.removeEventListener('click', pageClickHandler); pageClickHandler = null; if (refreshInterval) window.clearInterval(refreshInterval); refreshInterval = null; if (activeRoot) activeRoot.innerHTML = ''; activeRoot = null; activeRoute = null; radarLeads = []; }
   window.addEventListener('msoft:route-unmount', unmount);
   window.StudioConsoleRouter = { mount, unmount, STUDIO_PAGES };
 })();

@@ -16,13 +16,13 @@
         <a data-studio-route="equipe/consultoras" href="/app/studio/equipe/consultoras"><span class="studio-nav-icon"><i class="bi bi-people"></i></span><span><strong>Equipe</strong><small>Consultoras VIP</small></span></a>
 
         <div class="mt-3 mb-1 px-2 text-muted small fw-bold text-uppercase">Fábrica 3D</div>
-        <a data-studio-route="erp/produtos" href="/app/studio/erp/produtos"><span class="studio-nav-icon"><i class="bi bi-box-seam"></i></span><span><strong>Produtos</strong><small>Vitrine e margens</small></span></a>
-        <a data-studio-route="erp/insumos" href="/app/studio/erp/insumos"><span class="studio-nav-icon"><i class="bi bi-palette"></i></span><span><strong>Insumos</strong><small>Estoque e materiais</small></span></a>
-        <a data-studio-route="erp/kardex" href="/app/studio/erp/kardex"><span class="studio-nav-icon"><i class="bi bi-arrow-left-right"></i></span><span><strong>Kardex</strong><small>Movimentações</small></span></a>
+        <a data-studio-route="fabrica/produtos" href="/app/studio/fabrica/produtos"><span class="studio-nav-icon"><i class="bi bi-box-seam"></i></span><span><strong>Produtos</strong><small>Vitrine e margens</small></span></a>
+        <a data-studio-route="fabrica/insumos" href="/app/studio/fabrica/insumos"><span class="studio-nav-icon"><i class="bi bi-palette"></i></span><span><strong>Insumos</strong><small>Estoque e materiais</small></span></a>
+        <a data-studio-route="fabrica/kardex" href="/app/studio/fabrica/kardex"><span class="studio-nav-icon"><i class="bi bi-arrow-left-right"></i></span><span><strong>Kardex</strong><small>Movimentações</small></span></a>
 
         <div class="mt-3 mb-1 px-2 text-muted small fw-bold text-uppercase">Configurações</div>
-        <a data-studio-route="erp/categorias" href="/app/studio/erp/categorias"><span class="studio-nav-icon"><i class="bi bi-tags"></i></span><span><strong>Categorias</strong><small>Organização do site</small></span></a>
-        <a data-studio-route="erp/maquinas" href="/app/studio/erp/maquinas"><span class="studio-nav-icon"><i class="bi bi-printer"></i></span><span><strong>Máquinas</strong><small>Custos de energia</small></span></a>
+        <a data-studio-route="fabrica/categorias" href="/app/studio/fabrica/categorias"><span class="studio-nav-icon"><i class="bi bi-tags"></i></span><span><strong>Categorias</strong><small>Organização do site</small></span></a>
+        <a data-studio-route="fabrica/maquinas" href="/app/studio/fabrica/maquinas"><span class="studio-nav-icon"><i class="bi bi-printer"></i></span><span><strong>Máquinas</strong><small>Custos de energia</small></span></a>
       </nav>
       <a class="studio-console-exit btn btn-outline-secondary mt-auto" href="/premium">‹ Voltar aos aplicativos</a>
     </aside>
@@ -39,11 +39,11 @@
             <a data-studio-route="revendas/pedidos" href="/app/studio/revendas/pedidos">Pedidos</a>
             <a data-studio-route="crm/radar" href="/app/studio/crm/radar">Radar B2B</a>
             <a data-studio-route="equipe/consultoras" href="/app/studio/equipe/consultoras">Equipe</a>
-            <a data-studio-route="erp/produtos" href="/app/studio/erp/produtos">Produtos</a>
-            <a data-studio-route="erp/insumos" href="/app/studio/erp/insumos">Insumos</a>
-            <a data-studio-route="erp/kardex" href="/app/studio/erp/kardex">Kardex</a>
-            <a data-studio-route="erp/categorias" href="/app/studio/erp/categorias">Categorias</a>
-            <a data-studio-route="erp/maquinas" href="/app/studio/erp/maquinas">Máquinas</a>
+            <a data-studio-route="fabrica/produtos" href="/app/studio/fabrica/produtos">Produtos</a>
+            <a data-studio-route="fabrica/insumos" href="/app/studio/fabrica/insumos">Insumos</a>
+            <a data-studio-route="fabrica/kardex" href="/app/studio/fabrica/kardex">Kardex</a>
+            <a data-studio-route="fabrica/categorias" href="/app/studio/fabrica/categorias">Categorias</a>
+            <a data-studio-route="fabrica/maquinas" href="/app/studio/fabrica/maquinas">Máquinas</a>
           </nav>
         </details>
       </header>
@@ -112,7 +112,7 @@
   .studio-refresh:hover, .crud-action:hover { opacity: 0.9; }
   .crud-action { font-size: 0.85rem; padding: 0.35rem 0.75rem; }
   .crud-action[data-crud-delete] { background: #dc3545; }
-  .crud-icon-action { align-items: center; display: inline-flex; height: 44px; justify-content: center; padding: 0; width: 44px; }
+  .crud-icon-action { align-items: center; display: inline-flex; height: 36px; justify-content: center; padding: 0; width: 36px; }
   .crud-icon-action:focus-visible { outline: 3px solid var(--studio-primary); outline-offset: 2px; }
 
   .studio-metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
@@ -130,6 +130,8 @@
   .studio-table-wrap { overflow-x: auto; width: 100%; }
   .studio-table-wrap table { border-collapse: collapse; min-width: 720px; width: 100%; }
   .studio-table-wrap th, .studio-table-wrap td { border-bottom: 1px solid var(--studio-border); padding: 1rem 1.25rem; text-align: left; color: var(--studio-text); vertical-align: middle; }
+  .studio-table-wrap th:last-child, .studio-table-wrap td:last-child { min-width: 148px; }
+  .studio-table-wrap .studio-crud-actions { flex-wrap: nowrap; }
   .studio-table-wrap th { background: var(--studio-bg); color: var(--studio-muted); font-size: .75rem; text-transform: uppercase; font-weight: 700; }
   .studio-table-wrap tr:hover td { background: var(--studio-bg); }
 
@@ -139,6 +141,11 @@
   .studio-list li:last-child, .studio-list-item:last-child { border-bottom: 0; }
   .studio-list strong, .studio-list-item strong { font-size: 1.1rem; color: var(--studio-text); }
   .studio-list span, .studio-list small, .studio-list-item span, .studio-list-item small { display: block; color: var(--studio-muted); margin-top: .35rem; }
+  .studio-kardex-entry { align-items: flex-start !important; gap: 1rem; }
+  .studio-kardex-entry > div { min-width: 0; }
+  .studio-kardex-value { flex: 0 0 auto; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+  .studio-kardex-value.is-entry { color: #198754; }
+  .studio-kardex-value.is-exit { color: #dc3545; }
 
   /* Filters */
   .studio-filter-row, .studio-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; padding: 1.25rem; border-bottom: 1px solid var(--studio-border); background: var(--studio-bg); }

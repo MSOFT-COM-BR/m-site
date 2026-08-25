@@ -62,13 +62,15 @@ test('Studio organiza os módulos em rotas canônicas semânticas', () => {
   const core = read('src/core/core.js');
   const page = read('src/pages/app/studio-bva/index.html');
 
-  for (const route of ['erp/produtos', 'crm/radar', 'equipe/consultoras', 'revendas/catalogo']) {
+  for (const route of ['fabrica/produtos', 'crm/radar', 'equipe/consultoras', 'revendas/catalogo']) {
     assert.match(config, new RegExp(`'${route}'`));
   }
   assert.match(core, /segments\.length === 5/);
   assert.match(core, /studioPages/);
   assert.match(page, /studio-console-router\.js/);
-  assert.match(read('src/modules/studio-console-router.js'), /\/app\/studio\/erp\/produtos|erp\/produtos/);
+  assert.match(read('src/modules/studio-console-router.js'), /fabrica\/produtos/);
+  assert.match(core, /requestedStudioRouteKey\.replace\(\/\^erp\\\//);
+  assert.match(core, /\/app\/studio\/\$\{studioRouteKey\}/);
 });
 
 test('Studio separa cada listagem ERP e Revendas na sua rota própria', () => {
@@ -76,11 +78,11 @@ test('Studio separa cada listagem ERP e Revendas na sua rota própria', () => {
   const router = read('src/modules/studio-console-router.js');
   const shell = read('src/pages/app/studio-bva/views/console.html');
   const routes = {
-    'erp/produtos': 'erp/produtos.html',
-    'erp/insumos': 'erp/insumos.html',
-    'erp/kardex': 'erp/kardex.html',
-    'erp/categorias': 'erp/categorias.html',
-    'erp/maquinas': 'erp/maquinas.html',
+    'fabrica/produtos': 'erp/produtos.html',
+    'fabrica/insumos': 'erp/insumos.html',
+    'fabrica/kardex': 'erp/kardex.html',
+    'fabrica/categorias': 'erp/categorias.html',
+    'fabrica/maquinas': 'erp/maquinas.html',
     'revendas/pedidos': 'revendas/pedidos.html',
   };
 
@@ -90,8 +92,8 @@ test('Studio separa cada listagem ERP e Revendas na sua rota própria', () => {
     assert.ok(fs.existsSync(path.join(root, 'src/pages/app/studio-bva/views', view)), `Missing list page: ${view}`);
     assert.match(shell, new RegExp(`data-studio-route="${route}"`));
   }
-  assert.match(router, /activeRoute === 'erp\/maquinas' \? \['maquina'\]/);
-  assert.match(router, /activeRoute === 'erp\/produtos' \? \['produto'\]/);
+  assert.match(router, /activeRoute === 'fabrica\/maquinas' \? \['maquina'\]/);
+  assert.match(router, /activeRoute === 'fabrica\/produtos' \? \['produto'\]/);
 });
 
 test('Studio monta páginas internas por módulo sem reutilizar a tela de login BVA', () => {
@@ -110,7 +112,7 @@ test('Studio monta páginas internas por módulo sem reutilizar a tela de login 
   assert.match(router, /\/erp\/produtos/);
   assert.match(router, /\/erp\/insumos/);
   assert.match(router, /window\.core\.fetchAPI/);
-  for (const page of ['revendas/catalogo', 'crm/radar', 'equipe/consultoras', 'erp/produtos']) {
+  for (const page of ['revendas/catalogo', 'crm/radar', 'equipe/consultoras', 'fabrica/produtos']) {
     assert.match(router, new RegExp(page));
   }
 
@@ -128,7 +130,7 @@ test('navegação Studio oferece menu lateral e compacto no mobile sem alterar a
   assert.match(shell, /min-height: 44px/);
   assert.match(shell, /@media \(max-width: 760px\)/);
   assert.match(router, /querySelectorAll\(`\[data-studio-route=/);
-  for (const route of ['revendas/catalogo', 'crm/radar', 'equipe/consultoras', 'erp/produtos']) {
+  for (const route of ['revendas/catalogo', 'crm/radar', 'equipe/consultoras', 'fabrica/produtos']) {
     assert.match(shell, new RegExp(`data-studio-route="${route}"`));
   }
 });
@@ -162,8 +164,8 @@ test('ações CRUD do Studio usam ícones acessíveis com alvo mínimo de toque'
   assert.match(router, /class="crud-action crud-icon-action"/);
   assert.match(router, /aria-label="\$\{label\}"/);
   assert.match(router, /<i class="bi \$\{definition\.icon\}" aria-hidden="true"><\/i>/);
-  assert.match(shell, /\.crud-icon-action[^}]*width:\s*44px/);
-  assert.match(shell, /\.crud-icon-action[^}]*height:\s*44px/);
+  assert.match(shell, /\.crud-icon-action[^}]*width:\s*36px/);
+  assert.match(shell, /\.crud-icon-action[^}]*height:\s*36px/);
 });
 
 test('produto ERP envia os dados no contrato da API e registra fabricação', () => {
@@ -171,7 +173,10 @@ test('produto ERP envia os dados no contrato da API e registra fabricação', ()
   const productForm = read('src/pages/app/studio-bva/views/shared/crud-forms.html');
 
   assert.match(productForm, /data-studio-filamentos/);
+  assert.match(productForm, /<select name="categoria" data-studio-categorias required>/);
   assert.match(router, /body\.filamentos = filamentos/);
+  assert.match(router, /const categorySelect = form\.querySelector\('\[data-studio-categorias\]'\)/);
+  assert.match(router, /Object\.values\(crudRecords\.categoria \|\| \{\}\)/);
   assert.match(router, /function updateProductPricing\(form\)/);
   assert.match(router, /Custo: \$\{money\(total\)\}/);
   assert.match(router, /\/erp\/produtos\/\$\{encodeURIComponent\(id\)\}\/fabricar/);
@@ -193,6 +198,30 @@ test('link VIP aponta para a vitrine pública, sem vazar a origem local do conso
   assert.match(router, /link\.searchParams\.set\('consultora', resellerId\)/);
   assert.match(catalog, /data-copy-reseller-link/);
   assert.match(catalog, /target="_blank"/);
+});
+
+test('console atualiza automaticamente sem exibir ações manuais redundantes', () => {
+  const router = read('src/modules/studio-console-router.js');
+
+  for (const view of ['erp/produtos.html', 'erp/insumos.html', 'erp/kardex.html', 'erp/categorias.html', 'erp/maquinas.html', 'revendas/catalogo.html', 'revendas/pedidos.html', 'crm/radar.html', 'equipe/consultoras.html']) {
+    assert.doesNotMatch(read(`src/pages/app/studio-bva/views/${view}`), /data-studio-refresh/);
+  }
+  assert.match(router, /25_000/);
+  assert.match(router, /window\.clearInterval\(refreshInterval\)/);
+});
+
+test('Kardex carrega todas as páginas e expõe os totais financeiros', () => {
+  const router = read('src/modules/studio-console-router.js');
+  const kardex = read('src/pages/app/studio-bva/views/erp/kardex.html');
+
+  assert.match(router, /async function loadAllKardex\(query\)/);
+  assert.match(router, /limit=200&page=1/);
+  assert.match(router, /remainingPages\.flatMap/);
+  assert.doesNotMatch(router, /erp-kardex-list', \(kardex\.data \|\| \[\]\)\.slice/);
+  for (const id of ['kardex-total-entradas', 'kardex-total-saidas', 'kardex-total-saldo', 'kardex-total-vendas', 'kardex-total-lancamentos']) {
+    assert.match(kardex, new RegExp(`id="${id}"`));
+    assert.match(router, new RegExp(`setText\\('${id}'`));
+  }
 });
 
 test('componentes HTML possuem root padronizado e aceitam variantes pelo Core', () => {

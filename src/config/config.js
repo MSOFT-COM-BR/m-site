@@ -16,7 +16,7 @@ function resolveApiBaseUrl() {
 const config = {
   app: {
     name: "Miranda Soft",
-    version: "0.12.28",
+    version: "0.12.34",
     environment: "production",
     debug: false
   },
@@ -71,11 +71,11 @@ const config = {
     },
     appPages: ['studio-bva', 'mcredential'],
     studioPages: {
-      'erp/produtos': 'app/studio-bva/index',
-      'erp/insumos': 'app/studio-bva/index',
-      'erp/kardex': 'app/studio-bva/index',
-      'erp/categorias': 'app/studio-bva/index',
-      'erp/maquinas': 'app/studio-bva/index',
+      'fabrica/produtos': 'app/studio-bva/index',
+      'fabrica/insumos': 'app/studio-bva/index',
+      'fabrica/kardex': 'app/studio-bva/index',
+      'fabrica/categorias': 'app/studio-bva/index',
+      'fabrica/maquinas': 'app/studio-bva/index',
       'crm/radar': 'app/studio-bva/index',
       'equipe/consultoras': 'app/studio-bva/index',
       'revendas/catalogo': 'app/studio-bva/index',
