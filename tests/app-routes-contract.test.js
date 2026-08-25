@@ -181,6 +181,8 @@ test('produto ERP envia os dados no contrato da API e registra fabricação', ()
   assert.match(router, /function updateProductPricing\(form\)/);
   assert.match(router, /Custo: \$\{money\(total\)\}/);
   assert.match(router, /\/erp\/produtos\/\$\{encodeURIComponent\(id\)\}\/fabricar/);
+  assert.match(router, /function openProductPreview\(id\)/);
+  assert.match(router, /data-product-view/);
   assert.match(router, /\/image\?appKey=\$\{APP_KEY\}/);
   assert.match(router, /method: 'POST'/);
   assert.match(router, /\/attachments\?appKey=\$\{APP_KEY\}/);
@@ -236,7 +238,7 @@ test('Kardex carrega todas as páginas e expõe os totais financeiros', () => {
   assert.doesNotMatch(router, /erp-kardex-list', \(kardex\.data \|\| \[\]\)\.slice/);
   for (const id of ['kardex-total-entradas', 'kardex-total-saidas', 'kardex-total-saldo', 'kardex-total-vendas', 'kardex-total-lancamentos']) {
     assert.match(kardex, new RegExp(`id="${id}"`));
-    assert.match(router, new RegExp(`setText\\('${id}'`));
+    assert.match(router, id === 'kardex-total-saldo' ? /setSignedMoney\('kardex-total-saldo'/ : new RegExp(`setText\\('${id}'`));
   }
 });
 

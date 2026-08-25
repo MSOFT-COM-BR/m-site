@@ -29,6 +29,7 @@
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
   const money = (value) => Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  const moneyCell = (value) => `<span class="studio-money ${Number(value) > 0 ? 'is-positive' : ''}">${money(value)}</span>`;
   const officialResellerLink = (user = {}) => {
     const resellerId = user.uuid || user.id;
     const resellerName = user.nome || user.name;
@@ -45,9 +46,18 @@
     return `${apiBase}${url}`;
   };
   const setText = (id, value) => { const el = activeRoot?.querySelector(`#${id}`); if (el) el.textContent = value; };
+  const setSignedMoney = (id, value) => {
+    setText(id, money(value));
+    const el = activeRoot?.querySelector(`#${id}`);
+    if (el) {
+      el.classList.toggle('is-positive', Number(value) > 0);
+      el.classList.toggle('is-negative', Number(value) < 0);
+    }
+  };
   const setHtml = (id, value) => { const el = activeRoot?.querySelector(`#${id}`); if (el) el.innerHTML = value; };
   function crudIconAction(action, entity, id) {
     const actions = {
+      view: { attribute: 'data-product-view', icon: 'bi-eye', label: 'Visualizar' },
       edit: { attribute: 'data-crud-edit', icon: 'bi-pencil', label: 'Editar' },
       delete: { attribute: 'data-crud-delete', icon: 'bi-trash3', label: 'Excluir' },
       archive: { attribute: 'data-crud-delete', icon: 'bi-archive', label: 'Arquivar' },
@@ -129,7 +139,7 @@
       resellerLinkElement.textContent = resellerLink;
     }
 
-    const orderRows = (orders.data || orders.orders || []).map((order) => `<tr><td>${escapeHtml(order.customer?.name || order.reseller?.name || 'Cliente')}</td><td>${formatDate(order.createdAt)}</td><td>${escapeHtml((order.items || []).map((item) => item.name || item.sku).filter(Boolean).join(', ') || '—')}</td><td>${money(order.total)}</td><td>${escapeHtml(order.status || 'Novo pedido')}</td></tr>`);
+    const orderRows = (orders.data || orders.orders || []).map((order) => `<tr><td>${escapeHtml(order.customer?.name || order.reseller?.name || 'Cliente')}</td><td>${formatDate(order.createdAt)}</td><td>${escapeHtml((order.items || []).map((item) => item.name || item.sku).filter(Boolean).join(', ') || '—')}</td><td class="studio-money-cell">${moneyCell(order.total)}</td><td>${escapeHtml(order.status || 'Novo pedido')}</td></tr>`);
 
     if (activeRoute === 'revendas/catalogo') {
       const prospectRows = (prospects.data || []).slice(0, 3).map((lead) => `<tr><td>${escapeHtml(lead.name || lead.empresa)}</td><td>${formatDate(lead.createdAt || lead.data)}</td><td>${escapeHtml(lead.category || lead.segmento || '—')}</td><td>—</td><td>${escapeHtml(lead.status)}</td></tr>`);
@@ -189,7 +199,7 @@
     setText('vendas-qtd-itens', String(quantity));
     setText('vendas-total', money(total));
     setText('vendas-total-confirmacao', `Total: ${money(total)}`);
-    setHtml('vendas-carrinho', entries.map((item) => `<tr><td><strong>${escapeHtml(item.nome)}</strong></td><td>${escapeHtml(item.estoque)}</td><td>${escapeHtml(item.quantidade)}</td><td>${money(item.preco)}</td><td>${money(item.preco * item.quantidade)}</td><td><button type="button" class="crud-action crud-icon-action" data-vendas-remover="${escapeHtml(item.id)}" aria-label="Remover ${escapeHtml(item.nome)}" title="Remover item"><i class="bi bi-trash3" aria-hidden="true"></i></button></td></tr>`).join('') || '<tr><td colspan="6">Nenhum item adicionado.</td></tr>');
+    setHtml('vendas-carrinho', entries.map((item) => `<tr><td><strong>${escapeHtml(item.nome)}</strong></td><td>${escapeHtml(item.estoque)}</td><td>${escapeHtml(item.quantidade)}</td><td class="studio-money-cell">${moneyCell(item.preco)}</td><td class="studio-money-cell">${moneyCell(item.preco * item.quantidade)}</td><td><button type="button" class="crud-action crud-icon-action" data-vendas-remover="${escapeHtml(item.id)}" aria-label="Remover ${escapeHtml(item.nome)}" title="Remover item"><i class="bi bi-trash3" aria-hidden="true"></i></button></td></tr>`).join('') || '<tr><td colspan="6">Nenhum item adicionado.</td></tr>');
   }
 
   function renderSaleProducts() {
@@ -253,12 +263,12 @@
     setText('erp-qtd-vendas', `${vendas.length} venda${vendas.length === 1 ? '' : 's'} registrada${vendas.length === 1 ? '' : 's'}`);
     setText('kardex-total-entradas', money(resumoData.entradas));
     setText('kardex-total-saidas', money(resumoData.saidas));
-    setText('kardex-total-saldo', money(resumoData.saldo));
+    setSignedMoney('kardex-total-saldo', resumoData.saldo);
     setText('kardex-total-vendas', money(resumoData.receitaVendas));
     setText('kardex-total-lancamentos', String(resumoData.totalMovimentacoes ?? kardex.count ?? kardex.data?.length ?? 0));
 
-    setHtml('erp-produtos-tbody', productList.map((item) => `<tr><td>${escapeHtml(item.nome || item.name)}</td><td>${escapeHtml(item.pesoGramas || item.consumo || '—')}g</td><td>${money(item.custoTotal || item.custoFabricacao || item.ctf)}</td><td>${money(item.precoAtacado || item.preco_atacado)}</td><td>${money(item.precoVarejo || item.preco_varejo)}</td><td>${escapeHtml(item.estoqueAcabado ?? item.estoque ?? '—')}</td><td><div class="studio-crud-actions"><button type="button" class="crud-action crud-icon-action" data-crud-manufacture="${escapeHtml(item.uuid || item.id)}" aria-label="Fabricar ${escapeHtml(item.nome || item.name)}" title="Registrar fabricação"><i class="bi bi-plus-circle" aria-hidden="true"></i></button>${crudIconAction('edit', 'produto', item.uuid || item.id)}${crudIconAction('delete', 'produto', item.uuid || item.id)}</div></td></tr>`).join('') || '<tr><td colspan="7">Nenhum produto cadastrado.</td></tr>');
-    setHtml('erp-insumos-tbody', supplyList.map((item) => `<tr><td>${escapeHtml(item.nome || item.name)}</td><td>${escapeHtml(item.categoria || '—')}</td><td>${escapeHtml(item.qtyEstoque ?? item.estoque ?? item.quantidade ?? '—')} ${escapeHtml(item.unidade || '')}</td><td>${money(item.custoPorUnidade || item.custoUnitario || item.custo_unitario)}</td><td><div class="studio-crud-actions">${crudIconAction('edit', 'insumo', item.uuid || item.id)}${crudIconAction('delete', 'insumo', item.uuid || item.id)}</div></td></tr>`).join('') || '<tr><td colspan="5">Nenhum insumo cadastrado.</td></tr>');
+    setHtml('erp-produtos-tbody', productList.map((item) => `<tr><td>${escapeHtml(item.nome || item.name)}</td><td>${escapeHtml(item.pesoGramas || item.consumo || '—')}g</td><td class="studio-money-cell">${moneyCell(item.custoTotal || item.custoFabricacao || item.ctf)}</td><td class="studio-money-cell">${moneyCell(item.precoAtacado || item.preco_atacado)}</td><td class="studio-money-cell">${moneyCell(item.precoVarejo || item.preco_varejo)}</td><td>${escapeHtml(item.estoqueAcabado ?? item.estoque ?? '—')}</td><td><div class="studio-crud-actions">${crudIconAction('view', 'produto', item.uuid || item.id)}<button type="button" class="crud-action crud-icon-action" data-crud-manufacture="${escapeHtml(item.uuid || item.id)}" aria-label="Fabricar ${escapeHtml(item.nome || item.name)}" title="Registrar fabricação"><i class="bi bi-plus-circle" aria-hidden="true"></i></button>${crudIconAction('edit', 'produto', item.uuid || item.id)}${crudIconAction('delete', 'produto', item.uuid || item.id)}</div></td></tr>`).join('') || '<tr><td colspan="7">Nenhum produto cadastrado.</td></tr>');
+    setHtml('erp-insumos-tbody', supplyList.map((item) => `<tr><td>${escapeHtml(item.nome || item.name)}</td><td>${escapeHtml(item.categoria || '—')}</td><td>${escapeHtml(item.qtyEstoque ?? item.estoque ?? item.quantidade ?? '—')} ${escapeHtml(item.unidade || '')}</td><td class="studio-money-cell">${moneyCell(item.custoPorUnidade || item.custoUnitario || item.custo_unitario)}</td><td><div class="studio-crud-actions">${crudIconAction('edit', 'insumo', item.uuid || item.id)}${crudIconAction('delete', 'insumo', item.uuid || item.id)}</div></td></tr>`).join('') || '<tr><td colspan="5">Nenhum insumo cadastrado.</td></tr>');
     setHtml('erp-kardex-list', (kardex.data || []).map((item) => {
       const tipo = item.tipo || item.type || 'Movimentação';
       const isEntry = tipo === 'ENTRADA';
@@ -267,7 +277,7 @@
     }).join('') || '<li>Nenhuma movimentação registrada.</li>');
     setHtml('erp-categorias-list', categoryList.map((item) => `<li><strong>${escapeHtml(item.rotulo || item.nome || item.name)}</strong><span>${escapeHtml(item.status || 'Ativa')}</span><span class="studio-crud-actions">${crudIconAction('edit', 'categoria', item.uuid || item.id)}</span></li>`).join('') || '<li>Nenhuma categoria cadastrada.</li>');
 
-    setHtml('erp-maquinas-tbody', machineList.map((machine) => `<tr><td>${escapeHtml(machine.nome || machine.name || '—')}</td><td>${escapeHtml(machine.potenciaWatts ?? '—')}</td><td>${money(machine.custoDepreciacaoHora)}</td><td>${money(machine.custoMaquinaHora)}</td><td>${escapeHtml(machine.observacoes || '—')}</td><td><div class="studio-crud-actions">${crudIconAction('edit', 'maquina', machine.uuid || machine.id)}${crudIconAction('delete', 'maquina', machine.uuid || machine.id)}</div></td></tr>`).join('') || '<tr><td colspan="6">Nenhuma máquina cadastrada.</td></tr>');
+    setHtml('erp-maquinas-tbody', machineList.map((machine) => `<tr><td>${escapeHtml(machine.nome || machine.name || '—')}</td><td>${escapeHtml(machine.potenciaWatts ?? '—')}</td><td class="studio-money-cell">${moneyCell(machine.custoDepreciacaoHora)}</td><td class="studio-money-cell">${moneyCell(machine.custoMaquinaHora)}</td><td>${escapeHtml(machine.observacoes || '—')}</td><td><div class="studio-crud-actions">${crudIconAction('edit', 'maquina', machine.uuid || machine.id)}${crudIconAction('delete', 'maquina', machine.uuid || machine.id)}</div></td></tr>`).join('') || '<tr><td colspan="6">Nenhuma máquina cadastrada.</td></tr>');
     const configData = config.data || config || {};
     setHtml('erp-config-list', [...Object.entries(configData), ...((maquinas.data || []).map((machine, index) => [`Máquina ${index + 1}`, machine.nome || machine.name || '—']))].slice(0, 12).map(([key, value]) => `<div><dt>${escapeHtml(key)}</dt><dd>${escapeHtml(typeof value === 'object' ? JSON.stringify(value) : value)}</dd></div>`).join('') || '<div><dt>Parâmetros</dt><dd>Não configurados</dd></div>');
   }
@@ -544,6 +554,25 @@
     };
     modal.open();
   }
+  function openProductPreview(id) {
+    const product = crudRecords.produto?.[id];
+    if (!product || !window.MSoftComponents) return;
+    const filamentos = Array.isArray(product.filamentos) && product.filamentos.length ? product.filamentos : product.insumoId ? [{ insumoId: product.insumoId, gramas: product.pesoGramas }] : [];
+    const materialRows = filamentos.map((item) => {
+      const supply = crudRecords.insumo?.[item.insumoId] || {};
+      return `<li>${escapeHtml(supply.nome || supply.name || 'Material não encontrado')} <strong>${escapeHtml(item.gramas)} g</strong></li>`;
+    }).join('') || '<li>Materiais não informados.</li>';
+    const images = Array.isArray(product.images) && product.images.length ? product.images : product.imageUrl ? [{ url: product.imageUrl }] : [];
+    const imageGallery = images.map((image) => { const url = escapeHtml(mediaUrl(image.url)); return `<a href="${url}" target="_blank" rel="noopener noreferrer"><img src="${url}" alt="${escapeHtml(product.nome || product.name)}"></a>`; }).join('');
+    const videos = Array.isArray(product.videos) ? product.videos : [];
+    const videoLinks = videos.map((video) => { const url = typeof video === 'string' ? video : video.url; return url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">Abrir vídeo</a>` : ''; }).join('');
+    const attachments = Array.isArray(product.attachments) ? product.attachments : [];
+    const attachmentLinks = attachments.map((file) => `<a href="${escapeHtml(mediaUrl(file.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(file.originalName || file.filename || 'Anexo técnico')}</a>`).join('');
+    const content = document.createElement('div');
+    content.innerHTML = `<section class="studio-product-preview"><header class="studio-dialog-header"><div><span class="studio-console-kicker">Produto 3D</span><h2>${escapeHtml(product.nome || product.name)}</h2><p>${escapeHtml(product.categoria || 'Sem categoria')} · ${product.visivelNaVitrine === false ? 'Oculto na vitrine' : 'Visível na vitrine'}</p></div><button type="button" data-close aria-label="Fechar detalhes">×</button></header><div class="studio-product-preview-body"><div class="studio-product-preview-grid"><dl><dt>Estoque acabado</dt><dd>${escapeHtml(product.estoqueAcabado ?? product.estoque ?? 0)} un.</dd><dt>Peso total</dt><dd>${escapeHtml(product.pesoGramas || 0)} g</dd><dt>Tempo de impressão</dt><dd>${escapeHtml(product.tempoHoras || 0)} h</dd><dt>Peça articulada</dt><dd>${product.articulado ? 'Sim' : 'Não'}</dd></dl><dl><dt>Custo de fabricação</dt><dd>${money(product.custoTotal || product.custoFabricacao || product.ctf)}</dd><dt>Preço atacado</dt><dd class="is-positive">${money(product.precoAtacado || product.preco_atacado)}</dd><dt>Preço varejo</dt><dd class="is-positive">${money(product.precoVarejo || product.preco_varejo)}</dd><dt>Margens</dt><dd>${escapeHtml(product.margemAtacado ?? 0)}% atacado · ${escapeHtml(product.margemVarejo ?? 0)}% varejo</dd></dl></div><h3>Materiais</h3><ul class="studio-product-preview-materials">${materialRows}</ul>${imageGallery ? `<h3>Fotos</h3><div class="studio-product-preview-media">${imageGallery}</div>` : ''}${videoLinks ? `<h3>Vídeos</h3><div class="studio-product-preview-links">${videoLinks}</div>` : ''}${attachmentLinks ? `<h3>Anexos técnicos</h3><div class="studio-product-preview-links">${attachmentLinks}</div>` : ''}${product.observacoes ? `<h3>Observações</h3><p>${escapeHtml(product.observacoes)}</p>` : ''}</div></section>`;
+    const modal = window.MSoftComponents.createDialog({ content, className: 'studio-crud-dialog', initialFocus: content.querySelector('[data-close]') });
+    modal.open();
+  }
   function renderCrudActions() { const entities = activeRoute === 'crm/radar' ? ['lead'] : activeRoute === 'equipe/consultoras' ? ['consultora'] : activeRoute === 'fabrica/produtos' ? ['produto'] : activeRoute === 'fabrica/insumos' ? ['insumo'] : activeRoute === 'fabrica/categorias' ? ['categoria'] : activeRoute === 'fabrica/maquinas' ? ['maquina'] : []; const target = activeRoot?.querySelector('.studio-module-heading'); if (target && entities.length) target.insertAdjacentHTML('beforeend', `<div class="studio-crud-actions">${entities.map((entity) => `<button type="button" class="studio-refresh crud-action" data-crud-create="${entity}">Cadastrar ${CRUD[entity][0]}</button>`).join('')}</div>`); }
 
   function bindPageEvents() {
@@ -565,6 +594,8 @@
           alert('Erro ao abrir formulário: ' + e.message);
         }
       }
+      const productView = event.target.closest('[data-product-view]');
+      if (productView) return openProductPreview(productView.dataset.crudId);
       const manufacture = event.target.closest('[data-crud-manufacture]');
       if (manufacture) return openManufactureDialog(manufacture.dataset.crudManufacture);
       const saleRemove = event.target.closest('[data-vendas-remover]');
