@@ -1,0 +1,27 @@
+<section data-studio-page="vendas/registrar">
+  <div class="studio-module-heading"><span class="studio-console-kicker">Comercial</span><h2>Registrar venda</h2></div>
+  <p class="studio-intro">Selecione os itens vendidos. Ao confirmar, o estoque acabado é baixado e cada item entra no Kardex.</p>
+  <div class="studio-metric-grid">
+    <article class="studio-metric"><span>Itens no carrinho</span><strong id="vendas-qtd-itens">0</strong></article>
+    <article class="studio-metric"><span>Total da venda</span><strong id="vendas-total">R$ 0,00</strong></article>
+  </div>
+  <section class="studio-panel">
+    <h3>Itens vendidos</h3>
+    <div class="studio-filter-row">
+      <label>Produto<select id="vendas-produto" aria-label="Produto vendido"><option value="">Carregando produtos…</option></select></label>
+      <label>Quantidade<input id="vendas-quantidade" type="number" min="1" value="1" inputmode="numeric"></label>
+      <div class="studio-sale-add"><button id="vendas-adicionar" type="button" class="crud-action"><i class="bi bi-plus-lg" aria-hidden="true"></i> Adicionar item</button></div>
+    </div>
+    <div class="studio-table-wrap"><table><thead><tr><th>Produto</th><th>Disponível</th><th>Quantidade</th><th>Unitário</th><th>Subtotal</th><th></th></tr></thead><tbody id="vendas-carrinho"><tr><td colspan="6">Nenhum item adicionado.</td></tr></tbody></table></div>
+  </section>
+  <form id="vendas-form" class="studio-panel studio-sale-form">
+    <h3>Dados da venda</h3>
+    <div class="studio-form-grid three">
+      <label>Cliente<input name="clienteNome" autocomplete="name" placeholder="Nome do cliente (opcional)"></label>
+      <label>WhatsApp do cliente<input name="clienteTelefone" inputmode="tel" autocomplete="tel" placeholder="(85) 99999-9999"><small id="vendas-cliente-historico">Informe o WhatsApp para recuperar compras anteriores.</small></label>
+      <label>Forma de pagamento<select name="formaPagamento"><option value="Pix">Pix</option><option value="Dinheiro">Dinheiro</option><option value="Cartão">Cartão</option><option value="Outro">Outro</option></select></label>
+    </div>
+    <label>Observações<textarea name="observacoes" rows="2" placeholder="Opcional"></textarea></label>
+    <footer class="studio-sale-footer"><strong id="vendas-total-confirmacao">Total: R$ 0,00</strong><button type="submit" class="studio-refresh">Confirmar venda e baixar estoque</button></footer>
+  </form>
+</section>

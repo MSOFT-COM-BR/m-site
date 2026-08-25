@@ -16,7 +16,7 @@ function resolveApiBaseUrl() {
 const config = {
   app: {
     name: "Miranda Soft",
-    version: "0.12.34",
+    version: "0.12.37",
     environment: "production",
     debug: false
   },
@@ -71,6 +71,7 @@ const config = {
     },
     appPages: ['studio-bva', 'mcredential'],
     studioPages: {
+      'vendas/registrar': 'app/studio-bva/index',
       'fabrica/produtos': 'app/studio-bva/index',
       'fabrica/insumos': 'app/studio-bva/index',
       'fabrica/kardex': 'app/studio-bva/index',

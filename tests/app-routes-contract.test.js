@@ -62,7 +62,7 @@ test('Studio organiza os módulos em rotas canônicas semânticas', () => {
   const core = read('src/core/core.js');
   const page = read('src/pages/app/studio-bva/index.html');
 
-  for (const route of ['fabrica/produtos', 'crm/radar', 'equipe/consultoras', 'revendas/catalogo']) {
+  for (const route of ['fabrica/produtos', 'crm/radar', 'equipe/consultoras', 'revendas/catalogo', 'vendas/registrar']) {
     assert.match(config, new RegExp(`'${route}'`));
   }
   assert.match(core, /segments\.length === 5/);
@@ -78,6 +78,7 @@ test('Studio separa cada listagem ERP e Revendas na sua rota própria', () => {
   const router = read('src/modules/studio-console-router.js');
   const shell = read('src/pages/app/studio-bva/views/console.html');
   const routes = {
+    'vendas/registrar': 'vendas/registrar.html',
     'fabrica/produtos': 'erp/produtos.html',
     'fabrica/insumos': 'erp/insumos.html',
     'fabrica/kardex': 'erp/kardex.html',
@@ -194,10 +195,25 @@ test('link VIP aponta para a vitrine pública, sem vazar a origem local do conso
   const catalog = read('src/pages/app/studio-bva/views/revendas/catalogo.html');
 
   assert.match(router, /const officialResellerLink/);
-  assert.match(router, /https:\/\/studiobva\.com\.br\//);
+  assert.match(router, /https:\/\/studiobva\.mirandasoft\.com\.br\//);
   assert.match(router, /link\.searchParams\.set\('consultora', resellerId\)/);
   assert.match(catalog, /data-copy-reseller-link/);
   assert.match(catalog, /target="_blank"/);
+});
+
+test('vendas do Studio usam o catálogo, confirmam o pedido e baixam o estoque pelo servidor', () => {
+  const router = read('src/modules/studio-console-router.js');
+  const sales = read('src/pages/app/studio-bva/views/vendas/registrar.html');
+
+  assert.match(router, /async function loadVendas\(\)/);
+  assert.match(router, /api\('\/erp\/vendas', 'POST'/);
+  assert.match(router, /saleCart = new Map\(\)/);
+  assert.match(router, /data-vendas-remover/);
+  assert.match(router, /\/bva\/orders\/cliente\?appKey=/);
+  assert.match(sales, /Confirmar venda e baixar estoque/);
+  assert.match(sales, /id="vendas-carrinho"/);
+  assert.match(sales, /name="clienteNome" autocomplete="name"/);
+  assert.doesNotMatch(sales, /name="clienteNome" required/);
 });
 
 test('console atualiza automaticamente sem exibir ações manuais redundantes', () => {

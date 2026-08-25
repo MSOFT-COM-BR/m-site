@@ -1,6 +1,7 @@
 (() => {
   const STUDIO_PAGES = Object.freeze({
     'revendas/catalogo': 'revendas/catalogo.html',
+    'vendas/registrar': 'vendas/registrar.html',
     'crm/radar': 'crm/radar.html',
     'equipe/consultoras': 'equipe/consultoras.html',
     'fabrica/produtos': 'erp/produtos.html',
@@ -16,6 +17,9 @@
   let activeRoot = null;
   let activeRoute = null;
   let radarLeads = [];
+  let saleProducts = [];
+  let saleCart = new Map();
+  let clientLookupTimer = null;
   let crudRecords = {};
   let crudTemplates = null;
   let pageClickHandler = null;
@@ -28,7 +32,7 @@
   const officialResellerLink = (user = {}) => {
     const resellerId = user.uuid || user.id;
     const resellerName = user.nome || user.name;
-    const link = new URL('https://studiobva.com.br/');
+    const link = new URL('https://studiobva.mirandasoft.com.br/');
     if (resellerId) link.searchParams.set('consultora', resellerId);
     else if (resellerName) link.searchParams.set('revendedora', resellerName);
     return link.toString();
@@ -177,6 +181,33 @@
     setHtml('team-tbody', rows.join('') || '<tr><td colspan="7">Nenhuma consultora cadastrada.</td></tr>');
   }
 
+  function renderSaleCart() {
+    if (activeRoute !== 'vendas/registrar') return;
+    const entries = [...saleCart.values()];
+    const quantity = entries.reduce((sum, item) => sum + item.quantidade, 0);
+    const total = entries.reduce((sum, item) => sum + item.preco * item.quantidade, 0);
+    setText('vendas-qtd-itens', String(quantity));
+    setText('vendas-total', money(total));
+    setText('vendas-total-confirmacao', `Total: ${money(total)}`);
+    setHtml('vendas-carrinho', entries.map((item) => `<tr><td><strong>${escapeHtml(item.nome)}</strong></td><td>${escapeHtml(item.estoque)}</td><td>${escapeHtml(item.quantidade)}</td><td>${money(item.preco)}</td><td>${money(item.preco * item.quantidade)}</td><td><button type="button" class="crud-action crud-icon-action" data-vendas-remover="${escapeHtml(item.id)}" aria-label="Remover ${escapeHtml(item.nome)}" title="Remover item"><i class="bi bi-trash3" aria-hidden="true"></i></button></td></tr>`).join('') || '<tr><td colspan="6">Nenhum item adicionado.</td></tr>');
+  }
+
+  function renderSaleProducts() {
+    const select = activeRoot?.querySelector('#vendas-produto');
+    if (!select) return;
+    select.innerHTML = '<option value="">Selecione um produto…</option>' + saleProducts
+      .filter((product) => Number(product.estoqueAcabado || 0) > 0)
+      .map((product) => `<option value="${escapeHtml(product.uuid || product.id)}">${escapeHtml(product.nome || product.name)} · ${money(product.precoVarejo || product.preco_varejo)} · ${escapeHtml(product.estoqueAcabado)} disponível</option>`).join('');
+  }
+
+  async function loadVendas() {
+    const result = await api(`/erp/produtos?appKey=${APP_KEY}`);
+    if (activeRoute !== 'vendas/registrar') return;
+    saleProducts = result.data || [];
+    renderSaleProducts();
+    renderSaleCart();
+  }
+
   async function loadAllKardex(query) {
     const firstPage = await api(`/erp/kardex${query}&limit=200&page=1`);
     const pages = Number(firstPage.pagination?.pages || 1);
@@ -242,7 +273,7 @@
   }
 
   async function loadCurrentRoute() {
-    const loaders = { 'revendas/catalogo': loadRevendas, 'revendas/pedidos': loadRevendas, 'crm/radar': loadRadar, 'equipe/consultoras': loadEquipe, 'fabrica/produtos': loadErp, 'fabrica/insumos': loadErp, 'fabrica/categorias': loadErp, 'fabrica/maquinas': loadErp, 'fabrica/kardex': loadErp };
+    const loaders = { 'revendas/catalogo': loadRevendas, 'revendas/pedidos': loadRevendas, 'vendas/registrar': loadVendas, 'crm/radar': loadRadar, 'equipe/consultoras': loadEquipe, 'fabrica/produtos': loadErp, 'fabrica/insumos': loadErp, 'fabrica/categorias': loadErp, 'fabrica/maquinas': loadErp, 'fabrica/kardex': loadErp };
     try { await loaders[activeRoute]?.(); } catch (error) {
       const destination = activeRoot?.querySelector('#studio-console-page');
       if (destination) destination.insertAdjacentHTML('afterbegin', errorState(error.message));
@@ -536,6 +567,8 @@
       }
       const manufacture = event.target.closest('[data-crud-manufacture]');
       if (manufacture) return openManufactureDialog(manufacture.dataset.crudManufacture);
+      const saleRemove = event.target.closest('[data-vendas-remover]');
+      if (saleRemove) { saleCart.delete(saleRemove.dataset.vendasRemover); return renderSaleCart(); }
       const remove = event.target.closest('[data-crud-delete]');
       if (remove) return deleteCrud(remove.dataset.crudDelete, remove.dataset.crudId);
     };
@@ -554,6 +587,63 @@
     ['#radar-filter-search', '#radar-filter-category', '#radar-filter-status'].forEach((selector) => activeRoot?.querySelector(selector)?.addEventListener('input', renderRadar));
     activeRoot?.querySelector('#radar-filter-category')?.addEventListener('change', renderRadar);
     activeRoot?.querySelector('#radar-filter-status')?.addEventListener('change', renderRadar);
+    activeRoot?.querySelector('#vendas-adicionar')?.addEventListener('click', () => {
+      const productId = activeRoot?.querySelector('#vendas-produto')?.value;
+      const quantity = Number(activeRoot?.querySelector('#vendas-quantidade')?.value);
+      const product = saleProducts.find((item) => (item.uuid || item.id) === productId);
+      if (!product || !Number.isInteger(quantity) || quantity < 1) return alert('Selecione um produto e informe uma quantidade válida.');
+      const existing = saleCart.get(productId)?.quantidade || 0;
+      const stock = Number(product.estoqueAcabado || 0);
+      if (existing + quantity > stock) return alert(`Estoque disponível: ${stock} unidade(s).`);
+      saleCart.set(productId, { id: productId, nome: product.nome || product.name, estoque: stock, preco: Number(product.precoVarejo || product.preco_varejo || 0), quantidade: existing + quantity });
+      activeRoot.querySelector('#vendas-quantidade').value = '1';
+      renderSaleCart();
+    });
+    activeRoot?.querySelector('#vendas-form')?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const items = [...saleCart.values()].map((item) => ({ produtoId: item.id, quantidade: item.quantidade }));
+      if (!items.length) return alert('Adicione ao menos um item à venda.');
+      const submit = form.querySelector('[type="submit"]');
+      submit.disabled = true;
+      try {
+        const result = await api('/erp/vendas', 'POST', {
+          appKey: APP_KEY,
+          items,
+          cliente: { nome: form.elements.clienteNome.value, telefone: form.elements.clienteTelefone.value },
+          formaPagamento: form.elements.formaPagamento.value,
+          observacoes: form.elements.observacoes.value,
+        });
+        saleCart = new Map();
+        form.reset();
+        alert(`Venda ${result.data?.code || ''} registrada com sucesso.`);
+        await loadCurrentRoute();
+      } catch (error) {
+        alert(error.message);
+      } finally {
+        submit.disabled = false;
+      }
+    });
+    activeRoot?.querySelector('[name="clienteTelefone"]')?.addEventListener('input', (event) => {
+      if (clientLookupTimer) window.clearTimeout(clientLookupTimer);
+      const phone = event.currentTarget.value;
+      const digits = phone.replace(/\D/g, '');
+      const hint = activeRoot?.querySelector('#vendas-cliente-historico');
+      if (digits.length < 8) { if (hint) hint.textContent = 'Informe o WhatsApp para recuperar compras anteriores.'; return; }
+      if (hint) hint.textContent = 'Buscando compras anteriores…';
+      clientLookupTimer = window.setTimeout(async () => {
+        try {
+          const result = await api(`/bva/orders/cliente?appKey=${APP_KEY}&phone=${encodeURIComponent(phone)}`);
+          if (activeRoute !== 'vendas/registrar' || event.currentTarget.value !== phone) return;
+          const customer = result.data || {};
+          const form = activeRoot?.querySelector('#vendas-form');
+          if (customer.name && form?.elements.clienteNome && !form.elements.clienteNome.value) form.elements.clienteNome.value = customer.name;
+          if (hint) hint.textContent = customer.found ? `Cliente encontrado: ${customer.name || 'sem nome cadastrado'}.` : 'Nenhuma compra anterior encontrada para este WhatsApp.';
+        } catch {
+          if (hint) hint.textContent = 'Não foi possível consultar o histórico agora.';
+        }
+      }, 350);
+    });
     if (refreshInterval) window.clearInterval(refreshInterval);
     refreshInterval = window.setInterval(() => {
       if (!document.hidden && !document.querySelector('.studio-crud-dialog[open]')) loadCurrentRoute();
@@ -585,7 +675,7 @@
     }
   }
 
-  function unmount() { if (pageClickHandler) window.removeEventListener('click', pageClickHandler); pageClickHandler = null; if (refreshInterval) window.clearInterval(refreshInterval); refreshInterval = null; if (activeRoot) activeRoot.innerHTML = ''; activeRoot = null; activeRoute = null; radarLeads = []; }
+  function unmount() { if (pageClickHandler) window.removeEventListener('click', pageClickHandler); pageClickHandler = null; if (refreshInterval) window.clearInterval(refreshInterval); refreshInterval = null; if (clientLookupTimer) window.clearTimeout(clientLookupTimer); clientLookupTimer = null; if (activeRoot) activeRoot.innerHTML = ''; activeRoot = null; activeRoute = null; radarLeads = []; }
   window.addEventListener('msoft:route-unmount', unmount);
   window.StudioConsoleRouter = { mount, unmount, STUDIO_PAGES };
 })();

@@ -4,13 +4,14 @@
       <header class="studio-console-brand">
         <span class="studio-console-kicker text-primary">MSoft · Console</span>
         <h1 class="fw-bold text-dark">Studio BVA</h1>
-        <p class="text-muted">Operação e fábrica em um só lugar.</p>
+        <p id="studio-console-user" class="text-muted">Sessão MSoft ativa</p>
       </header>
       <nav class="studio-console-nav" aria-label="Módulos do Studio">
         <div class="mt-1 mb-1 px-2 text-muted small fw-bold text-uppercase">Painel</div>
         <a data-studio-route="revendas/catalogo" href="/app/studio/revendas/catalogo"><span class="studio-nav-icon"><i class="bi bi-house"></i></span><span><strong>Visão Geral</strong><small>Métricas da conta</small></span></a>
 
         <div class="mt-3 mb-1 px-2 text-muted small fw-bold text-uppercase">Comercial</div>
+        <a data-studio-route="vendas/registrar" href="/app/studio/vendas/registrar"><span class="studio-nav-icon"><i class="bi bi-cart-check"></i></span><span><strong>Nova venda</strong><small>Baixa de estoque</small></span></a>
         <a data-studio-route="revendas/pedidos" href="/app/studio/revendas/pedidos"><span class="studio-nav-icon"><i class="bi bi-receipt"></i></span><span><strong>Pedidos</strong><small>Vendas registradas</small></span></a>
         <a data-studio-route="crm/radar" href="/app/studio/crm/radar"><span class="studio-nav-icon"><i class="bi bi-geo-alt"></i></span><span><strong>Radar B2B</strong><small>Leads e oportunidades</small></span></a>
         <a data-studio-route="equipe/consultoras" href="/app/studio/equipe/consultoras"><span class="studio-nav-icon"><i class="bi bi-people"></i></span><span><strong>Equipe</strong><small>Consultoras VIP</small></span></a>
@@ -28,14 +29,11 @@
     </aside>
     <div class="studio-console-content">
       <header class="studio-console-header">
-        <div>
-          <span class="studio-console-kicker text-primary">Área de trabalho</span>
-          <p id="studio-console-user" class="fw-medium text-dark mb-0">Carregando sua sessão MSoft…</p>
-        </div>
         <details class="studio-mobile-menu">
           <summary class="btn btn-outline-secondary">Menu do Studio <i class="bi bi-chevron-down ms-2"></i></summary>
           <nav aria-label="Módulos do Studio no mobile" class="shadow">
             <a data-studio-route="revendas/catalogo" href="/app/studio/revendas/catalogo">Visão Geral</a>
+            <a data-studio-route="vendas/registrar" href="/app/studio/vendas/registrar">Nova venda</a>
             <a data-studio-route="revendas/pedidos" href="/app/studio/revendas/pedidos">Pedidos</a>
             <a data-studio-route="crm/radar" href="/app/studio/crm/radar">Radar B2B</a>
             <a data-studio-route="equipe/consultoras" href="/app/studio/equipe/consultoras">Equipe</a>
@@ -146,6 +144,11 @@
   .studio-kardex-value { flex: 0 0 auto; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
   .studio-kardex-value.is-entry { color: #198754; }
   .studio-kardex-value.is-exit { color: #dc3545; }
+  .studio-sale-add { align-self: end; display: flex; padding-bottom: .75rem; }
+  .studio-sale-form { margin-top: 1.5rem; overflow: visible; padding: 1.5rem; }
+  .studio-sale-form label { color: var(--studio-text); display: grid; font-weight: 600; font-size: .9rem; gap: .5rem; margin: .75rem 0; }
+  .studio-sale-form input, .studio-sale-form select, .studio-sale-form textarea { background: var(--studio-surface); border: 1px solid var(--studio-border); border-radius: .4rem; color: var(--studio-text); font: inherit; padding: .65rem; width: 100%; box-sizing: border-box; }
+  .studio-sale-footer { align-items: center; border-top: 1px solid var(--studio-border); display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; margin: 1.5rem -1.5rem -1.5rem; padding: 1.25rem 1.5rem; background: var(--studio-bg); }
 
   /* Filters */
   .studio-filter-row, .studio-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; padding: 1.25rem; border-bottom: 1px solid var(--studio-border); background: var(--studio-bg); }
