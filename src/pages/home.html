@@ -1,6 +1,6 @@
 <!-- Luminous Background Elements -->
-<div class="orb-primary" style="top: -10%; right: -10%;"></div>
-<div class="orb-secondary" style="bottom: 15%; left: -5%;"></div>
+<div class="orb-primary" style="top: -10%; right: 0; max-width: 100vw;"></div>
+<div class="orb-secondary" style="bottom: 15%; left: 0; max-width: 100vw;"></div>
 
 <!-- Hero Section -->
 <section class="relative min-vh-100 d-flex align-items-center justify-content-center overflow-hidden">
@@ -32,7 +32,7 @@
       <div class="row g-4 align-items-center mb-4 mb-lg-5">
         <div class="col-lg-7">
           <span class="label-pill d-inline-block mb-3">UM HUB, VÁRIAS FORMAS DE AVANÇAR</span>
-          <h2 class="display-md text-white tracking-tight mb-3" id="hub-title">Comece pelo que faz sentido para o seu momento.</h2>
+          <h2 class="display-md text-on-surface tracking-tight mb-3" id="hub-title">Comece pelo que faz sentido para o seu momento.</h2>
           <p class="body-lg text-on-surface-variant mb-0">Da primeira ideia ao produto em operação: encontre uma solução, explore ferramentas ou aprofunde seu repertório com conteúdos que ajudam a decidir melhor.</p>
         </div>
         <div class="col-lg-5 d-lg-flex justify-content-lg-end">
@@ -90,6 +90,14 @@
   .home-hub-link { margin-top: auto; color: #7dd3fc; font-size: .88rem; font-weight: 700; }
   .home-hub-link i { margin-left: .25rem; transition: transform .2s ease; }
   .home-hub-card:hover .home-hub-link i { transform: translate(2px, -2px); }
+  body[data-bs-theme="light"] .home-hub-shell { background: linear-gradient(135deg, #ffffff, #f1f5f9); border-color: var(--ms-outline-variant); box-shadow: 0 16px 48px rgba(15, 23, 42, .08); }
+  body[data-bs-theme="light"] .home-hub-card { background: #ffffff; border-color: var(--ms-outline-variant); color: var(--ms-on-surface); }
+  body[data-bs-theme="light"] .home-hub-card-featured { background: linear-gradient(145deg, #eff6ff, #ffffff); border-color: #93c5fd; }
+  body[data-bs-theme="light"] .home-hub-card:hover { background: #eff6ff; border-color: var(--ms-primary); color: var(--ms-on-surface); }
+  body[data-bs-theme="light"] .home-hub-card h3 { color: var(--ms-on-surface); }
+  body[data-bs-theme="light"] .home-hub-card p { color: var(--ms-on-surface-variant); }
+  body[data-bs-theme="light"] :is(.home-hub-icon, .home-hub-eyebrow, .home-hub-link) { color: var(--ms-secondary); }
+  body[data-bs-theme="light"] #root .text-info { color: var(--ms-secondary) !important; }
   @media (max-width: 575.98px) { .home-hub-shell { padding: 1.25rem; border-radius: 18px; } .home-hub-cta { width: 100%; text-align: center; } }
 </style>
 
@@ -97,7 +105,7 @@
   <div class="container">
     <div class="mb-5">
       <span class="label-pill d-block mb-3" style="color: var(--ms-tertiary);">ESPECIALIDADES</span>
-      <h2 class="display-md text-white tracking-tight">Nossas Soluções</h2>
+      <h2 class="display-md text-on-surface tracking-tight">Nossas Soluções</h2>
     </div>
 
     <div class="row g-4" id="features-grid">
@@ -105,7 +113,7 @@
       <div class="col-lg-6">
         <div class="dev-skill-card h-100">
           <div class="dev-skill-icon"><i class="bi bi-window-stack fs-2"></i></div>
-          <h3 class="h4 fw-bold text-white mb-3">Criação de Sites</h3>
+          <h3 class="h4 fw-bold text-on-surface mb-3">Criação de Sites</h3>
           <p class="text-on-surface-variant mb-4">Sites institucionais e páginas de campanha para comunicar sua oferta com clareza.</p>
           <a href="/criacao-de-sites" class="mt-auto d-inline-flex align-items-center text-primary fw-bold gap-2 text-decoration-none">Saber mais <i class="bi bi-arrow-right"></i></a>
         </div>
@@ -113,7 +121,7 @@
       <div class="col-lg-6">
         <div class="dev-skill-card h-100">
           <div class="dev-skill-icon" style="color: var(--ms-secondary); background: rgba(76, 215, 246, 0.1);"><i class="bi bi-code-square fs-2"></i></div>
-          <h3 class="h4 fw-bold text-white mb-3">Desenvolvimento de Sistemas</h3>
+          <h3 class="h4 fw-bold text-on-surface mb-3">Desenvolvimento de Sistemas</h3>
           <p class="text-on-surface-variant mb-4">Sistemas sob medida para apoiar processos e necessidades específicas da operação.</p>
           <a href="/desenvolvimento-de-sistemas" class="mt-auto d-inline-flex align-items-center text-info fw-bold gap-2 text-decoration-none">Saber mais <i class="bi bi-arrow-right"></i></a>
         </div>
@@ -156,7 +164,7 @@
 
       <div class="col-lg-6">
         <span class="label-pill text-primary d-block mb-4">NOSSA ESSÊNCIA</span>
-        <h2 class="display-md text-white mb-4" id="about-title">Engenharia de Software com Propósito</h2>
+        <h2 class="display-md text-on-surface mb-4" id="about-title">Engenharia de Software com Propósito</h2>
         <p class="body-lg mb-4" id="about-desc">
           A Miranda Soft nasceu da paixão por resolver problemas complexos através do código. Não entregamos apenas software; construímos parcerias estratégicas que impulsionam o crescimento real.
         </p>
@@ -179,11 +187,11 @@
              <i class="bi bi-patch-check-fill"></i>
              <span class="small fw-bold text-uppercase tracking-wider">Novo Lançamento</span>
            </div>
-            <h2 class="display-md text-white mb-4" id="cta-title"></h2>
+            <h2 class="display-md text-on-surface mb-4" id="cta-title"></h2>
             <p class="body-lg mb-4 text-on-surface-variant" id="cta-desc">
               Buscando as últimas novidades da Miranda Soft para você.
             </p>
-            <div id="cta-meta" class="d-flex align-items-center gap-3 mb-5 text-white small"></div>
+            <div id="cta-meta" class="d-flex align-items-center gap-3 mb-5 text-on-surface-variant small"></div>
 
 
 
@@ -203,7 +211,7 @@
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-end mb-5 gap-4">
       <div>
         <span class="label-pill d-block mb-3" style="color: var(--ms-secondary);">INSIGHTS TECH</span>
-        <h2 class="display-md text-white tracking-tight m-0">Nosso Blog</h2>
+        <h2 class="display-md text-on-surface tracking-tight m-0">Nosso Blog</h2>
       </div>
       <a href="/blog" class="dev-btn dev-btn-secondary px-4 py-2 text-decoration-none d-flex align-items-center gap-2">
         Ver Todos <i class="bi bi-arrow-right"></i>
@@ -224,7 +232,7 @@
   <div class="container text-center">
     <div class="mb-5">
       <span class="label-pill d-block mb-3" style="color: var(--ms-primary);">SUPORTE</span>
-      <h2 class="display-md text-white">Suporte Especializado</h2>
+      <h2 class="display-md text-on-surface">Suporte Especializado</h2>
     </div>
 
     <div class="row g-4 justify-content-center">
@@ -233,7 +241,7 @@
           <div class="mx-auto bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
             <i class="bi bi-chat-dots fs-1 text-primary"></i>
           </div>
-          <h3 class="h5 text-white fw-bold mb-3">Chat em Tempo Real</h3>
+          <h3 class="h5 text-on-surface fw-bold mb-3">Chat em Tempo Real</h3>
           <p class="text-on-surface-variant small mb-0">Tire suas dúvidas instantaneamente com nossa equipe de suporte via chat.</p>
         </div>
       </div>
@@ -242,7 +250,7 @@
           <div class="mx-auto bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
             <i class="bi bi-book fs-1 text-success"></i>
           </div>
-          <h3 class="h5 text-white fw-bold mb-3">Base de Conhecimento</h3>
+          <h3 class="h5 text-on-surface fw-bold mb-3">Base de Conhecimento</h3>
           <p class="text-on-surface-variant small mb-0">Acesse nossa documentação completa, tutoriais e guias de uso.</p>
         </div>
       </div>
@@ -260,7 +268,7 @@
 <section id="contact" class="dev-section">
   <div class="container">
     <div class="text-center">
-      <h2 class="display-md text-white mb-4">Vamos <span class="text-gradient-neon">inovar juntos?</span></h2>
+      <h2 class="display-md text-on-surface mb-4">Vamos <span class="text-gradient-neon">inovar juntos?</span></h2>
       <p class="body-lg mx-auto mb-5" style="max-width: 600px;">
         Estamos prontos para atender sua demanda. Entre em contato e solicite um orçamento.
       </p>
@@ -324,7 +332,7 @@
               <div class="dev-skill-icon">
                 <i class="bi ${f.icon}"></i>
               </div>
-              <h3 class="h4 fw-bold text-white mb-3">${f.title}</h3>
+              <h3 class="h4 fw-bold text-on-surface mb-3">${f.title}</h3>
               <p class="text-on-surface-variant mb-4">${f.description}</p>
               <a href="${f.href || '/expertise'}" class="mt-auto d-inline-flex align-items-center text-primary fw-bold gap-2 text-decoration-none">
                 ${f.ctaLabel || 'Saber mais'} <i class="bi bi-arrow-right"></i>
@@ -392,7 +400,7 @@
               if (hTitle) hTitle.textContent = highlightPost.title;
               if (hDesc) hDesc.textContent = highlightPost.description || ((highlightPost.content || '').replace(/<[^>]*>/g, '').substring(0, 160).trim());
               if (hBtn) hBtn.href = `/blog/${highlightPost.slug}`;
-              if (hMeta) hMeta.innerHTML = `<span class="text-white"><i class="bi bi-calendar3 me-1"></i> ${date}</span> <span class="opacity-50 text-white">|</span> <span class="text-info fw-semibold"><i class="bi bi-tag me-1"></i> ${highlightPost.category || 'Insights'}</span>`;
+              if (hMeta) hMeta.innerHTML = `<span class="text-on-surface-variant"><i class="bi bi-calendar3 me-1"></i> ${date}</span> <span class="opacity-50 text-on-surface-variant">|</span> <span class="text-info fw-semibold"><i class="bi bi-tag me-1"></i> ${highlightPost.category || 'Insights'}</span>`;
           }
 
           grid.innerHTML = posts.map(post => {
@@ -419,7 +427,7 @@
                         <span class="mx-2 opacity-25">|</span>
                         <span class="text-secondary">${post.category || 'Tecnologia'}</span>
                       </div>` : ''}
-                      <h3 class="h5 fw-bold text-white mb-3 line-clamp-2">${post.title}</h3>
+                      <h3 class="h5 fw-bold text-on-surface mb-3 line-clamp-2">${post.title}</h3>
                       <div class="d-flex align-items-center text-primary small fw-bold gap-2">
                         Ler Artigo <i class="bi bi-chevron-right"></i>
                       </div>

@@ -88,6 +88,10 @@ body[data-bs-theme="dark"] {
   background-clip: text !important;
 }
 
+body[data-bs-theme="light"] .text-gradient {
+  background: linear-gradient(135deg, var(--ms-primary), var(--ms-secondary), var(--ms-tertiary));
+}
+
 /* Background Pattern */
 body[data-bs-theme="dark"]::before {
   content: '';

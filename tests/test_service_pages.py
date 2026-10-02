@@ -508,7 +508,7 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertIn(brand_markup, footer)
         self.assertIn('font-size: 1.5rem;', footer)
         self.assertIn('letter-spacing: -0.03em;', footer)
-        self.assertIn('color: #ffffff;', footer)
+        self.assertIn('color: var(--ms-text-primary);', footer)
         self.assertIn('color: var(--ms-primary);', footer)
         self.assertIn('margin-left: 2px;', footer)
         self.assertIn('opacity: 0.9;', footer)

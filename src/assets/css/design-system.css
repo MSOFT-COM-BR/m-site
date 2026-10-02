@@ -82,6 +82,9 @@ body {
 
 /* Tema público padrão: claro. */
 html[data-bs-theme="light"], body[data-bs-theme="light"] {
+    --ms-primary: #1d4ed8;
+    --ms-secondary: #087f96;
+    --ms-tertiary: #047857;
     --ms-surface: #f8fafc;
     --ms-surface-container-low: #ffffff;
     --ms-surface-container: #f1f5f9;
@@ -112,6 +115,14 @@ body[data-bs-theme="dark"] {
 }
 
 /* Typography Enhancements */
+.text-on-surface {
+    color: var(--ms-on-surface) !important;
+}
+
+.text-on-surface-variant {
+    color: var(--ms-on-surface-variant) !important;
+}
+
 .text-mono {
     font-family: 'JetBrains Mono', monospace;
     letter-spacing: -0.02em;
