@@ -77,6 +77,7 @@ test('uses Portuguese as the safe default for a missing or invalid locale', () =
   const i18n = new I18n({ window: createWindow(document, storage) });
 
   assert.equal(i18n.getLocale(), DEFAULT_LOCALE);
+  assert.equal(i18n.getLocaleInfo('pt-BR').code, 'BR');
   assert.equal(document.documentElement.getAttribute('lang'), 'pt-BR');
   assert.equal(i18n.setLocale('fr'), DEFAULT_LOCALE);
   assert.equal(storage.getItem(STORAGE_KEY), 'fr');

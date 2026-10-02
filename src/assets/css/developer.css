@@ -44,11 +44,18 @@
 /* ============================================
    BASE STYLES - No-Line Philosophy
    ============================================ */
+/* Theme changes colors, not the light layout's base typography. */
+body[data-bs-theme="light"],
 body[data-bs-theme="dark"] {
-  font-family: var(--ms-font-body);
+  --bs-body-font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-body-line-height: 1.5;
+  font-family: var(--bs-body-font-family);
+  line-height: var(--bs-body-line-height);
+}
+
+body[data-bs-theme="dark"] {
   background-color: var(--ms-surface);
   color: var(--ms-text-primary);
-  line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }

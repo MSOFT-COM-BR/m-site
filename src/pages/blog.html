@@ -55,7 +55,7 @@
         font-size: 0.65rem;
         letter-spacing: 0.06em;
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.35);
+        color: var(--ms-on-surface-variant);
         margin-bottom: 0.35rem;
     }
 
@@ -103,26 +103,52 @@
         overflow-x: clip;
     }
 
-    /* Lighthouse: contrast on filter chips (outline-light on dark was too low) */
-    #blog-filters .btn.btn-outline-light {
-        border-color: rgba(255, 255, 255, 0.72);
-        color: rgba(255, 255, 255, 0.96);
+    /* Foreground and surfaces track the selected theme without rerendering. */
+    #blog-filters .btn.btn-outline-light,
+    #post-content .btn.btn-outline-light {
+        border-color: var(--ms-outline);
+        color: var(--ms-on-surface);
     }
     #blog-filters .btn.btn-outline-light:hover,
-    #blog-filters .btn.btn-outline-light:focus-visible {
-        border-color: #fff;
-        color: #fff;
-        background: rgba(255, 255, 255, 0.1);
+    #blog-filters .btn.btn-outline-light:focus-visible,
+    #post-content .btn.btn-outline-light:hover,
+    #post-content .btn.btn-outline-light:focus-visible {
+        border-color: var(--ms-primary);
+        color: var(--ms-on-surface);
+        background: var(--ms-surface-container-high);
     }
     #blog-filters .btn.btn-outline-light.active {
-        background: rgba(99, 102, 241, 0.45);
-        border-color: rgba(199, 210, 254, 0.95);
-        color: #fff;
+        background: var(--ms-primary-container);
+        border-color: var(--ms-primary-container);
+        color: var(--ms-on-primary-container);
+    }
+
+    .blog-content :is(h1, h2, h3, h4, h5, h6) {
+        color: var(--ms-on-surface);
+    }
+
+    .blog-content a {
+        color: var(--ms-primary);
+    }
+
+    #post-content .blog-share-whatsapp {
+        border-color: var(--ms-tertiary);
+        color: var(--ms-tertiary);
+    }
+
+    #post-content .blog-share-facebook {
+        border-color: var(--ms-primary);
+        color: var(--ms-primary);
     }
 
     .blog-category-badge {
         background-color: rgba(13, 110, 253, 0.92) !important;
         color: #fff !important;
+    }
+
+    .blog-tag-badge {
+        background: var(--ms-surface-container-high);
+        color: var(--ms-on-surface);
     }
 </style>
 <!-- Blog Hero Section -->
@@ -251,7 +277,7 @@
             const loadGen = sidebarAdsGeneration;
 
             // Adjust layout for detail
-            if (heroTitle) heroTitle.innerHTML = '<div class="spinner-border text-light"></div>';
+            if (heroTitle) heroTitle.innerHTML = '<div class="spinner-border text-primary"></div>';
             if (heroSubtitle) heroSubtitle.style.display = 'none';
 
             // Clean grid container for article content
@@ -346,7 +372,7 @@
                 if (heroTitle) {
                     heroTitle.innerHTML = `
                         ${post.title} <br>
-                        <span class="fs-5 text-muted fw-normal mt-3 d-block">Por ${post.author} • ${new Date(post.createdAt).toLocaleDateString('pt-BR')}</span>
+                        <span class="fs-5 text-on-surface-variant fw-normal mt-3 d-block">Por ${post.author} • ${new Date(post.createdAt).toLocaleDateString('pt-BR')}</span>
                     `;
                 }
 
@@ -365,7 +391,7 @@
                                 <div class="col-12 col-lg-11 col-xl-8 animate__animated animate__fadeInUp">
                                     <article class="container-lg mx-auto px-3 px-lg-4 blog-post-text-wrap" itemscope itemtype="https://schema.org/Article">
                                         ${hasCoverImage ? `<header class="mb-5"><img src="${post.imageUrl.trim()}" class="w-100 rounded-3 mb-4 shadow" alt="${(post.title || '').replace(/"/g, '&quot;')}" itemprop="image" loading="lazy"></header>` : ''}
-                                        <div class="blog-content pb-4 text-white" style="line-height: 1.8; font-size: 1.15rem;" itemprop="articleBody" data-inline-ads="enabled">
+                                        <div class="blog-content pb-4 text-on-surface" style="line-height: 1.8; font-size: 1.15rem;" itemprop="articleBody" data-inline-ads="enabled">
                                             ${post.content || '<p class="text-muted">Sem conteúdo disponível.</p>'}
                                         </div>
                                         <hr class="border-secondary mt-5 mb-4 opacity-25">
@@ -375,16 +401,16 @@
                                             </div>
                                             <div class="d-flex gap-2 align-items-center flex-wrap">
                                                 <span class="text-muted small me-2"><i class="bi bi-tags"></i> Tags:</span>
-                                                ${(post.tags && post.tags.length > 0) ? post.tags.map(t => `<span class="badge bg-secondary opacity-50 text-white">${t}</span>`).join('') : '<span class="text-muted small">Nenhuma tag</span>'}
+                                                ${(post.tags && post.tags.length > 0) ? post.tags.map(t => `<span class="badge blog-tag-badge">${t}</span>`).join('') : '<span class="text-muted small">Nenhuma tag</span>'}
                                             </div>
                                         </div>
                                         <div class="mt-4 pt-4 border-top border-secondary border-opacity-25">
-                                            <p class="text-white mb-3 fw-bold">Compartilhe este artigo na sua rede:</p>
+                                            <p class="text-on-surface mb-3 fw-bold">Compartilhe este artigo na sua rede:</p>
                                             <div class="d-flex gap-3 flex-wrap">
                                                 <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}" target="_blank" class="btn btn-outline-light rounded-circle" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-twitter-x"></i></a>
                                                 <a href="https://www.linkedin.com/shareArticle?mini=true&title=${encodeURIComponent(post.title)}&url=${encodeURIComponent(window.location.href)}" target="_blank" class="btn btn-outline-light rounded-circle" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-linkedin"></i></a>
-                                                <a href="https://api.whatsapp.com/send?text=${encodeURIComponent('Acabei de ler esse conteúdo incrível no MSOFT: ' + post.title + ' ' + window.location.href)}" target="_blank" class="btn btn-outline-light rounded-circle" style="border-color: #22c55e; color: #22c55e; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-whatsapp"></i></a>
-                                                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank" class="btn btn-outline-light rounded-circle" style="border-color: #3b82f6; color: #3b82f6; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-facebook"></i></a>
+                                                <a href="https://api.whatsapp.com/send?text=${encodeURIComponent('Acabei de ler esse conteúdo incrível no MSOFT: ' + post.title + ' ' + window.location.href)}" target="_blank" class="btn btn-outline-light rounded-circle blog-share-whatsapp" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-whatsapp"></i></a>
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank" class="btn btn-outline-light rounded-circle blog-share-facebook" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-facebook"></i></a>
                                             </div>
                                         </div>
                                     </article>
@@ -534,7 +560,7 @@
 
                     return `
                     <div class="col-md-6 col-lg-4 animate-on-scroll" style="animation-delay: ${index * 0.1}s">
-                    <article class="card h-100 border-0 bg-transparent text-white" style="transition: transform 0.3s ease;">
+                    <article class="card h-100 border-0 bg-transparent text-on-surface" style="transition: transform 0.3s ease;">
                         ${hasImage ? `
                         <div class="position-relative overflow-hidden rounded-4 mb-3" style="aspect-ratio: 16/10;">
                             <img src="${post.imageUrl}" class="w-100 h-100 object-fit-cover" alt="${(post.title || '').replace(/"/g, '&quot;')}" style="transition: transform 0.5s ease;">
@@ -553,9 +579,9 @@
                             <i class="bi bi-calendar3"></i> ${date}
                         </div>` : ''}
                         <h3 class="h5 fw-bold mb-2">
-                            <a href="/blog/${post.slug}" class="text-white text-decoration-none hover-gradient">${post.title}</a>
+                            <a href="/blog/${post.slug}" class="text-on-surface text-decoration-none hover-gradient">${post.title}</a>
                         </h3>
-                        <p class="text-muted small line-clamp-3 mb-3">
+                        <p class="text-on-surface-variant small line-clamp-3 mb-3">
                             ${post.description || (post.content || '').replace(/<[^>]*>/g, '').substring(0, 120).trim()}
                         </p>
                         <a href="/blog/${post.slug}" class="dev-link-arrow text-primary text-decoration-none small fw-semibold">
@@ -633,7 +659,7 @@
 <style>
     /* Local styles for blog cards */
     .hover-gradient:hover {
-        background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        background: linear-gradient(135deg, var(--ms-primary) 0%, var(--ms-secondary) 100%);
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;

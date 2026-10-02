@@ -9,7 +9,7 @@
   const STORAGE_KEY = 'msoft.locale';
 
   const LOCALES = Object.freeze({
-    'pt-BR': Object.freeze({ code: 'PT', flag: '🇧🇷', lang: 'pt-BR' }),
+    'pt-BR': Object.freeze({ code: 'BR', flag: '🇧🇷', lang: 'pt-BR' }),
     es: Object.freeze({ code: 'ES', flag: '🇪🇸', lang: 'es' }),
     en: Object.freeze({ code: 'EN', flag: '🇺🇸', lang: 'en' })
   });
