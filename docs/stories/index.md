@@ -1,15 +1,15 @@
 # Story Index
 
 **Generated:** 2026-07-27T03:10:00Z
-**Total Stories:** 34
-**Epics:** 12
+**Total Stories:** 35
+**Epics:** 13
 
 ---
 
 ## 📊 Summary by Status
 
 - 👀 **Ready for Review**: 20
-- 🚀 **Ready for Dev**: 0
+- 🚀 **Ready for Dev**: 1
 - ✅ **Completed**: 1
 - 📝 **Draft**: 9
 - 🚫 **Blocked**: 4
@@ -111,6 +111,12 @@
 | Story ID | Title | Status | Priority | Owner | Estimate |
 |----------|-------|--------|----------|-------|----------|
 | 12.1 | [Carregar vendors globais sob demanda por rota](12.1-carregar-vendors-sob-demanda.md) | 👀 Ready for Review | 🟠 High | dev-agent | 5 |
+
+### EPIC-13 (1 stories)
+
+| Story ID | Title | Status | Priority | Owner | Estimate |
+|----------|-------|--------|----------|-------|----------|
+| 13.1 | [Publicar M-Care no marketplace sem preço público](13.1-publicar-m-care-no-marketplace-sem-preco-publico.md) | 🚀 Ready for Dev | 🟠 High | dev-agent | 3 |
 
 ---
 
