@@ -80,6 +80,37 @@ body {
     overflow-x: hidden;
 }
 
+/* Tema público padrão: claro. */
+html[data-bs-theme="light"], body[data-bs-theme="light"] {
+    --ms-surface: #f8fafc;
+    --ms-surface-container-low: #ffffff;
+    --ms-surface-container: #f1f5f9;
+    --ms-surface-container-high: #e2e8f0;
+    --ms-surface-container-highest: #cbd5e1;
+    --ms-outline: #64748b;
+    --ms-outline-variant: #cbd5e1;
+    --ms-on-surface: #0f172a;
+    --ms-on-surface-variant: #475569;
+    --ms-text-primary: #0f172a;
+    --ms-text-secondary: #475569;
+}
+
+body[data-bs-theme="light"] {
+    background-image: linear-gradient(rgba(37, 99, 235, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(37, 99, 235, 0.035) 1px, transparent 1px);
+}
+
+body[data-bs-theme="dark"] {
+    --ms-surface: #0a0a0f;
+    --ms-surface-container-low: #0f0f15;
+    --ms-surface-container: #14141d;
+    --ms-surface-container-high: #1a1a26;
+    --ms-surface-container-highest: #222230;
+    --ms-on-surface: #f1f5f9;
+    --ms-on-surface-variant: #94a3b8;
+    --ms-text-primary: #ffffff;
+    --ms-text-secondary: #94a3b8;
+}
+
 /* Typography Enhancements */
 .text-mono {
     font-family: 'JetBrains Mono', monospace;

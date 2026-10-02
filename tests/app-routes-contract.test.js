@@ -430,3 +430,18 @@ test('router não renderiza o fallback 404 de uma navegação que ficou obsoleta
   await secondLoad;
   assert.equal(rootElement.innerHTML, '<section>Studio BVA</section>');
 });
+
+test('site inicia no tema claro e disponibiliza seletor de tema persistente', () => {
+  const index = read('index.html');
+  const header = read('src/components/header.html');
+  const designSystem = read('src/assets/css/design-system.css');
+
+  assert.match(index, /<html lang="pt-BR" data-bs-theme="light">/);
+  assert.match(index, /<body data-bs-theme="light"/);
+  assert.match(index, /msoft_theme/);
+  assert.match(header, /data-theme-toggle/);
+  assert.match(header, /msoft_theme/);
+  assert.match(header, /theme-change/);
+  assert.match(designSystem, /body\[data-bs-theme="light"\]/);
+  assert.match(designSystem, /body\[data-bs-theme="dark"\]/);
+});

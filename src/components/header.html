@@ -40,6 +40,12 @@
               </ul>
             </div>
           </li>
+          <li class="nav-item ms-lg-2" id="header-theme-action">
+            <button class="header-theme-btn" type="button" data-theme-toggle aria-pressed="false" aria-label="Ativar tema escuro" title="Ativar tema escuro">
+              <i class="bi bi-moon-stars" data-theme-icon aria-hidden="true"></i>
+              <span class="visually-hidden" data-theme-label>Ativar tema escuro</span>
+            </button>
+          </li>
           <li class="nav-item ms-lg-2" id="header-auth-action"></li>
         </ul>
       </div>
@@ -649,3 +655,34 @@
     }
   })();
 </script>
+
+<script>
+  (function initThemeToggle() {
+    const toggle = document.querySelector('[data-theme-toggle]');
+    if (!toggle) return;
+    const render = () => {
+      const dark = document.body.dataset.bsTheme === 'dark';
+      const action = dark ? 'Ativar tema claro' : 'Ativar tema escuro';
+      toggle.setAttribute('aria-pressed', String(dark));
+      toggle.setAttribute('aria-label', action);
+      toggle.title = action;
+      toggle.querySelector('[data-theme-icon]').className = `bi bi-${dark ? 'sun' : 'moon-stars'}`;
+      toggle.querySelector('[data-theme-label]').textContent = action;
+    };
+    toggle.addEventListener('click', () => {
+      const next = document.body.dataset.bsTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.bsTheme = next;
+      document.body.dataset.bsTheme = next;
+      try { localStorage.setItem('msoft_theme', next); } catch (_) {}
+      window.dispatchEvent(new CustomEvent('theme-change', { detail: { theme: next } }));
+      render();
+    });
+    window.addEventListener('theme-change', render);
+    render();
+  })();
+</script>
+
+<style>
+  .dev-header .header-theme-btn { width: 40px; height: 40px; border: 1px solid var(--header-user-border); border-radius: 50%; background: var(--header-user-background); color: var(--header-brand-color); }
+  .dev-header .header-theme-btn:hover, .dev-header .header-theme-btn:focus-visible { background: var(--header-user-hover-background); border-color: var(--header-user-hover-border); }
+</style>

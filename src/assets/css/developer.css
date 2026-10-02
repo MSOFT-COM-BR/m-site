@@ -869,7 +869,7 @@ body[data-bs-theme="dark"]::after {
    HEADER OVERRIDE
    ============================================ */
 #head .navbar {
-  background: rgba(19, 19, 24, 0.8) !important;
+  background: var(--header-navbar-background) !important;
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--ms-outline-variant);
   padding: 20px 0;
