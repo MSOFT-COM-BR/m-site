@@ -6,13 +6,13 @@
 
         <div class="position-relative z-1">
             <a href="/" class="text-decoration-none d-inline-flex align-items-center fw-bold fs-4">
-                <span class="text-white">Miranda<span class="brand-soft text-mono">Soft</span></span>
+                <span class="text-on-surface">Miranda<span class="brand-soft text-mono">Soft</span></span>
             </a>
         </div>
 
         <div class="position-relative z-1">
             <span class="login-eyebrow">PORTAL DO CLIENTE</span>
-            <h1 class="display-6 fw-semibold text-white mb-3 mt-3">
+            <h1 class="display-6 fw-semibold text-on-surface mb-3 mt-3">
                 Seu ambiente para acompanhar o que importa.
             </h1>
             <p class="text-on-surface-variant fs-5 mb-4" style="max-width: 32rem;">
@@ -44,12 +44,12 @@
 
         <div class="login-panel position-relative z-1 w-100 px-4 px-sm-5">
             <a href="/" class="login-mobile-brand d-inline-flex d-lg-none text-decoration-none align-items-center fw-bold fs-4 mb-5">
-                <span class="text-white">Miranda<span class="brand-soft text-mono">Soft</span></span>
+                <span class="text-on-surface">Miranda<span class="brand-soft text-mono">Soft</span></span>
             </a>
 
             <div class="text-center mb-4">
                 <span class="login-eyebrow">ACESSO SEGURO</span>
-                <h2 id="login-title" class="h3 text-white fw-semibold mt-3 mb-0">Boas-vindas de volta</h2>
+                <h2 id="login-title" class="h3 text-on-surface fw-semibold mt-3 mb-0">Boas-vindas de volta</h2>
                 <p class="text-on-surface-variant small mt-2 mb-0">
                     Entre com suas credenciais para continuar.
                 </p>
@@ -83,14 +83,14 @@
                     <p id="login-form-feedback" class="login-form-feedback mb-0" role="status" aria-live="polite"></p>
                 </form>
 
-                <div class="login-assistance mt-4 pt-4 border-top border-white border-opacity-5 d-flex flex-column gap-3">
-                    <a href="/recovery" class="text-decoration-none text-on-surface-variant small hover-white transition-all">Esqueceu sua senha?</a>
+                <div class="login-assistance mt-4 pt-4 border-top d-flex flex-column gap-3">
+                    <a href="/recovery" class="text-decoration-none text-on-surface-variant small login-link transition-all">Esqueceu sua senha?</a>
                     <p class="text-muted extra-small m-0"><i class="bi bi-shield-check me-1" aria-hidden="true"></i> Use apenas um dispositivo confiável para acessar sua conta.</p>
                 </div>
             </div>
 
             <div class="mt-4 text-center animate__animated animate__fadeIn animate__delay-1s">
-                <a href="/" class="text-decoration-none text-muted small d-inline-flex align-items-center gap-2 hover-white transition-all">
+                <a href="/" class="text-decoration-none text-muted small d-inline-flex align-items-center gap-2 login-link transition-all">
                     <i class="bi bi-arrow-left" aria-hidden="true"></i> Voltar para o Site Principal
                 </a>
             </div>
@@ -99,6 +99,11 @@
 </section>
 
 <style>
+    .login-screen .text-muted,
+    #roleSelectorModal .text-muted {
+        color: var(--ms-on-surface-variant) !important;
+    }
+
     body:has(.login-screen) #head,
     body:has(.login-screen) #footer {
         display: none !important;
@@ -111,6 +116,7 @@
     .login-screen {
         min-height: 100vh;
         isolation: isolate;
+        color: var(--ms-on-surface);
     }
 
     .login-showcase {
@@ -118,7 +124,7 @@
         max-width: 720px;
         padding: 3.5rem clamp(3rem, 7vw, 7rem);
         background: linear-gradient(180deg, var(--ms-surface-container-low) 0%, var(--ms-surface) 100%);
-        border-right: 1px solid rgba(255, 255, 255, 0.05);
+        border-right: 1px solid var(--ms-outline-variant);
         overflow-x: hidden;
     }
 
@@ -134,7 +140,7 @@
     }
 
     .login-eyebrow {
-        color: #38bdf8;
+        color: var(--ms-primary);
         font-size: 0.7rem;
         font-weight: 700;
         letter-spacing: 0.16em;
@@ -148,17 +154,18 @@
         align-items: center;
         justify-content: center;
         border-radius: 12px;
-        background: rgba(59, 130, 246, 0.12);
+        background: var(--ms-surface-container-high);
         color: var(--ms-primary);
         font-size: 1.1rem;
     }
 
     .ms-login-surface {
-        background: rgba(20, 20, 28, 0.72);
+        background: var(--ms-surface-container);
+        color: var(--ms-on-surface);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border-radius: 32px;
-        border: 1px solid rgba(148, 163, 184, 0.16);
+        border: 1px solid var(--ms-outline-variant);
         box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
     }
 
@@ -167,7 +174,7 @@
     }
 
     .login-input-group > i {
-        color: #94a3b8;
+        color: var(--ms-on-surface-variant);
         left: 1rem;
         pointer-events: none;
         position: absolute;
@@ -177,21 +184,21 @@
     }
 
     .ms-login-surface .form-control {
-        background: rgba(14, 14, 19, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--ms-surface-container-low);
+        border: 1px solid var(--ms-outline);
         border-radius: 16px;
-        color: white;
+        color: var(--ms-on-surface);
         min-height: 3.5rem;
         padding: 0.95rem 3rem;
         transition: all 0.3s ease;
     }
 
     .ms-login-surface .form-control::placeholder {
-        color: #64748b;
+        color: var(--ms-on-surface-variant);
     }
 
     .ms-login-surface .form-control:focus {
-        background: rgba(14, 14, 19, 0.8);
+        background: var(--ms-surface-container-low);
         border-color: var(--ms-primary);
         box-shadow: 0 0 0 4px rgba(173, 198, 255, 0.1);
     }
@@ -201,7 +208,7 @@
         background: transparent;
         border: 0;
         border-radius: 8px;
-        color: #94a3b8;
+        color: var(--ms-on-surface-variant);
         display: flex;
         height: 2.5rem;
         justify-content: center;
@@ -214,16 +221,16 @@
     }
 
     .password-visibility-toggle:hover {
-        color: #f8fafc;
+        color: var(--ms-on-surface);
     }
 
     .password-visibility-toggle:focus-visible {
-        outline: 2px solid #38bdf8;
+        outline: 2px solid var(--ms-primary);
         outline-offset: 2px;
     }
 
     .login-form-feedback {
-        color: #fda4af;
+        color: var(--ms-error);
         font-size: 0.8125rem;
         line-height: 1.4;
         min-height: 1.4em;
@@ -236,8 +243,12 @@
         letter-spacing: 0.05em;
     }
 
-    .hover-white:hover {
-        color: white !important;
+    .login-screen .login-link:hover {
+        color: var(--ms-on-surface) !important;
+    }
+
+    .login-screen .login-assistance {
+        border-color: var(--ms-outline-variant) !important;
     }
 
     .transition-all {
@@ -254,9 +265,6 @@
             padding: 2rem 0 3rem;
         }
 
-        .login-mobile-brand {
-            color: #fff;
-        }
 
         .ms-login-surface {
             border-radius: 24px;
@@ -294,25 +302,26 @@
     }
 
     /* Selection Modal Overrides */
-    .modal-content {
+    #roleSelectorModal .modal-content {
         background: var(--ms-surface-container-high) !important;
+        color: var(--ms-on-surface);
         border-radius: 24px !important;
-        border: 1px solid rgba(255,255,255,0.05) !important;
+        border: 1px solid var(--ms-outline-variant) !important;
         box-shadow: 0 32px 100px rgba(0,0,0,0.6) !important;
     }
 
-    .role-btn {
-        background: rgba(255, 255, 255, 0.03) !important;
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        color: white !important;
+    #roleSelectorModal .role-btn {
+        background: var(--ms-surface-container) !important;
+        border: 1px solid var(--ms-outline) !important;
+        color: var(--ms-on-surface) !important;
         border-radius: 16px !important;
         transition: all 0.3s ease !important;
         text-align: left !important;
         padding: 18px !important;
     }
 
-    .role-btn:hover {
-        background: rgba(173, 198, 255, 0.08) !important;
+    #roleSelectorModal .role-btn:hover {
+        background: var(--ms-surface-container-highest) !important;
         border-color: var(--ms-primary) !important;
         transform: translateX(8px);
     }
@@ -332,7 +341,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header border-bottom-0 text-center justify-content-center pt-5">
-                        <h5 class="modal-title fw-bold text-white fs-4">Selecione o Destino</h5>
+                        <h5 class="modal-title fw-bold text-on-surface fs-4">Selecione o Destino</h5>
                     </div>
                     <div class="modal-body pb-5 px-4">
                         <p class="text-center text-muted mb-5">Você possui múltiplos níveis de acesso. Onde deseja atuar hoje?</p>

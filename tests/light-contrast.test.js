@@ -7,15 +7,17 @@ const read = file => fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
 test('home estática e dinâmica usam texto semântico, não branco fixo', () => {
   const home = read('src/pages/home.html');
   assert.doesNotMatch(home, /\btext-white\b/);
-  assert.match(home, /body\[data-bs-theme="light"\] \.home-hub-shell/);
-  assert.match(home, /body\[data-bs-theme="light"\] \.home-hub-card/);
+  assert.match(home, /\.home-hub-shell\s*\{[^}]*var\(--ms-surface-container-low\)/);
+  assert.match(home, /\.home-hub-card\s*\{[^}]*color: var\(--ms-on-surface\)/);
 });
 
-test('cores de texto e gradiente possuem variantes legíveis por tema', () => {
+test('textos e títulos usam cor sólida sem degradê nos dois temas', () => {
   const css = read('src/assets/css/design-system.css');
   assert.match(css, /\.text-on-surface\s*\{\s*color: var\(--ms-on-surface\) !important;/);
   assert.match(css, /\.text-on-surface-variant\s*\{\s*color: var\(--ms-on-surface-variant\) !important;/);
-  assert.match(read('src/assets/css/developer.css'), /body\[data-bs-theme="light"\] \.text-gradient/);
+  assert.match(css, /\.text-gradient,\s*\.text-gradient-primary,\s*\.text-gradient-neon\s*\{[^}]*color: var\(--ms-on-surface\)/);
+  assert.match(css, /\.text-gradient-neon\s*\{[^}]*background: none;[^}]*-webkit-text-fill-color: currentColor;/);
+  assert.doesNotMatch(read('src/assets/css/developer.css'), /\.text-gradient-neon\s*\{/);
 });
 
 test('rodapé usa tokens para títulos, descrições e hover', () => {

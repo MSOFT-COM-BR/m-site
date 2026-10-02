@@ -21,7 +21,7 @@
   <div class="container">
     <div class="dev-skill-card p-4 p-lg-5 d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-4">
       <div>
-        <h2 class="h3 text-white mb-2">Pronto para tirar o projeto do papel?</h2>
+        <h2 class="h3 text-on-surface mb-2">Pronto para tirar o projeto do papel?</h2>
         <p class="text-on-surface-variant mb-0">
           Fale com nosso time agora no WhatsApp ou avance para iniciar um novo negocio com a Miranda Soft.
         </p>
@@ -44,10 +44,10 @@
       <div class="col-lg-6" id="desenvolvimento-web">
         <article class="dev-skill-card h-100 p-4 p-lg-5">
           <div class="d-flex align-items-center gap-3 mb-4">
-            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 52px; height: 52px; background: rgba(59,130,246,.15); color: #60a5fa;">
+            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 52px; height: 52px; background: rgba(59,130,246,.15); color: var(--ms-primary);">
               <i class="bi bi-window-stack fs-4"></i>
             </div>
-            <h2 class="h4 text-white m-0">Desenvolvimento Web</h2>
+            <h2 class="h4 text-on-surface m-0">Desenvolvimento Web</h2>
           </div>
           <p class="text-on-surface-variant mb-0">
             Construimos plataformas web seguras e performaticas com arquitetura escalavel, UX moderna e foco em conversao.
@@ -58,10 +58,10 @@
       <div class="col-lg-6" id="apps-mobile">
         <article class="dev-skill-card h-100 p-4 p-lg-5">
           <div class="d-flex align-items-center gap-3 mb-4">
-            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 52px; height: 52px; background: rgba(16,185,129,.15); color: #34d399;">
+            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 52px; height: 52px; background: rgba(16,185,129,.15); color: var(--ms-tertiary);">
               <i class="bi bi-phone fs-4"></i>
             </div>
-            <h2 class="h4 text-white m-0">Apps Mobile</h2>
+            <h2 class="h4 text-on-surface m-0">Apps Mobile</h2>
           </div>
           <p class="text-on-surface-variant mb-0">
             Desenvolvemos aplicativos Android e iOS com alto padrao de qualidade, experiencia fluida e base pronta para crescer.
@@ -72,10 +72,10 @@
       <div class="col-lg-6" id="consultoria-ti">
         <article class="dev-skill-card h-100 p-4 p-lg-5">
           <div class="d-flex align-items-center gap-3 mb-4">
-            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 52px; height: 52px; background: rgba(6,182,212,.15); color: #22d3ee;">
+            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 52px; height: 52px; background: rgba(6,182,212,.15); color: var(--ms-secondary);">
               <i class="bi bi-diagram-3 fs-4"></i>
             </div>
-            <h2 class="h4 text-white m-0">Consultoria TI</h2>
+            <h2 class="h4 text-on-surface m-0">Consultoria TI</h2>
           </div>
           <p class="text-on-surface-variant mb-0">
             Mapeamos gargalos, definimos estrategia tecnica e apoiamos decisoes para reduzir risco e aumentar previsibilidade.
@@ -86,10 +86,10 @@
       <div class="col-lg-6" id="cloud-computing">
         <article class="dev-skill-card h-100 p-4 p-lg-5">
           <div class="d-flex align-items-center gap-3 mb-4">
-            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 52px; height: 52px; background: rgba(139,92,246,.15); color: #a78bfa;">
+            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 52px; height: 52px; background: rgba(139,92,246,.15); color: var(--ms-primary);">
               <i class="bi bi-cloud-check fs-4"></i>
             </div>
-            <h2 class="h4 text-white m-0">Cloud Computing</h2>
+            <h2 class="h4 text-on-surface m-0">Cloud Computing</h2>
           </div>
           <p class="text-on-surface-variant mb-0">
             Estruturamos infraestrutura cloud com seguranca, observabilidade e eficiencia de custo para operacao de longo prazo.
@@ -106,7 +106,7 @@
       <span class="dev-section-badge">
         <i class="bi bi-briefcase-fill"></i> Oportunidade
       </span>
-      <h2 class="dev-section-title text-white">Abrir oportunidade de negocio</h2>
+      <h2 class="dev-section-title text-on-surface">Abrir oportunidade de negocio</h2>
       <p class="dev-section-description mb-0">
         Preencha os dados do projeto. Nosso time comercial analisa e retorna com o plano ideal.
       </p>
@@ -187,19 +187,19 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--ms-text-muted, #64748b);
+    color: var(--ms-on-surface-variant);
     margin-bottom: 0.35rem;
   }
   .expertise-form-control {
-    background: var(--ms-surface-container, #1b1b20) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    color: var(--ms-text-primary, #e4e1e9) !important;
+    background: var(--ms-surface-container) !important;
+    border: 1px solid var(--ms-outline-variant) !important;
+    color: var(--ms-on-surface) !important;
     border-radius: 12px;
     padding: 0.75rem 1rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
   .expertise-form-control::placeholder {
-    color: rgba(148, 163, 184, 0.65);
+    color: var(--ms-on-surface-variant);
   }
   .expertise-form-control:focus {
     border-color: rgba(59, 130, 246, 0.55) !important;

@@ -298,7 +298,7 @@ class ServicePagesContractTests(unittest.TestCase):
         marketplace = (ROOT / "src/pages/marketplace.html").read_text(encoding="utf-8")
 
         self.assertIn('id="modal-price">A consultar</span>', marketplace)
-        self.assertIn('<span class="text-white fs-4 fw-bold">A consultar</span>', marketplace)
+        self.assertIn('<span class="text-on-surface fs-4 fw-bold">A consultar</span>', marketplace)
         self.assertIn("onclick=\"openPurchaseModal('${escapeHtml(item.name).replace(/'/g, \"\\\\'\")}', '${item.type}')\"", marketplace)
         self.assertIn("currentPurchase = { name, type };", marketplace)
         self.assertIn("Gostaria de receber informações sobre o produto", marketplace)
@@ -312,7 +312,7 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertIn('bi-gift-fill"></i> Grátis', marketplace)
         self.assertIn('</i> Usar', marketplace)
         self.assertIn('href="/apps?tool=${encodeURIComponent(item.appKey)}"', marketplace)
-        self.assertIn('<span class="text-white fs-4 fw-bold">A consultar</span>', marketplace)
+        self.assertIn('<span class="text-on-surface fs-4 fw-bold">A consultar</span>', marketplace)
 
     def test_free_apps_page_includes_blog_style_adsense_slots(self) -> None:
         apps = (ROOT / "src/pages/apps.html").read_text(encoding="utf-8")

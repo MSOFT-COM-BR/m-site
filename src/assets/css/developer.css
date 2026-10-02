@@ -7,39 +7,7 @@
 /* ============================================
    CSS VARIABLES - Design System
    ============================================ */
-:root {
-  --ms-surface: #0a0a0f;
-  --ms-surface-container-low: #0f0f15;
-  --ms-surface-container: #14141d;
-  --ms-surface-container-high: #1a1a26;
-  --ms-surface-container-highest: #222230;
-  
-  /* Primary Palette - MirandaSoft Brand */
-  --ms-primary: #3b82f6;
-  --ms-primary-container: #1d4ed8;
-  --ms-on-primary-container: #ffffff;
-  --ms-secondary: #06b6d4;
-  --ms-tertiary: #10b981;
-  --ms-tertiary-container: #059669;
-  --ms-on-tertiary-container: #ffffff;
-  
-  /* Text Colors - Editorial Voice */
-  --ms-text-primary: #f1f5f9;
-  --ms-text-secondary: #94a3b8;
-  --ms-text-muted: #64748b;
-  --ms-on-surface-variant: #94a3b8;
-  
-  /* Outlines - Ghost Border Principle */
-  --ms-outline: #475569;
-  --ms-outline-variant: rgba(30, 41, 59, 0.3);
-  
-  /* Typography - Editorial Scale */
-  --ms-font-display: 'Inter', sans-serif;
-  --ms-font-body: 'Inter', sans-serif;
-  
-  /* Transitions */
-  --ms-transition-base: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
+/* Shared tokens live in design-system.css. */
 
 /* ============================================
    BASE STYLES - No-Line Philosophy
@@ -79,24 +47,6 @@ body[data-bs-theme="dark"] {
   filter: blur(80px);
   pointer-events: none;
   z-index: -1;
-}
-
-.text-gradient {
-  background: linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0.6) 100%);
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-}
-
-.text-gradient-neon {
-  background: linear-gradient(135deg, var(--ms-primary) 0%, var(--ms-primary-container) 100%);
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-}
-
-body[data-bs-theme="light"] .text-gradient {
-  background: linear-gradient(135deg, var(--ms-primary), var(--ms-secondary), var(--ms-tertiary));
 }
 
 /* Background Pattern */
@@ -905,13 +855,6 @@ body[data-bs-theme="dark"]::after {
 /* ============================================
    UTILITIES
    ============================================ */
-.text-gradient {
-  background: var(--dev-gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 .glow-effect {
   box-shadow: var(--dev-shadow-glow);
 }

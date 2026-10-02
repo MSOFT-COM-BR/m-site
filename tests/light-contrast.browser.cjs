@@ -30,13 +30,22 @@ const fixture = { success: true, data: [{ title: 'Artigo sintético de contraste
         }, theme);
         const colors = await page.evaluate(() => {
           const c = selector => getComputedStyle(document.querySelector(selector)).color;
-          return { heading: c('#features-grid h3'), blog: c('#home-blog-grid h3'), footer: c('.footer-title'), description: c('.footer-description'), hub: c('#hub-title'), support: c('#suporte h3'), gradient: getComputedStyle(document.querySelector('#hero-title')).backgroundImage };
+          return { hero: c('#hero-title'), heroFill: getComputedStyle(document.querySelector('#hero-title')).webkitTextFillColor, heading: c('#features-grid h3'), blog: c('#home-blog-grid h3'), footer: c('.footer-title'), description: c('.footer-description'), hub: c('#hub-title'), support: c('#suporte h3'), gradient: getComputedStyle(document.querySelector('#hero-title')).backgroundImage };
         });
         const primary = theme === 'light' ? 'rgb(15, 23, 42)' : 'rgb(241, 245, 249)';
         for (const key of ['heading', 'blog', 'hub', 'support']) assert.equal(colors[key], primary, `${theme}: ${key}`);
         assert.equal(colors.footer, theme === 'light' ? primary : 'rgb(255, 255, 255)');
         assert.equal(colors.description, theme === 'light' ? 'rgb(71, 85, 105)' : 'rgb(148, 163, 184)');
-        if (theme === 'light') assert.ok(colors.gradient.includes('rgb(8, 127, 150)'));
+        assert.equal(colors.gradient, 'none', 'título sem degradê');
+        assert.equal(colors.hero, primary, 'cor sólida acompanha o tema');
+        assert.equal(colors.heroFill, primary, 'texto não pode permanecer transparente');
+        for (const selector of ['#hero-title .text-gradient', '.text-gradient-neon']) {
+          for (const element of await page.locator(selector).all()) {
+            const style = await element.evaluate(e => { const s = getComputedStyle(e); return {background:s.backgroundImage,fill:s.webkitTextFillColor}; });
+            assert.equal(style.background, 'none');
+            assert.equal(style.fill, primary);
+          }
+        }
         if (width === 390) {
           assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'mobile horizontal overflow');
         }

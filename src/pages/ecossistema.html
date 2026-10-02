@@ -60,7 +60,7 @@
   .ecosystem-title {
     max-width: 820px;
     margin: 1.5rem 0;
-    color: var(--ms-text-primary);
+    color: var(--ms-on-surface);
     font-size: clamp(2.9rem, 7vw, 5.8rem);
     font-weight: 900;
     letter-spacing: -0.065em;
@@ -134,7 +134,7 @@
     padding: 1rem;
     border: 1px solid rgba(148, 163, 184, 0.12);
     border-radius: 28px;
-    background: linear-gradient(135deg, rgba(34, 34, 48, 0.88), rgba(15, 15, 21, 0.72));
+    background: linear-gradient(135deg, var(--ms-surface-container-highest), var(--ms-surface-container-low));
     box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
   }
 
@@ -143,7 +143,7 @@
     padding: 1.1rem;
     border: 1px solid rgba(148, 163, 184, 0.1);
     border-radius: 20px;
-    background: rgba(10, 10, 15, 0.72);
+    background: var(--ms-surface-container-low);
   }
 
   .ecosystem-map-node i {
@@ -159,33 +159,18 @@
   }
 
   .ecosystem-map-node strong {
-    color: var(--ms-text-primary);
+    color: var(--ms-on-surface);
     font-size: 0.95rem;
   }
 
   .ecosystem-map-node span {
     margin-top: 0.2rem;
-    color: var(--ms-text-secondary);
+    color: var(--ms-on-surface-variant);
     font-size: 0.78rem;
   }
 
   .ecosystem-map-node--primary {
     background: linear-gradient(145deg, rgba(37, 99, 235, 0.28), rgba(6, 182, 212, 0.08));
-  }
-
-  body[data-bs-theme="light"] .ecosystem-map {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(241, 245, 249, 0.94));
-    border-color: rgba(100, 116, 139, 0.24);
-    box-shadow: 0 25px 70px rgba(15, 23, 42, 0.12);
-  }
-
-  body[data-bs-theme="light"] .ecosystem-map-node {
-    background: rgba(255, 255, 255, 0.92);
-    border-color: rgba(100, 116, 139, 0.2);
-  }
-
-  body[data-bs-theme="light"] .ecosystem-map-node--primary {
-    background: linear-gradient(145deg, rgba(37, 99, 235, 0.16), rgba(6, 182, 212, 0.08));
   }
 
   .ecosystem-section {
@@ -203,7 +188,7 @@
   .ecosystem-section-header h2 {
     max-width: 660px;
     margin: 0.7rem 0 0;
-    color: var(--ms-text-primary);
+    color: var(--ms-on-surface);
     font-size: clamp(2rem, 4vw, 3.2rem);
     font-weight: 800;
     letter-spacing: -0.045em;
@@ -213,7 +198,7 @@
   .ecosystem-section-header p {
     max-width: 370px;
     margin: 0;
-    color: var(--ms-text-secondary);
+    color: var(--ms-on-surface-variant);
     line-height: 1.65;
   }
 
@@ -265,9 +250,9 @@
     width: 3.3rem;
     height: 3.3rem;
     margin-bottom: auto;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid var(--ms-outline-variant);
     border-radius: 15px;
-    background: rgba(10, 10, 15, 0.48);
+    background: var(--ms-surface-container);
     color: var(--ms-secondary);
     font-size: 1.35rem;
   }
@@ -278,7 +263,7 @@
 
   .ecosystem-journey h3 {
     margin: 2.4rem 0 0.7rem;
-    color: var(--ms-text-primary);
+    color: var(--ms-on-surface);
     font-size: 1.45rem;
     font-weight: 800;
     letter-spacing: -0.03em;
@@ -286,7 +271,7 @@
 
   .ecosystem-journey p {
     margin: 0;
-    color: var(--ms-text-secondary);
+    color: var(--ms-on-surface-variant);
     line-height: 1.65;
   }
 
@@ -314,7 +299,7 @@
   .ecosystem-destination:hover {
     border-color: var(--ms-secondary);
     background: rgba(6, 182, 212, 0.1);
-    color: var(--ms-text-primary);
+    color: var(--ms-on-surface);
   }
 
   .ecosystem-feature-grid {
@@ -367,7 +352,7 @@
   .ecosystem-feature h3 {
     max-width: 280px;
     margin: 2rem 0 0.65rem;
-    color: var(--ms-text-primary);
+    color: var(--ms-on-surface);
     font-size: 1.35rem;
     font-weight: 800;
   }
@@ -375,7 +360,7 @@
   .ecosystem-feature p {
     max-width: 340px;
     margin: 0;
-    color: var(--ms-text-secondary);
+    color: var(--ms-on-surface-variant);
     line-height: 1.6;
   }
 
@@ -396,7 +381,7 @@
     padding: clamp(2rem, 5vw, 4rem);
     border: 1px solid rgba(59, 130, 246, 0.25);
     border-radius: 30px;
-    background: linear-gradient(115deg, rgba(29, 78, 216, 0.42), rgba(6, 182, 212, 0.16) 55%, rgba(16, 185, 129, 0.14));
+    background: linear-gradient(115deg, rgba(29, 78, 216, 0.12), rgba(6, 182, 212, 0.08) 55%, transparent), var(--ms-surface-container-low);
   }
 
   .ecosystem-cta::after {
@@ -404,7 +389,7 @@
     position: absolute;
     right: clamp(1rem, 6vw, 5rem);
     bottom: -0.34em;
-    color: rgba(255, 255, 255, 0.08);
+    color: color-mix(in srgb, var(--ms-on-surface) 8%, transparent);
     font-size: clamp(8rem, 20vw, 18rem);
     font-weight: 900;
     letter-spacing: -0.13em;
@@ -420,7 +405,7 @@
 
   .ecosystem-cta h2 {
     margin: 0.85rem 0 1rem;
-    color: #fff;
+    color: var(--ms-on-surface);
     font-size: clamp(2rem, 4vw, 3.3rem);
     font-weight: 800;
     letter-spacing: -0.045em;
@@ -428,7 +413,7 @@
 
   .ecosystem-cta p {
     margin: 0;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--ms-on-surface-variant);
     font-size: 1.07rem;
     line-height: 1.7;
   }

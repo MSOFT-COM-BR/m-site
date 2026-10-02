@@ -1,4 +1,4 @@
-<section class="dev-section pt-5 mt-5">
+<section class="apps-page dev-section pt-5 mt-5">
     <div class="container">
         <div class="dev-section-header text-center mb-5">
             <span class="dev-section-badge bg-success bg-opacity-10 text-success border-success">
@@ -34,7 +34,7 @@
                         <i class="bi bi-key fs-1 text-primary"></i>
                     </div>
                     <h3 class="dev-skill-title mb-2">Gerador de Senha</h3>
-                    <p class="text-muted small">Crie senhas fortes e seguras com opções personalizáveis.</p>
+                    <p class="text-on-surface-variant small">Crie senhas fortes e seguras com opções personalizáveis.</p>
                 </div>
             </div>
 
@@ -49,7 +49,7 @@
                         <i class="bi bi-percent fs-1 text-success"></i>
                     </div>
                     <h3 class="dev-skill-title mb-2">Calculadora de %</h3>
-                    <p class="text-muted small">Cálculos rápidos de porcentagem, desconto e aumento.</p>
+                    <p class="text-on-surface-variant small">Cálculos rápidos de porcentagem, desconto e aumento.</p>
                 </div>
             </div>
 
@@ -64,7 +64,7 @@
                         <i class="bi bi-person-badge fs-1 text-info"></i>
                     </div>
                     <h3 class="dev-skill-title mb-2">Gerador CPF/CNPJ</h3>
-                    <p class="text-muted small">Gere e valide documentos para testes de desenvolvimento.</p>
+                    <p class="text-on-surface-variant small">Gere e valide documentos para testes de desenvolvimento.</p>
                 </div>
             </div>
 
@@ -79,7 +79,7 @@
                         <i class="bi bi-file-earmark-code fs-1 text-warning"></i>
                     </div>
                     <h3 class="dev-skill-title mb-2">XML NFe para JSON</h3>
-                    <p class="text-muted small">Converta XML de Nota Fiscal (55/65) para JSON instantaneamente.</p>
+                    <p class="text-on-surface-variant small">Converta XML de Nota Fiscal (55/65) para JSON instantaneamente.</p>
                 </div>
             </div>
 
@@ -94,7 +94,7 @@
                         <i class="bi bi-braces fs-1 text-danger"></i>
                     </div>
                     <h3 class="dev-skill-title mb-2">JSON Formatter</h3>
-                    <p class="text-muted small">Valide e formate arquivos JSON desorganizados ou minificados.</p>
+                    <p class="text-on-surface-variant small">Valide e formate arquivos JSON desorganizados ou minificados.</p>
                 </div>
             </div>
 
@@ -106,10 +106,10 @@
                         class="position-absolute top-0 end-0 m-3 badge bg-success rounded-pill d-none installed-badge"><i
                             class="bi bi-check-lg"></i> Instalado</span>
                     <div class="dev-skill-icon mb-3">
-                        <i class="bi bi-shield-lock fs-1 text-light"></i>
+                        <i class="bi bi-shield-lock fs-1 text-on-surface"></i>
                     </div>
                     <h3 class="dev-skill-title mb-2">Conversor Base64</h3>
-                    <p class="text-muted small">Codifique e decodifique textos em Base64 facilmente.</p>
+                    <p class="text-on-surface-variant small">Codifique e decodifique textos em Base64 facilmente.</p>
                 </div>
             </div>
 
@@ -124,7 +124,7 @@
                         <i class="bi bi-arrow-left-right fs-1 text-info"></i>
                     </div>
                     <h3 class="dev-skill-title mb-2">De/Para Universal</h3>
-                    <p class="text-muted small">Substituição em massa e mapeamento direto de textos, código e JSON.</p>
+                    <p class="text-on-surface-variant small">Substituição em massa e mapeamento direto de textos, código e JSON.</p>
                 </div>
             </div>
         </div>
@@ -132,11 +132,11 @@
         <!-- Tool Display Area -->
         <div id="tool-container" class="mt-5" style="display: none;">
             <div class="card dev-card border-0 shadow-lg"
-                style="background: rgba(30, 30, 40, 0.95); backdrop-filter: blur(10px); border-radius: 16px;">
+                style="background: var(--ms-surface-container-low); backdrop-filter: blur(10px); border-radius: 16px;">
                 <div class="card-body p-5">
                     <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-dark pb-3">
                         <div class="d-flex align-items-center gap-3">
-                            <h3 id="tool-title" class="m-0 fw-bold bg-gradient-primary text-white"></h3>
+                            <h3 id="tool-title" class="m-0 fw-bold text-on-surface"></h3>
                             <button class="btn btn-outline-secondary btn-sm rounded-circle"
                                 onclick="window.openHistory()" title="Histórico de Uso" data-bs-toggle="tooltip">
                                 <i class="bi bi-clock-history"></i>
@@ -154,6 +154,18 @@
 </section>
 
 <style>
+    .apps-surface {
+        background: var(--ms-surface-container) !important;
+        color: var(--ms-on-surface);
+        border-color: var(--ms-outline-variant) !important;
+    }
+
+    .apps-page .form-control::placeholder,
+    #history-modal .form-control::placeholder {
+        color: var(--ms-on-surface-variant);
+        opacity: 1;
+    }
+
     .apps-ad-slot {
         min-height: 90px;
         overflow: hidden;
@@ -170,38 +182,38 @@
     .apps-ad-label {
         display: block;
         margin-bottom: 0.35rem;
-        color: rgba(255, 255, 255, 0.35);
+        color: var(--ms-on-surface-variant);
         font-size: 0.65rem;
         letter-spacing: 0.06em;
         text-transform: uppercase;
     }
 
-    .dev-skill-card:hover {
+    .apps-page .dev-skill-card:hover {
         transform: translateY(-5px);
-        background: rgba(255, 255, 255, 0.05);
+        background: var(--ms-surface-container-highest);
     }
 </style>
 
 
 <!-- Premium Install Overlay -->
 <div id="premium-install-overlay" class="fade-in"
-    style="display: none; position: fixed; inset: 0; background: rgba(5, 5, 10, 0.95); backdrop-filter: blur(15px); z-index: 9999; flex-direction: column; align-items: center; justify-content: center;">
+    style="display: none; position: fixed; inset: 0; background: var(--ms-surface); backdrop-filter: blur(15px); z-index: 9999; flex-direction: column; align-items: center; justify-content: center;">
     <div class="text-center p-5 rounded-4 border border-secondary border-opacity-25"
-        style="background: rgba(20, 20, 30, 0.8); max-width: 400px; width: 90%;">
+        style="background: var(--ms-surface-container); max-width: 400px; width: 90%;">
         <div class="mb-4 position-relative d-inline-block">
             <i class="bi bi-hexagon-fill text-primary text-opacity-25" style="font-size: 6rem;"></i>
             <i class="bi bi-cloud-arrow-down-fill text-primary position-absolute top-50 start-50 translate-middle"
                 style="font-size: 3rem;"></i>
         </div>
-        <h3 class="text-white mb-2 fw-bold">Instalando App...</h3>
-        <p class="text-secondary small mb-4" id="install-status">Preparando ambiente seguro</p>
+        <h3 class="text-on-surface mb-2 fw-bold">Instalando App...</h3>
+        <p class="text-on-surface-variant small mb-4" id="install-status">Preparando ambiente seguro</p>
 
-        <div class="progress bg-dark border border-secondary border-opacity-25"
+        <div class="progress apps-surface border border-secondary border-opacity-25"
             style="height: 6px; border-radius: 10px;">
             <div id="install-progress" class="progress-bar bg-gradient-primary" role="progressbar" style="width: 0%">
             </div>
         </div>
-        <div class="d-flex justify-content-between text-muted small mt-2">
+        <div class="d-flex justify-content-between text-on-surface-variant small mt-2">
             <span>0%</span>
             <span id="install-percent">0%</span>
         </div>
@@ -211,19 +223,19 @@
 <!-- Upgrade Modal -->
 <div id="upgrade-modal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content bg-dark border-warning">
+        <div class="modal-content apps-surface border-warning">
             <div class="modal-header border-secondary">
                 <h5 class="modal-title text-warning"><i class="bi bi-star-fill me-2"></i>Recurso Premium</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body text-center py-4">
                 <div class="display-1 text-warning mb-3"><i class="bi bi-lock-fill"></i></div>
                 <h4>Acesso Restrito</h4>
-                <p class="text-muted">Este aplicativo é exclusivo para assinantes Premium. Faça o upgrade agora para
+                <p class="text-on-surface-variant">Este aplicativo é exclusivo para assinantes Premium. Faça o upgrade agora para
                     desbloquear todas as ferramentas.</p>
             </div>
             <div class="modal-footer border-secondary justify-content-center">
-                <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Fechar</button>
                 <a href="/#contact"
                     onclick="bootstrap.Modal.getInstance(document.getElementById('upgrade-modal')).hide()"
                     class="btn btn-warning text-dark fw-bold">Ver Planos</a>
@@ -235,16 +247,16 @@
 <!-- History Modal -->
 <div id="history-modal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content bg-dark border-secondary">
+        <div class="modal-content apps-surface border-secondary">
             <div class="modal-header border-secondary">
-                <h5 class="modal-title text-white"><i class="bi bi-clock-history me-2"></i>Histórico: <span
+                <h5 class="modal-title text-on-surface"><i class="bi bi-clock-history me-2"></i>Histórico: <span
                         id="history-tool-title" class="text-primary"></span></h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body bg-black bg-opacity-50 p-0">
+            <div class="modal-body apps-surface bg-opacity-50 p-0">
                 <div id="history-list" class="list-group list-group-flush">
                     <!-- Items injected here -->
-                    <div class="text-center p-5 text-muted">Ainda não há histórico para esta ferramenta.</div>
+                    <div class="text-center p-5 text-on-surface-variant">Ainda não há histórico para esta ferramenta.</div>
                 </div>
             </div>
             <div class="modal-footer border-secondary justify-content-between">
@@ -401,23 +413,23 @@
         list.innerHTML = '';
 
         if (history.length === 0) {
-            list.innerHTML = '<div class="text-center p-5 text-muted"><i class="bi bi-clock me-2"></i>Nenhum histórico recente.</div>';
+            list.innerHTML = '<div class="text-center p-5 text-on-surface-variant"><i class="bi bi-clock me-2"></i>Nenhum histórico recente.</div>';
         } else {
             history.forEach(item => {
                 const date = new Date(item.date).toLocaleString('pt-BR');
                 const div = document.createElement('div');
-                div.className = 'list-group-item list-group-item-action bg-dark text-white border-secondary p-3';
+                div.className = 'list-group-item list-group-item-action apps-surface text-on-surface border-secondary p-3';
                 div.innerHTML = `
                     <div class="d-flex w-100 justify-content-between mb-2">
                         <h6 class="mb-1 text-primary fw-bold">${item.summary}</h6>
-                        <small class="text-muted">${date}</small>
+                        <small class="text-on-surface-variant">${date}</small>
                     </div>
-                    <div class="mb-2 bg-black bg-opacity-50 p-2 rounded font-monospace small text-break border border-secondary border-opacity-25" style="max-height: 100px; overflow-y: auto;">
+                    <div class="mb-2 apps-surface bg-opacity-50 p-2 rounded font-monospace small text-break border border-secondary border-opacity-25" style="max-height: 100px; overflow-y: auto;">
                         ${item.content}
                     </div>
                     <div class="mt-2">
-                        <label class="small text-muted mb-1"><i class="bi bi-pencil me-1"></i>Anotações</label>
-                        <input type="text" class="form-control form-control-sm bg-black text-white border-secondary" 
+                        <label class="small text-on-surface-variant mb-1"><i class="bi bi-pencil me-1"></i>Anotações</label>
+                        <input type="text" class="form-control form-control-sm apps-surface text-on-surface border-secondary"
                             placeholder="Adicione uma nota..." value="${item.note || ''}"
                             onblur="window.AppState.updateNote('${toolId}', ${item.id}, this.value)">
                     </div>
@@ -474,13 +486,13 @@
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="input-group mb-4">
-                                <input type="text" class="form-control form-control-lg bg-dark text-white border-secondary" id="generated-password" readonly>
+                                <input type="text" class="form-control form-control-lg apps-surface text-on-surface border-secondary" id="generated-password" readonly>
                                 <button class="btn btn-primary" onclick="window.copyPassword()">
                                     <i class="bi bi-clipboard"></i> Copiar
                                 </button>
                             </div>
                             
-                            <div class="card bg-dark border-secondary p-4">
+                            <div class="card apps-surface border-secondary p-4">
                                 <div class="mb-4">
                                     <label class="form-label d-flex justify-content-between">
                                         <span>Tamanho da Senha</span>
@@ -532,19 +544,19 @@
                 content.innerHTML = `
                     <div class="row g-4">
                         <div class="col-md-6">
-                            <div class="card bg-dark border-secondary h-100">
+                            <div class="card apps-surface border-secondary h-100">
                                 <div class="card-header border-secondary">
                                     <h5 class="m-0"><i class="bi bi-calculator"></i> Porcentagem de Valor</h5>
                                 </div>
                                 <div class="card-body">
-                                    <p class="text-muted">Quanto é X% de Y?</p>
+                                    <p class="text-on-surface-variant">Quanto é X% de Y?</p>
                                     <div class="row g-2 align-items-center mb-3">
                                         <div class="col">
-                                            <input type="number" class="form-control bg-dark text-white border-secondary" placeholder="X" id="perc-1-x">
+                                            <input type="number" class="form-control apps-surface text-on-surface border-secondary" placeholder="X" id="perc-1-x">
                                         </div>
-                                        <div class="col-auto text-muted">% de</div>
+                                        <div class="col-auto text-on-surface-variant">% de</div>
                                         <div class="col">
-                                            <input type="number" class="form-control bg-dark text-white border-secondary" placeholder="Y" id="perc-1-y">
+                                            <input type="number" class="form-control apps-surface text-on-surface border-secondary" placeholder="Y" id="perc-1-y">
                                         </div>
                                     </div>
                                     <button class="btn btn-primary w-100 mb-3" onclick="window.calcPerc1()">Calcular</button>
@@ -553,19 +565,19 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                             <div class="card bg-dark border-secondary h-100">
+                             <div class="card apps-surface border-secondary h-100">
                                 <div class="card-header border-secondary">
                                     <h5 class="m-0"><i class="bi bi-percent"></i> Porcentagem Relativa</h5>
                                 </div>
                                 <div class="card-body">
-                                    <p class="text-muted">X é qual % de Y?</p>
+                                    <p class="text-on-surface-variant">X é qual % de Y?</p>
                                     <div class="row g-2 align-items-center mb-3">
                                         <div class="col">
-                                            <input type="number" class="form-control bg-dark text-white border-secondary" placeholder="X" id="perc-2-x">
+                                            <input type="number" class="form-control apps-surface text-on-surface border-secondary" placeholder="X" id="perc-2-x">
                                         </div>
-                                        <div class="col-auto text-muted">é qual % de</div>
+                                        <div class="col-auto text-on-surface-variant">é qual % de</div>
                                         <div class="col">
-                                            <input type="number" class="form-control bg-dark text-white border-secondary" placeholder="Y" id="perc-2-y">
+                                            <input type="number" class="form-control apps-surface text-on-surface border-secondary" placeholder="Y" id="perc-2-y">
                                         </div>
                                     </div>
                                     <button class="btn btn-primary w-100 mb-3" onclick="window.calcPerc2()">Calcular</button>
@@ -580,7 +592,7 @@
                 content.innerHTML = `
                     <div class="row g-4">
                         <div class="col-md-6">
-                            <div class="card bg-dark border-secondary h-100">
+                            <div class="card apps-surface border-secondary h-100">
                                 <div class="card-header border-secondary d-flex justify-content-between align-items-center">
                                     <h5 class="m-0">CPF</h5>
                                     <div class="form-check form-switch m-0">
@@ -593,7 +605,7 @@
                                         <i class="bi bi-person-plus"></i> Gerar CPF
                                     </button>
                                     <div class="input-group">
-                                        <input type="text" class="form-control text-center fs-4 bg-dark text-white border-secondary" id="cpf-result" readonly>
+                                        <input type="text" class="form-control text-center fs-4 apps-surface text-on-surface border-secondary" id="cpf-result" readonly>
                                         <button class="btn btn-outline-secondary" onclick="navigator.clipboard.writeText(document.getElementById('cpf-result').value)">
                                             <i class="bi bi-clipboard"></i>
                                         </button>
@@ -602,7 +614,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="card bg-dark border-secondary h-100">
+                            <div class="card apps-surface border-secondary h-100">
                                 <div class="card-header border-secondary d-flex justify-content-between align-items-center">
                                     <h5 class="m-0">CNPJ</h5>
                                     <div class="form-check form-switch m-0">
@@ -615,7 +627,7 @@
                                         <i class="bi bi-building-add"></i> Gerar CNPJ
                                     </button>
                                      <div class="input-group">
-                                        <input type="text" class="form-control text-center fs-5 bg-dark text-white border-secondary" id="cnpj-result" readonly>
+                                        <input type="text" class="form-control text-center fs-5 apps-surface text-on-surface border-secondary" id="cnpj-result" readonly>
                                         <button class="btn btn-outline-secondary" onclick="navigator.clipboard.writeText(document.getElementById('cnpj-result').value)">
                                             <i class="bi bi-clipboard"></i>
                                         </button>
@@ -630,12 +642,12 @@
                 content.innerHTML = `
                     <div class="row justify-content-center">
                         <div class="col-md-10">
-                            <div class="card bg-dark border-secondary p-4 mb-4">
+                            <div class="card apps-surface border-secondary p-4 mb-4">
                                 <div class="mb-4 text-center">
                                     <label for="xml-file-input" class="form-label d-block p-5 border border-2 border-dashed border-secondary rounded-3" style="cursor: pointer;" id="drop-zone">
                                         <i class="bi bi-cloud-upload fs-1 text-primary mb-3"></i>
                                         <h5 class="mb-2">Arraste seu XML aqui</h5>
-                                        <span class="text-muted">Suporta NFe (modelo 55) e NFCe (modelo 65)</span>
+                                        <span class="text-on-surface-variant">Suporta NFe (modelo 55) e NFCe (modelo 65)</span>
                                         <input type="file" id="xml-file-input" class="d-none" accept=".xml">
                                     </label>
                                 </div>
@@ -643,11 +655,11 @@
                                     <div class="d-flex justify-content-between align-items-center mb-2">
                                         <span class="text-success fw-bold"><i class="bi bi-check-circle"></i> Convertido com Sucesso</span>
                                         <div class="btn-group">
-                                            <button class="btn btn-sm btn-outline-light" onclick="window.copyJson()"><i class="bi bi-clipboard"></i> Copiar</button>
+                                            <button class="btn btn-sm btn-outline-secondary" onclick="window.copyJson()"><i class="bi bi-clipboard"></i> Copiar</button>
                                             <button class="btn btn-sm btn-outline-primary" onclick="window.downloadJson()"><i class="bi bi-download"></i> Baixar JSON</button>
                                         </div>
                                     </div>
-                                    <textarea id="json-result" class="form-control bg-black text-info font-monospace border-secondary" rows="15" readonly></textarea>
+                                    <textarea id="json-result" class="form-control apps-surface text-on-surface font-monospace border-secondary" rows="15" readonly></textarea>
                                 </div>
                             </div>
                             <div class="alert alert-info bg-opacity-10 border-info text-info">
@@ -668,19 +680,19 @@
                         dropZone.addEventListener('dragover', (e) => {
                             e.preventDefault();
                             dropZone.classList.add('border-primary');
-                            dropZone.classList.add('bg-dark');
+                            dropZone.classList.add('apps-surface');
                         });
 
                         dropZone.addEventListener('dragleave', (e) => {
                             e.preventDefault();
                             dropZone.classList.remove('border-primary');
-                            dropZone.classList.remove('bg-dark');
+                            dropZone.classList.remove('apps-surface');
                         });
 
                         dropZone.addEventListener('drop', (e) => {
                             e.preventDefault();
                             dropZone.classList.remove('border-primary');
-                            dropZone.classList.remove('bg-dark');
+                            dropZone.classList.remove('apps-surface');
                             if (e.dataTransfer.files.length) {
                                 fileInput.files = e.dataTransfer.files;
                                 window.handleFileSelect({ target: fileInput });
@@ -699,20 +711,20 @@
                             </div>
                             <div class="row g-3">
                                 <div class="col-md-6">
-                                    <label class="form-label text-muted">Entrada (JSON Sujo/Minificado)</label>
-                                    <textarea id="json-input" class="form-control bg-dark text-white border-secondary font-monospace" rows="15" placeholder='Paste JSON here...'></textarea>
+                                    <label class="form-label text-on-surface-variant">Entrada (JSON Sujo/Minificado)</label>
+                                    <textarea id="json-input" class="form-control apps-surface text-on-surface border-secondary font-monospace" rows="15" placeholder='Paste JSON here...'></textarea>
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="form-label text-muted d-flex justify-content-between">
+                                    <label class="form-label text-on-surface-variant d-flex justify-content-between">
                                         <span>Saída (JSON Formatado)</span>
                                         <span id="json-status" class="badge bg-secondary">Aguardando</span>
                                     </label>
-                                    <textarea id="json-output" class="form-control bg-black text-success border-secondary font-monospace" rows="15" readonly></textarea>
+                                    <textarea id="json-output" class="form-control apps-surface text-on-surface border-secondary font-monospace" rows="15" readonly></textarea>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center gap-3 mt-4">
                                 <button class="btn btn-primary px-5" onclick="window.formatJson()"><i class="bi bi-magic"></i> Formatar</button>
-                                <button class="btn btn-outline-light" onclick="window.minifyJson()"><i class="bi bi-arrows-collapse"></i> Minificar</button>
+                                <button class="btn btn-outline-secondary" onclick="window.minifyJson()"><i class="bi bi-arrows-collapse"></i> Minificar</button>
                                 <button class="btn btn-outline-success" onclick="window.copyFormattedJson()"><i class="bi bi-clipboard"></i> Copiar</button>
                             </div>
                         </div>
@@ -725,41 +737,41 @@
                         <div class="col-md-10">
                             <ul class="nav nav-tabs border-secondary mb-4" id="b64Tab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active text-white" id="encode-tab" data-bs-toggle="tab" data-bs-target="#encode" type="button" role="tab">Codificar (Encode)</button>
+                                    <button class="nav-link active text-on-surface" id="encode-tab" data-bs-toggle="tab" data-bs-target="#encode" type="button" role="tab">Codificar (Encode)</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link text-white" id="decode-tab" data-bs-toggle="tab" data-bs-target="#decode" type="button" role="tab">Decodificar (Decode)</button>
+                                    <button class="nav-link text-on-surface" id="decode-tab" data-bs-toggle="tab" data-bs-target="#decode" type="button" role="tab">Decodificar (Decode)</button>
                                 </li>
                             </ul>
                             <div class="tab-content" id="b64TabContent">
                                 <div class="tab-pane fade show active" id="encode" role="tabpanel">
                                     <div class="mb-3">
-                                        <label class="form-label text-muted">Texto Normal</label>
-                                        <textarea id="b64-encode-input" class="form-control bg-dark text-white border-secondary" rows="5" oninput="window.b64Encode()"></textarea>
+                                        <label class="form-label text-on-surface-variant">Texto Normal</label>
+                                        <textarea id="b64-encode-input" class="form-control apps-surface text-on-surface border-secondary" rows="5" oninput="window.b64Encode()"></textarea>
                                     </div>
                                     <div class="text-center mb-3">
-                                        <i class="bi bi-arrow-down fs-3 text-secondary"></i>
+                                        <i class="bi bi-arrow-down fs-3 text-on-surface-variant"></i>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label text-muted">Resultado Base64</label>
+                                        <label class="form-label text-on-surface-variant">Resultado Base64</label>
                                         <div class="input-group">
-                                            <textarea id="b64-encode-output" class="form-control bg-black text-warning border-secondary font-monospace" rows="5" readonly></textarea>
+                                            <textarea id="b64-encode-output" class="form-control apps-surface text-on-surface border-secondary font-monospace" rows="5" readonly></textarea>
                                             <button class="btn btn-outline-secondary" onclick="window.copyToClipboard('b64-encode-output')"><i class="bi bi-clipboard"></i></button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="decode" role="tabpanel">
                                     <div class="mb-3">
-                                        <label class="form-label text-muted">String Base64</label>
-                                        <textarea id="b64-decode-input" class="form-control bg-dark text-warning border-secondary font-monospace" rows="5" oninput="window.b64Decode()"></textarea>
+                                        <label class="form-label text-on-surface-variant">String Base64</label>
+                                        <textarea id="b64-decode-input" class="form-control apps-surface text-on-surface border-secondary font-monospace" rows="5" oninput="window.b64Decode()"></textarea>
                                     </div>
                                      <div class="text-center mb-3">
-                                        <i class="bi bi-arrow-down fs-3 text-secondary"></i>
+                                        <i class="bi bi-arrow-down fs-3 text-on-surface-variant"></i>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label text-muted">Resultado Texto</label>
+                                        <label class="form-label text-on-surface-variant">Resultado Texto</label>
                                         <div class="input-group">
-                                            <textarea id="b64-decode-output" class="form-control bg-black text-white border-secondary" rows="5" readonly></textarea>
+                                            <textarea id="b64-decode-output" class="form-control apps-surface text-on-surface border-secondary" rows="5" readonly></textarea>
                                             <button class="btn btn-outline-secondary" onclick="window.copyToClipboard('b64-decode-output')"><i class="bi bi-clipboard"></i></button>
                                         </div>
                                     </div>
@@ -775,7 +787,7 @@
                         <div class="col-md-12">
                              <div class="row g-4">
                                 <div class="col-md-4">
-                                    <div class="card bg-dark border-secondary h-100">
+                                    <div class="card apps-surface border-secondary h-100">
                                         <div class="card-header border-secondary">
                                             <h5 class="m-0"><i class="bi bi-list-check"></i> Regras de Mapeamento</h5>
                                         </div>
@@ -791,12 +803,12 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="mb-3">
-                                        <label class="form-label text-muted">Conteúdo Original (JSON, Texto, Código)</label>
+                                        <label class="form-label text-on-surface-variant">Conteúdo Original (JSON, Texto, Código)</label>
                                         <div class="d-flex justify-content-end mb-1">
                                             <button class="btn btn-sm btn-outline-secondary me-2 py-0" onclick="window.clearDepara()">Limpar</button>
                                             <button class="btn btn-sm btn-outline-secondary py-0" onclick="window.sampleDepara()">Exemplo</button>
                                         </div>
-                                        <textarea id="depara-input" class="form-control bg-dark text-white border-secondary font-monospace" rows="8" placeholder="Cole seu conteúdo aqui..."></textarea>
+                                        <textarea id="depara-input" class="form-control apps-surface text-on-surface border-secondary font-monospace" rows="8" placeholder="Cole seu conteúdo aqui..."></textarea>
                                     </div>
                                     
                                     <div class="text-center my-3">
@@ -806,9 +818,9 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label text-muted">Resultado</label>
+                                        <label class="form-label text-on-surface-variant">Resultado</label>
                                         <div class="input-group">
-                                            <textarea id="depara-output" class="form-control bg-black text-warning border-secondary font-monospace" rows="8" readonly></textarea>
+                                            <textarea id="depara-output" class="form-control apps-surface text-on-surface border-secondary font-monospace" rows="8" readonly></textarea>
                                             <button class="btn btn-outline-secondary" onclick="window.copyToClipboard('depara-output')"><i class="bi bi-clipboard"></i></button>
                                         </div>
                                     </div>
@@ -1320,9 +1332,9 @@
         div.className = 'input-group mb-2 animate__animated animate__fadeIn';
         div.id = `rule-${id}`;
         div.innerHTML = `
-            <input type="text" class="form-control bg-dark text-white border-secondary form-control-sm rule-de" placeholder="De (Busca)" value="${de}">
+            <input type="text" class="form-control apps-surface text-on-surface border-secondary form-control-sm rule-de" placeholder="De (Busca)" value="${de}">
             <span class="input-group-text bg-secondary border-secondary text-white"><i class="bi bi-arrow-right"></i></span>
-            <input type="text" class="form-control bg-dark text-white border-secondary form-control-sm rule-para" placeholder="Para" value="${para}">
+            <input type="text" class="form-control apps-surface text-on-surface border-secondary form-control-sm rule-para" placeholder="Para" value="${para}">
             <button class="btn btn-outline-danger btn-sm" onclick="document.getElementById('rule-${id}').remove()"><i class="bi bi-x"></i></button>
         `;
         container.appendChild(div);

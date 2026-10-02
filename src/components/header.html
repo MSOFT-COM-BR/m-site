@@ -14,13 +14,33 @@
 
       <!-- Navigation Menu -->
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-4">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="/ecossistema" data-i18n="nav.ecosystem">Ecossistema</a></li>
-          <li class="nav-item"><a class="nav-link" href="/criacao-de-sites" data-i18n="nav.solutions">Soluções</a></li>
+          <li class="nav-item dropdown">
+            <button class="nav-link dropdown-toggle border-0 bg-transparent" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-i18n="nav.solutions">Soluções</button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/criacao-de-sites" data-i18n="nav.websites">Criação de sites</a></li>
+              <li><a class="dropdown-item" href="/desenvolvimento-de-sistemas" data-i18n="nav.systems">Desenvolvimento de sistemas</a></li>
+              <li><a class="dropdown-item" href="/expertise" data-i18n="nav.expertise">Expertise</a></li>
+            </ul>
+          </li>
           <li class="nav-item"><a class="nav-link" href="/mercado" data-i18n="nav.market">Mercado</a></li>
-          <li class="nav-item"><a class="nav-link" href="/marketplace" data-i18n="nav.marketplace">Marketplace</a></li>
+          <li class="nav-item dropdown">
+            <button class="nav-link dropdown-toggle border-0 bg-transparent" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-i18n="nav.marketplace">Marketplace</button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/marketplace" data-i18n="nav.catalog">Catálogo de apps</a></li>
+              <li><a class="dropdown-item" href="/apps" data-i18n="nav.tools">Ferramentas</a></li>
+            </ul>
+          </li>
           <li class="nav-item"><a class="nav-link" href="/blog" data-i18n="nav.content">Conteúdo</a></li>
-          <li class="nav-item"><a class="nav-link" href="/about" data-i18n="nav.about">Sobre</a></li>
+          <li class="nav-item dropdown">
+            <button class="nav-link dropdown-toggle border-0 bg-transparent" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-i18n="nav.about">Sobre</button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="/about" data-i18n="nav.about">Sobre</a></li>
+              <li><a class="dropdown-item" href="/contact" data-i18n="nav.contact">Fale Conosco</a></li>
+              <li><a class="dropdown-item" href="/login" data-i18n="nav.login">Área do cliente</a></li>
+            </ul>
+          </li>
           <li class="nav-item ms-lg-2" id="header-contact-action">
              <a class="dev-btn dev-btn-primary" href="/cotacoes" data-track="quote_open" data-track-location="header">
                Pedir cotação
@@ -146,11 +166,26 @@
     font-size: 0.9rem;
   }
 
-  .text-gradient {
-    background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 50%, #10b981 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .dev-header .navbar-nav {
+    gap: .5rem;
+  }
+
+  .dev-header .nav-link,
+  .dev-header .dev-btn {
+    white-space: nowrap;
+  }
+
+  .dev-header #header-auth-action {
+    max-width: 11.5rem;
+    min-width: 0;
+  }
+
+  @media (min-width: 1400px) {
+    .dev-header .navbar-nav { gap: 1rem; }
+  }
+
+  .dev-header .dropdown-menu .dropdown-item {
+    white-space: normal;
   }
 
   .brand-soft {
@@ -379,18 +414,20 @@
   }
 
   /* Dropdown Overrides */
-  .dropdown-menu {
+  .dev-header .dropdown-menu {
     background: var(--header-dropdown-background, rgba(20, 20, 25, 0.95)) !important;
     backdrop-filter: blur(10px);
     border: 1px solid var(--header-dropdown-border, rgba(59, 130, 246, 0.2)) !important;
     margin-top: 10px !important;
   }
 
-  .dropdown-item {
+  .dev-header .dropdown-item {
+    color: var(--header-dropdown-item-color);
     transition: all 0.2s;
   }
 
-  .dropdown-item:hover {
+  .dev-header .dropdown-item:hover,
+  .dev-header .dropdown-item:focus-visible {
     background: var(--header-dropdown-hover-background, rgba(59, 130, 246, 0.1)) !important;
     color: var(--header-dropdown-hover-color, #fff) !important;
   }

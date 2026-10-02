@@ -22,6 +22,7 @@
 
     /* Primary Accent Palette (MirandaSoft Logo Blue) */
     --ms-primary: #3b82f6;
+    --ms-primary-rgb: 59, 130, 246;
     --ms-primary-container: #1d4ed8;
     --ms-on-primary-container: #ffffff;
     --ms-primary-fixed: #dbeafe;
@@ -30,6 +31,7 @@
 
     /* Secondary Accent Palette (MirandaSoft Logo Cyan) */
     --ms-secondary: #06b6d4;
+    --ms-secondary-rgb: 6, 182, 212;
     --ms-secondary-container: #0891b2;
     --ms-secondary-fixed-dim: #06b6d4;
     --ms-secondary-fixed: #cffafe;
@@ -52,6 +54,32 @@
     --ms-on-surface-variant: #94a3b8;
     --ms-text-primary: #ffffff;
     --ms-text-secondary: #94a3b8;
+    --ms-text-muted: #64748b;
+    --ms-font-display: 'Inter', sans-serif;
+    --ms-font-body: 'Inter', sans-serif;
+    --ms-transition-base: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --ms-gradient-text: linear-gradient(135deg, var(--ms-primary), var(--ms-secondary), var(--ms-tertiary));
+
+    /* Compatibility names reference the same palette, never a second one. */
+    --dev-bg-primary: var(--ms-surface);
+    --dev-bg-secondary: var(--ms-surface-container-low);
+    --dev-bg-card: var(--ms-surface-container);
+    --dev-text-primary: var(--ms-on-surface);
+    --dev-text-secondary: var(--ms-on-surface-variant);
+    --dev-text-muted: var(--ms-text-muted);
+    --dev-accent-primary: var(--ms-primary);
+    --dev-accent-secondary: var(--ms-secondary);
+    --dev-accent-tertiary: var(--ms-tertiary);
+    --dev-border-color: var(--ms-outline-variant);
+    --dev-gradient-primary: linear-gradient(135deg, var(--ms-primary), var(--ms-primary-container));
+    --dev-gradient-text: var(--ms-gradient-text);
+    --dev-radius-md: 12px;
+    --dev-radius-lg: 16px;
+    --dev-radius-xl: 24px;
+    --dev-shadow-md: 0 8px 24px rgba(0, 0, 0, .12);
+    --dev-shadow-glow: 0 8px 24px rgba(59, 130, 246, .15);
+    --dev-transition-base: var(--ms-transition-base);
+    --dev-transition-fast: 0.2s ease;
 }
 
 /* ============================================
@@ -80,16 +108,36 @@ body {
     overflow-x: hidden;
 }
 
+body[data-bs-theme="light"], body[data-bs-theme="dark"] {
+    --bs-body-bg: var(--ms-surface);
+    --bs-body-color: var(--ms-on-surface);
+    --bs-secondary-bg: var(--ms-surface-container);
+    --bs-tertiary-bg: var(--ms-surface-container-high);
+    --bs-secondary-color: var(--ms-on-surface-variant);
+    --bs-emphasis-color: var(--ms-text-primary);
+    --bs-border-color: var(--ms-outline-variant);
+    --bs-link-color: var(--ms-primary);
+    --bs-link-color-rgb: var(--ms-primary-rgb);
+    --bs-link-hover-color: var(--ms-secondary);
+    --bs-link-hover-color-rgb: var(--ms-secondary-rgb);
+}
+
 /* Tema público padrão: claro. */
 html[data-bs-theme="light"], body[data-bs-theme="light"] {
     --ms-primary: #1d4ed8;
-    --ms-secondary: #087f96;
-    --ms-tertiary: #047857;
+    --ms-primary-rgb: 29, 78, 216;
+    --ms-secondary: #155e75;
+    --ms-secondary-rgb: 21, 94, 117;
+    --ms-tertiary: #065f46;
     --ms-surface: #f8fafc;
     --ms-surface-container-low: #ffffff;
     --ms-surface-container: #f1f5f9;
     --ms-surface-container-high: #e2e8f0;
     --ms-surface-container-highest: #cbd5e1;
+    --ms-surface-container-lowest: #ffffff;
+    --ms-surface-variant: #e2e8f0;
+    --ms-surface-bright: #ffffff;
+    --ms-surface-dim: #e2e8f0;
     --ms-outline: #64748b;
     --ms-outline-variant: #cbd5e1;
     --ms-on-surface: #0f172a;
@@ -123,6 +171,22 @@ body[data-bs-theme="dark"] {
     color: var(--ms-on-surface-variant) !important;
 }
 
+/* Semantic accent utilities for the public SPA, including generated content. */
+#root .text-primary { color: var(--ms-primary) !important; }
+#root .text-info { color: var(--ms-secondary) !important; }
+#root .text-success { color: var(--ms-tertiary) !important; }
+
+#root .btn-outline-success {
+    --bs-btn-color: var(--ms-tertiary);
+    --bs-btn-border-color: var(--ms-tertiary);
+    --bs-btn-hover-color: var(--ms-surface);
+    --bs-btn-hover-bg: var(--ms-tertiary);
+    --bs-btn-hover-border-color: var(--ms-tertiary);
+    --bs-btn-active-color: var(--ms-surface);
+    --bs-btn-active-bg: var(--ms-tertiary);
+    --bs-btn-active-border-color: var(--ms-tertiary);
+}
+
 .text-mono {
     font-family: 'JetBrains Mono', monospace;
     letter-spacing: -0.02em;
@@ -150,24 +214,19 @@ body[data-bs-theme="dark"] {
    ============================================ */
 
 .glass-nav {
-    background: rgba(10, 10, 15, 0.75);
+    background: var(--ms-surface-container-low);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid var(--ms-outline-variant);
 }
 
-.text-gradient {
-    background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.text-gradient-primary {
-    background: linear-gradient(135deg, var(--ms-primary) 0%, var(--ms-secondary) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+/* Compatibility classes share one solid, theme-aware text treatment. */
+.text-gradient,
+.text-gradient-primary,
+.text-gradient-neon {
+    color: var(--ms-on-surface);
+    background: none;
+    -webkit-text-fill-color: currentColor;
 }
 
 .glow-primary {
@@ -210,12 +269,13 @@ body[data-bs-theme="dark"] {
 
 /* Cards & Containers */
 .ms-card {
-    background: rgba(20, 20, 29, 0.6);
+    background: var(--ms-surface-container);
+    color: var(--ms-on-surface);
     backdrop-filter: blur(10px);
     border-radius: 16px;
     padding: 32px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--ms-outline-variant);
     position: relative;
 }
 
@@ -235,7 +295,7 @@ body[data-bs-theme="dark"] {
 
 .ms-card:hover {
     transform: translateY(-5px);
-    background: rgba(26, 26, 37, 0.8);
+    background: var(--ms-surface-container-high);
     border-color: rgba(59, 130, 246, 0.3);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }

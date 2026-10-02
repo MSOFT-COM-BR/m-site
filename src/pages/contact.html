@@ -1,4 +1,4 @@
-<section class="dev-section pt-5 mt-5">
+<section class="contact-page dev-section pt-5 mt-5">
   <div class="container">
 
     <!-- Header -->
@@ -16,23 +16,23 @@
 
       <!-- Contact Form -->
       <div class="col-lg-7">
-        <div class="card bg-dark border-secondary bg-opacity-50 animate__animated animate__fadeInLeft h-100">
+        <div class="card contact-surface border-secondary animate__animated animate__fadeInLeft h-100">
           <div class="card-body p-4 p-md-5">
             <form id="contact-form">
               <div class="row g-3">
                 <div class="col-md-6">
-                  <label class="form-label text-muted small text-uppercase fw-bold">Seu Nome</label>
-                  <input type="text" class="form-control bg-dark text-white border-secondary py-3"
+                  <label class="form-label text-on-surface-variant small text-uppercase fw-bold">Seu Nome</label>
+                  <input type="text" class="form-control contact-surface text-on-surface border-secondary py-3"
                     placeholder="João Silva" required id="contact-name">
                 </div>
                 <div class="col-md-6">
-                  <label class="form-label text-muted small text-uppercase fw-bold">Seu Email</label>
-                  <input type="email" class="form-control bg-dark text-white border-secondary py-3"
+                  <label class="form-label text-on-surface-variant small text-uppercase fw-bold">Seu Email</label>
+                  <input type="email" class="form-control contact-surface text-on-surface border-secondary py-3"
                     placeholder="joao@empresa.com" required id="contact-email">
                 </div>
                 <div class="col-12">
-                  <label class="form-label text-muted small text-uppercase fw-bold">Assunto</label>
-                  <select class="form-select bg-dark text-white border-secondary py-3" id="contact-subject">
+                  <label class="form-label text-on-surface-variant small text-uppercase fw-bold">Assunto</label>
+                  <select class="form-select contact-surface text-on-surface border-secondary py-3" id="contact-subject">
                     <option value="orcamento">Orçamento de Projeto</option>
                     <option value="duvida">Dúvida Técnica</option>
                     <option value="parceria">Parceria</option>
@@ -40,8 +40,8 @@
                   </select>
                 </div>
                 <div class="col-12">
-                  <label class="form-label text-muted small text-uppercase fw-bold">Mensagem</label>
-                  <textarea class="form-control bg-dark text-white border-secondary" rows="5"
+                  <label class="form-label text-on-surface-variant small text-uppercase fw-bold">Mensagem</label>
+                  <textarea class="form-control contact-surface text-on-surface border-secondary" rows="5"
                     placeholder="Conte-nos mais sobre seu projeto..." required id="contact-message"></textarea>
                 </div>
                 <div class="col-12 mt-4">
@@ -60,14 +60,14 @@
         <div class="d-flex flex-column gap-4 animate__animated animate__fadeInRight">
 
           <!-- Card 1 -->
-          <div class="card bg-dark border-secondary bg-opacity-50">
+          <div class="card contact-surface border-secondary">
             <div class="card-body p-4 d-flex align-items-center gap-4">
               <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-circle">
                 <i class="bi bi-whatsapp fs-3"></i>
               </div>
               <div>
-                <h5 class="mb-1 text-white">WhatsApp</h5>
-                <p class="text-muted small mb-1">Atendimento rápido</p>
+                <h5 class="mb-1 text-on-surface">WhatsApp</h5>
+                <p class="text-on-surface-variant small mb-1">Atendimento rápido</p>
                 <a href="https://wa.me/5584988330532" target="_blank"
                   class="btn btn-primary btn-sm rounded-pill mt-2 stretched-link"><i class="bi bi-whatsapp me-1"></i>
                   Chamar no WhatsApp</a>
@@ -76,24 +76,24 @@
           </div>
 
           <!-- Card 2 -->
-          <div class="card bg-dark border-secondary bg-opacity-50">
+          <div class="card contact-surface border-secondary">
             <div class="card-body p-4 d-flex align-items-center gap-4">
               <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-circle">
                 <i class="bi bi-envelope-fill fs-3"></i>
               </div>
               <div>
-                <h5 class="mb-1 text-white">Email</h5>
-                <p class="text-muted small mb-1">Para orçamentos detalhados</p>
+                <h5 class="mb-1 text-on-surface">Email</h5>
+                <p class="text-on-surface-variant small mb-1">Para orçamentos detalhados</p>
                 <a href="mailto:contato@mirandasoft.com.br"
-                  class="text-white text-decoration-none fw-bold stretched-link">contato@mirandasoft.com.br</a>
+                  class="text-on-surface text-decoration-none fw-bold stretched-link">contato@mirandasoft.com.br</a>
               </div>
             </div>
           </div>
 
           <!-- Socials -->
-          <div class="card bg-dark border-secondary bg-opacity-50 mt-2">
+          <div class="card contact-surface border-secondary mt-2">
             <div class="card-body p-4 text-center">
-              <h6 class="text-muted mb-3">Redes Sociais</h6>
+              <h6 class="text-on-surface-variant mb-3">Redes Sociais</h6>
               <div class="d-flex justify-content-center gap-3">
                 <a href="#" class="btn btn-outline-secondary rounded-circle"><i class="bi bi-instagram"></i></a>
               </div>
@@ -108,11 +108,22 @@
 </section>
 
 <style>
-  .form-control:focus,
-  .form-select:focus {
-    background-color: #1a1a25 !important;
+  .contact-page .contact-surface {
+    background: var(--ms-surface-container-low);
+    color: var(--ms-on-surface);
+    border-color: var(--ms-outline-variant) !important;
+  }
+
+  .contact-page .form-control::placeholder {
+    color: var(--ms-on-surface-variant);
+    opacity: 1;
+  }
+
+  .contact-page .form-control:focus,
+  .contact-page .form-select:focus {
+    background-color: var(--ms-surface-container) !important;
     border-color: #3b82f6 !important;
-    color: white !important;
+    color: var(--ms-on-surface) !important;
     box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25);
   }
 </style>
