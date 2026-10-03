@@ -655,15 +655,15 @@
         const isActive = (path) => window.location.pathname.startsWith(path) ? 'active bg-primary' : '';
 
         if (auth.hasRole('admin')) {
-          menuItems += `<li><a class="dropdown-item text-white ${isActive('/admin')}" href="/admin"><i class="bi bi-shield-lock me-2"></i><span data-i18n="account.admin">Painel Admin</span></a></li>`;
+          menuItems += `<li><a class="dropdown-item text-white ${isActive('/console')}" href="/console"><i class="bi bi-shield-lock me-2"></i><span data-i18n="account.admin">Console</span></a></li>`;
         }
 
         if (auth.hasRole('premium')) {
-          menuItems += `<li><a class="dropdown-item text-white ${isActive('/premium')}" href="/premium"><i class="bi bi-star-fill me-2"></i><span data-i18n="account.premium">Dashboard Premium</span></a></li>`;
+          menuItems += `<li><a class="dropdown-item text-white ${isActive('/painel')}" href="/painel"><i class="bi bi-star-fill me-2"></i><span data-i18n="account.premium">Painel</span></a></li>`;
         }
 
         if (!auth.hasRole('admin') && !auth.hasRole('premium')) {
-          menuItems += `<li><a class="dropdown-item text-white ${isActive('/premium')}" href="/premium"><i class="bi bi-speedometer2 me-2"></i><span data-i18n="account.dashboard">Dashboard</span></a></li>`;
+          menuItems += `<li><a class="dropdown-item text-white ${isActive('/painel')}" href="/painel"><i class="bi bi-speedometer2 me-2"></i><span data-i18n="account.dashboard">Painel</span></a></li>`;
         }
 
         headerAuthItem.innerHTML = `

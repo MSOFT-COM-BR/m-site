@@ -254,13 +254,14 @@ class Core {
       ? config.routes.legacyAppPages?.[requestedPageName] || ''
       : '';
     const appSlug = nestedAppSlug || legacyAppSlug;
+    const canonicalPageName = config.routes.aliases?.[requestedPageName] || requestedPageName;
     const pageName = studioRouteKey
       ? `app-studio-${studioRouteKey.replace('/', '-')}`
       : appSlug
         ? `app-${appSlug}`
       : requestedPageName === 'padrao-engenharia' && ['consultar', 'contato'].includes(segments[2])
         ? 'padrao-engenharia-contato'
-        : requestedPageName;
+        : canonicalPageName;
     this.params = pageName === 'padrao-engenharia-contato' || appSlug || studioRouteKey ? [] : segments.slice(2);
 
     if (config?.app?.debug) {
@@ -365,10 +366,9 @@ class Core {
       const headerEl = document.getElementById('head');
       const footerEl = document.getElementById('footer');
 
-      // "dashboard de admin pode apareceer o menu do site.. dash premium nao pode"
       const isPadraoEngineeringRoute = ['padrao-engenharia', 'padrao-engenharia-contato'].includes(pageName);
       const isBvaConsoleRoute = pageName.startsWith('app-studio-');
-      const hideMainFrame = pageName === 'premium' || isPadraoEngineeringRoute || isBvaConsoleRoute;
+      const hideMainFrame = isPadraoEngineeringRoute || isBvaConsoleRoute;
       const fullBleedLayout = isPadraoEngineeringRoute || isBvaConsoleRoute;
       const layoutWrapper = root.closest('.container-lg');
       if (headerEl) headerEl.style.display = hideMainFrame ? 'none' : 'block';

@@ -159,9 +159,9 @@ const SEO_CONFIG = {
     description: 'Acesse sua conta MSoft.',
     noindex: true
   },
-  'admin': {
-    title: 'Painel Admin | MSoft',
-    description: 'Painel administrativo da MSoft.',
+  'console': {
+    title: 'Console | Miranda Soft',
+    description: 'Console de administração da Miranda Soft.',
     noindex: true
   },
   'profile': {
@@ -169,9 +169,9 @@ const SEO_CONFIG = {
     description: 'Gerencie seus dados e preferências de conta MSoft.',
     noindex: true
   },
-  'premium': {
-    title: 'Dashboard Premium | MSoft',
-    description: 'Acesse seus aplicativos e recursos premium da MSoft.',
+  'painel': {
+    title: 'Painel | Miranda Soft',
+    description: 'Acesse seus aplicativos e recursos no painel da Miranda Soft.',
     noindex: true
   }
 };

@@ -39,9 +39,9 @@
       'account.menu': 'Menu da conta',
       'account.default': 'Conta',
       'account.accesses': 'Meus acessos',
-      'account.admin': 'Painel Admin',
-      'account.premium': 'Dashboard Premium',
-      'account.dashboard': 'Dashboard',
+      'account.admin': 'Console',
+      'account.premium': 'Painel',
+      'account.dashboard': 'Painel',
       'account.profile': 'Meu perfil',
       'account.logout': 'Sair'
     }),
@@ -69,8 +69,8 @@
       'account.menu': 'Menú de cuenta',
       'account.default': 'Cuenta',
       'account.accesses': 'Mis accesos',
-      'account.admin': 'Panel de administración',
-      'account.premium': 'Panel premium',
+      'account.admin': 'Consola',
+      'account.premium': 'Panel',
       'account.dashboard': 'Panel',
       'account.profile': 'Mi perfil',
       'account.logout': 'Cerrar sesión'
@@ -99,9 +99,9 @@
       'account.menu': 'Account menu',
       'account.default': 'Account',
       'account.accesses': 'My access',
-      'account.admin': 'Admin panel',
-      'account.premium': 'Premium dashboard',
-      'account.dashboard': 'Dashboard',
+      'account.admin': 'Console',
+      'account.premium': 'Panel',
+      'account.dashboard': 'Panel',
       'account.profile': 'My profile',
       'account.logout': 'Sign out'
     })

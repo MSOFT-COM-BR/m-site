@@ -16,7 +16,7 @@ function resolveApiBaseUrl() {
 const config = {
   app: {
     name: "Miranda Soft",
-    version: "0.12.45",
+    version: "0.12.46",
     environment: "production",
     debug: false
   },
@@ -36,8 +36,8 @@ const config = {
       'blog',
       'apps',
       'login',
-      'premium',
-      'admin',
+      'painel',
+      'console',
       'blog-ads',
       'blog-review',
       'blogs',
@@ -65,7 +65,10 @@ const config = {
       'profile',
       'support',
     ],
+    aliases: { premium: 'painel', admin: 'console' },
     pagePaths: {
+      painel: 'premium',
+      console: 'admin',
       'padrao-engenharia': 'sites/padrao-engenharia/index',
       'padrao-engenharia-contato': 'sites/padrao-engenharia/consultar'
     },

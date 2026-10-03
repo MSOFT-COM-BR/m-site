@@ -211,7 +211,7 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertIn("'/padrao-engenharia/consultar'", core)
         self.assertIn("const isPadraoEngineeringRoute = ['padrao-engenharia', 'padrao-engenharia-contato'].includes(pageName);", core)
         self.assertIn("const isBvaConsoleRoute = pageName.startsWith('app-studio-');", core)
-        self.assertIn("const hideMainFrame = pageName === 'premium' || isPadraoEngineeringRoute || isBvaConsoleRoute;", core)
+        self.assertIn("const hideMainFrame = isPadraoEngineeringRoute || isBvaConsoleRoute;", core)
         self.assertIn('const fullBleedLayout = isPadraoEngineeringRoute || isBvaConsoleRoute;', core)
         self.assertIn("layoutWrapper.style.maxWidth = fullBleedLayout ? 'none' : '1140px';", core)
         self.assertNotIn('root.style.paddingTop', core)
@@ -299,7 +299,8 @@ class ServicePagesContractTests(unittest.TestCase):
 
         self.assertIn('id="modal-price">A consultar</span>', marketplace)
         self.assertIn('<span class="text-on-surface fs-4 fw-bold">A consultar</span>', marketplace)
-        self.assertIn("onclick=\"openPurchaseModal('${escapeHtml(item.name).replace(/'/g, \"\\\\'\")}', '${item.type}')\"", marketplace)
+        self.assertIn('data-purchase-name="${escapeHtml(item.name)}"', marketplace)
+        self.assertIn("button.dataset.purchaseName, button.dataset.purchaseType", marketplace)
         self.assertIn("currentPurchase = { name, type };", marketplace)
         self.assertIn("Gostaria de receber informações sobre o produto", marketplace)
         self.assertNotIn("toLocaleString('pt-BR', { style: 'currency'", marketplace)

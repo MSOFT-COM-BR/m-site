@@ -202,11 +202,7 @@
         const auth = window.authService;
         let currentPurchase = null;
 
-        function escapeHtml(str) {
-            const div = document.createElement('div');
-            div.textContent = str == null ? '' : String(str);
-            return div.innerHTML;
-        }
+        const escapeHtml = window.core.helpers.escapeHtml;
 
         function renderCatalogCard(item) {
             const isFree = item.type === 'free';
@@ -223,8 +219,7 @@
                 ? `<a href="/apps?tool=${encodeURIComponent(item.appKey)}" class="btn btn-outline-success rounded-pill px-4">
                         <i class="bi bi-box-arrow-up-right"></i> Usar
                    </a>`
-                : `<button class="btn btn-primary rounded-pill px-4"
-                        onclick="openPurchaseModal('${escapeHtml(item.name).replace(/'/g, "\\'")}', '${item.type}')">
+                : `<button type="button" class="btn btn-primary rounded-pill px-4" data-purchase-name="${escapeHtml(item.name)}" data-purchase-type="${escapeHtml(item.type)}">
                         <i class="bi bi-chat-dots"></i> Consultar
                    </button>`;
 
@@ -275,6 +270,10 @@
         }
 
         loadCatalog();
+        document.getElementById('apps-grid').addEventListener('click', event => {
+            const button = event.target.closest('[data-purchase-name]');
+            if (button) window.openPurchaseModal(button.dataset.purchaseName, button.dataset.purchaseType);
+        });
 
         // Filter Apps
         window.filterApps = function (type, btn) {

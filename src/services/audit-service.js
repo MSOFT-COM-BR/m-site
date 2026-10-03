@@ -9,7 +9,7 @@
 
     isAuditedArea() {
       const path = window.location.pathname || '';
-      return path.startsWith('/admin') || path.startsWith('/premium');
+      return ['/console', '/painel', '/admin', '/premium'].some(area => path === area || path.startsWith(area + '/'));
     }
 
     canSend(actionKey) {

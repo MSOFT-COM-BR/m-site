@@ -30,7 +30,7 @@ const pageName = segments[1] || 'home';</code></pre>
     id: 2,
     title: "CMS embutido: usando localStorage para editar o site",
     excerpt:
-      "Veja como o painel em /admin salva conteúdo, notifica componentes e exporta JSON sem backend.",
+      "Veja como o painel em /console salva conteúdo, notifica componentes e exporta JSON sem backend.",
     content: `
       <p>O CMS integrado resolve o dilema de editar textos em um projeto estático. Ele usa <code>localStorage</code> como camada de persistência e publica eventos para toda a aplicação.</p>
 

@@ -10,8 +10,8 @@ O runtime e uma SPA estatica: JavaScript vanilla, HTML e CSS, com paginas e comp
 | --- | --- |
 | Institucional | `/`, `/about`, `/expertise`, `/contact`, `/support` |
 | Conteudo | `/blog`, `/blog-ads`, `/blog-review`, `/materials` |
-| Produtos | `/apps`, `/marketplace`, `/games`, `/premium`, `/app/mcredential` |
-| Conta | `/login`, `/admin`, `/profile` |
+| Produtos | `/apps`, `/marketplace`, `/games`, `/painel`, `/app/mcredential` |
+| Conta | `/login`, `/console`, `/profile` |
 | Legal | `/privacy`, `/terms`, `/lgpd`, `/cookies` |
 
 As rotas validas sao definidas em `src/config/config.js`. O roteador SPA usa o historico do navegador, por isso o servidor de producao precisa redirecionar deep links para `index.html`.
