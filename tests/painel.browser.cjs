@@ -139,6 +139,20 @@ async function metrics(page) {
       assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'),'noindex, nofollow');
       assert.ok(api.calls.includes('/api/auth/me'));
       assert.equal(await page.locator('#profile-back-link').isVisible(),true);
+      const fieldBackgrounds=[];
+      for(const theme of ['light','dark']) {
+        await page.evaluate(value=>{document.body.dataset.bsTheme=value;document.documentElement.dataset.bsTheme=value;},theme);
+        const layout=await page.evaluate(()=>({
+          headingTop:document.getElementById('profile-title').getBoundingClientRect().top,
+          navbarBottom:document.querySelector('#head .navbar').getBoundingClientRect().bottom,
+          overflow:document.documentElement.scrollWidth>innerWidth,
+          inputBackground:getComputedStyle(document.getElementById('input-name')).backgroundColor
+        }));
+        assert.ok(layout.headingTop>=layout.navbarBottom-2,`${width} ${theme} profile heading below navbar`);
+        assert.equal(layout.overflow,false,`${width} ${theme} profile overflow`);
+        fieldBackgrounds.push(layout.inputBackground);
+      }
+      assert.notEqual(fieldBackgrounds[0],fieldBackgrounds[1],`${width} profile field follows theme`);
       await page.locator('#input-name').fill('Breno Alterado');
       await page.locator('#profile-form button[type="submit"]').click();
       await page.waitForFunction(()=>document.getElementById('profile-name').textContent==='Breno Alterado');

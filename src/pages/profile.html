@@ -1,127 +1,128 @@
-<section class="dev-section pt-5 mt-5 profile-page">
-    <style>.profile-page [hidden] { display: none !important; }</style>
-    <div class="container">
-        <a id="profile-back-link" href="/painel" class="btn btn-outline-secondary mb-4" hidden><i class="bi bi-arrow-left me-2" aria-hidden="true"></i>Voltar ao Painel</a>
-        <!-- Personal Greeting -->
-        <div class="row align-items-center mb-5 animate__animated animate__fadeIn">
-            <div class="col-lg-8">
-                <div class="d-flex align-items-center gap-4">
-                    <div class="position-relative">
-                        <div class="profile-avatar border border-2 border-primary p-1 rounded-circle">
-                            <img src="https://ui-avatars.com/api/?name=User&background=6366f1&color=fff" alt="Profile"
-                                class="rounded-circle" width="100" height="100" id="profile-img">
-                        </div>
-                        <span
-                            class="position-absolute bottom-0 end-0 p-2 bg-success border border-dark rounded-circle"></span>
-                    </div>
-                    <div>
-                        <h2 class="fw-bold mb-1">Olá, <span id="profile-name" class="text-gradient">Usuário</span></h2>
-                        <p class="text-muted mb-0" id="profile-email"></p>
-                        <span
-                            class="badge bg-primary bg-opacity-10 text-primary mt-2 border border-primary border-opacity-25"
-                            id="profile-role">
-                            <i class="bi bi-star-fill me-1"></i> Premium
-                        </span>
-                    </div>
-                </div>
+<section class="profile-page dev-section py-4 py-md-5" aria-labelledby="profile-title">
+    <div class="container px-3 px-md-4">
+        <header class="profile-heading mb-4">
+            <div>
+                <span class="badge-tech d-inline-flex align-items-center gap-2 mb-3"><i class="bi bi-person-circle" aria-hidden="true"></i>Minha conta</span>
+                <h1 id="profile-title" class="fw-bold mb-2">Meu perfil</h1>
+                <p class="text-on-surface-variant mb-0">Confira seus dados e mantenha sua conta atualizada.</p>
             </div>
-            <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
-                <div class="d-flex gap-2 justify-content-lg-end">
-                    <button class="btn btn-outline-danger" onclick="window.authService.logout()">
-                        <i class="bi bi-box-arrow-right"></i> Sair
-                    </button>
-                </div>
+            <a id="profile-back-link" href="/painel" class="btn btn-outline-secondary" hidden><i class="bi bi-arrow-left me-2" aria-hidden="true"></i>Voltar ao Painel</a>
+        </header>
+
+        <div class="ms-card profile-identity mb-4">
+            <img src="https://ui-avatars.com/api/?name=User&background=6366f1&color=fff" alt="Avatar da conta"
+                class="profile-avatar rounded-circle" width="72" height="72" id="profile-img">
+            <div class="profile-identity-text">
+                <h2 class="h4 fw-bold mb-1" id="profile-name">Usuário</h2>
+                <p class="text-on-surface-variant mb-2" id="profile-email"></p>
+                <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25" id="profile-role">
+                    <i class="bi bi-person-fill me-1" aria-hidden="true"></i> Usuário
+                </span>
             </div>
         </div>
 
-        <div class="row g-4">
-            <!-- Profile Settings -->
+        <div class="row g-4 align-items-start">
             <div class="col-lg-8">
-                <div class="card bg-dark border-secondary bg-opacity-50 animate__animated animate__fadeInUp">
-                    <div class="card-header border-secondary bg-transparent py-3">
-                        <h5 class="mb-0"><i class="bi bi-person-gear me-2"></i>Meus Dados</h5>
-                    </div>
-                    <div class="card-body p-4">
-                        <form id="profile-form">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label text-muted small">Nome Completo</label>
-                                    <input type="text" class="form-control bg-dark text-white border-secondary"
-                                        id="input-name" value="">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label text-muted small">Email</label>
-                                    <input type="email" class="form-control bg-dark text-secondary border-secondary"
-                                        id="input-email" value="" readonly disabled>
-                                    <div class="form-text text-muted small"><i class="bi bi-lock"></i> O email não pode
-                                        ser alterado.</div>
-                                </div>
-                            </div>
-
-                            <hr class="border-secondary my-4">
-
-                            <h6 class="text-white mb-3">Segurança</h6>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label text-muted small">Nova Senha</label>
-                                    <input type="password" class="form-control bg-dark text-white border-secondary"
-                                        id="input-pass" placeholder="Deixe em branco para manter">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label text-muted small">Confirmar Senha</label>
-                                    <input type="password" class="form-control bg-dark text-white border-secondary"
-                                        id="input-pass-confirm" placeholder="Confirme a nova senha">
-                                </div>
-                            </div>
-
-                            <div class="d-flex justify-content-end mt-4">
-                                <button type="submit" class="btn btn-primary px-4">
-                                    <i class="bi bi-save me-2"></i>Salvar Alterações
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stats / Plan Info -->
-            <div class="col-lg-4">
-                <!-- Plan Card -->
-                <div class="card bg-gradient-dark border-0 mb-4 animate__animated animate__fadeInUp"
-                    style="background: linear-gradient(145deg, #1e1e2f 0%, #2d2d44 100%);">
-                    <div class="card-body p-4 text-center">
-                        <div class="mb-3">
-                            <i class="bi bi-trophy-fill text-warning display-4"></i>
-                        </div>
-                        <h4 class="text-white" id="plan-title">Plano</h4>
-                        <p class="text-muted small" id="plan-description"></p>
-                        <hr class="border-secondary opacity-25">
-                        <div class="d-flex justify-content-between text-muted small">
-                            <span>Status</span>
-                            <span class="text-success fw-bold">Ativo</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Usage Stats -->
-                <div class="card bg-dark border-secondary bg-opacity-50 animate__animated animate__fadeInUp"
-                    style="animation-delay: 0.1s;">
-                    <div class="card-header border-secondary bg-transparent py-3">
-                        <h5 class="mb-0"><i class="bi bi-activity me-2"></i>Uso da Conta</h5>
-                    </div>
-                    <div class="card-body p-4">
+                <div class="ms-card profile-form-card">
+                    <div class="profile-card-heading mb-4">
+                        <i class="bi bi-person-gear text-primary" aria-hidden="true"></i>
                         <div>
-                            <div class="d-flex justify-content-between mb-1">
-                                <span class="text-muted small">Apps Instalados</span>
-                                <span class="text-white small" id="stat-apps-count">--</span>
-                            </div>
+                            <h2 class="h5 fw-bold mb-1">Meus dados</h2>
+                            <p class="text-on-surface-variant small mb-0">Altere seu nome e, se desejar, sua senha.</p>
                         </div>
                     </div>
+                    <form id="profile-form">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="input-name" class="form-label">Nome completo</label>
+                                <input type="text" class="form-control" id="input-name" autocomplete="name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="input-email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="input-email" autocomplete="email" disabled>
+                                <div class="form-text"><i class="bi bi-lock me-1" aria-hidden="true"></i>O email não pode ser alterado.</div>
+                            </div>
+                        </div>
+
+                        <div class="profile-security mt-4 pt-4">
+                            <h3 class="h6 fw-bold mb-1">Segurança</h3>
+                            <p class="text-on-surface-variant small mb-3">Deixe os campos vazios para manter a senha atual.</p>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="input-pass" class="form-label">Nova senha</label>
+                                    <input type="password" class="form-control" id="input-pass" autocomplete="new-password" placeholder="Mínimo de 12 caracteres">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="input-pass-confirm" class="form-label">Confirmar nova senha</label>
+                                    <input type="password" class="form-control" id="input-pass-confirm" autocomplete="new-password" placeholder="Repita a nova senha">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-form-actions mt-4 pt-4">
+                            <button type="submit" class="btn btn-primary px-4"><i class="bi bi-check2 me-2" aria-hidden="true"></i>Salvar alterações</button>
+                        </div>
+                    </form>
                 </div>
             </div>
+
+            <aside class="col-lg-4" aria-label="Resumo da conta">
+                <div class="ms-card profile-summary mb-4">
+                    <div class="profile-summary-icon mb-3"><i class="bi bi-stars" aria-hidden="true"></i></div>
+                    <p class="text-on-surface-variant small mb-1">Seu acesso</p>
+                    <h2 class="h5 fw-bold mb-2" id="plan-title">Plano</h2>
+                    <p class="text-on-surface-variant small mb-0" id="plan-description"></p>
+                    <div class="profile-summary-row mt-4 pt-3">
+                        <span class="text-on-surface-variant small">Status da conta</span>
+                        <span class="text-success fw-semibold small"><i class="bi bi-check-circle me-1" aria-hidden="true"></i>Ativo</span>
+                    </div>
+                </div>
+                <div class="ms-card profile-summary">
+                    <div class="profile-card-heading mb-3">
+                        <i class="bi bi-grid text-primary" aria-hidden="true"></i>
+                        <h2 class="h5 fw-bold mb-0">Uso da conta</h2>
+                    </div>
+                    <div class="profile-summary-row">
+                        <span class="text-on-surface-variant small">Apps instalados</span>
+                        <strong id="stat-apps-count" aria-live="polite">—</strong>
+                    </div>
+                </div>
+            </aside>
         </div>
     </div>
 </section>
+
+<style>
+    .profile-page { color: var(--ms-on-surface); }
+    .profile-page [hidden] { display: none !important; }
+    .profile-page .profile-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; }
+    .profile-page .profile-heading h1 { font-size: clamp(2rem, 4vw, 3rem); }
+    .profile-page .ms-card { padding: 1.5rem; }
+    .profile-page .ms-card:hover { transform: none; box-shadow: none; }
+    .profile-page .profile-identity { display: flex; align-items: center; gap: 1.25rem; background: var(--ms-surface-container-low); }
+    .profile-page .profile-avatar { flex: none; border: 2px solid var(--ms-primary); padding: 3px; object-fit: cover; }
+    .profile-page .profile-identity-text { min-width: 0; }
+    .profile-page :is(#profile-name,#profile-email) { overflow-wrap: anywhere; }
+    .profile-page .profile-card-heading { display: flex; align-items: center; gap: .75rem; }
+    .profile-page .profile-card-heading > i { font-size: 1.35rem; }
+    .profile-page .profile-security, .profile-page .profile-form-actions, .profile-page .profile-summary-row.mt-4 { border-top: 1px solid var(--ms-outline-variant); }
+    .profile-page .profile-form-actions { display: flex; justify-content: flex-end; }
+    .profile-page .profile-summary-icon { display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 12px; background: var(--ms-surface-container-high); color: var(--ms-primary); font-size: 1.4rem; }
+    .profile-page .profile-summary-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .profile-page .form-label { color: var(--ms-on-surface); font-size: .875rem; font-weight: 600; }
+    .profile-page .form-text { color: var(--ms-on-surface-variant); }
+    .profile-page .form-control { min-height: 2.8rem; background: var(--ms-surface-container-low); color: var(--ms-on-surface); border-color: var(--ms-outline-variant); }
+    .profile-page .form-control::placeholder { color: var(--ms-on-surface-variant); opacity: .8; }
+    .profile-page .form-control:disabled { background: var(--ms-surface-container-high); color: var(--ms-on-surface-variant); opacity: 1; }
+    .profile-page .form-control:focus { background: var(--ms-surface-container-low); color: var(--ms-on-surface); border-color: var(--ms-primary); box-shadow: 0 0 0 .2rem rgba(var(--ms-primary-rgb), .16); }
+    .profile-page .btn-outline-secondary { --bs-btn-color: var(--ms-on-surface); --bs-btn-border-color: var(--ms-outline); --bs-btn-hover-color: var(--ms-on-surface); --bs-btn-hover-bg: var(--ms-surface-container-high); --bs-btn-hover-border-color: var(--ms-outline); }
+    .profile-page :is(a,button,input):focus-visible { outline: 2px solid var(--ms-primary); outline-offset: 3px; }
+    @media (max-width: 767.98px) {
+        .profile-page .profile-heading { align-items: flex-start; flex-direction: column; }
+        .profile-page .profile-identity { align-items: flex-start; }
+        .profile-page .profile-form-actions .btn { width: 100%; }
+    }
+</style>
 
 <script>
     (function () {
