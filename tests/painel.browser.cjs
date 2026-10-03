@@ -14,7 +14,7 @@ const catalog = [
   {appKey:'paid-app', type:'subscription', name:"Plano adquirido O'Brien", icon:'bi-star'}
 ];
 async function setup(page, role = 'premium') {
-  const calls=[]; let fail=false, empty=false, catalogFail=false, catalogComplete=false;
+  const calls=[], writes=[]; let fail=false, empty=false, catalogFail=false, catalogComplete=false;
   await page.addInitScript(role => {
     localStorage.setItem('msoft_cookie_consent','rejected');
     if(role !== 'visitor') {
@@ -27,11 +27,18 @@ async function setup(page, role = 'premium') {
     if(url.origin===origin) return route.continue();
     if(url.hostname!=='gateway.mirandasoft.com.br') return route.abort();
     calls.push(url.pathname+url.search);
+    if(url.pathname.endsWith('/auth/me')) {
+      if(route.request().method()==='PUT') {
+        const payload=route.request().postDataJSON(); writes.push(payload);
+        return route.fulfill({json:{success:true,user:{name:payload.name,email:'breno@example.com',roles:[role]}}});
+      }
+      return route.fulfill({json:{success:true,user:{name:'Breno Teste',email:'breno@example.com',roles:[role]}}});
+    }
     if(url.pathname.endsWith('/catalog')) return route.fulfill({json:catalogFail?{success:false,data:null}:{success:true,data:catalogComplete?[...catalog,{appKey:'missing-app',type:'free',name:'Sem catálogo'}]:catalog}});
     if(url.pathname.endsWith('/apps')) return route.fulfill({json:fail?{success:false,data:null}:{success:true,data:empty?[]:apps}});
     return route.fulfill({json:{success:true,data:[]}});
   });
-  return {calls, fail(value){fail=value}, empty(value){empty=value}, catalogFail(value){catalogFail=value}, catalogComplete(value){catalogComplete=value}};
+  return {calls,writes, fail(value){fail=value}, empty(value){empty=value}, catalogFail(value){catalogFail=value}, catalogComplete(value){catalogComplete=value}};
 }
 async function contrastIssues(page) {
   return page.evaluate(() => {
@@ -114,6 +121,66 @@ async function metrics(page) {
       console.log(`PASS painel ${width}: shared navbar, themes, apps, filter, catalog escape`);
       await page.close();
     }
+    for(const width of [1440,390]) {
+      const page=await browser.newPage({viewport:{width,height:960},reducedMotion:'reduce'}); const api=await setup(page);
+      await page.goto(origin+'/painel',{waitUntil:'networkidle'});
+      await page.waitForSelector('.premium-app-card button[data-open-app]');
+      assert.equal(await page.locator('.premium-actions a[href="/painel/perfil"]').count(),1);
+      await page.locator('.premium-actions a[href="/painel/perfil"]').click();
+      await page.waitForURL(origin+'/painel/perfil');
+      await page.waitForSelector('#profile-name');
+      assert.equal(await page.locator('#profile-name').innerText(),'Breno Teste');
+      assert.equal(await page.locator('#input-email').inputValue(),'breno@example.com');
+      assert.equal(await page.locator('#plan-title').innerText(),'Plano Premium');
+      assert.equal(await page.locator('#head .navbar').isVisible(),true);
+      assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),origin+'/painel/perfil');
+      assert.equal(await page.locator('meta[property="og:url"]').getAttribute('content'),origin+'/painel/perfil');
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+      assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'),'noindex, nofollow');
+      assert.ok(api.calls.includes('/api/auth/me'));
+      assert.equal(await page.locator('#profile-back-link').isVisible(),true);
+      await page.locator('#input-name').fill('Breno Alterado');
+      await page.locator('#profile-form button[type="submit"]').click();
+      await page.waitForFunction(()=>document.getElementById('profile-name').textContent==='Breno Alterado');
+      assert.deepEqual(api.writes,[{name:'Breno Alterado'}]);
+      await page.locator('#profile-back-link').click();
+      await page.waitForURL(origin+'/painel');
+      if(width===390) {
+        await page.locator('[data-mobile-nav-toggle]').click();
+        await page.locator('.header-user-btn').click();
+      } else await page.locator('.header-user-btn').click();
+      assert.equal(await page.locator('.dev-header a[href="/painel/perfil"]').count(),1);
+      await page.close();
+      console.log(`PASS profile navigation ${width}`);
+    }
+    for(const [role,backLink] of [['admin',true],['member',false]]) {
+      const page=await browser.newPage(); await setup(page,role);
+      await page.goto(origin+'/profile?tab=seguranca#dados',{waitUntil:'networkidle'});
+      await page.waitForURL(origin+'/painel/perfil?tab=seguranca#dados');
+      await page.waitForSelector('#profile-name');
+      assert.equal(await page.locator('#profile-back-link').isVisible(),backLink);
+      assert.equal(await page.locator('#plan-title').innerText(),role==='admin'?'Administrador':'Plano Gratuito');
+      assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),origin+'/painel/perfil');
+      assert.equal(await page.locator('meta[property="og:url"]').getAttribute('content'),origin+'/painel/perfil');
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+      await page.close();
+    }
+    {
+      const page=await browser.newPage(); const api=await setup(page,'visitor');
+      await page.goto(origin+'/painel/perfil',{waitUntil:'networkidle'});
+      await page.waitForURL(origin+'/login');
+      assert.equal(api.calls.includes('/api/auth/me'),false);
+      await page.close();
+    }
+    for(const [path,canonical,hasProfile] of [['/painel/perfil/','/painel/perfil',true],['/profile/','/painel/perfil',true],['/painel/perfil/extra','/painel/perfil/extra',false],['/profile/extra','/profile/extra',false]]) {
+      const page=await browser.newPage(); await setup(page);
+      await page.goto(origin+path,{waitUntil:'networkidle'});
+      if(hasProfile) {await page.waitForURL(origin+canonical);await page.waitForSelector('#profile-form');}
+      else {await page.waitForSelector('#root .error-page,#root section');assert.equal(await page.locator('#profile-form').count(),0);}
+      assert.equal(new URL(page.url()).pathname,canonical);
+      await page.close();
+    }
+    console.log('PASS profile legacy URL, roles, PUT, trailing slash and guest guard');
     for(const [requested, canonical, role] of [['/premium','/painel','premium'],['/admin','/console','admin'],['/console','/console','admin']]) {
       const page=await browser.newPage(); const api=await setup(page,role);
       await page.goto(origin+requested,{waitUntil:'networkidle'});

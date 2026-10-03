@@ -290,9 +290,16 @@ class ServicePagesContractTests(unittest.TestCase):
             core,
         )
         self.assertIn(
-            "hasValidPadraoEngineeringPath && this.registerPages.includes(pageName)",
+            "hasValidPadraoEngineeringPath && (!registeredNestedPage || validNestedPath) && validAliasPath && this.registerPages.includes(pageName)",
             core,
         )
+
+    def test_nested_profile_route_rejects_extra_path_segments(self) -> None:
+        core = (ROOT / "src/core/core.js").read_text(encoding="utf-8")
+
+        self.assertIn("const registeredNestedPage = this.registerPages.includes", core)
+        self.assertIn("const validNestedPath = segments.length === 3 || (segments.length === 4 && segments[3] === '');", core)
+        self.assertIn("const validAliasPath = !aliasPageName || segments.length === 2 || (segments.length === 3 && segments[2] === '');", core)
 
     def test_marketplace_public_view_hides_catalog_prices(self) -> None:
         marketplace = (ROOT / "src/pages/marketplace.html").read_text(encoding="utf-8")

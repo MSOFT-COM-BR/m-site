@@ -164,9 +164,9 @@ const SEO_CONFIG = {
     description: 'Console de administração da Miranda Soft.',
     noindex: true
   },
-  'profile': {
-    title: 'Meu Perfil | MSoft',
-    description: 'Gerencie seus dados e preferências de conta MSoft.',
+  'painel/perfil': {
+    title: 'Meu perfil | Painel | Miranda Soft',
+    description: 'Gerencie seus dados e preferências de conta no Painel da Miranda Soft.',
     noindex: true
   },
   'painel': {

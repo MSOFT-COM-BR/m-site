@@ -1,5 +1,7 @@
-<section class="dev-section pt-5 mt-5">
+<section class="dev-section pt-5 mt-5 profile-page">
+    <style>.profile-page [hidden] { display: none !important; }</style>
     <div class="container">
+        <a id="profile-back-link" href="/painel" class="btn btn-outline-secondary mb-4" hidden><i class="bi bi-arrow-left me-2" aria-hidden="true"></i>Voltar ao Painel</a>
         <!-- Personal Greeting -->
         <div class="row align-items-center mb-5 animate__animated animate__fadeIn">
             <div class="col-lg-8">
@@ -130,7 +132,12 @@
             return;
         }
 
+        document.getElementById('profile-back-link').hidden = !(auth.hasRole('premium') || auth.hasRole('admin'));
+
         function renderUser(user) {
+            const roles = Array.isArray(user.roles) ? user.roles : [user.role];
+            const isAdmin = roles.includes('admin');
+            const isPremium = roles.includes('premium');
             document.getElementById('profile-name').textContent = user.name || 'Usuário';
             document.getElementById('profile-email').textContent = user.email || '';
             document.getElementById('input-name').value = user.name || '';
@@ -138,10 +145,10 @@
 
             const roleBadge = document.getElementById('profile-role');
             roleBadge.classList.remove('text-warning', 'border-warning', 'bg-warning', 'text-primary', 'border-primary', 'bg-primary');
-            if (user.role === 'admin') {
+            if (isAdmin) {
                 roleBadge.innerHTML = '<i class="bi bi-shield-lock-fill me-1"></i> Administrador';
                 roleBadge.classList.add('text-warning', 'border-warning', 'bg-warning', 'bg-opacity-10', 'border-opacity-25');
-            } else if (user.role === 'premium') {
+            } else if (isPremium) {
                 roleBadge.innerHTML = '<i class="bi bi-star-fill me-1"></i> Premium';
                 roleBadge.classList.add('text-primary', 'border-primary', 'bg-primary', 'bg-opacity-10', 'border-opacity-25');
             } else {
@@ -151,10 +158,10 @@
 
             const planTitle = document.getElementById('plan-title');
             const planDescription = document.getElementById('plan-description');
-            if (user.role === 'admin') {
+            if (isAdmin) {
                 planTitle.textContent = 'Administrador';
                 planDescription.textContent = 'Acesso total à plataforma e ao painel administrativo.';
-            } else if (user.role === 'premium') {
+            } else if (isPremium) {
                 planTitle.textContent = 'Plano Premium';
                 planDescription.textContent = 'Acesso total a todas as ferramentas e suporte prioritário.';
             } else {

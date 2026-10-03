@@ -254,7 +254,12 @@ class Core {
       ? config.routes.legacyAppPages?.[requestedPageName] || ''
       : '';
     const appSlug = nestedAppSlug || legacyAppSlug;
-    const canonicalPageName = config.routes.aliases?.[requestedPageName] || requestedPageName;
+    const registeredNestedPage = this.registerPages.includes(`${segments[1]}/${segments[2]}`);
+    const validNestedPath = segments.length === 3 || (segments.length === 4 && segments[3] === '');
+    const nestedPageName = registeredNestedPage && validNestedPath ? `${segments[1]}/${segments[2]}` : '';
+    const aliasPageName = config.routes.aliases?.[requestedPageName];
+    const validAliasPath = !aliasPageName || segments.length === 2 || (segments.length === 3 && segments[2] === '');
+    const canonicalPageName = nestedPageName || aliasPageName || requestedPageName;
     const pageName = studioRouteKey
       ? `app-studio-${studioRouteKey.replace('/', '-')}`
       : appSlug
@@ -262,7 +267,7 @@ class Core {
       : requestedPageName === 'padrao-engenharia' && ['consultar', 'contato'].includes(segments[2])
         ? 'padrao-engenharia-contato'
         : canonicalPageName;
-    this.params = pageName === 'padrao-engenharia-contato' || appSlug || studioRouteKey ? [] : segments.slice(2);
+    this.params = pageName === 'padrao-engenharia-contato' || nestedPageName || aliasPageName || appSlug || studioRouteKey ? [] : segments.slice(2);
 
     if (config?.app?.debug) {
       console.log(`pageName`, pageName);
@@ -288,7 +293,7 @@ class Core {
         ? Boolean(studioPagePath)
         : appSlug
           ? config.routes.appPages.includes(appSlug)
-        : hasValidPadraoEngineeringPath && this.registerPages.includes(pageName);
+        : hasValidPadraoEngineeringPath && (!registeredNestedPage || validNestedPath) && validAliasPath && this.registerPages.includes(pageName);
       if (!isRegisteredPage) {
         throw new Error('Page not found');
       }
