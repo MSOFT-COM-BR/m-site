@@ -3,42 +3,17 @@
   .ecosystem-page {
     overflow: hidden;
     padding-top: 76px;
+    --ms-on-surface-variant: var(--ms-on-surface);
   }
 
   .ecosystem-page a:focus-visible {
-    outline: 3px solid var(--ms-secondary);
+    outline: 3px solid var(--ms-primary);
     outline-offset: 4px;
   }
 
   .ecosystem-hero {
-    isolation: isolate;
     position: relative;
     padding: clamp(5.5rem, 10vw, 8.5rem) 0 clamp(4.5rem, 8vw, 7rem);
-  }
-
-  .ecosystem-hero::before,
-  .ecosystem-hero::after {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    border-radius: 999px;
-    pointer-events: none;
-  }
-
-  .ecosystem-hero::before {
-    width: min(64vw, 760px);
-    aspect-ratio: 1;
-    top: -28%;
-    right: -18%;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.19), rgba(59, 130, 246, 0) 68%);
-  }
-
-  .ecosystem-hero::after {
-    width: min(46vw, 560px);
-    aspect-ratio: 1;
-    bottom: -52%;
-    left: -14%;
-    background: radial-gradient(circle, rgba(16, 185, 129, 0.13), rgba(16, 185, 129, 0) 70%);
   }
 
   .ecosystem-kicker {
@@ -48,13 +23,17 @@
     padding: 0.5rem 0.85rem;
     border: 1px solid rgba(148, 163, 184, 0.18);
     border-radius: 999px;
-    color: var(--ms-secondary);
-    background: rgba(6, 182, 212, 0.07);
+    color: var(--ms-primary);
+    background: rgba(var(--ms-primary-rgb), 0.07);
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+  }
+
+  .ecosystem-page .label-pill {
+    color: var(--ms-primary);
   }
 
   .ecosystem-title {
@@ -68,7 +47,7 @@
   }
 
   .ecosystem-title em {
-    color: var(--ms-secondary);
+    color: var(--ms-primary);
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.74em;
     font-style: normal;
@@ -88,14 +67,14 @@
     font-family: inherit;
     font-size: 1em;
     letter-spacing: inherit;
-    color: #087f96;
+    color: var(--ms-primary);
   }
 
   body[data-bs-theme="light"] .ecosystem-kicker {
     font-family: 'Inter', sans-serif;
     font-weight: 600;
     letter-spacing: 0.055em;
-    color: #087f96;
+    color: var(--ms-primary);
   }
 
   body[data-bs-theme="light"] .ecosystem-intro {
@@ -149,7 +128,7 @@
   .ecosystem-map-node i {
     display: block;
     margin-bottom: 0.7rem;
-    color: var(--ms-secondary);
+    color: var(--ms-primary);
     font-size: 1.2rem;
   }
 
@@ -253,12 +232,8 @@
     border: 1px solid var(--ms-outline-variant);
     border-radius: 15px;
     background: var(--ms-surface-container);
-    color: var(--ms-secondary);
+    color: var(--ms-primary);
     font-size: 1.35rem;
-  }
-
-  .ecosystem-journey--content .ecosystem-journey-icon {
-    color: var(--ms-tertiary);
   }
 
   .ecosystem-journey h3 {
@@ -297,8 +272,8 @@
   }
 
   .ecosystem-destination:hover {
-    border-color: var(--ms-secondary);
-    background: rgba(6, 182, 212, 0.1);
+    border-color: var(--ms-primary);
+    background: rgba(var(--ms-primary-rgb), 0.1);
     color: var(--ms-on-surface);
   }
 
@@ -369,7 +344,7 @@
     align-items: center;
     gap: 0.45rem;
     margin-top: 1.3rem;
-    color: var(--ms-secondary);
+    color: var(--ms-primary);
     font-size: 0.88rem;
     font-weight: 700;
   }
@@ -583,7 +558,7 @@
 
       <div class="ecosystem-feature-grid">
         <a class="ecosystem-feature ecosystem-feature--tools" href="/apps">
-          <i class="bi bi-lightning-charge fs-3 text-info" aria-hidden="true"></i>
+          <i class="bi bi-lightning-charge fs-3 text-primary" aria-hidden="true"></i>
           <h3>Ferramentas rápidas</h3>
           <p>Utilitários e apps para desafios do dia a dia.</p>
           <span>Explorar apps <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
