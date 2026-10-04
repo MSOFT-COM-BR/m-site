@@ -44,20 +44,20 @@
 
     ],
     about: {
-      title: "Nossa Essência",
+      title: "Tecnologia para construir soluções reais",
       description:
-        "Fundada com a missão de democratizar o acesso à tecnologia de alta qualidade, a MSoft se estabeleceu como referência em desenvolvimento de soluções digitais para todo o Brasil.",
+        "A Miranda Soft cria sites, sistemas sob medida e produtos digitais a partir de necessidades concretas, com atenção ao contexto e às pessoas que usam cada solução.",
       bullets: [
-        "10+ Anos de Experiência",
-        "100% Foco no Cliente",
-        "Equipe Especializada",
-        "Projetos de Alta Complexidade",
+        "Sites e presença digital",
+        "Sistemas sob medida",
+        "Produtos e ferramentas digitais",
+        "Evolução de soluções existentes",
       ],
-      supportTitle: "Por que nos escolher?",
-      supportDescription: "Nossa essência é entregar qualidade técnica superior com agilidade e parceria real.",
+      supportTitle: "Entendemos o contexto, definimos prioridades e construímos soluções que podem evoluir com a necessidade.",
+      supportDescription: "Nosso trabalho começa pelo problema a resolver e pelas pessoas que vão usar a solução.",
       supportColumns: [
-        ["Qualidade Técnica Superior", "Tecnologias Modernas (React, Node.js)", "Longevidade do Projeto"],
-        ["Entregas Ágeis (Scrum)", "Parceria Estratégica", "Feedback Constante"],
+        ["Contexto do projeto", "Escopo priorizado", "Experiência de uso"],
+        ["Construção técnica", "Avaliação do resultado", "Próximos incrementos"],
       ],
     },
     testimonials: [

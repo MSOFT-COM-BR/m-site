@@ -10,8 +10,8 @@ const SEO_CONFIG = {
     noindex: false
   },
   'about': {
-    title: 'Sobre a MSoft | Fábrica de Software e Inovação',
-    description: 'Conheça a Miranda Soft: mais de uma década transformando negócios com software sob medida, apps mobile e consultoria tech.',
+    title: 'Sobre a Miranda Soft | Sites, Sistemas e Produtos Digitais',
+    description: 'Conheça a Miranda Soft, suas soluções em sites, sistemas sob medida e produtos digitais, e como trabalhamos em cada projeto.',
     noindex: false
   },
   'expertise': {

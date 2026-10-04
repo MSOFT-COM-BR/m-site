@@ -9,8 +9,7 @@
           <span class="logo-text">Miranda<span class="brand-soft text-mono">Soft</span></span>
         </a>
         <p class="footer-description">
-          Empresa líder em desenvolvimento de software e soluções tecnológicas inovadoras,
-          comprometida em transformar o seu negócio através da tecnologia.
+          Criamos sites, sistemas e produtos digitais para transformar necessidades concretas em soluções úteis.
         </p>
         <div class="footer-social mt-4" role="group" aria-label="Redes sociais">
           <a href="mailto:contato@mirandasoft.com.br" class="social-link" aria-label="Enviar e-mail">
@@ -26,11 +25,11 @@
       <div class="col-lg-2 col-md-6">
         <h6 class="footer-title">Navegação</h6>
         <ul class="footer-links">
-          <li><a href="#solucoes">Soluções</a></li>
-          <li><a href="#sobre">Sobre Nós</a></li>
+          <li><a href="/ecossistema">Soluções</a></li>
+          <li><a href="/about">Sobre a Miranda Soft</a></li>
           <li><a href="/apps">Apps</a></li>
           <li><a href="/cotacoes" data-track="quote_open" data-track-location="footer">Pedir cotação</a></li>
-          <li><a href="#contact" data-track="contact_click" data-track-location="footer">Fale Conosco</a></li>
+          <li><a href="/contact" data-track="contact_click" data-track-location="footer">Fale Conosco</a></li>
           <li id="footer-auth-item"><a href="/login">Área do Cliente</a></li>
         </ul>
       </div>
@@ -66,12 +65,12 @@
       <div class="row align-items-center">
         <div class="col-md-6">
           <p class="copyright">
-            © 2025 Miranda Soft. Todos os direitos reservados. CNPJ: 37.704.330/0001-78
+            © <span id="footer-year">2026</span> Miranda Soft. Todos os direitos reservados. CNPJ: 37.704.330/0001-78
           </p>
         </div>
         <div class="col-md-6 text-md-end">
           <p class="made-with">
-            Feito com muita tecnologia na veia <i class="bi bi-person-workspace ms-1"></i>
+            Tecnologia para construir soluções reais.
           </p>
         </div>
       </div>
@@ -233,22 +232,6 @@
     white-space: nowrap;
   }
 
-  .made-with i {
-    animation: heartbeat 1.5s ease infinite;
-  }
-
-  @keyframes heartbeat {
-
-    0%,
-    100% {
-      transform: scale(1);
-    }
-
-    50% {
-      transform: scale(1.2);
-    }
-  }
-
   @media (max-width: 767.98px) {
     .dev-footer-section {
       padding: 60px 0 24px;
@@ -272,6 +255,8 @@
 <script>
   // Auth Footer Logic - Apenas monitora estado se necessário, mas não injeta mais links de admin/premium
   (function updateFooterNav() {
+    const footerYear = document.getElementById('footer-year');
+    if (footerYear) footerYear.textContent = String(new Date().getFullYear());
     const footerAuthItem = document.getElementById('footer-auth-item');
     if (!footerAuthItem) return;
 
