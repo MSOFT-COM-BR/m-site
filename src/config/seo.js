@@ -164,6 +164,13 @@ const SEO_CONFIG = {
     description: 'Console de administração da Miranda Soft.',
     noindex: true
   },
+  'console/aparencia': { title: 'Aparência | Console | Miranda Soft', description: 'Personalização visual do Console.', noindex: true },
+  'console/conteudo/mjson': { title: 'MJSON | Console | Miranda Soft', description: 'Dados estruturados do Console.', noindex: true },
+  'console/conteudo/blog': { title: 'Artigos | Console | Miranda Soft', description: 'Gerenciamento de artigos do Console.', noindex: true },
+  'console/midia': { title: 'Mídia | Console | Miranda Soft', description: 'Galeria de mídia do Console.', noindex: true },
+  'console/sistema/logs': { title: 'Registros | Console | Miranda Soft', description: 'Registros do sistema no Console.', noindex: true },
+  'console/sistema/usuarios': { title: 'Usuários | Console | Miranda Soft', description: 'Gerenciamento de usuários do Console.', noindex: true },
+  'console/sistema/apps': { title: 'Apps | Console | Miranda Soft', description: 'Catálogo de apps do Console.', noindex: true },
   'painel/perfil': {
     title: 'Meu perfil | Painel | Miranda Soft',
     description: 'Gerencie seus dados e preferências de conta no Painel da Miranda Soft.',

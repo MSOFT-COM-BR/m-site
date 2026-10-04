@@ -256,7 +256,12 @@ class Core {
     const appSlug = nestedAppSlug || legacyAppSlug;
     const registeredNestedPage = this.registerPages.includes(`${segments[1]}/${segments[2]}`);
     const validNestedPath = segments.length === 3 || (segments.length === 4 && segments[3] === '');
-    const nestedPageName = registeredNestedPage && validNestedPath ? `${segments[1]}/${segments[2]}` : '';
+    const isConsoleRoute = requestedPageName === 'console';
+    const consoleSegments = segments[segments.length - 1] === '' ? segments.slice(1, -1) : segments.slice(1);
+    const requestedConsolePage = isConsoleRoute ? consoleSegments.join('/') : '';
+    const registeredConsolePage = isConsoleRoute && this.registerPages.includes(requestedConsolePage) && requestedConsolePage !== 'console';
+    const validConsolePath = !isConsoleRoute || registeredConsolePage || requestedConsolePage === 'console';
+    const nestedPageName = registeredConsolePage ? requestedConsolePage : registeredNestedPage && validNestedPath ? `${segments[1]}/${segments[2]}` : '';
     const aliasPageName = config.routes.aliases?.[requestedPageName];
     const validAliasPath = !aliasPageName || segments.length === 2 || (segments.length === 3 && segments[2] === '');
     const canonicalPageName = nestedPageName || aliasPageName || requestedPageName;
@@ -293,7 +298,7 @@ class Core {
         ? Boolean(studioPagePath)
         : appSlug
           ? config.routes.appPages.includes(appSlug)
-        : hasValidPadraoEngineeringPath && (!registeredNestedPage || validNestedPath) && validAliasPath && this.registerPages.includes(pageName);
+        : hasValidPadraoEngineeringPath && validConsolePath && (!registeredNestedPage || validNestedPath || registeredConsolePage) && validAliasPath && this.registerPages.includes(pageName);
       if (!isRegisteredPage) {
         throw new Error('Page not found');
       }

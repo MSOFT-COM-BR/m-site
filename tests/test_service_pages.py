@@ -150,7 +150,7 @@ class ServicePagesContractTests(unittest.TestCase):
         self.assertIn('loadAdminEditorVendors', loader)
         self.assertIn('window.jQuery', loader)
         self.assertIn('summernote-lite.min.js', loader)
-        self.assertIn('await window.vendorLoader.loadAdminEditorVendors()', admin)
+        self.assertIn('await window.vendorLoader.loadAdminEditorVendors()', (ROOT / "src/assets/js/console/blog.js").read_text(encoding="utf-8"))
         self.assertIn('const filePath = `/src/pages/${pagePath}.html?v=${config.app.version}`;', core)
 
     def test_products_route_is_removed_in_favor_of_marketplace(self) -> None:
@@ -167,17 +167,18 @@ class ServicePagesContractTests(unittest.TestCase):
 
     def test_admin_apps_tab_drives_the_catalog_crud(self) -> None:
         admin = (ROOT / "src/pages/admin.html").read_text(encoding="utf-8")
+        apps = (ROOT / "src/assets/js/console/apps.js").read_text(encoding="utf-8")
 
         self.assertIn('data-tab="apps"', admin)
-        self.assertIn("tab === 'apps'", admin)
-        self.assertIn("'/catalog/admin'", admin)
-        self.assertIn("`/catalog/admin/${encodeURIComponent(editingAppKey)}`", admin)
-        self.assertIn("`/catalog/admin/${encodeURIComponent(appKey)}`", admin)
-        self.assertIn("'catalog-app-form'", admin)
-        self.assertIn("'catalog-app-list'", admin)
+        self.assertIn('href="/console/sistema/apps"', admin)
+        self.assertIn("'/catalog/admin'", apps)
+        self.assertIn("`/catalog/admin/${encodeURIComponent(editingAppKey)}`", apps)
+        self.assertIn("`/catalog/admin/${encodeURIComponent(appKey)}`", apps)
+        self.assertIn("'catalog-app-form'", apps)
+        self.assertIn("'catalog-app-list'", apps)
 
     def test_admin_blog_categories_use_the_api_crud(self) -> None:
-        admin = (ROOT / "src/pages/admin.html").read_text(encoding="utf-8")
+        admin = (ROOT / "src/assets/js/console/blog.js").read_text(encoding="utf-8")
 
         self.assertIn("'/blogs/categories'", admin)
         self.assertIn("`/blogs/categories/${encodeURIComponent(id)}`", admin)
@@ -290,7 +291,7 @@ class ServicePagesContractTests(unittest.TestCase):
             core,
         )
         self.assertIn(
-            "hasValidPadraoEngineeringPath && (!registeredNestedPage || validNestedPath) && validAliasPath && this.registerPages.includes(pageName)",
+            "hasValidPadraoEngineeringPath && validConsolePath && (!registeredNestedPage || validNestedPath || registeredConsolePage) && validAliasPath && this.registerPages.includes(pageName)",
             core,
         )
 

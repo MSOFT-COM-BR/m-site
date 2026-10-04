@@ -16,7 +16,7 @@ function resolveApiBaseUrl() {
 const config = {
   app: {
     name: "Miranda Soft",
-    version: "0.12.50",
+    version: "0.12.51",
     environment: "production",
     debug: false
   },
@@ -38,6 +38,13 @@ const config = {
       'login',
       'painel',
       'console',
+      'console/aparencia',
+      'console/conteudo/mjson',
+      'console/conteudo/blog',
+      'console/midia',
+      'console/sistema/logs',
+      'console/sistema/usuarios',
+      'console/sistema/apps',
       'blog-ads',
       'blog-review',
       'blogs',
@@ -70,6 +77,13 @@ const config = {
       painel: 'premium',
       'painel/perfil': 'profile',
       console: 'admin',
+      'console/aparencia': 'console/aparencia',
+      'console/conteudo/mjson': 'console/conteudo/mjson',
+      'console/conteudo/blog': 'console/conteudo/blog',
+      'console/midia': 'console/midia',
+      'console/sistema/logs': 'console/sistema/logs',
+      'console/sistema/usuarios': 'console/sistema/usuarios',
+      'console/sistema/apps': 'console/sistema/apps',
       'padrao-engenharia': 'sites/padrao-engenharia/index',
       'padrao-engenharia-contato': 'sites/padrao-engenharia/consultar'
     },
