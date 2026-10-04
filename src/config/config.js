@@ -16,7 +16,7 @@ function resolveApiBaseUrl() {
 const config = {
   app: {
     name: "Miranda Soft",
-    version: "0.12.51",
+    version: "0.12.52",
     environment: "production",
     debug: false
   },
@@ -41,6 +41,8 @@ const config = {
       'console/aparencia',
       'console/conteudo/mjson',
       'console/conteudo/blog',
+      'console/conteudo/blog/novo',
+      'console/conteudo/blog/editar',
       'console/midia',
       'console/sistema/logs',
       'console/sistema/usuarios',
@@ -80,6 +82,8 @@ const config = {
       'console/aparencia': 'console/aparencia',
       'console/conteudo/mjson': 'console/conteudo/mjson',
       'console/conteudo/blog': 'console/conteudo/blog',
+      'console/conteudo/blog/novo': 'console/conteudo/blog-editor',
+      'console/conteudo/blog/editar': 'console/conteudo/blog-editor',
       'console/midia': 'console/midia',
       'console/sistema/logs': 'console/sistema/logs',
       'console/sistema/usuarios': 'console/sistema/usuarios',

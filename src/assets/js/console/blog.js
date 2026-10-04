@@ -1,5 +1,9 @@
 window.consoleViews = window.consoleViews || Object.create(null);
 window.consoleViews.blog = async function ({ container, auth }) {
+                const route = window.location.pathname.replace(/\/$/, '');
+                const editorRoute = route === '/console/conteudo/blog/novo' || /\/console\/conteudo\/blog\/[a-zA-Z0-9-]{1,64}\/editar$/.test(route);
+                const editingId = route.match(/^\/console\/conteudo\/blog\/([a-zA-Z0-9-]{1,64})\/editar$/)?.[1] || '';
+                let isDirty = false;
                 function escapeHtmlAttr(s) {
                     return String(s ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
                 }
@@ -7,11 +11,12 @@ window.consoleViews.blog = async function ({ container, auth }) {
                 const blogLoggedAuthor = (blogUser && String(blogUser.name || blogUser.email || '').trim()) || '';
 
                 container.innerHTML = `
+                    <div id="blog-list-screen" ${editorRoute ? 'hidden style="display:none"' : ''}>
                     <div class="cms-section-header">
                         <div><h2 class="cms-title">Artigos</h2><p>Organize suas publicações e acompanhe o alcance do blog.</p></div>
                         <div class="cms-actions">
                             <a href="/blog" target="_blank" rel="noopener" class="btn btn-outline-light">Ver blog <i class="bi bi-box-arrow-up-right ms-1" aria-hidden="true"></i></a>
-                            <button type="button" class="btn cms-btn-primary" onclick="showBlogForm()"><i class="bi bi-plus-lg me-2" aria-hidden="true"></i>Escrever artigo</button>
+                            <a href="/console/conteudo/blog/novo" class="btn cms-btn-primary"><i class="bi bi-plus-lg me-2" aria-hidden="true"></i>Escrever artigo</a>
                         </div>
                     </div>
                     <dl class="cms-stats" aria-label="Resumo dos artigos">
@@ -29,8 +34,14 @@ window.consoleViews.blog = async function ({ container, auth }) {
                     <div id="blog-list-container" class="mt-3" aria-busy="true"></div>
                     <nav id="blog-pagination" class="cms-pagination" aria-label="Paginação de artigos" hidden></nav>
 
-                    <div id="blog-form-container" style="display: none;" class="mt-5 border-top border-light border-opacity-10 pt-5">
+                    </div>
+                    <div id="blog-form-container" style="display: ${editorRoute ? 'block' : 'none'};" class="cms-article-editor pt-3">
+                        <div class="d-flex flex-wrap align-items-start justify-content-between gap-3 mb-4">
+                            <div><a href="/console/conteudo/blog" class="text-decoration-none text-on-surface-variant small"><i class="bi bi-arrow-left me-1"></i> Voltar aos artigos</a><h2 class="cms-title mt-2 mb-1" id="blog-editor-heading">${editingId ? 'Editar artigo' : 'Escrever artigo'}</h2><p class="text-on-surface-variant mb-0">Prepare o conteúdo, escolha a publicação e posicione anúncios entre os blocos.</p></div>
+                            <span class="cms-status" id="blog-editor-status">Rascunho</span>
+                        </div>
                         <h5 class="text-on-surface mb-4 fw-bold fs-4"><i class="bi bi-journal-plus text-info me-2"></i> Estúdio do Artigo</h5>
+                        <div id="blog-editor-load-error" class="alert cms-alert" role="alert" hidden></div>
                         <form id="new-blog-form" class="row g-4">
                             <input type="hidden" id="blog-id" name="id">
                             <div class="col-md-6">
@@ -70,7 +81,7 @@ window.consoleViews.blog = async function ({ container, auth }) {
                                 <label class="form-label text-on-surface mb-2">Visibilidade</label>
                                 <div class="form-control cms-input d-flex align-items-center" style="background: var(--ms-surface-container-low) !important;">
                                      <div class="form-check form-switch m-0 pt-0 pb-0">
-                                        <input class="form-check-input" type="checkbox" id="blog-published" checked>
+                                        <input class="form-check-input" type="checkbox" id="blog-published">
                                         <label class="form-check-label text-on-surface ms-1 mb-0" for="blog-published">Ativo ao Público</label>
                                     </div>
                                 </div>
@@ -91,6 +102,15 @@ window.consoleViews.blog = async function ({ container, auth }) {
                                     <input type="radio" class="btn-check" name="blog-editor-mode" id="blog-mode-html" autocomplete="off">
                                     <label class="btn btn-outline-light btn-sm" for="blog-mode-html">HTML (anúncios / scripts)</label>
                                 </div>
+                                <div class="cms-ad-controls mb-3 p-3 rounded-3">
+                                    <label for="blog-ad-mode" class="form-label text-on-surface fw-semibold">Anúncios entre os blocos</label>
+                                    <div class="d-flex flex-wrap gap-2 align-items-center">
+                                        <select id="blog-ad-mode" class="form-select cms-input" style="max-width: 250px"><option value="auto">Automáticos</option><option value="manual">Posições manuais</option><option value="none">Sem anúncios no texto</option></select>
+                                        <button type="button" class="btn btn-outline-light" id="blog-insert-ad"><i class="bi bi-plus-circle me-1"></i> Inserir anúncio no cursor</button>
+                                        <button type="button" class="btn btn-outline-light" id="blog-remove-ad"><i class="bi bi-dash-circle me-1"></i> Remover último anúncio</button>
+                                    </div>
+                                    <p class="text-on-surface-variant small mb-0 mt-2" id="blog-ad-help">No modo manual, posicione o cursor entre os parágrafos e insira os espaços desejados. O blog adiciona o anúncio na publicação.</p>
+                                </div>
                                 <p class="text-on-surface-variant small mb-2 d-none" id="blog-html-mode-hint">Use este modo para colar blocos Google AdSense no meio do texto. Os scripts são executados na página pública do blog.</p>
                                 <div id="blog-editor-visual-wrap">
                                     <p id="blog-editor-vendor-feedback" class="alert alert-warning d-none" role="alert"></p>
@@ -106,9 +126,8 @@ window.consoleViews.blog = async function ({ container, auth }) {
                             <div class="col-12 mt-4 text-end">
                                 <hr class="border-secondary opacity-25 mb-4">
                                 <button type="button" class="btn btn-link text-on-surface-variant text-decoration-none me-3" onclick="hideBlogForm()">Cancelar edição</button>
-                                <button type="button" class="btn cms-btn-primary" onclick="saveBlogForm(event)">
-                                    <i class="bi bi-check2-circle me-1"></i> Salvar artigo
-                                </button>
+                                <button type="button" class="btn btn-outline-light" id="blog-save-draft" onclick="saveBlogForm(event, false)"><i class="bi bi-file-earmark me-1"></i> Salvar rascunho</button>
+                                <button type="button" class="btn cms-btn-primary" id="blog-save-published" onclick="saveBlogForm(event, true)"><i class="bi bi-check2-circle me-1"></i> Publicar artigo</button>
                             </div>
                         </form>
                     </div>
@@ -130,10 +149,12 @@ window.consoleViews.blog = async function ({ container, auth }) {
                     try {
                         blogCategoriesCache = await fetchBlogCategories();
                     } catch(e) {
+                        if (!container.isConnected || !container.contains(sel)) return;
                         console.warn('Falha ao buscar categorias do servidor:', e);
                         if (window.core && window.core.toast) window.core.toast('Não foi possível carregar as categorias.', 'error');
                         return;
                     }
+                    if (!container.isConnected || !container.contains(sel)) return;
 
                     // Preserva seleções atuais ao reconstruir as opções
                     const currentSelections = Array.from(sel.selectedOptions).map((o) => o.value).filter(Boolean);
@@ -178,6 +199,7 @@ window.consoleViews.blog = async function ({ container, auth }) {
                 };
 
                 const renderBlogCategoryManager = () => {
+                    if (!container.isConnected) return;
                     const list = document.getElementById('blog-category-manager-list');
                     if (!list) return;
                     if (!blogCategoriesCache.length) {
@@ -352,6 +374,7 @@ window.consoleViews.blog = async function ({ container, auth }) {
                     if (/<(script|iframe|img|video|ins|audio)[\s>/]/i.test(t)) return false;
                     const d = document.createElement('div');
                     d.innerHTML = raw;
+                    d.querySelectorAll('[data-ms-ad-marker]').forEach(marker => marker.remove());
                     const text = (d.textContent || '').replace(/\s/g, '');
                     return text === '';
                 }
@@ -367,6 +390,51 @@ window.consoleViews.blog = async function ({ container, auth }) {
                     }
                     return String(document.getElementById('blog-content').value || '').trim();
                 }
+
+                const adModePattern = /<!--\s*msoft:inline-ads:(manual|none)\s*-->/i;
+                function readAdMode(raw) {
+                    const match = String(raw || '').match(adModePattern);
+                    return match ? match[1].toLowerCase() : /data-ms-ad-marker/i.test(String(raw || '')) ? 'manual' : 'auto';
+                }
+                function removeAdMode(raw) {
+                    return String(raw || '').replace(adModePattern, '').trim();
+                }
+                function contentWithAdMode(raw) {
+                    const body = removeAdMode(raw);
+                    const mode = document.getElementById('blog-ad-mode').value;
+                    return mode === 'auto' ? body : `<!-- msoft:inline-ads:${mode} -->\n${body}`;
+                }
+                function insertAdMarker() {
+                    const mode = document.getElementById('blog-ad-mode');
+                    mode.value = 'manual';
+                    const marker = '<p class="ms-inline-ad-marker" data-ms-ad-marker="inline" contenteditable="false">Publicidade · anúncio nesta posição</p>';
+                    const htmlMode = document.getElementById('blog-mode-html').checked;
+                    if (!htmlMode && window.summernoteEditor?._editor) {
+                        window.summernoteEditor._editor.summernote('pasteHTML', marker);
+                    } else {
+                        if (!htmlMode) setBlogEditorMode('html');
+                        const field = document.getElementById('blog-content-html');
+                        const from = field.selectionStart;
+                        const to = field.selectionEnd;
+                        field.setRangeText(`\n${marker}\n`, from, to, 'end');
+                        field.focus();
+                    }
+                    isDirty = true;
+                }
+                document.getElementById('blog-insert-ad').addEventListener('click', insertAdMarker);
+                document.getElementById('blog-remove-ad').addEventListener('click', () => {
+                    if (document.getElementById('blog-mode-html').checked) {
+                        const field = document.getElementById('blog-content-html');
+                        const matches = [...field.value.matchAll(/<p\b[^>]*data-ms-ad-marker="inline"[^>]*>[\s\S]*?<\/p>/gi)];
+                        const last = matches.at(-1);
+                        if (last) field.value = field.value.slice(0, last.index) + field.value.slice(last.index + last[0].length);
+                    } else {
+                        const editable = document.querySelector('#blog-editor-container + .note-editor .note-editable, .note-editor .note-editable');
+                        [...(editable?.querySelectorAll('[data-ms-ad-marker="inline"]') || [])].at(-1)?.remove();
+                        if (window.summernoteEditor) document.getElementById('blog-content').value = window.summernoteEditor.root.innerHTML;
+                    }
+                    isDirty = true;
+                });
 
                 function setBlogEditorMode(mode) {
                     const visualWrap = document.getElementById('blog-editor-visual-wrap');
@@ -530,9 +598,9 @@ window.consoleViews.blog = async function ({ container, auth }) {
                     if (!button) return;
                     const action = button.dataset.listAction;
                     if (action === 'clear') clearBlogFilters();
-                    if (action === 'create') window.showBlogForm();
+                    if (action === 'create') window.core.navigate('/console/conteudo/blog/novo');
                     if (action === 'retry') window.refreshBlogList();
-                    if (action === 'edit') window.editBlog(button.dataset.blogId);
+                    if (action === 'edit') window.core.navigate(`/console/conteudo/blog/${encodeURIComponent(button.dataset.blogId)}/editar`);
                     if (action === 'delete') window.deleteBlog(button.dataset.blogId);
                 });
 
@@ -560,6 +628,7 @@ window.consoleViews.blog = async function ({ container, auth }) {
                         filters.category.value = categories.includes(selectedCategory) ? selectedCategory : '';
                         listReady = true;
                         renderBlogList();
+                        return blogs;
                     } catch (error) {
                         if (!listEl.isConnected || currentRequest !== requestId) return;
                         countEl.textContent = 'Artigos indisponíveis';
@@ -582,7 +651,43 @@ window.consoleViews.blog = async function ({ container, auth }) {
                     window.summernoteEditor = null;
                 }
 
+                function updateEditorStatus(published) {
+                    const checkbox = document.getElementById('blog-published');
+                    const status = document.getElementById('blog-editor-status');
+                    const draftButton = document.getElementById('blog-save-draft');
+                    const publishButton = document.getElementById('blog-save-published');
+                    checkbox.checked = Boolean(published);
+                    status.textContent = published ? 'Publicado' : 'Rascunho';
+                    status.classList.toggle('cms-status-published', Boolean(published));
+                    draftButton.innerHTML = `<i class="bi bi-file-earmark me-1"></i> ${published ? 'Retirar da publicação' : 'Salvar rascunho'}`;
+                    publishButton.innerHTML = `<i class="bi bi-check2-circle me-1"></i> ${published ? 'Salvar alterações' : 'Publicar artigo'}`;
+                }
+
+                if (editorRoute) {
+                    const form = document.getElementById('new-blog-form');
+                    form.addEventListener('input', () => { isDirty = true; });
+                    form.addEventListener('change', () => { isDirty = true; });
+                    const beforeRoute = event => {
+                        if (isDirty && event.detail?.to !== window.location.pathname && !window.confirm('Há alterações não salvas. Deseja sair do editor?')) event.preventDefault();
+                    };
+                    const beforeUnload = event => {
+                        if (!isDirty || !container.isConnected) return;
+                        event.preventDefault();
+                        event.returnValue = '';
+                    };
+                    window.addEventListener('msoft:before-route', beforeRoute);
+                    window.addEventListener('beforeunload', beforeUnload);
+                    window.addEventListener('msoft:route-unmount', () => {
+                        window.removeEventListener('msoft:before-route', beforeRoute);
+                        window.removeEventListener('beforeunload', beforeUnload);
+                    }, { once: true });
+                }
+
                 window.showBlogForm = async function() {
+                    if (!editorRoute) {
+                        window.core.navigate('/console/conteudo/blog/novo');
+                        return false;
+                    }
                     const formStr = document.getElementById('new-blog-form');
                     if (!container.isConnected || !formStr || !container.contains(formStr)) return false;
                     if (formStr) formStr.reset();
@@ -592,7 +697,7 @@ window.consoleViews.blog = async function ({ container, auth }) {
                     applyDefaultBlogAuthor();
                     setBlogCategorySelections(['Tecnologia']);
                     document.getElementById('blog-tags').value = '';
-                    document.getElementById('blog-published').checked = true;
+                    updateEditorStatus(false);
                     document.getElementById('blog-form-container').style.display = 'block';
                     setBlogSlugMode(true);
                     window.generateSlug(document.getElementById('blog-title').value);
@@ -652,22 +757,32 @@ window.consoleViews.blog = async function ({ container, auth }) {
                             var ed = window.summernoteEditor;
                             if (ed && ed.root && container.isConnected && container.contains(formStr)) {
                                 document.getElementById('blog-content').value = ed.root.innerHTML;
+                                isDirty = true;
                             }
                         });
                     } catch(e) { console.error('Summernote não iniciou: ', e); }
 
                     document.getElementById('blog-content').value = '';
                     window.scrollTo({ top: document.getElementById('blog-form-container').offsetTop - 100, behavior: 'smooth' });
+                    isDirty = false;
                     return true;
                 };
 
                 window.hideBlogForm = function() {
+                    if (editorRoute) {
+                        window.core.navigate('/console/conteudo/blog');
+                        return;
+                    }
                     if (!container.isConnected || !container.querySelector('#blog-form-container')) return;
                     document.getElementById('blog-form-container').style.display = 'none';
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 };
 
                 window.editBlog = async function(id) {
+                    if (!editorRoute) {
+                        window.core.navigate(`/console/conteudo/blog/${encodeURIComponent(id)}/editar`);
+                        return;
+                    }
                     const blog = window.blogCache[id];
                     if(!blog) return;
                     if (!await showBlogForm()) return;
@@ -683,9 +798,10 @@ window.consoleViews.blog = async function ({ container, auth }) {
                     }
                     document.getElementById('blog-tags').value = (blog.tags || []).join(', ');
                     document.getElementById('blog-imageUrl').value = blog.imageUrl || '';
-                    document.getElementById('blog-published').checked = blog.published;
+                    updateEditorStatus(blog.published);
 
-                    const raw = blog.content || '';
+                    const raw = removeAdMode(blog.content || '');
+                    document.getElementById('blog-ad-mode').value = readAdMode(blog.content || '');
                     if (blogContentNeedsRawHtml(raw)) {
                         const vRadio = document.getElementById('blog-mode-visual');
                         const hRadio = document.getElementById('blog-mode-html');
@@ -709,13 +825,17 @@ window.consoleViews.blog = async function ({ container, auth }) {
                         }
                     }
                     document.getElementById('blog-content').value = raw;
+                    isDirty = false;
                 };
 
-                window.saveBlogForm = async function(event) {
+                window.saveBlogForm = async function(event, desiredPublished) {
                     const btnSave = event.target.closest('button');
+                    const form = document.getElementById('new-blog-form');
+                    if (!form || !container.contains(form) || form.getAttribute('aria-busy') === 'true') return;
+                    const routeAtSubmit = window.location.pathname;
                     const orgText = btnSave.innerHTML;
+                    const actionButtons = [document.getElementById('blog-save-draft'), document.getElementById('blog-save-published')];
                     btnSave.innerHTML = '<div class="spinner-border spinner-border-sm me-2"></div>Salvando...';
-                    btnSave.disabled = true;
 
                     const id = document.getElementById('blog-id').value;
                     const tagsStr = document.getElementById('blog-tags').value;
@@ -735,33 +855,52 @@ window.consoleViews.blog = async function ({ container, auth }) {
                         category: categories[0] || 'Geral',
                         tags: tagsStr ? tagsStr.split(',').map(t => t.trim()).filter(Boolean) : [],
                         imageUrl: document.getElementById('blog-imageUrl').value,
-                        content: bodyContent,
-                        published: document.getElementById('blog-published').checked
+                        content: contentWithAdMode(bodyContent),
+                        published: Boolean(desiredPublished)
                     };
 
                     if (!payload.title || !payload.slug || isBlogBodyEmpty(bodyContent)) {
                         window.core.toast('O Título, o Slug e o Conteúdo são cruciais e obrigatórios.', 'warning');
                         btnSave.innerHTML = orgText;
-                        btnSave.disabled = false;
+                        actionButtons.forEach(button => { button.disabled = false; });
                         return;
                     }
+
+                    const controls = [...form.querySelectorAll('input, select, textarea, button')];
+                    const disabledBefore = controls.map(control => control.disabled);
+                    controls.forEach(control => { control.disabled = true; });
+                    const editable = form.querySelector('.note-editable');
+                    const contentEditableBefore = editable?.getAttribute('contenteditable');
+                    editable?.setAttribute('contenteditable', 'false');
+                    form.setAttribute('aria-busy', 'true');
 
                     try {
                         const endpoint = id ? '/blogs/' + id : '/blogs';
                         const method = id ? 'PUT' : 'POST';
                         const res = await window.core.fetchAPI(endpoint, method, payload);
+                        if (!container.isConnected || !container.contains(form) || window.location.pathname !== routeAtSubmit) return;
                         if (res && res.success) {
                             window.core.toast('Artigo salvo com sucesso.', 'success');
-                            hideBlogForm();
-                            refreshBlogList();
+                            isDirty = false;
+                            updateEditorStatus(payload.published);
+                            const savedId = String(res.data?._id || res.data?.id || id || '');
+                            if (!id && savedId) window.core.navigate(`/console/conteudo/blog/${encodeURIComponent(savedId)}/editar`);
+                            else if (!id) window.core.navigate('/console/conteudo/blog');
                         } else {
-                            window.core.toast('Erro ao processar: ' + (res.error || 'Código Desconhecido'), 'error');
+                            window.core.toast('Erro ao processar: ' + (res?.error || 'Código Desconhecido'), 'error');
                         }
                     } catch(e) {
-                        window.core.toast('Não foi possível salvar. Verifique sua conexão e tente novamente.', 'error');
+                        if (container.isConnected && container.contains(form)) window.core.toast('Não foi possível salvar. Verifique sua conexão e tente novamente.', 'error');
                     } finally {
-                        btnSave.innerHTML = orgText;
-                        btnSave.disabled = false;
+                        if (container.isConnected && container.contains(form)) {
+                            btnSave.innerHTML = orgText;
+                            controls.forEach((control, index) => { control.disabled = disabledBefore[index]; });
+                            if (editable) {
+                                if (contentEditableBefore === null) editable.removeAttribute('contenteditable');
+                                else editable.setAttribute('contenteditable', contentEditableBefore);
+                            }
+                            form.removeAttribute('aria-busy');
+                        }
                     }
                 };
 
@@ -780,6 +919,19 @@ window.consoleViews.blog = async function ({ container, auth }) {
                     }
                 };
 
-                // Trigger inicial
-                refreshBlogList();
+                // A lista e o estúdio compartilham a lógica de edição, mas cada rota mostra apenas sua tela.
+                if (editorRoute) {
+                    if (editingId) {
+                        const articles = await window.refreshBlogList();
+                        if (!container.isConnected) return;
+                        const article = Array.isArray(articles) && articles.find(item => String(item._id) === editingId);
+                        if (article) await window.editBlog(editingId);
+                        else {
+                            document.getElementById('new-blog-form').hidden = true;
+                            const error = document.getElementById('blog-editor-load-error');
+                            error.hidden = false;
+                            error.textContent = Array.isArray(articles) ? 'Artigo não encontrado. Volte à lista e escolha outro artigo.' : 'Não foi possível carregar o artigo. Atualize a página para tentar novamente.';
+                        }
+                    } else await window.showBlogForm();
+                } else refreshBlogList();
 };

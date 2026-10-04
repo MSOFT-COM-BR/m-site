@@ -20,7 +20,9 @@
   const lifecycle = new AbortController();
   const { signal } = lifecycle;
   const routePath = window.location.pathname.replace(/\/$/, '');
-  const explicitTab = Object.keys(paths).find(tab => paths[tab] === routePath);
+  const isBlogEditorRoute = routePath === '/console/conteudo/blog/novo'
+    || /^\/console\/conteudo\/blog\/[a-zA-Z0-9-]{1,64}\/editar$/.test(routePath);
+  const explicitTab = Object.keys(paths).find(tab => paths[tab] === routePath) || (isBlogEditorRoute ? 'blog' : undefined);
   const legacyRoot = routePath === '/console' || routePath === '/admin';
   let selectedTab = explicitTab;
   let renderId = 0;

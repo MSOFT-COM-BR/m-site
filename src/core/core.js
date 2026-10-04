@@ -258,7 +258,13 @@ class Core {
     const validNestedPath = segments.length === 3 || (segments.length === 4 && segments[3] === '');
     const isConsoleRoute = requestedPageName === 'console';
     const consoleSegments = segments[segments.length - 1] === '' ? segments.slice(1, -1) : segments.slice(1);
-    const requestedConsolePage = isConsoleRoute ? consoleSegments.join('/') : '';
+    const blogEditId = isConsoleRoute && consoleSegments.length === 5
+      && consoleSegments[1] === 'conteudo' && consoleSegments[2] === 'blog'
+      && /^[a-zA-Z0-9-]{1,64}$/.test(consoleSegments[3]) && consoleSegments[4] === 'editar'
+      ? consoleSegments[3] : '';
+    const requestedConsolePage = isConsoleRoute
+      ? blogEditId ? 'console/conteudo/blog/editar' : consoleSegments.join('/')
+      : '';
     const registeredConsolePage = isConsoleRoute && this.registerPages.includes(requestedConsolePage) && requestedConsolePage !== 'console';
     const validConsolePath = !isConsoleRoute || registeredConsolePage || requestedConsolePage === 'console';
     const nestedPageName = registeredConsolePage ? requestedConsolePage : registeredNestedPage && validNestedPath ? `${segments[1]}/${segments[2]}` : '';
@@ -272,7 +278,7 @@ class Core {
       : requestedPageName === 'padrao-engenharia' && ['consultar', 'contato'].includes(segments[2])
         ? 'padrao-engenharia-contato'
         : canonicalPageName;
-    this.params = pageName === 'padrao-engenharia-contato' || nestedPageName || aliasPageName || appSlug || studioRouteKey ? [] : segments.slice(2);
+    this.params = blogEditId ? [blogEditId] : pageName === 'padrao-engenharia-contato' || nestedPageName || aliasPageName || appSlug || studioRouteKey ? [] : segments.slice(2);
 
     if (config?.app?.debug) {
       console.log(`pageName`, pageName);
@@ -397,6 +403,8 @@ class Core {
       const paramsString = this.params.length > 0 ? `/${this.params.join('/')}` : '';
       const canonicalPath = pageName === 'home'
         ? '/'
+        : blogEditId
+          ? `/console/conteudo/blog/${blogEditId}/editar`
         : studioRouteKey
           ? `/app/studio/${studioRouteKey}`
           : appSlug
@@ -462,7 +470,15 @@ class Core {
 
   // SPA: Navegação e roteamento
   initRouter() {
-    window.addEventListener('popstate', () => this.handleRoute(`${window.location.pathname}${window.location.search}${window.location.hash}`));
+    window.addEventListener('popstate', () => {
+      const next = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+      const before = new CustomEvent('msoft:before-route', { cancelable: true, detail: { from: this._currentPath, to: next } });
+      if (!window.dispatchEvent(before)) {
+        window.history.pushState({}, '', this._currentPath || '/');
+        return;
+      }
+      this.handleRoute(next);
+    });
     document.addEventListener('click', e => {
       const link = e.target.closest('a');
       if (link && link.href.startsWith(window.location.origin) && !link.hasAttribute('target')) {
@@ -485,6 +501,8 @@ class Core {
   navigate(path) {
     const currentRoute = `${window.location.pathname}${window.location.search}${window.location.hash}`;
     if (currentRoute !== path) {
+      const before = new CustomEvent('msoft:before-route', { cancelable: true, detail: { from: currentRoute, to: path } });
+      if (!window.dispatchEvent(before)) return;
       window.history.pushState({}, '', path);
       this.handleRoute(path);
     }

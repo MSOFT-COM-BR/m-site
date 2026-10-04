@@ -76,8 +76,8 @@ async function setup(page, role = 'admin') {
       await page.goto(origin + '/console/inexistente', { waitUntil: 'networkidle' });
       assert.equal(await page.locator('.admin-nav').count(), 0);
       assert.equal(new URL(page.url()).pathname, '/console/inexistente');
-      await page.goto(origin + '/console/conteudo/blog', { waitUntil: 'networkidle' });
-      await page.waitForSelector('#blog-search');
+      await page.goto(origin + '/console/conteudo/blog/novo', { waitUntil: 'networkidle' });
+      await page.waitForSelector('.note-editor');
       await page.waitForFunction(() => !document.querySelector('#tab-content')?.hasAttribute('aria-busy') && typeof window.showBlogForm === 'function');
       await page.evaluate(() => {
         Object.defineProperty(window, 'vendorLoader', {

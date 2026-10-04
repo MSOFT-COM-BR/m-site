@@ -87,6 +87,7 @@ async function inspect(page) {
       assert.match(await page.locator('.cms-article').first().innerText(),/120 visualizações/);
       assert.equal(api.reads.length,1,'search/filter/sort/pagination reuse loaded data');
       await page.locator('[data-list-action="edit"]').first().click();
+      await page.waitForURL(origin+'/console/conteudo/blog/post-12/editar');
       await page.waitForSelector('.note-editor');
       assert.equal(await page.locator('#blog-id').inputValue(),'post-12');
       assert.equal(await page.locator('#blog-title').inputValue(),'Artigo 12');
@@ -97,10 +98,12 @@ async function inspect(page) {
         assert.deepEqual(result,{overflow:false,violations:[]},`${width} ${theme} editor`);
       }
       await page.locator('#blog-title').fill('Artigo editado');
-      await page.locator('#new-blog-form button[onclick^="saveBlogForm"]').click();
-      await page.waitForFunction(()=>document.getElementById('blog-form-container').style.display==='none');
+      await page.locator('#blog-save-draft').click();
+      await page.waitForFunction(()=>document.getElementById('blog-save-draft').disabled===false && !document.getElementById('blog-save-draft').querySelector('.spinner-border'));
       assert.equal(api.writes[0].method,'PUT');
       assert.equal(api.writes[0].body.title,'Artigo editado');
+      await page.locator('#blog-form-container a[href="/console/conteudo/blog"]').click();
+      await page.waitForURL(origin+'/console/conteudo/blog');
       await page.waitForSelector('.cms-article');
       page.once('dialog',dialog=>dialog.dismiss());
       await page.locator('[data-list-action="delete"]').first().click();
