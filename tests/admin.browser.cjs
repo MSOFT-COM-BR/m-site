@@ -58,7 +58,7 @@ async function inspect(page) {
       const page=await browser.newPage({viewport:{width,height:1000}, reducedMotion:'reduce'});
       const api=await setup(page); const errors=[];
       page.on('pageerror',error=>errors.push(error.message));
-      await page.goto(origin+'/admin',{waitUntil:'networkidle'});
+      await page.goto(origin+'/console/conteudo/blog',{waitUntil:'networkidle'});
       await page.waitForSelector('.cms-article');
       assert.equal(await page.locator('#blog-stat-total').innerText(),'13');
       assert.equal(await page.locator('#blog-stat-published').innerText(),'8');
@@ -122,7 +122,7 @@ async function inspect(page) {
       await page.waitForSelector('[data-list-action="create"]');
       assert.equal(await page.locator('#blog-stat-total').innerText(),'0');
       assert.equal(await page.locator('#blog-pagination').isVisible(),false);
-      for(const tab of ['theme','mjson','images','logs','users','apps']) {
+      for(const tab of ['overview','theme','mjson','images','logs','users','apps']) {
         await page.evaluate(tab=>window.loadTab(tab),tab);
         await page.waitForTimeout(500);
         for(const theme of ['light','dark']) {
@@ -138,7 +138,6 @@ async function inspect(page) {
         assert.equal(await page.locator('#admin-nav-toggle').getAttribute('aria-expanded'),'false');
       }
       if (width === 390) await page.locator('#admin-nav-toggle').click();
-      await page.locator('[data-group="content"] > button').click();
       await page.locator('.admin-nav [data-tab="blog"]').click();
       await page.waitForSelector('#blog-search');
       assert.equal(await page.locator('.admin-nav [data-tab="blog"]').getAttribute('aria-current'),'page');
@@ -154,7 +153,7 @@ async function inspect(page) {
     }
     for (const role of [false, 'member']) {
       const page=await browser.newPage(); const api=await setup(page,role);
-      await page.goto(origin+'/admin',{waitUntil:'networkidle'});
+      await page.goto(origin+'/console/conteudo/blog',{waitUntil:'networkidle'});
       await page.waitForSelector('#access-denied',{state:'visible'});
       await page.evaluate(()=>window.loadTab('blog'));
       assert.equal(api.reads.length,0,'visitor and non-admin cannot load admin data');

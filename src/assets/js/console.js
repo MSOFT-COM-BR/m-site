@@ -1,5 +1,6 @@
 (function () {
   const paths = Object.freeze({
+    overview: '/console',
     theme: '/console/aparencia',
     mjson: '/console/conteudo/mjson',
     blog: '/console/conteudo/blog',
@@ -8,7 +9,7 @@
     users: '/console/sistema/usuarios',
     apps: '/console/sistema/apps'
   });
-  const groups = { theme: null, mjson: 'content', blog: 'content', images: null, logs: 'system', users: 'system', apps: 'system' };
+  const groups = { overview: null, theme: 'workspace', mjson: 'content', blog: 'content', images: 'workspace', logs: 'system', users: 'system', apps: 'system' };
   const auth = window.authService;
   const content = document.getElementById('admin-content');
   const denied = document.getElementById('access-denied');
@@ -23,7 +24,7 @@
   const isBlogEditorRoute = routePath === '/console/conteudo/blog/novo'
     || /^\/console\/conteudo\/blog\/[a-zA-Z0-9-]{1,64}\/editar$/.test(routePath);
   const explicitTab = Object.keys(paths).find(tab => paths[tab] === routePath) || (isBlogEditorRoute ? 'blog' : undefined);
-  const legacyRoot = routePath === '/console' || routePath === '/admin';
+  const legacyRoot = routePath === '/admin';
   let selectedTab = explicitTab;
   let renderId = 0;
 
@@ -40,10 +41,12 @@
   function closeMobileNav() {
     nav?.classList.remove('open');
     toggle?.setAttribute('aria-expanded', 'false');
+    toggle?.setAttribute('aria-label', 'Abrir navegação do Console');
   }
   toggle?.addEventListener('click', () => {
     const open = nav.classList.toggle('open');
     toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fechar navegação do Console' : 'Abrir navegação do Console');
   }, { signal });
   document.addEventListener('pointerdown', event => {
     if (window.innerWidth < 992 && nav?.classList.contains('open') && !nav.contains(event.target)) closeMobileNav();
@@ -64,7 +67,7 @@
       else item.removeAttribute('aria-current');
     });
     nav?.querySelectorAll('.admin-nav-group').forEach(group => {
-      group.querySelector('.admin-nav-dropdown-toggle')?.classList.toggle('active', group.dataset.group === groups[tab]);
+      group.classList.toggle('active', group.dataset.group === groups[tab]);
     });
     const current = document.getElementById('admin-current-tab');
     if (current) current.textContent = nav?.querySelector(`[data-tab="${tab}"]`)?.textContent.trim() || '';
@@ -131,13 +134,7 @@
   if (auth?.isAuthenticated() && auth.hasRole('admin')) {
     content.style.display = 'block';
     document.getElementById('admin-role').hidden = false;
-    let initialTab = explicitTab || 'blog';
-    if (legacyRoot) {
-      try {
-        const saved = localStorage.getItem('msoft_cms_last_tab');
-        if (paths[saved]) initialTab = saved;
-      } catch (_) { /* storage unavailable */ }
-    }
+    const initialTab = explicitTab || 'overview';
     render(initialTab);
   } else {
     denied.style.display = 'block';

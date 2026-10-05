@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const origin = process.env.TEST_ORIGIN || 'http://127.0.0.1:8082';
 const routes = [
+  ['overview', '/console', 'Visão geral'],
   ['theme', '/console/aparencia', 'Personalização Visual'],
   ['mjson', '/console/conteudo/mjson', 'MJSON'],
   ['blog', '/console/conteudo/blog', 'Artigos'],
@@ -57,7 +58,6 @@ async function setup(page, role = 'admin') {
       }
       await page.goto(origin + '/console/aparencia', { waitUntil: 'networkidle' });
       if (width === 390) await page.locator('#admin-nav-toggle').click();
-      await page.locator('[data-group="content"] > button').click();
       await page.locator('.admin-nav [data-tab="blog"]').click();
       await page.waitForURL(origin + '/console/conteudo/blog');
       await page.waitForSelector('#blog-search');
@@ -70,7 +70,8 @@ async function setup(page, role = 'admin') {
       assert.equal(await page.locator('.admin-nav [data-tab="blog"]').getAttribute('aria-current'), 'page');
       await page.goto(origin + '/console', { waitUntil: 'networkidle' });
       await page.waitForFunction(() => document.querySelector('.admin-nav [aria-current="page"]'));
-      assert.equal(await page.locator('.admin-nav [data-tab="blog"]').getAttribute('aria-current'), 'page');
+      assert.equal(await page.locator('.admin-nav [data-tab="overview"]').getAttribute('aria-current'), 'page');
+      assert.match(await page.locator('#tab-content').innerText(), /Visão geral/);
       await page.goto(origin + '/admin', { waitUntil: 'networkidle' });
       assert.equal(new URL(page.url()).pathname, '/console');
       await page.goto(origin + '/console/inexistente', { waitUntil: 'networkidle' });
@@ -109,6 +110,6 @@ async function setup(page, role = 'admin') {
       assert.equal(calls.some(path => /blogs|catalog\/admin|\/mjson|\/admin\/users/.test(path)), false, calls.join(', '));
       await page.close();
     }
-    console.log('PASS Console routes: seven direct pages, reload, history, legacy, 404, roles and SEO');
+    console.log('PASS Console routes: overview, seven direct pages, reload, history, legacy, 404, roles and SEO');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });
