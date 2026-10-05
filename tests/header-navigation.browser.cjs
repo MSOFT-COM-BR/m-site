@@ -25,7 +25,12 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
             await page.waitForTimeout(350);
             const bounds=await page.locator('.dev-header .nav-link').evaluateAll(es=>es.map(e=>{const b=e.getBoundingClientRect();return {text:e.textContent,visible:!!b.width,left:b.left,right:b.right};}));
             for(const b of bounds) assert.ok(b.visible && b.left>=0 && b.right<=width,`${width} ${locale} ${theme}: ${b.text} alcançável`);
-            for(const [key,hrefs] of [['solutions',['/criacao-de-sites','/desenvolvimento-de-sistemas','/expertise']],['marketplace',['/marketplace','/apps']],['about',['/about','/contact','/login']]]) {
+            const dropdownLinks = [
+              ['solutions',['/criacao-de-sites','/desenvolvimento-de-sistemas','/expertise']],
+              ['marketplace',['/marketplace','/apps']],
+              ['about', authenticated ? ['/about','/contact'] : ['/about','/contact','/login']]
+            ];
+            for(const [key,hrefs] of dropdownLinks) {
               const toggle=page.locator(`.dev-header [data-i18n="nav.${key}"][data-bs-toggle]`);
               await toggle.click();
               assert.equal(await toggle.getAttribute('aria-expanded'),'true');
@@ -54,13 +59,21 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
         });
         for (const href of ['/criacao-de-sites','/desenvolvimento-de-sistemas','/expertise','/marketplace','/apps','/about','/contact','/login']) {
           const link = page.locator(`.dev-header .dropdown-menu a[href="${href}"]`);
+          const publicAccountLink = page.locator('.dev-header a.header-client-link[href="/login"]');
           const mobile = page.locator('[data-mobile-nav-toggle]');
           if (await mobile.isVisible() && await mobile.getAttribute('aria-expanded') !== 'true') await mobile.click();
-          await link.locator('xpath=ancestor::li[contains(@class,"dropdown")][1]').locator('[data-bs-toggle="dropdown"]').click();
-          await Promise.all([
-            page.waitForResponse(response => response.url().includes(`/src/pages/${href.slice(1)}.html`)),
-            link.click()
-          ]);
+          if (href === '/login') {
+            await Promise.all([
+              page.waitForResponse(response => response.url().includes('/src/pages/login.html')),
+              publicAccountLink.click()
+            ]);
+          } else {
+            await link.locator('xpath=ancestor::li[contains(@class,"dropdown")][1]').locator('[data-bs-toggle="dropdown"]').click();
+            await Promise.all([
+              page.waitForResponse(response => response.url().includes(`/src/pages/${href.slice(1)}.html`)),
+              link.click()
+            ]);
+          }
           await page.waitForFunction(path => location.pathname === path, href);
           await page.waitForTimeout(500);
           assert.ok(await page.locator('#root').innerText(), `${href} carregou conteúdo`);
