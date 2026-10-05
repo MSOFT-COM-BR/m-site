@@ -29,6 +29,11 @@ const origin = process.env.TEST_ORIGIN || 'http://127.0.0.1:8082';
           htmlOverflow: getComputedStyle(document.documentElement).overflow,
           bodyOverflow: getComputedStyle(document.body).overflow,
           themeLabel: getComputedStyle(document.querySelector('[data-theme-label]')).visibility,
+          controlWidths: ['#header-language-action button', '#header-theme-action button', '#header-auth-action .header-user-btn'].map(selector => {
+            const rect = document.querySelector(selector).getBoundingClientRect();
+            return rect.width;
+          }),
+          themeButtonHeight: document.querySelector('#header-theme-action button').getBoundingClientRect().height,
           pageY: scrollY,
         };
       });
@@ -38,6 +43,8 @@ const origin = process.env.TEST_ORIGIN || 'http://127.0.0.1:8082';
       assert.equal(metrics.htmlOverflow, 'hidden');
       assert.equal(metrics.bodyOverflow, 'hidden');
       assert.equal(metrics.themeLabel, 'visible', 'mobile theme action has a visible label');
+      assert.ok(metrics.controlWidths.every(width => Math.abs(width - metrics.controlWidths[0]) <= 1), 'language, theme and account controls fill the same width');
+      assert.ok(metrics.themeButtonHeight >= 44, 'theme action has a full-height touch target');
       assert.equal(metrics.pageY, 0, 'opening the menu does not move the page');
 
       await page.locator('.header-user-btn').click();

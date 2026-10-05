@@ -447,7 +447,7 @@
       border-top: 1px solid var(--header-menu-border);
     }
 
-    .dev-header .header-theme-btn {
+    .dev-header .navbar-collapse #header-theme-action .header-theme-btn {
       display: flex;
       width: 100%;
       height: 44px;
@@ -474,7 +474,18 @@
       font-weight: 600;
     }
 
-    .dev-header .navbar-collapse .header-user-btn {
+    .dev-header .navbar-collapse #header-auth-action {
+      width: 100%;
+      max-width: none;
+      min-width: 0;
+    }
+
+    .dev-header .navbar-collapse #header-auth-action > .dropdown {
+      width: 100%;
+    }
+
+    .dev-header .navbar-collapse #header-auth-action .header-user-btn {
+      width: 100%;
       justify-content: flex-start;
       padding-inline: 14px;
       border-radius: 10px;
