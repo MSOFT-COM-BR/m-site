@@ -567,13 +567,13 @@
 
             const normalizeCategory = (value) => (value || '').toString().trim().toLocaleLowerCase('pt-BR');
             const getPostCategories = (post) => {
-                const categories = Array.isArray(post.categories) ? post.categories : [post.category];
+                const categories = Array.isArray(post.categories) && post.categories.length ? post.categories : [post.category];
                 return categories
                     .map((category) => (typeof category === 'object' ? category?.name : category))
                     .map((category) => (category || '').toString().trim())
                     .filter(Boolean);
             };
-            let selectedFilter = 'todos';
+            let selectedFilter = normalizeCategory(new URLSearchParams(window.location.search).get('categoria')) || 'todos';
             let allPosts = [];
 
             try {
@@ -681,10 +681,11 @@
                     filterContainer.appendChild(button);
                 };
 
-                createFilterButton('todos', 'Todos', true);
+                if (!categoriesByFilter.has(selectedFilter)) selectedFilter = 'todos';
+                createFilterButton('todos', 'Todos', selectedFilter === 'todos');
                 Array.from(categoriesByFilter.entries())
                     .sort(([, firstLabel], [, secondLabel]) => firstLabel.localeCompare(secondLabel, 'pt-BR'))
-                    .forEach(([filter, label]) => createFilterButton(filter, label));
+                    .forEach(([filter, label]) => createFilterButton(filter, label, selectedFilter === filter));
 
                 const buttons = filterContainer.querySelectorAll('[data-filter]');
                 buttons.forEach((button) => {

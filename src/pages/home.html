@@ -91,7 +91,86 @@
       </div>
     </div>
   </section>
+
+  <section class="home-editorial" aria-labelledby="home-editorial-title">
+    <div class="container">
+      <div class="home-products-heading">
+        <div>
+          <span class="home-portfolio-eyebrow">CONTEÚDO MIRANDASOFT</span>
+          <h2 id="home-editorial-title">Ideias para colocar em prática</h2>
+        </div>
+        <a class="home-editorial-all" href="/blog">Ver todos os artigos <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+      </div>
+      <div class="home-editorial-categories" id="home-content-categories" aria-label="Categorias de conteúdo">
+        <span class="home-editorial-loading">Carregando categorias…</span>
+      </div>
+      <div class="home-popular-heading">
+        <h3><i class="bi bi-fire" aria-hidden="true"></i> Mais visualizados</h3>
+        <span>Os artigos mais lidos pela comunidade</span>
+      </div>
+      <div class="row g-3 g-xl-4" id="home-popular-articles" aria-live="polite">
+        <div class="col-12"><p class="home-editorial-loading">Carregando artigos…</p></div>
+      </div>
+    </div>
+  </section>
 </main>
+
+<script>
+(() => {
+  const categoriesRoot = document.getElementById('home-content-categories');
+  const articlesRoot = document.getElementById('home-popular-articles');
+  if (!categoriesRoot || !articlesRoot) return;
+  const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+  const normalizeCategory = (category) => typeof category === 'object' ? String(category?.name || '').trim() : String(category || '').trim();
+  const categoryNames = (article) => (Array.isArray(article.categories) && article.categories.length ? article.categories : [article.category]).map(normalizeCategory).filter(Boolean);
+  const summaryOf = article => String(article.description || article.content || '').replace(/<[^>]*>/g, '').trim().slice(0, 160);
+  const imageOf = value => {
+    const source = String(value || '').trim();
+    if (source.startsWith('/')) return source;
+    try { const url = new URL(source); return ['https:', 'http:'].includes(url.protocol) ? url.href : ''; } catch (_) { return ''; }
+  };
+  const load = async () => {
+    try {
+      const [categoryResult, articleResult] = await Promise.allSettled([
+        window.core.fetchAPI('/blogs/categories', 'GET', {}, { silent: true }),
+        window.core.fetchAPI('/blogs', 'GET', {}, { silent: true })
+      ]);
+      const categoryResponse = categoryResult.status === 'fulfilled' ? categoryResult.value : null;
+      const articleResponse = articleResult.status === 'fulfilled' ? articleResult.value : null;
+      const categoriesAvailable = categoryResponse?.success === true && Array.isArray(categoryResponse.data);
+      const articlesAvailable = articleResponse?.success === true && Array.isArray(articleResponse.data);
+      const categories = categoriesAvailable ? categoryResponse.data : [];
+      const articles = articlesAvailable ? articleResponse.data : [];
+      const usedCategories = new Set(articles.flatMap(categoryNames).map(name => name.toLocaleLowerCase('pt-BR')));
+      const names = [...new Map(categories.map(item => normalizeCategory(item)).filter(name => name && usedCategories.has(name.toLocaleLowerCase('pt-BR'))).map(name => [name.toLocaleLowerCase('pt-BR'), name])).values()];
+      if (!categoriesAvailable) categoriesRoot.innerHTML = '<a class="home-editorial-empty" href="/blog">Categorias temporariamente indisponíveis <i class="bi bi-arrow-right" aria-hidden="true"></i></a>';
+      else if (!names.length) categoriesRoot.innerHTML = '<span class="home-editorial-empty">Categorias em breve.</span>';
+      else categoriesRoot.innerHTML = names.map(name => `<a class="home-category-chip" href="/blog?categoria=${encodeURIComponent(name)}">${escapeHtml(name)} <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>`).join('');
+
+      if (!articlesAvailable) {
+        articlesRoot.innerHTML = '<div class="col-12"><p class="home-editorial-empty">Não foi possível carregar os artigos mais visualizados. <a href="/blog">Tente novamente no blog.</a></p></div>';
+        return;
+      }
+      const popular = articles.filter(article => article.published !== false && article.slug).sort((a, b) => (Number(b.views) || 0) - (Number(a.views) || 0)).slice(0, 3);
+      if (!popular.length) {
+        articlesRoot.innerHTML = '<div class="col-12"><p class="home-editorial-empty">Ainda não há artigos publicados.</p></div>';
+        return;
+      }
+      articlesRoot.innerHTML = popular.map((article, index) => {
+        const categoriesForArticle = categoryNames(article);
+        const image = imageOf(article.imageUrl);
+        const views = new Intl.NumberFormat('pt-BR').format(Math.max(0, Number(article.views) || 0));
+        const date = article.createdAt ? new Date(article.createdAt).toLocaleDateString('pt-BR', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+        return `<div class="col-md-6 col-xl-4"><article class="home-article-card${image ? '' : ' home-article-card-text-only'}"><span class="home-article-rank">0${index + 1}</span>${image ? `<a class="home-article-image" href="/blog/${encodeURIComponent(article.slug)}" tabindex="-1" aria-hidden="true"><img src="${escapeHtml(image)}" alt="" loading="lazy"></a>` : ''}<div class="home-article-content"><div class="home-article-meta">${categoriesForArticle.length ? `<a href="/blog?categoria=${encodeURIComponent(categoriesForArticle[0])}">${escapeHtml(categoriesForArticle[0])}</a>` : '<span>Artigo</span>'}<span><i class="bi bi-eye" aria-hidden="true"></i> ${views}</span></div><h4><a href="/blog/${encodeURIComponent(article.slug)}">${escapeHtml(article.title || 'Artigo MirandaSoft')}</a></h4><p>${escapeHtml(summaryOf(article))}</p><div class="home-article-footer">${date ? `<span>${escapeHtml(date)}</span>` : '<span>Conteúdo MirandaSoft</span>'}<a href="/blog/${encodeURIComponent(article.slug)}" aria-label="Ler ${escapeHtml(article.title || 'artigo')}">Ler artigo <i class="bi bi-arrow-right" aria-hidden="true"></i></a></div></div></article></div>`;
+      }).join('');
+    } catch (_) {
+      categoriesRoot.innerHTML = '<a class="home-editorial-empty" href="/blog">Explore as categorias no blog <i class="bi bi-arrow-right" aria-hidden="true"></i></a>';
+      articlesRoot.innerHTML = '<div class="col-12"><p class="home-editorial-empty">Os artigos mais lidos serão exibidos aqui.</p></div>';
+    }
+  };
+  load();
+})();
+</script>
 
 <style>
   .home-portfolio { overflow: hidden; color: var(--ms-on-surface); }
@@ -137,12 +216,38 @@
   .home-products-cta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.5rem; padding: 1.3rem 0 0; border-top: 1px solid var(--ms-outline-variant); color: var(--ms-on-surface-variant); }
   .home-products-cta a { display: inline-flex; align-items: center; gap: .55rem; color: var(--ms-primary); font-weight: 750; text-decoration: none; }
 
+  .home-editorial { padding: clamp(3rem, 7vw, 6rem) 0; border-top: 1px solid var(--ms-outline-variant); background: var(--ms-surface-container-low); }
+  .home-editorial-all { display: inline-flex; align-items: center; gap: .5rem; color: var(--ms-primary); font-weight: 750; text-decoration: none; }
+  .home-editorial-categories { display: flex; flex-wrap: wrap; gap: .65rem; margin: 1.5rem 0 3rem; }
+  .home-category-chip { display: inline-flex; align-items: center; gap: .6rem; padding: .7rem 1rem; border: 1px solid var(--ms-outline-variant); border-radius: 999px; background: var(--ms-surface); color: var(--ms-on-surface); font-size: .9rem; font-weight: 650; text-decoration: none; transition: border-color .2s ease, color .2s ease, transform .2s ease; }
+  .home-category-chip:hover { transform: translateY(-2px); border-color: var(--ms-primary); color: var(--ms-primary); }
+  .home-popular-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1.2rem; }
+  .home-popular-heading h3 { margin: 0; color: var(--ms-on-surface); font-size: 1.2rem; font-weight: 800; }
+  .home-popular-heading h3 i { margin-right: .45rem; color: var(--ms-primary); }
+  .home-popular-heading > span,.home-editorial-loading,.home-editorial-empty { color: var(--ms-on-surface-variant); font-size: .9rem; }
+  .home-article-card { position: relative; height: 100%; overflow: hidden; border: 1px solid var(--ms-outline-variant); border-radius: 18px; background: var(--ms-surface); }
+  .home-article-rank { position: absolute; z-index: 1; top: .8rem; left: .8rem; display: grid; width: 2.2rem; height: 2.2rem; place-items: center; border: 1px solid var(--ms-outline-variant); border-radius: 50%; background: var(--ms-surface); color: var(--ms-primary); font-size: .75rem; font-weight: 800; }
+  .home-article-card-text-only .home-article-rank { position: static; display: inline-flex; margin: .9rem 0 0 1.15rem; }
+  .home-article-image { display: block; aspect-ratio: 16/9; overflow: hidden; background: var(--ms-surface-container); }
+  .home-article-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+  .home-article-card:hover .home-article-image img { transform: scale(1.04); }
+  .home-article-content { display: flex; min-height: 14rem; flex-direction: column; padding: 1.15rem; }
+  .home-article-meta,.home-article-footer { display: flex; align-items: center; justify-content: space-between; gap: .7rem; color: var(--ms-on-surface-variant); font-size: .76rem; }
+  .home-article-meta a { color: var(--ms-primary); font-weight: 700; text-decoration: none; }
+  .home-article-content h4 { margin: .8rem 0 .55rem; font-size: 1.12rem; font-weight: 780; line-height: 1.35; }
+  .home-article-content h4 a { color: var(--ms-on-surface); text-decoration: none; }
+  .home-article-content p { display: -webkit-box; overflow: hidden; margin: 0 0 1.2rem; color: var(--ms-on-surface-variant); font-size: .88rem; line-height: 1.6; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+  .home-article-footer { margin-top: auto; padding-top: .75rem; border-top: 1px solid var(--ms-outline-variant); }
+  .home-article-footer a { display: inline-flex; align-items: center; gap: .35rem; color: var(--ms-primary); font-weight: 750; text-decoration: none; }
+  .home-category-chip:focus-visible,.home-article-card a:focus-visible,.home-editorial-all:focus-visible { border-radius: 4px; outline: 3px solid rgba(var(--ms-primary-rgb), .45); outline-offset: 3px; }
+
   @media (max-width: 767.98px) {
     .home-portfolio-hero { padding-top: 5.5rem; }
     .home-portfolio-hero .container { align-items: flex-start; }
     .home-portfolio-index { display: none; }
     .home-products-heading { display: block; }
     .home-products-heading p { margin-top: .75rem; }
+    .home-popular-heading { align-items: flex-start; flex-direction: column; }
   }
 
   @media (max-width: 575.98px) {
