@@ -1,130 +1,240 @@
-<section class="contact-page dev-section pt-5 mt-5">
+<section class="contact-page dev-section" aria-labelledby="contact-title">
   <div class="container">
+    <div class="row g-5 align-items-center contact-layout">
+      <div class="col-lg-5 contact-intro">
+        <span class="contact-eyebrow"><i class="bi bi-chat-square-text" aria-hidden="true"></i> FALE CONOSCO</span>
+        <h1 id="contact-title">Vamos conversar<span>?</span></h1>
+        <p class="contact-lede">Conte sobre o seu próximo projeto. A gente ajuda a encontrar o caminho certo para a sua necessidade.</p>
 
-    <!-- Header -->
-    <div class="dev-section-header text-center mb-5">
-      <span class="dev-section-badge bg-primary bg-opacity-10 text-primary border-primary">
-        <i class="bi bi-chat-text-fill"></i> Fale Conosco
-      </span>
-      <h2 class="dev-section-title">Entre em <span class="text-gradient">Contato</span></h2>
-      <p class="dev-section-description">
-        Estamos prontos para ouvir seu projeto e transformar suas ideias em realidade.
-      </p>
-    </div>
+        <div class="contact-channels" aria-label="Outras formas de contato">
+          <a class="contact-channel" href="https://wa.me/5584988330532" target="_blank" rel="noopener noreferrer">
+            <span class="contact-channel-icon"><i class="bi bi-whatsapp" aria-hidden="true"></i></span>
+            <span class="contact-channel-copy">
+              <span class="contact-channel-label">WhatsApp</span>
+              <span class="contact-channel-value">Converse com a nossa equipe</span>
+            </span>
+            <i class="bi bi-arrow-up-right contact-channel-arrow" aria-hidden="true"></i>
+          </a>
+          <a class="contact-channel" href="mailto:contato@mirandasoft.com.br">
+            <span class="contact-channel-icon"><i class="bi bi-envelope" aria-hidden="true"></i></span>
+            <span class="contact-channel-copy">
+              <span class="contact-channel-label">E-mail</span>
+              <span class="contact-channel-value">contato@mirandasoft.com.br</span>
+            </span>
+            <i class="bi bi-arrow-up-right contact-channel-arrow" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
 
-    <div class="row g-5 justify-content-center">
-
-      <!-- Contact Form -->
       <div class="col-lg-7">
-        <div class="card contact-surface border-secondary animate__animated animate__fadeInLeft h-100">
-          <div class="card-body p-4 p-md-5">
-            <form id="contact-form">
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <label class="form-label text-on-surface-variant small text-uppercase fw-bold">Seu Nome</label>
-                  <input type="text" class="form-control contact-surface text-on-surface border-secondary py-3"
-                    placeholder="João Silva" required id="contact-name">
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label text-on-surface-variant small text-uppercase fw-bold">Seu Email</label>
-                  <input type="email" class="form-control contact-surface text-on-surface border-secondary py-3"
-                    placeholder="joao@empresa.com" required id="contact-email">
-                </div>
-                <div class="col-12">
-                  <label class="form-label text-on-surface-variant small text-uppercase fw-bold">Assunto</label>
-                  <select class="form-select contact-surface text-on-surface border-secondary py-3" id="contact-subject">
-                    <option value="orcamento">Orçamento de Projeto</option>
-                    <option value="duvida">Dúvida Técnica</option>
-                    <option value="parceria">Parceria</option>
-                    <option value="outro">Outro</option>
-                  </select>
-                </div>
-                <div class="col-12">
-                  <label class="form-label text-on-surface-variant small text-uppercase fw-bold">Mensagem</label>
-                  <textarea class="form-control contact-surface text-on-surface border-secondary" rows="5"
-                    placeholder="Conte-nos mais sobre seu projeto..." required id="contact-message"></textarea>
-                </div>
-                <div class="col-12 mt-4">
-                  <button type="submit" class="btn btn-primary w-100 py-3 fw-bold shadow-lg">
-                    <i class="bi bi-send-fill me-2"></i> Enviar Mensagem
-                  </button>
-                </div>
-              </div>
-            </form>
+        <div class="contact-form-card">
+          <div class="contact-form-heading">
+            <span class="contact-form-icon"><i class="bi bi-send" aria-hidden="true"></i></span>
+            <div>
+              <h2 id="contact-form-title">Conte sobre o seu projeto</h2>
+              <p>Preencha os dados e escreva uma mensagem para a gente.</p>
+            </div>
           </div>
+
+          <form id="contact-form" aria-labelledby="contact-form-title">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label" for="contact-name">Seu nome</label>
+                <input type="text" class="form-control contact-surface" placeholder="João Silva" required id="contact-name" autocomplete="name">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="contact-email">Seu e-mail</label>
+                <input type="email" class="form-control contact-surface" placeholder="voce@empresa.com" required id="contact-email" autocomplete="email">
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="contact-subject">Assunto</label>
+                <select class="form-select contact-surface" id="contact-subject">
+                  <option value="orcamento">Orçamento de projeto</option>
+                  <option value="duvida">Dúvida técnica</option>
+                  <option value="parceria">Parceria</option>
+                  <option value="outro">Outro</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="contact-message">Mensagem</label>
+                <textarea class="form-control contact-surface" rows="5" placeholder="Conte um pouco sobre o que você precisa..." required id="contact-message"></textarea>
+              </div>
+              <div class="col-12 pt-2">
+                <button type="submit" class="contact-submit">
+                  <span>Enviar mensagem</span>
+                  <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-
-      <!-- Contact Info -->
-      <div class="col-lg-5">
-        <div class="d-flex flex-column gap-4 animate__animated animate__fadeInRight">
-
-          <!-- Card 1 -->
-          <div class="card contact-surface border-secondary">
-            <div class="card-body p-4 d-flex align-items-center gap-4">
-              <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-circle">
-                <i class="bi bi-whatsapp fs-3"></i>
-              </div>
-              <div>
-                <h5 class="mb-1 text-on-surface">WhatsApp</h5>
-                <p class="text-on-surface-variant small mb-1">Atendimento rápido</p>
-                <a href="https://wa.me/5584988330532" target="_blank"
-                  class="btn btn-primary btn-sm rounded-pill mt-2 stretched-link"><i class="bi bi-whatsapp me-1"></i>
-                  Chamar no WhatsApp</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="card contact-surface border-secondary">
-            <div class="card-body p-4 d-flex align-items-center gap-4">
-              <div class="bg-primary bg-opacity-10 text-primary p-3 rounded-circle">
-                <i class="bi bi-envelope-fill fs-3"></i>
-              </div>
-              <div>
-                <h5 class="mb-1 text-on-surface">Email</h5>
-                <p class="text-on-surface-variant small mb-1">Para orçamentos detalhados</p>
-                <a href="mailto:contato@mirandasoft.com.br"
-                  class="text-on-surface text-decoration-none fw-bold stretched-link">contato@mirandasoft.com.br</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Socials -->
-          <div class="card contact-surface border-secondary mt-2">
-            <div class="card-body p-4 text-center">
-              <h6 class="text-on-surface-variant mb-3">Redes Sociais</h6>
-              <div class="d-flex justify-content-center gap-3">
-                <a href="#" class="btn btn-outline-secondary rounded-circle"><i class="bi bi-instagram"></i></a>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
 
 <style>
-  .contact-page .contact-surface {
-    background: var(--ms-surface-container-low);
-    color: var(--ms-on-surface);
-    border-color: var(--ms-outline-variant) !important;
+  .contact-page {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(3.5rem, 7vw, 6.5rem);
   }
 
-  .contact-page .form-control::placeholder {
-    color: var(--ms-on-surface-variant);
-    opacity: 1;
+  .contact-page::before {
+    position: absolute;
+    z-index: 0;
+    top: -7rem;
+    right: -12rem;
+    width: min(55vw, 46rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(var(--ms-primary-rgb), .11), transparent 68%);
+    content: "";
+    pointer-events: none;
   }
+
+  .contact-page > .container { position: relative; z-index: 1; }
+  .contact-layout { --bs-gutter-x: clamp(2rem, 5vw, 5rem); }
+
+  .contact-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    margin-bottom: 1.4rem;
+    color: var(--ms-primary);
+    font-size: .75rem;
+    font-weight: 800;
+    letter-spacing: .15em;
+  }
+
+  .contact-intro h1 {
+    max-width: 14ch;
+    margin: 0;
+    color: var(--ms-on-surface);
+    font-size: clamp(2.7rem, 5.2vw, 4.7rem);
+    font-weight: 800;
+    letter-spacing: -.065em;
+    line-height: .99;
+  }
+
+  .contact-intro h1 span { color: var(--ms-primary); }
+
+  .contact-lede {
+    max-width: 34rem;
+    margin: 1.5rem 0 2rem;
+    color: var(--ms-on-surface-variant);
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    line-height: 1.75;
+  }
+
+  .contact-channels { display: grid; gap: .8rem; max-width: 34rem; }
+
+  .contact-channel {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: .9rem;
+    padding: .9rem 1rem;
+    border: 1px solid var(--ms-outline-variant);
+    border-radius: 14px;
+    background: var(--ms-surface-container-low);
+    color: var(--ms-on-surface);
+    text-decoration: none;
+    transition: border-color .2s ease, transform .2s ease, background .2s ease;
+  }
+
+  .contact-channel:hover,
+  .contact-channel:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--ms-primary);
+    background: var(--ms-surface-container);
+    color: var(--ms-on-surface);
+  }
+
+  .contact-channel-icon,
+  .contact-form-icon {
+    display: grid;
+    flex: 0 0 auto;
+    width: 2.75rem;
+    height: 2.75rem;
+    place-items: center;
+    border-radius: 12px;
+    background: rgba(var(--ms-primary-rgb), .1);
+    color: var(--ms-primary);
+    font-size: 1.2rem;
+  }
+
+  .contact-channel-copy { display: grid; min-width: 0; gap: .12rem; }
+  .contact-channel-label { font-weight: 700; }
+  .contact-channel-value { overflow-wrap: anywhere; color: var(--ms-on-surface-variant); font-size: .85rem; }
+  .contact-channel-arrow { flex: 0 0 auto; margin-left: auto; color: var(--ms-primary); }
+
+  .contact-form-card {
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    border: 1px solid var(--ms-outline-variant);
+    border-radius: 24px;
+    background: var(--ms-surface-container-lowest);
+    box-shadow: 0 24px 70px rgba(15, 23, 42, .1);
+  }
+
+  .contact-form-heading { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.8rem; }
+  .contact-form-heading h2 { margin: 0 0 .3rem; color: var(--ms-on-surface); font-size: clamp(1.25rem, 2vw, 1.6rem); font-weight: 750; letter-spacing: -.035em; }
+  .contact-form-heading p { margin: 0; color: var(--ms-on-surface-variant); font-size: .9rem; }
+
+  .contact-page .form-label { margin-bottom: .5rem; color: var(--ms-on-surface); font-size: .88rem; font-weight: 650; }
+
+  .contact-page .contact-surface {
+    min-height: 3.2rem;
+    border: 1px solid var(--ms-outline-variant);
+    border-radius: 11px;
+    background: var(--ms-surface-container-low);
+    color: var(--ms-on-surface);
+  }
+
+  .contact-page textarea.contact-surface { min-height: 9rem; resize: vertical; }
+  .contact-page .form-control::placeholder { color: var(--ms-on-surface-variant); opacity: .8; }
 
   .contact-page .form-control:focus,
   .contact-page .form-select:focus {
     background-color: var(--ms-surface-container) !important;
-    border-color: #3b82f6 !important;
+    border-color: var(--ms-primary) !important;
     color: var(--ms-on-surface) !important;
-    box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25);
+    box-shadow: 0 0 0 .22rem rgba(var(--ms-primary-rgb), .18);
+  }
+
+  .contact-submit {
+    display: flex;
+    width: 100%;
+    min-height: 3.5rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .85rem 1.1rem .85rem 1.3rem;
+    border: 1px solid var(--ms-primary);
+    border-radius: 12px;
+    background: var(--ms-primary);
+    color: var(--ms-on-primary-container);
+    font: inherit;
+    font-weight: 700;
+    transition: background .2s ease, transform .2s ease;
+  }
+
+  .contact-submit:hover { transform: translateY(-1px); background: var(--ms-primary-container); }
+  .contact-submit:focus-visible { outline: 3px solid rgba(var(--ms-primary-rgb), .35); outline-offset: 3px; }
+  .contact-submit:disabled { cursor: wait; opacity: .75; }
+
+  @media (max-width: 991.98px) {
+    .contact-page { padding-block: 3rem; }
+    .contact-intro h1 { max-width: 17ch; }
+  }
+
+  @media (max-width: 575.98px) {
+    .contact-page { padding-block: 2.25rem; }
+    .contact-intro h1 { font-size: clamp(2.55rem, 12vw, 3.8rem); }
+    .contact-lede { margin-block: 1.15rem 1.5rem; }
+    .contact-form-card { border-radius: 18px; }
+    .contact-form-heading { align-items: flex-start; }
+    .contact-form-heading p { max-width: 26ch; }
   }
 </style>
 
