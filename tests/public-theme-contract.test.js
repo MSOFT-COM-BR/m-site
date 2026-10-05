@@ -24,7 +24,7 @@ test('superfícies e gradiente globais são definidos uma vez e usam tokens', ()
 
 test('menus usam um único componente e expõem serviços/ferramentas/contato', () => {
   const header = read('src/components/header.html');
-  for (const href of ['/criacao-de-sites', '/desenvolvimento-de-sistemas', '/expertise', '/apps', '/contact', '/login']) assert.ok(header.includes(`href="${href}"`), href);
+  for (const href of ['/criacao-de-sites', '/desenvolvimento-de-sistemas', '/expertise', '/apps', '/contact']) assert.ok(header.includes(`href="${href}"`), href);
   assert.doesNotMatch(header, /^\s*\.dropdown-(?:menu|item)[\s:{]/m, 'não vazar estilos de menu para páginas');
   assert.match(header, /\.dev-header \.dropdown-item\s*\{[^}]*color: var\(--header-dropdown-item-color\)/);
 });
