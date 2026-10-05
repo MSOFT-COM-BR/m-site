@@ -29,8 +29,10 @@ test('menus usam um único componente e expõem serviços/ferramentas/contato', 
   assert.match(header, /\.dev-header \.dropdown-item\s*\{[^}]*color: var\(--header-dropdown-item-color\)/);
 });
 
-test('Área do cliente é um link direto do menu principal para login', () => {
+test('Área do cliente fica junto à conta e abre painel autenticado ou login visitante', () => {
   const header = read('src/components/header.html');
-  assert.match(header, /<a class="nav-link header-client-link" href="\/login"[^>]*data-i18n-aria-label="nav.login"[^>]*><i class="bi bi-person-circle" aria-hidden="true"><\/i><span class="header-client-label" data-i18n="nav.login">Área do cliente<\/span><\/a>/);
-  assert.equal((header.match(/href="\/login"/g) || []).length, 1, 'não duplicar o acesso no submenu');
+  assert.match(header, /const accountLink = `\s*<a class="header-client-link" href="\$\{isAuthenticated \? '\/painel' : '\/login'\}"[^>]*data-i18n-aria-label="nav.login"/);
+  assert.match(header, /<div class="header-account-actions">\s*\$\{accountLink\}[\s\S]*class="header-user-btn/);
+  assert.doesNotMatch(header, /<li class="nav-item"><a class="nav-link header-client-link"/);
+  assert.equal((header.match(/'\/login'/g) || []).length, 1, 'visitante tem apenas um destino de login');
 });
