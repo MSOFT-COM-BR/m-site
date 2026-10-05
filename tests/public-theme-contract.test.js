@@ -31,6 +31,6 @@ test('menus usam um único componente e expõem serviços/ferramentas/contato', 
 
 test('Área do cliente é um link direto do menu principal para login', () => {
   const header = read('src/components/header.html');
-  assert.match(header, /<a class="nav-link header-client-link" href="\/login"><i class="bi bi-person-circle" aria-hidden="true"><\/i><span data-i18n="nav.login">Área do cliente<\/span><\/a>/);
+  assert.match(header, /<a class="nav-link header-client-link" href="\/login"[^>]*data-i18n-aria-label="nav.login"[^>]*><i class="bi bi-person-circle" aria-hidden="true"><\/i><span class="header-client-label" data-i18n="nav.login">Área do cliente<\/span><\/a>/);
   assert.equal((header.match(/href="\/login"/g) || []).length, 1, 'não duplicar o acesso no submenu');
 });
