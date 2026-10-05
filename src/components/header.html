@@ -33,12 +33,12 @@
             </ul>
           </li>
           <li class="nav-item"><a class="nav-link" href="/blog" data-i18n="nav.content">Conteúdo</a></li>
+          <li class="nav-item"><a class="nav-link header-client-link" href="/login"><i class="bi bi-person-circle" aria-hidden="true"></i><span data-i18n="nav.login">Área do cliente</span></a></li>
           <li class="nav-item dropdown">
             <button class="nav-link dropdown-toggle border-0 bg-transparent" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-i18n="nav.about">Sobre</button>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="/about" data-i18n="nav.about">Sobre</a></li>
               <li><a class="dropdown-item" href="/contact" data-i18n="nav.contact">Fale Conosco</a></li>
-              <li><a class="dropdown-item" href="/login" data-i18n="nav.login">Área do cliente</a></li>
             </ul>
           </li>
           <li class="nav-item ms-lg-2" id="header-contact-action">
@@ -154,6 +154,17 @@
     padding: 8px 16px !important;
     border-radius: 8px;
     transition: all 0.2s ease;
+  }
+
+  .dev-header .header-client-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  .dev-header .header-client-link .bi {
+    font-size: 1rem;
+    flex: 0 0 auto;
   }
 
   .dev-header .nav-link:hover {

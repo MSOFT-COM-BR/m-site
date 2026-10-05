@@ -28,3 +28,9 @@ test('menus usam um único componente e expõem serviços/ferramentas/contato', 
   assert.doesNotMatch(header, /^\s*\.dropdown-(?:menu|item)[\s:{]/m, 'não vazar estilos de menu para páginas');
   assert.match(header, /\.dev-header \.dropdown-item\s*\{[^}]*color: var\(--header-dropdown-item-color\)/);
 });
+
+test('Área do cliente é um link direto do menu principal para login', () => {
+  const header = read('src/components/header.html');
+  assert.match(header, /<a class="nav-link header-client-link" href="\/login"><i class="bi bi-person-circle" aria-hidden="true"><\/i><span data-i18n="nav.login">Área do cliente<\/span><\/a>/);
+  assert.equal((header.match(/href="\/login"/g) || []).length, 1, 'não duplicar o acesso no submenu');
+});
