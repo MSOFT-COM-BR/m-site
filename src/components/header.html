@@ -195,12 +195,6 @@
     }
   }
 
-  .dev-header .header-account-actions {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
   .dev-header .nav-link:hover {
     color: var(--header-link-hover-color) !important;
     background: var(--header-link-hover-background);
@@ -427,18 +421,6 @@
       overflow: visible;
       clip: auto;
       white-space: normal;
-    }
-
-    .dev-header .header-account-actions {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      gap: 0;
-    }
-
-    .dev-header .header-account-actions .dropdown,
-    .dev-header .header-account-actions .header-user-btn {
-      width: 100%;
     }
 
     .dev-header .navbar-collapse .dropdown-menu {
@@ -714,7 +696,7 @@
       const contactAction = document.getElementById('header-contact-action');
       const isAuthenticated = auth && auth.isAuthenticated();
       const accountLink = `
-        <a class="header-client-link" href="${isAuthenticated ? '/painel' : '/login'}" aria-label="Área do cliente" title="Área do cliente" data-i18n-aria-label="nav.login" data-i18n-title="nav.login">
+        <a class="header-client-link" href="/login" aria-label="Área do cliente" title="Área do cliente" data-i18n-aria-label="nav.login" data-i18n-title="nav.login">
           <i class="bi bi-person-circle" aria-hidden="true"></i>
           <span class="header-client-label" data-i18n="nav.login">Área do cliente</span>
         </a>`;
@@ -746,10 +728,9 @@
         }
 
         headerAuthItem.innerHTML = `
-          <div class="header-account-actions">
-            ${accountLink}
           <div class="dropdown">
             <button class="header-user-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Menu da conta" data-i18n-aria-label="account.menu">
+              <i class="bi bi-person-circle flex-shrink-0" aria-hidden="true"></i>
               <span class="header-user-name"${userName ? '' : ' data-i18n="account.default"'}>${userName || 'Conta'}</span>
               <i class="bi bi-chevron-down header-user-caret" aria-hidden="true"></i>
             </button>
@@ -760,7 +741,6 @@
               <li><a class="dropdown-item text-white" href="/painel/perfil"><i class="bi bi-person-gear me-2"></i><span data-i18n="account.profile">Meu perfil</span></a></li>
               <li><button class="dropdown-item text-danger" onclick="window.authService.logout()"><i class="bi bi-box-arrow-right me-2"></i><span data-i18n="account.logout">Sair</span></button></li>
             </ul>
-          </div>
           </div>
         `;
         if (window.i18n && typeof window.i18n.apply === 'function') {
