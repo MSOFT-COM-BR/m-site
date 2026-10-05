@@ -122,7 +122,7 @@ async function inspect(page) {
       await page.waitForSelector('[data-list-action="create"]');
       assert.equal(await page.locator('#blog-stat-total').innerText(),'0');
       assert.equal(await page.locator('#blog-pagination').isVisible(),false);
-      for(const tab of ['overview','theme','images','logs','users','apps']) {
+      for(const tab of ['overview','theme','images','logs','users','apps','clients']) {
         await page.evaluate(tab=>window.loadTab(tab),tab);
         await page.waitForTimeout(500);
         for(const theme of ['light','dark']) {

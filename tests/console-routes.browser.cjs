@@ -9,7 +9,8 @@ const routes = [
   ['images', '/console/midia', 'Galeria e Assets'],
   ['logs', '/console/sistema/logs', 'Monitoramento'],
   ['users', '/console/sistema/usuarios', 'Usuários por aplicação'],
-  ['apps', '/console/sistema/apps', 'Catálogo de aplicativos']
+  ['apps', '/console/sistema/apps', 'Catálogo de aplicativos'],
+  ['clients', '/console/clientes', 'Clientes MSoft']
 ];
 
 async function setup(page, role = 'admin') {
@@ -72,7 +73,7 @@ async function setup(page, role = 'admin') {
       await page.waitForFunction(() => document.querySelector('.admin-nav [aria-current="page"]'));
       assert.equal(await page.locator('.admin-nav [data-tab="overview"]').getAttribute('aria-current'), 'page');
       assert.match(await page.locator('#tab-content').innerText(), /Visão geral/);
-      assert.equal(await page.locator('.console-overview-card').count(), 6);
+      assert.equal(await page.locator('.console-overview-card').count(), 7);
       assert.equal(await page.locator('.admin-nav [data-tab="mjson"]').count(), 0);
       assert.doesNotMatch(await page.locator('#tab-content').innerText(), /MJSON/);
       await page.goto(origin + '/admin', { waitUntil: 'networkidle' });
@@ -115,9 +116,9 @@ async function setup(page, role = 'admin') {
         await page.waitForSelector('#access-denied', { state: 'visible' });
         assert.equal((await page.locator('#tab-content').innerText()).trim(), '');
       }
-      assert.equal(calls.some(path => /blogs|catalog\/admin|\/mjson|\/admin\/users/.test(path)), false, calls.join(', '));
+      assert.equal(calls.some(path => /blogs|catalog\/admin|\/mjson|\/admin\/users|\/admin\/clients/.test(path)), false, calls.join(', '));
       await page.close();
     }
-    console.log('PASS Console routes: overview, six direct pages, reload, history, legacy, removed MJSON, 404, roles and SEO');
+    console.log('PASS Console routes: overview, seven direct pages, reload, history, legacy, removed MJSON, 404, roles and SEO');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

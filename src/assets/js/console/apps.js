@@ -14,6 +14,16 @@ window.consoleViews.apps = async function ({ container, auth }) {
                         <i class="bi bi-info-circle me-2 text-info"></i>
                         Desativar um app apenas o oculta do catálogo público; os acessos já concedidos aos usuários não são alterados.
                     </div>
+                    <style>
+                        #catalog-app-list .catalog-item-row { display: grid !important; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1rem; min-width: 0; }
+                        #catalog-app-list .catalog-item-info { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+                        #catalog-app-list .catalog-item-actions { display: flex; flex-direction: column; align-items: stretch; gap: .5rem; min-width: 7.5rem; max-width: 100%; }
+                        #catalog-app-list .catalog-item-actions .btn { white-space: normal; overflow-wrap: anywhere; }
+                        @media (max-width: 575.98px) {
+                            #catalog-app-list .catalog-item-row { grid-template-columns: minmax(0, 1fr); }
+                            #catalog-app-list .catalog-item-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); min-width: 0; width: 100%; }
+                        }
+                    </style>
                     <div class="row g-4">
                         <div class="col-lg-5">
                             <section class="border rounded-3 p-3 p-md-4 h-100" style="border-color: var(--ms-outline-variant) !important; background: var(--ms-surface-container-low);">
@@ -29,15 +39,16 @@ window.consoleViews.apps = async function ({ container, auth }) {
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label text-on-surface mb-2" for="catalog-app-key">Chave (appKey)</label>
-                                        <input id="catalog-app-key" type="text" class="form-control cms-input" autocomplete="off" pattern="[a-z0-9][a-z0-9-]{0,63}" placeholder="Ex.: bva" required>
+                                        <input id="catalog-app-key" type="text" class="form-control cms-input" autocomplete="off" minlength="2" maxlength="64" pattern="[a-z0-9][a-z0-9-]{0,63}" placeholder="Ex.: bva" aria-describedby="catalog-app-key-help" required>
+                                        <div id="catalog-app-key-help" class="form-text text-on-surface-variant">Use de 2 a 64 letras minúsculas, números ou hífens. A chave não muda depois do cadastro.</div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label text-on-surface mb-2" for="catalog-app-category">Categoria</label>
-                                        <input id="catalog-app-category" type="text" class="form-control cms-input" maxlength="80" placeholder="Ex.: Gestão">
+                                        <input id="catalog-app-category" type="text" class="form-control cms-input" maxlength="60" placeholder="Ex.: Gestão">
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label text-on-surface mb-2" for="catalog-app-description">Descrição</label>
-                                        <textarea id="catalog-app-description" class="form-control cms-input" rows="3" maxlength="500" required></textarea>
+                                        <textarea id="catalog-app-description" class="form-control cms-input" rows="3" maxlength="1000" required></textarea>
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label text-on-surface mb-2" for="catalog-app-type">Cobrança</label>
@@ -61,7 +72,8 @@ window.consoleViews.apps = async function ({ container, auth }) {
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label text-on-surface mb-2" for="catalog-app-features">Recursos (um por linha)</label>
-                                        <textarea id="catalog-app-features" class="form-control cms-input" rows="3" maxlength="1000" placeholder="Relatórios em tempo real&#10;Multiusuário"></textarea>
+                                        <textarea id="catalog-app-features" class="form-control cms-input" rows="3" maxlength="1000" aria-describedby="catalog-app-features-help" placeholder="Relatórios em tempo real&#10;Multiusuário"></textarea>
+                                        <div id="catalog-app-features-help" class="form-text text-on-surface-variant">Até 120 caracteres por recurso.</div>
                                     </div>
                                     <div class="col-12 d-flex flex-wrap align-items-center gap-3 mt-2">
                                         <button id="catalog-app-submit" type="submit" class="btn cms-btn-primary">
@@ -84,6 +96,7 @@ window.consoleViews.apps = async function ({ container, auth }) {
                                         <i class="bi bi-arrow-clockwise me-1"></i> Atualizar
                                     </button>
                                 </div>
+                                <div id="catalog-app-list-feedback" class="small mb-3" role="status" aria-live="polite" tabindex="-1" hidden></div>
                                 <div id="catalog-app-list" class="d-flex flex-column gap-2" aria-live="polite">
                                     <div class="text-center py-5 text-on-surface-variant"><span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Carregando apps...</div>
                                 </div>
@@ -110,8 +123,11 @@ window.consoleViews.apps = async function ({ container, auth }) {
                 const formFeedback = getCatalogElement('catalog-app-feedback');
                 const refreshButton = getCatalogElement('catalog-app-refresh');
                 const catalogList = getCatalogElement('catalog-app-list');
+                const catalogListFeedback = getCatalogElement('catalog-app-list-feedback');
                 const catalogCount = getCatalogElement('catalog-app-count');
                 let editingAppKey = null;
+                let catalogMutationInProgress = false;
+                let catalogRefreshGeneration = 0;
 
                 const escapeHtml = (value) => String(value ?? '')
                     .replace(/&/g, '&amp;')
@@ -154,6 +170,15 @@ window.consoleViews.apps = async function ({ container, auth }) {
                         button.disabled = false;
                         button.innerHTML = originalContent;
                     };
+                };
+                const setCatalogMutationState = (active) => {
+                    catalogMutationInProgress = active;
+                    if (active) catalogRefreshGeneration++;
+                    catalogForm?.querySelectorAll('input, textarea, select, button').forEach((control) => {
+                        control.disabled = active || (control === appKeyInput && Boolean(editingAppKey));
+                    });
+                    catalogList?.querySelectorAll('button').forEach((button) => { button.disabled = active; });
+                    if (refreshButton) refreshButton.disabled = active;
                 };
                 const CATALOG_TYPE_LABELS = { free: 'Grátis', subscription: 'Assinatura', 'one-time': 'Pagamento único' };
                 const formatPrice = (item) => {
@@ -224,9 +249,9 @@ window.consoleViews.apps = async function ({ container, auth }) {
                             ? `<button type="button" class="btn btn-sm btn-outline-danger" data-catalog-action="deactivate" data-app-key="${encodeValue(item.appKey)}"><i class="bi bi-eye-slash me-1"></i> Desativar</button>`
                             : `<button type="button" class="btn btn-sm btn-outline-success" data-catalog-action="reactivate" data-app-key="${encodeValue(item.appKey)}"><i class="bi bi-eye me-1"></i> Reativar</button>`;
                         return `
-                            <article class="border rounded-3 p-3" style="border-color: var(--ms-outline) !important; background: var(--ms-surface-container-low);">
-                                <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
-                                    <div class="min-w-0">
+                            <article class="border rounded-3 p-3 overflow-hidden" style="border-color: var(--ms-outline) !important; background: var(--ms-surface-container-low);">
+                                <div class="catalog-item-row">
+                                    <div class="catalog-item-info">
                                         <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
                                             <i class="bi ${escapeHtml(item.icon || 'bi-box')} text-info"></i>
                                             <h6 class="text-on-surface mb-0 text-truncate">${escapeHtml(item.name || 'Sem nome')}</h6>
@@ -240,7 +265,7 @@ window.consoleViews.apps = async function ({ container, auth }) {
                                             ${item.category ? `<span class="opacity-50 mx-1">|</span> <i class="bi bi-tag me-1"></i>${escapeHtml(item.category)}` : ''}
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-sm-column gap-2 align-self-sm-center">
+                                    <div class="catalog-item-actions">
                                         <button type="button" class="btn btn-sm btn-outline-light" data-catalog-action="edit" data-app-key="${encodeValue(item.appKey)}">
                                             <i class="bi bi-pencil me-1"></i> Editar
                                         </button>
@@ -254,13 +279,16 @@ window.consoleViews.apps = async function ({ container, auth }) {
 
                 const refreshCatalog = async () => {
                     if (!catalogList) return;
+                    const requestId = ++catalogRefreshGeneration;
                     catalogList.innerHTML = '<div class="text-center py-4 text-on-surface-variant"><span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Atualizando apps...</div>';
                     try {
                         const response = await callCatalogApi('/catalog/admin');
-                        if (!container.contains(catalogList)) return;
+                        if (!container.contains(catalogList) || requestId !== catalogRefreshGeneration) return;
                         catalogItemsCache = Array.isArray(response.data) ? response.data : [];
                         renderCatalogList(catalogItemsCache);
+                        if (catalogListFeedback) catalogListFeedback.hidden = true;
                     } catch (error) {
+                        if (requestId !== catalogRefreshGeneration) return;
                         if (catalogCount) catalogCount.textContent = '';
                         if (container.contains(catalogList)) {
                             catalogList.innerHTML = `<div class="text-danger border rounded-3 py-4 px-3" style="border-color: rgba(239, 68, 68, 0.35) !important;">${escapeHtml(getErrorMessage(error, 'Não foi possível carregar o catálogo.'))}</div>`;
@@ -277,13 +305,16 @@ window.consoleViews.apps = async function ({ container, auth }) {
                 if (catalogForm && submitButton) {
                     catalogForm.addEventListener('submit', async (event) => {
                         event.preventDefault();
+                        if (catalogMutationInProgress) return;
                         appKeyInput.value = normalizeAppKey(appKeyInput.value);
                         if (!catalogForm.checkValidity()) {
                             catalogForm.reportValidity();
                             return;
                         }
                         const editing = Boolean(editingAppKey);
+                        setCatalogMutationState(true);
                         const restoreButton = setButtonBusy(submitButton, editing ? 'Salvando...' : 'Cadastrando...');
+                        let saved = false;
                         if (formFeedback) formFeedback.hidden = true;
                         const payload = {
                             name: nameInput.value.trim(),
@@ -295,6 +326,27 @@ window.consoleViews.apps = async function ({ container, auth }) {
                             category: categoryInput.value.trim(),
                             features: parseFeatures(featuresInput.value),
                         };
+                        if (payload.features.some((feature) => feature.length > 120)) {
+                            restoreButton();
+                            setCatalogMutationState(false);
+                            setFeedback(formFeedback, 'Cada recurso pode conter até 120 caracteres.', 'error');
+                            featuresInput.focus();
+                            return;
+                        }
+                        if (payload.type === 'free' && payload.price > 0) {
+                            restoreButton();
+                            setCatalogMutationState(false);
+                            setFeedback(formFeedback, 'Apps gratuitos devem ter preço igual a zero.', 'error');
+                            priceInput.focus();
+                            return;
+                        }
+                        if (!/^[A-Z]{3}$/.test(payload.currency)) {
+                            restoreButton();
+                            setCatalogMutationState(false);
+                            setFeedback(formFeedback, 'Informe a sigla de moeda com três letras, como BRL.', 'error');
+                            currencyInput.focus();
+                            return;
+                        }
                         try {
                             if (editing) {
                                 await callCatalogApi(`/catalog/admin/${encodeURIComponent(editingAppKey)}`, 'PUT', payload);
@@ -303,12 +355,14 @@ window.consoleViews.apps = async function ({ container, auth }) {
                                 await callCatalogApi('/catalog/admin', 'POST', { ...payload, appKey: appKeyInput.value });
                                 setFeedback(formFeedback, 'App cadastrado e disponível no marketplace.', 'success');
                             }
-                            resetCatalogForm();
+                            saved = true;
                             await refreshCatalog();
                         } catch (error) {
                             setFeedback(formFeedback, getErrorMessage(error, editing ? 'Não foi possível atualizar o app.' : 'Não foi possível cadastrar o app.'), 'error');
                         } finally {
                             restoreButton();
+                            if (saved) resetCatalogForm();
+                            setCatalogMutationState(false);
                         }
                     });
                 }
@@ -322,37 +376,61 @@ window.consoleViews.apps = async function ({ container, auth }) {
                 if (refreshButton) refreshButton.addEventListener('click', refreshCatalog);
                 if (catalogList) {
                     catalogList.addEventListener('click', async (event) => {
+                        if (catalogMutationInProgress) return;
                         const button = event.target.closest('button[data-catalog-action]');
                         if (!button) return;
                         const action = button.dataset.catalogAction;
                         const appKey = decodeValue(button.dataset.appKey);
                         const item = catalogItemsCache.find((entry) => normalizeAppKey(entry.appKey) === appKey);
                         if (action === 'edit') {
+                            if (!item) {
+                                setFeedback(formFeedback, 'Este app não está mais disponível. Atualize a lista e tente novamente.', 'error');
+                                await refreshCatalog();
+                                return;
+                            }
                             startEditing(item);
                             return;
                         }
                         if (action === 'deactivate') {
                             if (!window.confirm(`Desativar o app "${item && item.name ? item.name : appKey}"? Ele some do marketplace, mas os acessos já concedidos continuam.`)) return;
+                            if (!item) {
+                                setFeedback(catalogListFeedback, 'Este app não está mais disponível. Atualize a lista e tente novamente.', 'error');
+                                return;
+                            }
+                            setCatalogMutationState(true);
+                            if (catalogListFeedback) catalogListFeedback.hidden = true;
                             const restoreButton = setButtonBusy(button, 'Desativando...');
                             try {
                                 await callCatalogApi(`/catalog/admin/${encodeURIComponent(appKey)}`, 'DELETE');
+                                setFeedback(catalogListFeedback, 'App desativado; os acessos existentes foram preservados.', 'success');
                                 await refreshCatalog();
                             } catch (error) {
-                                setFeedback(formFeedback, getErrorMessage(error, 'Não foi possível desativar o app.'), 'error');
+                                setFeedback(catalogListFeedback, getErrorMessage(error, 'Não foi possível desativar o app.'), 'error');
+                                catalogListFeedback?.focus({ preventScroll: true });
+                                catalogListFeedback?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                                catalogListFeedback?.setAttribute('aria-atomic', 'true');
                             } finally {
                                 restoreButton();
+                                setCatalogMutationState(false);
                             }
                             return;
                         }
                         if (action === 'reactivate') {
+                            setCatalogMutationState(true);
+                            if (catalogListFeedback) catalogListFeedback.hidden = true;
                             const restoreButton = setButtonBusy(button, 'Reativando...');
                             try {
                                 await callCatalogApi(`/catalog/admin/${encodeURIComponent(appKey)}`, 'PUT', { active: true });
+                                setFeedback(catalogListFeedback, 'App reativado e disponível no marketplace.', 'success');
                                 await refreshCatalog();
                             } catch (error) {
-                                setFeedback(formFeedback, getErrorMessage(error, 'Não foi possível reativar o app.'), 'error');
+                                setFeedback(catalogListFeedback, getErrorMessage(error, 'Não foi possível reativar o app.'), 'error');
+                                catalogListFeedback?.focus({ preventScroll: true });
+                                catalogListFeedback?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                                catalogListFeedback?.setAttribute('aria-atomic', 'true');
                             } finally {
                                 restoreButton();
+                                setCatalogMutationState(false);
                             }
                         }
                     });

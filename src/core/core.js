@@ -604,7 +604,8 @@ class Core {
 
   // FetchAPI
   async fetchAPI(url, verb = 'GET', data = {}, customOptions = {}) {
-    console.time('fetchAPI');
+    const sensitive = customOptions?.sensitive === true;
+    if (!sensitive) console.time('fetchAPI');
     try {
       // Verifica se a URL base está definida
       if (!config?.api?.baseUrl) {
@@ -626,7 +627,7 @@ class Core {
 
         // Constrói a URL completa para o proxy
         const fullUrl = `${cleanProxyUrl}/api/${cleanUrl}`;
-        if (config?.app?.debug) console.log(`[API Request] ${verb} ${fullUrl}`, data);
+        if (!sensitive && config?.app?.debug) console.log(`[API Request] ${verb} ${fullUrl}`, data);
 
         const options = {
           method: verb,
@@ -649,12 +650,13 @@ class Core {
         // Verifica se a resposta está ok
         if (!res.ok) {
           const errorData = await res.json().catch(() => ({}));
+          if (sensitive) return { success: false, error: typeof errorData.error === 'string' ? errorData.error.slice(0, 200) : 'A operação não foi concluída.' };
           throw new Error(`API Error: ${res.status} ${res.statusText} - ${JSON.stringify(errorData)}`);
         }
 
         const responseData = await res.json();
-        if (config?.app?.debug) console.log(`[API Response] ${verb} ${url}:`, responseData);
-        console.timeEnd('fetchAPI');
+        if (!sensitive && config?.app?.debug) console.log(`[API Response] ${verb} ${url}:`, responseData);
+        if (!sensitive) console.timeEnd('fetchAPI');
         return responseData;
       }
 
@@ -663,7 +665,7 @@ class Core {
       const cleanUrl = url.replace(/^\/+/, '');
       const fullUrl = `${cleanBaseUrl}/${cleanUrl}`;
 
-      if (config?.app?.debug) console.log(`[API Request] ${verb} ${fullUrl}`, data);
+      if (!sensitive && config?.app?.debug) console.log(`[API Request] ${verb} ${fullUrl}`, data);
 
       const options = {
         method: verb,
@@ -684,6 +686,7 @@ class Core {
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
+        if (sensitive) return { success: false, error: typeof errorData.error === 'string' ? errorData.error.slice(0, 200) : 'A operação não foi concluída.' };
         // Se for 404, retorna o erro do backend se existir
         if (errorData.error) {
           return errorData;
@@ -692,17 +695,17 @@ class Core {
       }
 
       const responseData = await res.json();
-      if (config?.app?.debug) console.log(`[API Response] ${verb} ${url}:`, responseData);
-      console.timeEnd('fetchAPI');
+      if (!sensitive && config?.app?.debug) console.log(`[API Response] ${verb} ${url}:`, responseData);
+      if (!sensitive) console.timeEnd('fetchAPI');
       return responseData;
     } catch (error) {
-      if (config?.app?.debug) console.error('[API Fetch Error Original]:', error);
+      if (!sensitive && config?.app?.debug) console.error('[API Fetch Error Original]:', error);
       // Tenta fallback se a URL base falhar e não for o próprio fallback
       const fallbackUrl = config?.api?.fallbackUrl;
       const baseUrl = config?.api?.baseUrl;
 
       if (fallbackUrl && baseUrl !== fallbackUrl && !url.startsWith('http')) {
-        if (config?.app?.debug) console.warn(`[API Fallback] Request failed, retrying with ${fallbackUrl}`);
+        if (!sensitive && config?.app?.debug) console.warn(`[API Fallback] Request failed, retrying with ${fallbackUrl}`);
         
         try {
           const cleanFallback = fallbackUrl.replace(/\/+$/, '');
@@ -725,15 +728,16 @@ class Core {
           const fallbackData = await res.json().catch(() => ({}));
           
           if (res.ok) {
-            console.timeEnd('fetchAPI');
+            if (!sensitive) console.timeEnd('fetchAPI');
             return fallbackData;
           } else {
+            if (sensitive) return { success: false, error: typeof fallbackData.error === 'string' ? fallbackData.error.slice(0, 200) : 'A operação não foi concluída.' };
             // Se o fallback retornou erro (ex: 403), repassa esse erro em vez de deixar cair na falha de conexão original
             if (config?.app?.debug) console.error('[API Fallback] Error Status:', res.status, fallbackData);
             return fallbackData;
           }
         } catch (fallbackErr) {
-          if (config?.app?.debug) console.error('[API Fallback] Critical Error:', fallbackErr);
+          if (!sensitive && config?.app?.debug) console.error('[API Fallback] Critical Error:', fallbackErr);
         }
       }
 
@@ -746,7 +750,7 @@ class Core {
         errorMessage = 'Configuração da API está incompleta. Contate o suporte.';
       }
 
-      if (!customOptions.silent) {
+      if (!customOptions.silent && !sensitive) {
         // Notifica o usuário sobre o erro
         this.toast(errorMessage, 'error');
 

@@ -172,6 +172,7 @@ const SEO_CONFIG = {
   'console/sistema/logs': { title: 'Registros | Console | Miranda Soft', description: 'Registros do sistema no Console.', noindex: true },
   'console/sistema/usuarios': { title: 'Usuários | Console | Miranda Soft', description: 'Gerenciamento de usuários do Console.', noindex: true },
   'console/sistema/apps': { title: 'Apps | Console | Miranda Soft', description: 'Catálogo de apps do Console.', noindex: true },
+  'console/clientes': { title: 'Clientes MSoft | Console | Miranda Soft', description: 'Cadastro administrativo de clientes da MirandaSoft.', noindex: true },
   'painel/perfil': {
     title: 'Meu perfil | Painel | Miranda Soft',
     description: 'Gerencie seus dados e preferências de conta no Painel da Miranda Soft.',

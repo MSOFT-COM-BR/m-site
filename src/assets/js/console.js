@@ -6,9 +6,10 @@
     images: '/console/midia',
     logs: '/console/sistema/logs',
     users: '/console/sistema/usuarios',
-    apps: '/console/sistema/apps'
+    apps: '/console/sistema/apps',
+    clients: '/console/clientes'
   });
-  const groups = { overview: null, theme: 'workspace', blog: 'content', images: 'workspace', logs: 'system', users: 'system', apps: 'system' };
+  const groups = { overview: null, theme: 'workspace', blog: 'content', images: 'workspace', logs: 'system', users: 'system', apps: 'system', clients: 'system' };
   const auth = window.authService;
   const content = document.getElementById('admin-content');
   const denied = document.getElementById('access-denied');
