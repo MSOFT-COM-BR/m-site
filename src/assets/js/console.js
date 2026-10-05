@@ -2,14 +2,13 @@
   const paths = Object.freeze({
     overview: '/console',
     theme: '/console/aparencia',
-    mjson: '/console/conteudo/mjson',
     blog: '/console/conteudo/blog',
     images: '/console/midia',
     logs: '/console/sistema/logs',
     users: '/console/sistema/usuarios',
     apps: '/console/sistema/apps'
   });
-  const groups = { overview: null, theme: 'workspace', mjson: 'content', blog: 'content', images: 'workspace', logs: 'system', users: 'system', apps: 'system' };
+  const groups = { overview: null, theme: 'workspace', blog: 'content', images: 'workspace', logs: 'system', users: 'system', apps: 'system' };
   const auth = window.authService;
   const content = document.getElementById('admin-content');
   const denied = document.getElementById('access-denied');

@@ -122,7 +122,7 @@ async function inspect(page) {
       await page.waitForSelector('[data-list-action="create"]');
       assert.equal(await page.locator('#blog-stat-total').innerText(),'0');
       assert.equal(await page.locator('#blog-pagination').isVisible(),false);
-      for(const tab of ['overview','theme','mjson','images','logs','users','apps']) {
+      for(const tab of ['overview','theme','images','logs','users','apps']) {
         await page.evaluate(tab=>window.loadTab(tab),tab);
         await page.waitForTimeout(500);
         for(const theme of ['light','dark']) {
@@ -143,10 +143,12 @@ async function inspect(page) {
       assert.equal(await page.locator('.admin-nav [data-tab="blog"]').getAttribute('aria-current'),'page');
       if (width === 390) assert.equal(await page.locator('#admin-nav-toggle').getAttribute('aria-expanded'),'false');
       await page.evaluate(()=>window.loadTab('mjson'));
-      await page.waitForSelector('#mjson-data');
+      assert.equal(new URL(page.url()).pathname,'/console/conteudo/blog');
+      assert.equal(await page.locator('.admin-nav [data-tab="mjson"]').count(),0);
+      assert.equal(await page.locator('#blog-search').count(),1);
       await page.reload({waitUntil:'networkidle'});
-      await page.waitForSelector('#mjson-data');
-      assert.equal(await page.locator('.admin-nav [data-tab="mjson"]').getAttribute('aria-current'),'page');
+      await page.waitForSelector('#blog-search');
+      assert.equal(await page.locator('.admin-nav [data-tab="blog"]').getAttribute('aria-current'),'page');
       assert.deepEqual(errors,[],'no uncaught browser errors');
       console.log(`PASS admin ${width}: themes, filters, pagination, editor, save/delete, recovery, tabs`);
       await page.close();

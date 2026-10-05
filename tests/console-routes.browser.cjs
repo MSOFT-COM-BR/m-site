@@ -5,7 +5,6 @@ const origin = process.env.TEST_ORIGIN || 'http://127.0.0.1:8082';
 const routes = [
   ['overview', '/console', 'Visão geral'],
   ['theme', '/console/aparencia', 'Personalização Visual'],
-  ['mjson', '/console/conteudo/mjson', 'MJSON'],
   ['blog', '/console/conteudo/blog', 'Artigos'],
   ['images', '/console/midia', 'Galeria e Assets'],
   ['logs', '/console/sistema/logs', 'Monitoramento'],
@@ -68,15 +67,24 @@ async function setup(page, role = 'admin') {
       await page.goForward({ waitUntil: 'networkidle' });
       await page.waitForURL(origin + '/console/conteudo/blog');
       assert.equal(await page.locator('.admin-nav [data-tab="blog"]').getAttribute('aria-current'), 'page');
+      await page.evaluate(() => localStorage.setItem('msoft_cms_last_tab', 'mjson'));
       await page.goto(origin + '/console', { waitUntil: 'networkidle' });
       await page.waitForFunction(() => document.querySelector('.admin-nav [aria-current="page"]'));
       assert.equal(await page.locator('.admin-nav [data-tab="overview"]').getAttribute('aria-current'), 'page');
       assert.match(await page.locator('#tab-content').innerText(), /Visão geral/);
+      assert.equal(await page.locator('.console-overview-card').count(), 6);
+      assert.equal(await page.locator('.admin-nav [data-tab="mjson"]').count(), 0);
+      assert.doesNotMatch(await page.locator('#tab-content').innerText(), /MJSON/);
       await page.goto(origin + '/admin', { waitUntil: 'networkidle' });
       assert.equal(new URL(page.url()).pathname, '/console');
       await page.goto(origin + '/console/inexistente', { waitUntil: 'networkidle' });
       assert.equal(await page.locator('.admin-nav').count(), 0);
       assert.equal(new URL(page.url()).pathname, '/console/inexistente');
+      await page.goto(origin + '/console/conteudo/mjson', { waitUntil: 'networkidle' });
+      assert.equal(await page.locator('#not-found-title').innerText(), 'Página não encontrada');
+      assert.equal(await page.locator('.admin-nav').count(), 0);
+      assert.equal(new URL(page.url()).pathname, '/console/conteudo/mjson');
+      assert.equal(calls.some(path => path === '/mjson' || path.startsWith('/mjson/')), false, calls.join(', '));
       await page.goto(origin + '/console/conteudo/blog/novo', { waitUntil: 'networkidle' });
       await page.waitForSelector('.note-editor');
       await page.waitForFunction(() => !document.querySelector('#tab-content')?.hasAttribute('aria-busy') && typeof window.showBlogForm === 'function');
@@ -110,6 +118,6 @@ async function setup(page, role = 'admin') {
       assert.equal(calls.some(path => /blogs|catalog\/admin|\/mjson|\/admin\/users/.test(path)), false, calls.join(', '));
       await page.close();
     }
-    console.log('PASS Console routes: overview, seven direct pages, reload, history, legacy, 404, roles and SEO');
+    console.log('PASS Console routes: overview, six direct pages, reload, history, legacy, removed MJSON, 404, roles and SEO');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

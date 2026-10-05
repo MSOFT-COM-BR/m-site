@@ -165,7 +165,6 @@ const SEO_CONFIG = {
     noindex: true
   },
   'console/aparencia': { title: 'Aparência | Console | Miranda Soft', description: 'Personalização visual do Console.', noindex: true },
-  'console/conteudo/mjson': { title: 'MJSON | Console | Miranda Soft', description: 'Dados estruturados do Console.', noindex: true },
   'console/conteudo/blog': { title: 'Artigos | Console | Miranda Soft', description: 'Gerenciamento de artigos do Console.', noindex: true },
   'console/conteudo/blog/novo': { title: 'Escrever artigo | Console | Miranda Soft', description: 'Crie e publique artigos no Console.', noindex: true },
   'console/conteudo/blog/editar': { title: 'Editar artigo | Console | Miranda Soft', description: 'Edite e publique artigos no Console.', noindex: true },
