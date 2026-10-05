@@ -1,447 +1,156 @@
-<!-- Luminous Background Elements -->
-<div class="orb-primary" style="top: -10%; right: 0; max-width: 100vw;"></div>
-<div class="orb-secondary" style="bottom: 15%; left: 0; max-width: 100vw;"></div>
-
-<!-- Hero Section -->
-<section class="relative min-vh-100 d-flex align-items-center justify-content-center overflow-hidden">
-  <div class="container text-center pt-5 position-relative z-1">
-    <span class="label-pill mb-4 d-block" id="hero-badge-text">TECNOLOGIA DE ELITE</span>
-    <h1 class="display-lg text-gradient mb-4" id="hero-title">
-      Soluções Digitais que<br>Transformam o seu Negócio
-    </h1>
-    <p class="body-lg mx-auto mb-5 text-on-surface-variant" style="max-width: 700px;" id="hero-desc">
-      Construímos ecossistemas digitais escaláveis e inteligentes. Da consultoria estratégica ao desenvolvimento de alta performance.
-    </p>
-    <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
-      <a href="#solucoes" class="dev-btn dev-btn-primary px-5 py-3 text-decoration-none shadow-lg" id="hero-btn-primary">
-        Conheça Nossas Soluções
-      </a>
-      <a href="#contact" class="dev-btn dev-btn-secondary px-5 py-3 text-decoration-none" id="hero-btn-secondary">
-        Fale com um Especialista
-      </a>
-    </div>
-  </div>
-
-  <div class="position-absolute bottom-0 start-0 w-100 h-25" style="background: linear-gradient(transparent, var(--ms-surface));"></div>
-</section>
-
-<!-- Hub entry points -->
-<section class="home-hub-section dev-section pt-0" aria-labelledby="hub-title">
-  <div class="container">
-    <div class="home-hub-shell">
-      <div class="row g-4 align-items-center mb-4 mb-lg-5">
-        <div class="col-lg-7">
-          <span class="label-pill d-inline-block mb-3">UM HUB, VÁRIAS FORMAS DE AVANÇAR</span>
-          <h2 class="display-md text-on-surface tracking-tight mb-3" id="hub-title">Comece pelo que faz sentido para o seu momento.</h2>
-          <p class="body-lg text-on-surface-variant mb-0">Da primeira ideia ao produto em operação: encontre uma solução, explore ferramentas ou aprofunde seu repertório com conteúdos que ajudam a decidir melhor.</p>
-        </div>
-        <div class="col-lg-5 d-lg-flex justify-content-lg-end">
-          <a class="dev-btn dev-btn-primary text-decoration-none home-hub-cta" href="/cotacoes" data-track="quote_open" data-track-location="home_hub">
-            <i class="bi bi-lightning-charge-fill me-2" aria-hidden="true"></i>Pedir uma cotação
+<main class="home-portfolio">
+  <section class="home-portfolio-hero" aria-labelledby="home-portfolio-title">
+    <div class="container">
+      <div class="home-portfolio-hero-content">
+        <span class="home-portfolio-eyebrow"><i class="bi bi-grid-1x2" aria-hidden="true"></i> PORTFÓLIO MIRANDASOFT</span>
+        <h1 id="home-portfolio-title">Aplicações feitas para <span>o seu dia a dia.</span></h1>
+        <p>Conheça os produtos próprios da MirandaSoft: Movida, M-Notas e M-Care.</p>
+        <div class="home-portfolio-actions">
+          <a class="home-portfolio-button home-portfolio-button-primary" href="#portfolio-products">
+            Ver aplicações <i class="bi bi-arrow-down-right" aria-hidden="true"></i>
+          </a>
+          <a class="home-portfolio-button home-portfolio-button-secondary" href="/contact">
+            Falar com a MirandaSoft <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
           </a>
         </div>
       </div>
-
-      <div class="row g-3 g-lg-4">
-        <div class="col-md-4">
-          <a class="home-hub-card home-hub-card-featured" href="/cotacoes" data-track="quote_open" data-track-location="home_hub_card">
-            <span class="home-hub-icon"><i class="bi bi-chat-square-text" aria-hidden="true"></i></span>
-            <span class="home-hub-eyebrow">Para sua empresa</span>
-            <h3>Transforme uma necessidade em plano de ação.</h3>
-            <p>Conte o contexto do seu negócio e receba uma proposta orientada ao que precisa ser resolvido.</p>
-            <span class="home-hub-link">Montar minha cotação <i class="bi bi-arrow-up-right" aria-hidden="true"></i></span>
-          </a>
-        </div>
-        <div class="col-md-4">
-          <a class="home-hub-card" href="/ecossistema" data-track="ecosystem_open" data-track-location="home_hub_card">
-            <span class="home-hub-icon"><i class="bi bi-grid-1x2" aria-hidden="true"></i></span>
-            <span class="home-hub-eyebrow">Produtos e serviços</span>
-            <h3>Explore caminhos já prontos para evoluir.</h3>
-            <p>Conheça soluções, aplicativos e serviços que se conectam a diferentes jornadas digitais.</p>
-            <span class="home-hub-link">Ver ecossistema <i class="bi bi-arrow-up-right" aria-hidden="true"></i></span>
-          </a>
-        </div>
-        <div class="col-md-4">
-          <a class="home-hub-card" href="/blog" data-track="blog_open" data-track-location="home_hub_card">
-            <span class="home-hub-icon"><i class="bi bi-journal-richtext" aria-hidden="true"></i></span>
-            <span class="home-hub-eyebrow">Conteúdo e notícias</span>
-            <h3>Leve mais clareza para a próxima decisão.</h3>
-            <p>Acompanhe análises, aprendizados e referências para quem constrói produtos e operações digitais.</p>
-            <span class="home-hub-link">Ler conteúdos <i class="bi bi-arrow-up-right" aria-hidden="true"></i></span>
-          </a>
-        </div>
+      <div class="home-portfolio-index" aria-hidden="true">
+        <span>APLICAÇÕES</span>
+        <strong>03</strong>
+        <i class="bi bi-arrow-down-right"></i>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Nossas Soluções (Bento Grid) -->
-<style>
-  .home-hub-section { position: relative; z-index: 2; }
-  .home-hub-shell { padding: clamp(1.5rem, 4vw, 3rem); border: 1px solid var(--ms-outline-variant); border-radius: 24px; background: linear-gradient(135deg, var(--ms-surface-container-low), var(--ms-surface-container)); box-shadow: 0 16px 48px rgba(15, 23, 42, .08); }
-  .home-hub-cta { white-space: nowrap; }
-  .home-hub-card { display: flex; min-height: 100%; flex-direction: column; align-items: flex-start; padding: 1.5rem; border: 1px solid var(--ms-outline-variant); border-radius: 18px; background: var(--ms-surface-container-low); color: var(--ms-on-surface); text-decoration: none; transition: transform .25s ease, border-color .25s ease, background .25s ease; }
-  .home-hub-card:hover { transform: translateY(-5px); border-color: var(--ms-primary); background: var(--ms-surface-container-high); color: var(--ms-on-surface); }
-  .home-hub-card-featured { border-color: var(--ms-secondary); background: var(--ms-surface-container); }
-  .home-hub-icon { display: grid; width: 2.7rem; height: 2.7rem; margin-bottom: 1.3rem; place-items: center; border-radius: 12px; background: rgba(56, 189, 248, .13); color: var(--ms-secondary); font-size: 1.2rem; }
-  .home-hub-eyebrow { margin-bottom: .6rem; color: var(--ms-secondary); font-size: .69rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
-  .home-hub-card h3 { margin: 0 0 .8rem; color: var(--ms-on-surface); font-size: 1.15rem; font-weight: 700; line-height: 1.25; }
-  .home-hub-card p { margin: 0 0 1.4rem; color: var(--ms-on-surface-variant); font-size: .9rem; line-height: 1.6; }
-  .home-hub-link { margin-top: auto; color: var(--ms-secondary); font-size: .88rem; font-weight: 700; }
-  .home-hub-link i { margin-left: .25rem; transition: transform .2s ease; }
-  .home-hub-card:hover .home-hub-link i { transform: translate(2px, -2px); }
-
-
-  @media (max-width: 575.98px) { .home-hub-shell { padding: 1.25rem; border-radius: 18px; } .home-hub-cta { width: 100%; text-align: center; } }
-</style>
-
-<section id="solucoes" class="dev-section">
-  <div class="container">
-    <div class="mb-5">
-      <span class="label-pill d-block mb-3" style="color: var(--ms-tertiary);">ESPECIALIDADES</span>
-      <h2 class="display-md text-on-surface tracking-tight">Nossas Soluções</h2>
-    </div>
-
-    <div class="row g-4" id="features-grid">
-      <!-- Approved services fallback. ContentService may replace these cards at runtime. -->
-      <div class="col-lg-6">
-        <div class="dev-skill-card h-100">
-          <div class="dev-skill-icon"><i class="bi bi-window-stack fs-2"></i></div>
-          <h3 class="h4 fw-bold text-on-surface mb-3">Criação de Sites</h3>
-          <p class="text-on-surface-variant mb-4">Sites institucionais e páginas de campanha para comunicar sua oferta com clareza.</p>
-          <a href="/criacao-de-sites" class="mt-auto d-inline-flex align-items-center text-primary fw-bold gap-2 text-decoration-none">Saber mais <i class="bi bi-arrow-right"></i></a>
+  <section class="home-products" id="portfolio-products" aria-labelledby="home-products-title">
+    <div class="container">
+      <div class="home-products-heading">
+        <div>
+          <span class="home-portfolio-eyebrow">NOSSOS PRODUTOS</span>
+          <h2 id="home-products-title">Escolha uma aplicação</h2>
         </div>
+        <p>Veja o que cada produto oferece e fale com a nossa equipe para saber mais.</p>
       </div>
-      <div class="col-lg-6">
-        <div class="dev-skill-card h-100">
-          <div class="dev-skill-icon" style="color: var(--ms-secondary); background: rgba(76, 215, 246, 0.1);"><i class="bi bi-code-square fs-2"></i></div>
-          <h3 class="h4 fw-bold text-on-surface mb-3">Desenvolvimento de Sistemas</h3>
-          <p class="text-on-surface-variant mb-4">Sistemas sob medida para apoiar processos e necessidades específicas da operação.</p>
-          <a href="/desenvolvimento-de-sistemas" class="mt-auto d-inline-flex align-items-center text-info fw-bold gap-2 text-decoration-none">Saber mais <i class="bi bi-arrow-right"></i></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- Sobre a Miranda Soft -->
-<section id="sobre" class="dev-section">
-  <div class="container">
-    <div class="row align-items-center g-5">
-      <div class="col-lg-6">
-        <div class="position-relative">
-          <div style="border-radius: 48px; min-height: 500px; background-color: var(--ms-surface-container-low); overflow: hidden; position: relative;">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80&auto=format&fit=crop"
-                 srcset="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=480&q=80&auto=format&fit=crop 480w,
-                         https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80&auto=format&fit=crop 800w,
-                         https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80&auto=format&fit=crop 1200w"
-                 sizes="(max-width: 991px) 100vw, 50vw"
-                 width="800"
-                 height="533"
-                 alt="Miranda Soft Team"
-                 loading="lazy"
-                 decoding="async"
-                 class="w-100 h-100 object-fit-cover opacity-50"
-                 style="mix-blend-mode: luminosity; position: absolute; inset: 0;">
-            <div class="position-absolute bottom-0 start-0 w-100 p-5" style="background: linear-gradient(transparent, rgba(19,19,24,0.9));">
+      <div class="row g-3 g-xl-4">
+        <div class="col-md-6 col-xl-4">
+          <article class="home-product-card">
+            <div class="home-product-card-top">
+              <span class="home-product-number">01</span>
+              <span class="home-product-icon" aria-hidden="true"><i class="bi bi-grid-1x2"></i></span>
             </div>
-          </div>
-
-          <div class="position-absolute top-50 start-100 translate-middle d-none d-lg-block" style="margin-left: -50px;">
-            <div class="p-4 shadow-lg border border-white border-opacity-10" style="background-color: var(--ms-surface-container-highest); min-width: 180px; border-radius: 20px;">
-               <div class="h2 fw-black text-primary mb-0">10+</div>
-               <div class="small fw-bold text-on-surface-variant tracking-wider text-uppercase">ANOS DE INOVAÇÃO</div>
+            <div class="home-product-copy">
+              <span class="home-product-type">APLICAÇÃO MIRANDASOFT</span>
+              <h3>Movida</h3>
+              <p>Uma aplicação própria da MirandaSoft. Entre em contato para conhecer o produto e conversar com a nossa equipe.</p>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-6">
-        <span class="label-pill text-primary d-block mb-4">NOSSA ESSÊNCIA</span>
-        <h2 class="display-md text-on-surface mb-4" id="about-title">Engenharia de Software com Propósito</h2>
-        <p class="body-lg mb-4" id="about-desc">
-          A Miranda Soft nasceu da paixão por resolver problemas complexos através do código. Não entregamos apenas software; construímos parcerias estratégicas que impulsionam o crescimento real.
-        </p>
-        <p class="body-lg mb-5" id="about-support-title">
-          Nossa cultura é pautada na transparência técnica e na busca incessante pela excelência. Cada linha de código é pensada para ser resiliente, segura e preparada para o futuro.
-        </p>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Destaque MSOFT (Latest Blog Post) -->
-<section id="cta-section" class="dev-section">
-  <div class="container">
-    <div class="border border-white border-opacity-5 p-5 p-lg-5" style="border-radius: 40px; background: linear-gradient(145deg, var(--ms-surface-container-high), var(--ms-surface-container-low));">
-      <div class="row align-items-center g-5">
-        <div class="col-lg-12" id="cta-text-col">
-           <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-4" style="background-color: rgba(78, 222, 163, 0.1); color: var(--ms-tertiary);">
-             <i class="bi bi-patch-check-fill"></i>
-             <span class="small fw-bold text-uppercase tracking-wider">Novo Lançamento</span>
-           </div>
-            <h2 class="display-md text-on-surface mb-4" id="cta-title"></h2>
-            <p class="body-lg mb-4 text-on-surface-variant" id="cta-desc">
-              Buscando as últimas novidades da Miranda Soft para você.
-            </p>
-            <div id="cta-meta" class="d-flex align-items-center gap-3 mb-5 text-on-surface-variant small"></div>
-
-
-
-            <a href="/blog" id="cta-btn" class="dev-btn dev-btn-primary px-5 text-decoration-none">
-              Ler Artigo Completo
+            <a class="home-product-link" href="/contact" aria-label="Fale com a MirandaSoft sobre Movida">
+              Falar sobre Movida <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
             </a>
+          </article>
         </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- Blog Section (Tech Insights) -->
-<section id="blog-home" class="dev-section">
-  <div class="container">
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-end mb-5 gap-4">
-      <div>
-        <span class="label-pill d-block mb-3" style="color: var(--ms-secondary);">INSIGHTS TECH</span>
-        <h2 class="display-md text-on-surface tracking-tight m-0">Nosso Blog</h2>
-      </div>
-      <a href="/blog" class="dev-btn dev-btn-secondary px-4 py-2 text-decoration-none d-flex align-items-center gap-2">
-        Ver Todos <i class="bi bi-arrow-right"></i>
-      </a>
-    </div>
-
-    <div class="row g-4" id="home-blog-grid">
-      <!-- Skeleton or Loading -->
-      <div class="col-lg-4"><div class="dev-skill-card h-100 opacity-25" style="min-height: 300px;"></div></div>
-      <div class="col-lg-4"><div class="dev-skill-card h-100 opacity-25" style="min-height: 300px;"></div></div>
-      <div class="col-lg-4"><div class="dev-skill-card h-100 opacity-25" style="min-height: 300px;"></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- Support Section -->
-<section id="suporte" class="dev-section">
-  <div class="container text-center">
-    <div class="mb-5">
-      <span class="label-pill d-block mb-3" style="color: var(--ms-primary);">SUPORTE</span>
-      <h2 class="display-md text-on-surface">Suporte Especializado</h2>
-    </div>
-
-    <div class="row g-4 justify-content-center">
-      <div class="col-lg-4 col-md-6">
-        <div class="dev-skill-card p-4 text-center">
-          <div class="mx-auto bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
-            <i class="bi bi-chat-dots fs-1 text-primary"></i>
-          </div>
-          <h3 class="h5 text-on-surface fw-bold mb-3">Chat em Tempo Real</h3>
-          <p class="text-on-surface-variant small mb-0">Tire suas dúvidas instantaneamente com nossa equipe de suporte via chat.</p>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6">
-        <div class="dev-skill-card p-4 text-center">
-          <div class="mx-auto bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mb-4" style="width: 80px; height: 80px;">
-            <i class="bi bi-book fs-1 text-success"></i>
-          </div>
-          <h3 class="h5 text-on-surface fw-bold mb-3">Base de Conhecimento</h3>
-          <p class="text-on-surface-variant small mb-0">Acesse nossa documentação completa, tutoriais e guias de uso.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="mt-5">
-      <a href="/support" class="dev-btn dev-btn-secondary px-5 py-3 text-decoration-none">
-        Acessar Central de Suporte
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- Contact Section -->
-<section id="contact" class="dev-section">
-  <div class="container">
-    <div class="text-center">
-      <h2 class="display-md text-on-surface mb-4">Vamos <span class="text-gradient-neon">inovar juntos?</span></h2>
-      <p class="body-lg mx-auto mb-5" style="max-width: 600px;">
-        Estamos prontos para atender sua demanda. Entre em contato e solicite um orçamento.
-      </p>
-
-      <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
-        <a href="https://wa.me/5584988330532" target="_blank" class="dev-btn dev-btn-primary px-5 py-3 text-decoration-none shadow-lg">
-          <i class="bi bi-whatsapp me-2"></i> Chamar no WhatsApp
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<script>
-  (function () {
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        if (this.getAttribute('href').length > 1) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute('href'));
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }
-      });
-    });
-
-    // CMS & Content Binding
-    function renderContent() {
-      if (!window.ContentService) return;
-      const content = window.ContentService.getAll();
-      if (!content) return;
-
-      const setHtml = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
-      const setTxt = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
-      const setAttr = (id, attr, val) => { const el = document.getElementById(id); if (el) el.setAttribute(attr, val); };
-
-      // Hero
-      if (content.hero) {
-        setHtml('hero-badge-text', content.hero.eyebrow);
-        if (content.hero.title.includes('transformam')) {
-           setHtml('hero-title', content.hero.title.replace('transformam o seu negócio', '<span class="text-gradient">transformam o seu negócio</span>'));
-        } else {
-           setTxt('hero-title', content.hero.title);
-        }
-        setTxt('hero-desc', content.hero.description);
-        setTxt('hero-btn-primary', content.hero.primaryAction.label);
-        setAttr('hero-btn-primary', 'href', content.hero.primaryAction.href);
-        setTxt('hero-btn-secondary', content.hero.secondaryAction.label);
-        setAttr('hero-btn-secondary', 'href', content.hero.secondaryAction.href);
-      }
-
-      // Features
-      const grid = document.getElementById('features-grid');
-      if (grid && content.features) {
-        const featureColumnClass = content.features.length === 2 ? 'col-lg-6' : 'col-lg-4';
-        grid.innerHTML = content.features.map(f => `
-          <div class="${featureColumnClass}">
-            <div class="dev-skill-card h-100">
-              <div class="dev-skill-icon">
-                <i class="bi ${f.icon}"></i>
-              </div>
-              <h3 class="h4 fw-bold text-on-surface mb-3">${f.title}</h3>
-              <p class="text-on-surface-variant mb-4">${f.description}</p>
-              <a href="${f.href || '/expertise'}" class="mt-auto d-inline-flex align-items-center text-primary fw-bold gap-2 text-decoration-none">
-                ${f.ctaLabel || 'Saber mais'} <i class="bi bi-arrow-right"></i>
-              </a>
+        <div class="col-md-6 col-xl-4">
+          <article class="home-product-card home-product-card-featured">
+            <div class="home-product-card-top">
+              <span class="home-product-number">02</span>
+              <span class="home-product-icon" aria-hidden="true"><i class="bi bi-receipt"></i></span>
             </div>
-          </div>
-        `).join('');
-      }
+            <div class="home-product-copy">
+              <span class="home-product-type">GESTÃO FISCAL</span>
+              <h3>M-Notas</h3>
+              <p>Emita e gerencie NF-e e NFC-e, organize produtos e clientes e gere DANFE e DANFCE.</p>
+            </div>
+            <a class="home-product-link" href="/contact" aria-label="Fale com a MirandaSoft sobre M-Notas">
+              Falar sobre M-Notas <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+            </a>
+          </article>
+        </div>
 
-      // About
-      if (content.about) {
-        setTxt('about-title', content.about.title);
-        setTxt('about-desc', content.about.description);
-        setTxt('about-support-title', content.about.supportTitle);
-      }
+        <div class="col-md-6 col-xl-4">
+          <article class="home-product-card">
+            <div class="home-product-card-top">
+              <span class="home-product-number">03</span>
+              <span class="home-product-icon" aria-hidden="true"><i class="bi bi-heart-pulse"></i></span>
+            </div>
+            <div class="home-product-copy">
+              <span class="home-product-type">ROTINA CLÍNICA</span>
+              <h3>M-Care</h3>
+              <p>Plataforma para operação clínica multidisciplinar com foco em ABA, incluindo pacientes, programas, coletas e evolução.</p>
+            </div>
+            <a class="home-product-link" href="/contact" aria-label="Fale com a MirandaSoft sobre M-Care">
+              Falar sobre M-Care <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+            </a>
+          </article>
+        </div>
+      </div>
 
-      // Sections Visibility
-      const toggle = (id, sectionKey) => {
-        const el = document.getElementById(id);
-        if (el && content[sectionKey]) el.style.display = (content[sectionKey].enabled === false) ? 'none' : '';
-      };
-      toggle('solucoes', 'features');
-      toggle('sobre', 'about');
-    }
+      <div class="home-products-cta">
+        <span>Quer conversar sobre uma dessas aplicações?</span>
+        <a href="/contact">Entre em contato <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </section>
+</main>
 
-    // Blog Integration - Definitive Standalone Fix
-    async function loadHomeBlog() {
-      const grid = document.getElementById('home-blog-grid');
-      const ctaSection = document.getElementById('cta-section');
-      if (!grid) return;
+<style>
+  .home-portfolio { overflow: hidden; color: var(--ms-on-surface); }
+  .home-portfolio-hero { position: relative; padding: clamp(5.5rem, 11vw, 9rem) 0 clamp(4rem, 8vw, 7rem); }
+  .home-portfolio-hero::before { position: absolute; top: -18rem; right: -10rem; width: min(70vw, 64rem); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(var(--ms-primary-rgb), .16), transparent 68%); content: ""; pointer-events: none; }
+  .home-portfolio-hero .container { position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: 3rem; }
+  .home-portfolio-hero-content { max-width: 58rem; }
+  .home-portfolio-eyebrow { display: inline-flex; align-items: center; gap: .55rem; color: var(--ms-primary); font-size: .73rem; font-weight: 800; letter-spacing: .16em; }
+  .home-portfolio-hero h1 { max-width: 11ch; margin: 1.4rem 0 1.25rem; color: var(--ms-on-surface); font-size: clamp(3.2rem, 7.2vw, 6.8rem); font-weight: 850; letter-spacing: -.075em; line-height: .94; }
+  .home-portfolio-hero h1 span { color: var(--ms-primary); }
+  .home-portfolio-hero-content > p { max-width: 39rem; margin: 0; color: var(--ms-on-surface-variant); font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-height: 1.7; }
+  .home-portfolio-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+  .home-portfolio-button { display: inline-flex; min-height: 3.25rem; align-items: center; justify-content: center; gap: .7rem; padding: .8rem 1.15rem; border: 1px solid var(--ms-outline-variant); border-radius: 11px; font-weight: 700; text-decoration: none; transition: transform .2s ease, border-color .2s ease, background .2s ease; }
+  .home-portfolio-button:hover { transform: translateY(-2px); }
+  .home-portfolio-button-primary { border-color: var(--ms-primary); background: var(--ms-primary); color: var(--ms-on-primary-container); }
+  .home-portfolio-button-primary:hover { background: var(--ms-primary-container); color: var(--ms-on-primary-container); }
+  .home-portfolio-button-secondary { background: var(--ms-surface-container-low); color: var(--ms-on-surface); }
+  .home-portfolio-button-secondary:hover { border-color: var(--ms-primary); color: var(--ms-on-surface); }
+  .home-portfolio-index { display: grid; min-width: 9rem; justify-items: end; gap: .3rem; padding-bottom: .45rem; color: var(--ms-on-surface-variant); }
+  .home-portfolio-index span { font-size: .68rem; font-weight: 800; letter-spacing: .15em; }
+  .home-portfolio-index strong { color: var(--ms-primary); font-size: 4rem; font-weight: 800; letter-spacing: -.08em; line-height: 1; }
+  .home-portfolio-index i { color: var(--ms-primary); font-size: 1.2rem; }
 
-      try {
-        const apiBase = (typeof window !== 'undefined' && window.config?.api?.baseUrl)
-          ? window.config.api.baseUrl
-          : ((typeof window !== 'undefined' && window.location?.hostname && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1')
-            ? 'https://gateway.mirandasoft.com.br/api'
-            : 'http://127.0.0.1:3000');
-        let res;
-        if (window.core && typeof window.core.fetchAPI === 'function') {
-          res = await window.core.fetchAPI('/blogs');
-        } else {
-          const response = await fetch(`${apiBase}/blogs`, {
-            method: 'GET',
-            headers: { 'Accept': 'application/json' }
-          });
-          res = await response.json();
-        }
+  .home-products { padding: 1rem 0 clamp(4rem, 8vw, 7rem); }
+  .home-products-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; margin-bottom: 1.8rem; }
+  .home-products-heading h2 { margin: .6rem 0 0; color: var(--ms-on-surface); font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -.05em; }
+  .home-products-heading p { max-width: 24rem; margin: 0 0 .2rem; color: var(--ms-on-surface-variant); line-height: 1.65; }
+  .home-product-card { position: relative; display: flex; min-height: 23rem; flex-direction: column; overflow: hidden; padding: clamp(1.3rem, 2.5vw, 1.8rem); border: 1px solid var(--ms-outline-variant); border-radius: 20px; background: var(--ms-surface-container-low); transition: transform .24s ease, border-color .24s ease, background .24s ease; }
+  .home-product-card::before { position: absolute; top: 0; right: 1.5rem; left: 1.5rem; height: 2px; background: linear-gradient(90deg, transparent, var(--ms-primary), transparent); content: ""; opacity: .45; }
+  .home-product-card:hover { transform: translateY(-4px); border-color: var(--ms-primary); background: var(--ms-surface-container); }
+  .home-product-card-featured { border-color: rgba(var(--ms-primary-rgb), .45); background: linear-gradient(145deg, var(--ms-surface-container), var(--ms-surface-container-low)); }
+  .home-product-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
+  .home-product-number { color: var(--ms-on-surface-variant); font-size: .78rem; font-weight: 700; letter-spacing: .12em; }
+  .home-product-icon { display: grid; width: 3.2rem; height: 3.2rem; place-items: center; border: 1px solid rgba(var(--ms-primary-rgb), .24); border-radius: 14px; background: rgba(var(--ms-primary-rgb), .1); color: var(--ms-primary); font-size: 1.35rem; }
+  .home-product-type { display: block; margin-bottom: .55rem; color: var(--ms-primary); font-size: .66rem; font-weight: 800; letter-spacing: .14em; }
+  .home-product-copy h3 { margin: 0 0 .7rem; color: var(--ms-on-surface); font-size: 2rem; font-weight: 800; letter-spacing: -.05em; }
+  .home-product-copy p { margin: 0; color: var(--ms-on-surface-variant); line-height: 1.7; }
+  .home-product-link { display: flex; align-items: center; justify-content: space-between; gap: .8rem; margin-top: auto; padding-top: 1.7rem; color: var(--ms-primary); font-size: .88rem; font-weight: 750; text-decoration: none; }
+  .home-product-link:hover { color: var(--ms-primary); }
+  .home-product-link:focus-visible,
+  .home-portfolio-button:focus-visible,
+  .home-products-cta a:focus-visible { border-radius: 4px; outline: 3px solid rgba(var(--ms-primary-rgb), .45); outline-offset: 3px; }
+  .home-products-cta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.5rem; padding: 1.3rem 0 0; border-top: 1px solid var(--ms-outline-variant); color: var(--ms-on-surface-variant); }
+  .home-products-cta a { display: inline-flex; align-items: center; gap: .55rem; color: var(--ms-primary); font-weight: 750; text-decoration: none; }
 
-        if (res && res.success && res.data && res.data.length > 0) {
-          const sortedPosts = res.data
-            .filter(p => p.createdAt || p.date)
-            .sort((a, b) => new Date(b.createdAt || b.date).getTime() - new Date(a.createdAt || a.date).getTime());
+  @media (max-width: 767.98px) {
+    .home-portfolio-hero { padding-top: 5.5rem; }
+    .home-portfolio-hero .container { align-items: flex-start; }
+    .home-portfolio-index { display: none; }
+    .home-products-heading { display: block; }
+    .home-products-heading p { margin-top: .75rem; }
+  }
 
-          const posts = sortedPosts.slice(0, 3);
-
-          const highlightPost = sortedPosts[0];
-          if (highlightPost && ctaSection) {
-              const hTitle = document.getElementById('cta-title');
-              const hDesc = document.getElementById('cta-desc');
-              const hBtn = document.getElementById('cta-btn');
-              const hMeta = document.getElementById('cta-meta');
-              const dateStr = highlightPost.createdAt || highlightPost.date;
-              const date = dateStr ? new Date(dateStr).toLocaleDateString('pt-BR') : 'Hoje';
-
-              if (hTitle) hTitle.textContent = highlightPost.title;
-              if (hDesc) hDesc.textContent = highlightPost.description || ((highlightPost.content || '').replace(/<[^>]*>/g, '').substring(0, 160).trim());
-              if (hBtn) hBtn.href = `/blog/${highlightPost.slug}`;
-              if (hMeta) hMeta.innerHTML = `<span class="text-on-surface-variant"><i class="bi bi-calendar3 me-1"></i> ${date}</span> <span class="opacity-50 text-on-surface-variant">|</span> <span class="text-info fw-semibold"><i class="bi bi-tag me-1"></i> ${highlightPost.category || 'Insights'}</span>`;
-          }
-
-          grid.innerHTML = posts.map(post => {
-            const dateStr = post.createdAt || post.date;
-            const date = dateStr ? new Date(dateStr).toLocaleDateString('pt-BR') : 'Novidade';
-            const hasImage = !!(post.imageUrl && post.imageUrl.trim());
-            return `
-              <div class="col-lg-4">
-                <a href="/blog/${post.slug}" class="text-decoration-none">
-                  <div class="dev-skill-card h-100 p-0 overflow-hidden border border-white border-opacity-5">
-                    ${hasImage ? `
-                    <div style="height: 200px; overflow: hidden;">
-                      <img src="${post.imageUrl}" alt="${(post.title || '').replace(/"/g, '&quot;')}" class="w-100 h-100 object-fit-cover transition-all" style="transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-                    </div>
-                    ` : `
-                    <div class="d-flex align-items-center gap-2 text-muted small px-4 pt-4">
-                      <span class="badge bg-primary bg-opacity-25 text-primary">${post.category || 'Tecnologia'}</span>
-                      <span><i class="bi bi-calendar3"></i> ${date}</span>
-                    </div>
-                    `}
-                    <div class="p-4">
-                      ${hasImage ? `<div class="d-flex align-items-center gap-2 mb-3 text-muted small">
-                        <i class="bi bi-calendar3"></i> ${date}
-                        <span class="mx-2 opacity-25">|</span>
-                        <span class="text-secondary">${post.category || 'Tecnologia'}</span>
-                      </div>` : ''}
-                      <h3 class="h5 fw-bold text-on-surface mb-3 line-clamp-2">${post.title}</h3>
-                      <div class="d-flex align-items-center text-primary small fw-bold gap-2">
-                        Ler Artigo <i class="bi bi-chevron-right"></i>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            `;
-          }).join('');
-        } else {
-          grid.innerHTML = '<div class="col-12 text-center text-muted">Aguardando novos conteúdos...</div>';
-        }
-      } catch (e) {
-        console.error('Blog load failed:', e);
-        grid.innerHTML = ''; // Silencioso na falha persistente
-      }
-    }
-
-    // Execução Imediata + Evento
-    loadHomeBlog();
-    document.addEventListener('DOMContentLoaded', loadHomeBlog);
-  })();
-</script>
+  @media (max-width: 575.98px) {
+    .home-portfolio-hero { padding-block: 4.8rem 3.8rem; }
+    .home-portfolio-hero h1 { max-width: 10ch; font-size: clamp(3rem, 14vw, 4.6rem); }
+    .home-portfolio-actions { flex-direction: column; }
+    .home-portfolio-button { width: 100%; justify-content: space-between; }
+    .home-product-card { min-height: 20rem; }
+    .home-products-cta { align-items: flex-start; flex-direction: column; }
+  }
+</style>

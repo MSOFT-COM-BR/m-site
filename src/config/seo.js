@@ -5,8 +5,8 @@
  */
 const SEO_CONFIG = {
   'home': {
-    title: 'MSoft | Soluções Digitais que Transformam Negócios',
-    description: 'Líderes em desenvolvimento de software e soluções tecnológicas de alta performance para impulsionar sua empresa.',
+    title: 'Aplicações MirandaSoft | Movida, M-Notas e M-Care',
+    description: 'Conheça as aplicações próprias da MirandaSoft: Movida, M-Notas e M-Care.',
     noindex: false
   },
   'about': {
