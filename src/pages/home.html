@@ -1,10 +1,15 @@
-<main class="home-portfolio">
+<main class="home-portfolio home-hub-shell">
+  <!-- Hero Section -->
   <section class="home-portfolio-hero" aria-labelledby="home-portfolio-title">
     <div class="container">
       <div class="home-portfolio-hero-content">
-        <span class="home-portfolio-eyebrow"><i class="bi bi-grid-1x2" aria-hidden="true"></i> PORTFÓLIO MIRANDASOFT</span>
+        <div class="home-hero-badge">
+          <span class="home-status-dot" aria-hidden="true"></span>
+          <span class="home-portfolio-eyebrow"><i class="bi bi-grid-1x2" aria-hidden="true"></i> PORTFÓLIO MIRANDASOFT</span>
+        </div>
         <h1 id="home-portfolio-title">Aplicações feitas para <span>o seu dia a dia.</span></h1>
-        <p>Conheça os produtos próprios da MirandaSoft: Movida, M-Notas e M-Care.</p>
+        <p class="home-hero-lead">Conheça as soluções próprias da MirandaSoft: tecnologia robusta para gestão fiscal, rotina clínica multidisciplinar e operações digitais de alto impacto.</p>
+
         <div class="home-portfolio-actions">
           <a class="home-portfolio-button home-portfolio-button-primary" href="#portfolio-products">
             Ver aplicações <i class="bi bi-arrow-down-right" aria-hidden="true"></i>
@@ -13,15 +18,77 @@
             Falar com a MirandaSoft <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
           </a>
         </div>
+
+        <div class="home-hero-pills" aria-label="Diferenciais da MirandaSoft">
+          <span class="home-hero-pill"><i class="bi bi-shield-check" aria-hidden="true"></i> Software Próprio</span>
+          <span class="home-hero-pill"><i class="bi bi-lightning-charge" aria-hidden="true"></i> Alta Performance</span>
+          <span class="home-hero-pill"><i class="bi bi-lock" aria-hidden="true"></i> Conformidade LGPD</span>
+        </div>
       </div>
-      <div class="home-portfolio-index" aria-hidden="true">
-        <span>APLICAÇÕES</span>
-        <strong>03</strong>
-        <i class="bi bi-arrow-down-right"></i>
+
+      <div class="home-hero-showcase" aria-hidden="true">
+        <div class="home-showcase-card">
+          <div class="home-showcase-header">
+            <div class="home-showcase-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="home-showcase-title">MirandaSoft Suite</span>
+            <span class="home-showcase-status">Ativo</span>
+          </div>
+          <div class="home-showcase-body">
+            <div class="home-showcase-item">
+              <div class="home-showcase-icon"><i class="bi bi-receipt"></i></div>
+              <div class="home-showcase-info">
+                <strong>M-Notas</strong>
+                <small>Emissão fiscal &amp; DANFE</small>
+              </div>
+              <span class="home-showcase-tag">SaaS Fiscal</span>
+            </div>
+            <div class="home-showcase-item">
+              <div class="home-showcase-icon"><i class="bi bi-heart-pulse"></i></div>
+              <div class="home-showcase-info">
+                <strong>M-Care</strong>
+                <small>Rotina clínica &amp; ABA</small>
+              </div>
+              <span class="home-showcase-tag">Saúde &amp; ABA</span>
+            </div>
+          </div>
+          <div class="home-portfolio-index">
+            <span>APLICAÇÕES</span>
+            <strong>02</strong>
+            <i class="bi bi-arrow-down-right"></i>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- Brands Slider / Marquee Section -->
+  <section class="home-brands-ticker" aria-label="Marcas e produtos do ecossistema">
+    <div class="container">
+      <div class="home-brands-header">
+        <span class="home-brands-eyebrow">Marcas &amp; Soluções do Ecossistema</span>
+      </div>
+      <div class="home-brands-track-wrap" aria-hidden="true">
+        <div class="home-brands-track">
+          <!-- Track 1 -->
+          <div class="home-brand-item"><i class="bi bi-grid-1x2" aria-hidden="true"></i><span>MOVIDA</span></div>
+          <div class="home-brand-item"><i class="bi bi-receipt" aria-hidden="true"></i><span>M-NOTAS</span></div>
+          <div class="home-brand-item"><i class="bi bi-heart-pulse" aria-hidden="true"></i><span>M-CARE</span></div>
+          <div class="home-brand-item"><i class="bi bi-shield-check" aria-hidden="true"></i><span>MCREDENTIAL</span></div>
+          <div class="home-brand-item"><i class="bi bi-cpu" aria-hidden="true"></i><span>MIRANDASOFT</span></div>
+          <!-- Track 2 (loop) -->
+          <div class="home-brand-item"><i class="bi bi-grid-1x2" aria-hidden="true"></i><span>MOVIDA</span></div>
+          <div class="home-brand-item"><i class="bi bi-receipt" aria-hidden="true"></i><span>M-NOTAS</span></div>
+          <div class="home-brand-item"><i class="bi bi-heart-pulse" aria-hidden="true"></i><span>M-CARE</span></div>
+          <div class="home-brand-item"><i class="bi bi-shield-check" aria-hidden="true"></i><span>MCREDENTIAL</span></div>
+          <div class="home-brand-item"><i class="bi bi-cpu" aria-hidden="true"></i><span>MIRANDASOFT</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Portfolio Section -->
   <section class="home-products" id="portfolio-products" aria-labelledby="home-products-title">
     <div class="container">
       <div class="home-products-heading">
@@ -33,83 +100,204 @@
       </div>
 
       <div class="row g-3 g-xl-4">
-        <div class="col-md-6 col-xl-4">
-          <article class="home-product-card">
+        <!-- M-Notas -->
+        <div class="col-md-6">
+          <article class="home-product-card home-hub-card home-product-card-featured">
             <div class="home-product-card-top">
               <span class="home-product-number">01</span>
-              <span class="home-product-icon" aria-hidden="true"><i class="bi bi-grid-1x2"></i></span>
-            </div>
-            <div class="home-product-copy">
-              <span class="home-product-type">APLICAÇÃO MIRANDASOFT</span>
-              <h3>Movida</h3>
-              <p>Uma aplicação própria da MirandaSoft. Entre em contato para conhecer o produto e conversar com a nossa equipe.</p>
-            </div>
-            <a class="home-product-link" href="/contact" aria-label="Fale com a MirandaSoft sobre Movida">
-              Falar sobre Movida <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
-            </a>
-          </article>
-        </div>
-
-        <div class="col-md-6 col-xl-4">
-          <article class="home-product-card home-product-card-featured">
-            <div class="home-product-card-top">
-              <span class="home-product-number">02</span>
               <span class="home-product-icon" aria-hidden="true"><i class="bi bi-receipt"></i></span>
             </div>
             <div class="home-product-copy">
-              <span class="home-product-type">GESTÃO FISCAL</span>
+              <div class="home-product-badge-wrap">
+                <span class="home-product-type">GESTÃO FISCAL</span>
+                <span class="home-product-pill-featured"><i class="bi bi-star-fill" aria-hidden="true"></i> Destaque</span>
+              </div>
               <h3>M-Notas</h3>
-              <p>Emita e gerencie NF-e e NFC-e, organize produtos e clientes e gere DANFE e DANFCE.</p>
+              <p>Emita e gerencie NF-e e NFC-e, organize produtos e clientes e gere DANFE e DANFCE com agilidade e total conformidade.</p>
+
+              <ul class="home-product-features" aria-label="Destaques do M-Notas">
+                <li><i class="bi bi-check2" aria-hidden="true"></i> Emissão NF-e e NFC-e</li>
+                <li><i class="bi bi-check2" aria-hidden="true"></i> DANFE e DANFCE instantâneos</li>
+                <li><i class="bi bi-check2" aria-hidden="true"></i> Gestão de produtos e clientes</li>
+              </ul>
             </div>
             <a class="home-product-link" href="https://mnota.mirandasoft.com.br/" aria-label="Conheça a aplicação M-Notas" target="_blank" rel="noopener noreferrer">
-              Conhecer M-Notas <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+              <span>Conhecer M-Notas</span>
+              <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
             </a>
           </article>
         </div>
 
-        <div class="col-md-6 col-xl-4">
-          <article class="home-product-card">
+        <!-- M-Care -->
+        <div class="col-md-6">
+          <article class="home-product-card home-hub-card">
             <div class="home-product-card-top">
-              <span class="home-product-number">03</span>
+              <span class="home-product-number">02</span>
               <span class="home-product-icon" aria-hidden="true"><i class="bi bi-heart-pulse"></i></span>
             </div>
             <div class="home-product-copy">
-              <span class="home-product-type">ROTINA CLÍNICA</span>
+              <div class="home-product-badge-wrap">
+                <span class="home-product-type">ROTINA CLÍNICA</span>
+              </div>
               <h3>M-Care</h3>
-              <p>Plataforma para operação clínica multidisciplinar com foco em ABA, incluindo pacientes, programas, coletas e evolução.</p>
+              <p>Plataforma para operação clínica multidisciplinar com foco em ABA, incluindo pacientes, programas, coletas e evolução contínua.</p>
+
+              <ul class="home-product-features" aria-label="Destaques do M-Care">
+                <li><i class="bi bi-check2" aria-hidden="true"></i> Gestão de pacientes e prontuários</li>
+                <li><i class="bi bi-check2" aria-hidden="true"></i> Protocolos e rotina ABA</li>
+                <li><i class="bi bi-check2" aria-hidden="true"></i> Coletas e evolução clínica</li>
+              </ul>
             </div>
             <a class="home-product-link" href="https://mcare.mirandasoft.com.br/" aria-label="Conheça a aplicação M-Care" target="_blank" rel="noopener noreferrer">
-              Conhecer M-Care <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+              <span>Conhecer M-Care</span>
+              <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
             </a>
           </article>
         </div>
       </div>
 
       <div class="home-products-cta">
-        <span>Quer conversar sobre uma dessas aplicações?</span>
-        <a href="/contact">Entre em contato <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+        <span>Quer conversar sobre uma dessas aplicações ou agendar uma demonstração?</span>
+        <a href="/contact">Entre em contato com nossa equipe <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
       </div>
     </div>
   </section>
 
+  <!-- Commercial Services Section (Soluções Especializadas) -->
+  <section class="home-services" aria-labelledby="home-services-title">
+    <div class="container">
+      <div class="home-products-heading">
+        <div>
+          <span class="home-portfolio-eyebrow"><i class="bi bi-tools" aria-hidden="true"></i> ENGENHARIA SOB MEDIDA</span>
+          <h2 id="home-services-title">Soluções digitais para o seu negócio</h2>
+        </div>
+        <p>Além dos nossos produtos, construímos soluções sob medida com alto rigor de engenharia e foco em resultados operacionais.</p>
+      </div>
+
+      <div class="row g-3 g-xl-4">
+        <div class="col-md-6">
+          <article class="home-service-card">
+            <div class="home-service-header">
+              <span class="home-service-icon" aria-hidden="true"><i class="bi bi-window-stack"></i></span>
+              <span class="home-service-badge">Presença Digital</span>
+            </div>
+            <h3>Criação de Sites</h3>
+            <p>Planejamento e desenvolvimento de sites institucionais, portais corporativos e páginas comerciais focadas em velocidade, acessibilidade e conversão.</p>
+            <div class="home-service-tags">
+              <span>Sites Institucionais</span>
+              <span>Design Responsivo</span>
+              <span>SEO Técnico</span>
+            </div>
+            <a class="home-service-link" href="/criacao-de-sites">
+              Saiba mais sobre Criação de Sites <i class="bi bi-arrow-right" aria-hidden="true"></i>
+            </a>
+          </article>
+        </div>
+
+        <div class="col-md-6">
+          <article class="home-service-card">
+            <div class="home-service-header">
+              <span class="home-service-icon" aria-hidden="true"><i class="bi bi-cpu"></i></span>
+              <span class="home-service-badge">Operação &amp; Escala</span>
+            </div>
+            <h3>Desenvolvimento de Sistemas</h3>
+            <p>Desenvolvimento de sistemas sob medida para apoiar fluxos de trabalho, digitalizar processos empresariais e integrar operações complexas.</p>
+            <div class="home-service-tags">
+              <span>Sistemas Web</span>
+              <span>Automação de Fluxos</span>
+              <span>APIs &amp; Integrações</span>
+            </div>
+            <a class="home-service-link" href="/desenvolvimento-de-sistemas">
+              Saiba mais sobre Desenvolvimento de Sistemas <i class="bi bi-arrow-right" aria-hidden="true"></i>
+            </a>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Engineering Pillars Section -->
+  <section class="home-pillars" aria-labelledby="home-pillars-title">
+    <div class="container">
+      <div class="home-products-heading">
+        <div>
+          <span class="home-portfolio-eyebrow"><i class="bi bi-award" aria-hidden="true"></i> PADRÃO DE QUALIDADE</span>
+          <h2 id="home-pillars-title">Por que confiar na MirandaSoft</h2>
+        </div>
+        <p>Construímos tecnologia durável com compromisso direto de engenharia e transparência em todas as entregas.</p>
+      </div>
+
+      <div class="row g-3 g-xl-4">
+        <div class="col-md-4">
+          <div class="home-pillar-card">
+            <div class="home-pillar-icon"><i class="bi bi-speedometer2" aria-hidden="true"></i></div>
+            <h4>Performance &amp; Resiliência</h4>
+            <p>Código limpo, arquitetura escalável e páginas ultra-rápidas projetadas para carregar sem travamentos ou sobrecargas.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="home-pillar-card">
+            <div class="home-pillar-icon"><i class="bi bi-shield-lock" aria-hidden="true"></i></div>
+            <h4>Segurança &amp; LGPD</h4>
+            <p>Privacidade em primeiro lugar, consentimento ativo e controle de dados estruturado para total conformidade regulatória.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="home-pillar-card">
+            <div class="home-pillar-icon"><i class="bi bi-headset" aria-hidden="true"></i></div>
+            <h4>Suporte Especializado</h4>
+            <p>Acompanhamento próximo com quem entende do código e do produto para garantir continuidade e evolução segura.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Editorial Section (Dynamic Blog & Categories) -->
   <section class="home-editorial" aria-labelledby="home-editorial-title">
     <div class="container">
       <div class="home-products-heading">
         <div>
-          <span class="home-portfolio-eyebrow">CONTEÚDO MIRANDASOFT</span>
+          <span class="home-portfolio-eyebrow"><i class="bi bi-journal-text" aria-hidden="true"></i> CONTEÚDO MIRANDASOFT</span>
           <h2 id="home-editorial-title">Ideias para colocar em prática</h2>
         </div>
         <a class="home-editorial-all" href="/blog">Ver todos os artigos <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
       </div>
+
       <div class="home-editorial-categories" id="home-content-categories" aria-label="Categorias de conteúdo">
         <span class="home-editorial-loading">Carregando categorias…</span>
       </div>
+
       <div class="home-popular-heading">
         <h3><i class="bi bi-fire" aria-hidden="true"></i> Mais visualizados</h3>
         <span>Os artigos mais lidos pela comunidade</span>
       </div>
+
       <div class="row g-3 g-xl-4" id="home-popular-articles" aria-live="polite">
         <div class="col-12"><p class="home-editorial-loading">Carregando artigos…</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom CTA Banner -->
+  <section class="home-conversion" aria-labelledby="home-conversion-title">
+    <div class="container">
+      <div class="home-conversion-card">
+        <div class="home-conversion-content">
+          <span class="home-portfolio-eyebrow"><i class="bi bi-chat-dots" aria-hidden="true"></i> VAMOS CONVERSAR?</span>
+          <h2 id="home-conversion-title">Pronto para acelerar a tecnologia da sua empresa?</h2>
+          <p>Converse com nossos especialistas sobre as aplicações do portfólio ou desenhe uma solução sob medida com a MirandaSoft.</p>
+        </div>
+        <div class="home-conversion-actions">
+          <a class="home-portfolio-button home-portfolio-button-primary" href="/contact">
+            Falar com a equipe <i class="bi bi-arrow-right" aria-hidden="true"></i>
+          </a>
+          <a class="home-portfolio-button home-portfolio-button-secondary" href="/cotacoes">
+            Solicitar cotação <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -165,7 +353,7 @@
       }).join('');
     } catch (_) {
       categoriesRoot.innerHTML = '<a class="home-editorial-empty" href="/blog">Explore as categorias no blog <i class="bi bi-arrow-right" aria-hidden="true"></i></a>';
-      articlesRoot.innerHTML = '<div class="col-12"><p class="home-editorial-empty">Os artigos mais lidos serão exibidos aqui.</p></div>';
+      articlesRoot.innerHTML = '<div class="col-12"><p class="home-editorial-empty">Não foi possível carregar os artigos mais visualizados. <a href="/blog">Tente novamente no blog.</a></p></div>';
     }
   };
   load();
@@ -173,89 +361,950 @@
 </script>
 
 <style>
-  .home-portfolio { overflow: hidden; color: var(--ms-on-surface); }
-  .home-portfolio-hero { position: relative; padding: clamp(5.5rem, 11vw, 9rem) 0 clamp(4rem, 8vw, 7rem); }
-  .home-portfolio-hero::before { position: absolute; top: -18rem; right: -10rem; width: min(70vw, 64rem); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(var(--ms-primary-rgb), .16), transparent 68%); content: ""; pointer-events: none; }
-  .home-portfolio-hero .container { position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: 3rem; }
-  .home-portfolio-hero-content { max-width: 58rem; }
-  .home-portfolio-eyebrow { display: inline-flex; align-items: center; gap: .55rem; color: var(--ms-primary); font-size: .73rem; font-weight: 800; letter-spacing: .16em; }
-  .home-portfolio-hero h1 { max-width: 11ch; margin: 1.4rem 0 1.25rem; color: var(--ms-on-surface); font-size: clamp(3.2rem, 7.2vw, 6.8rem); font-weight: 850; letter-spacing: -.075em; line-height: .94; }
-  .home-portfolio-hero h1 span { color: var(--ms-primary); }
-  .home-portfolio-hero-content > p { max-width: 39rem; margin: 0; color: var(--ms-on-surface-variant); font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-height: 1.7; }
-  .home-portfolio-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
-  .home-portfolio-button { display: inline-flex; min-height: 3.25rem; align-items: center; justify-content: center; gap: .7rem; padding: .8rem 1.15rem; border: 1px solid var(--ms-outline-variant); border-radius: 11px; font-weight: 700; text-decoration: none; transition: transform .2s ease, border-color .2s ease, background .2s ease; }
-  .home-portfolio-button:hover { transform: translateY(-2px); }
-  .home-portfolio-button-primary { border-color: var(--ms-primary); background: var(--ms-primary); color: var(--ms-on-primary-container); }
-  .home-portfolio-button-primary:hover { background: var(--ms-primary-container); color: var(--ms-on-primary-container); }
-  .home-portfolio-button-secondary { background: var(--ms-surface-container-low); color: var(--ms-on-surface); }
-  .home-portfolio-button-secondary:hover { border-color: var(--ms-primary); color: var(--ms-on-surface); }
-  .home-portfolio-index { display: grid; min-width: 9rem; justify-items: end; gap: .3rem; padding-bottom: .45rem; color: var(--ms-on-surface-variant); }
-  .home-portfolio-index span { font-size: .68rem; font-weight: 800; letter-spacing: .15em; }
-  .home-portfolio-index strong { color: var(--ms-primary); font-size: 4rem; font-weight: 800; letter-spacing: -.08em; line-height: 1; }
-  .home-portfolio-index i { color: var(--ms-primary); font-size: 1.2rem; }
+  .home-portfolio {
+    overflow: hidden;
+    color: var(--ms-on-surface);
+    background: transparent;
+  }
+  .home-hub-shell {
+    --compat-bg: var(--ms-surface-container-low);
+  }
 
-  .home-products { padding: 1rem 0 clamp(4rem, 8vw, 7rem); }
-  .home-products-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; margin-bottom: 1.8rem; }
-  .home-products-heading h2 { margin: .6rem 0 0; color: var(--ms-on-surface); font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; letter-spacing: -.05em; }
-  .home-products-heading p { max-width: 24rem; margin: 0 0 .2rem; color: var(--ms-on-surface-variant); line-height: 1.65; }
-  .home-product-card { position: relative; display: flex; min-height: 23rem; flex-direction: column; overflow: hidden; padding: clamp(1.3rem, 2.5vw, 1.8rem); border: 1px solid var(--ms-outline-variant); border-radius: 20px; background: var(--ms-surface-container-low); transition: transform .24s ease, border-color .24s ease, background .24s ease; }
-  .home-product-card::before { position: absolute; top: 0; right: 1.5rem; left: 1.5rem; height: 2px; background: linear-gradient(90deg, transparent, var(--ms-primary), transparent); content: ""; opacity: .45; }
-  .home-product-card:hover { transform: translateY(-4px); border-color: var(--ms-primary); background: var(--ms-surface-container); }
-  .home-product-card-featured { border-color: rgba(var(--ms-primary-rgb), .45); background: linear-gradient(145deg, var(--ms-surface-container), var(--ms-surface-container-low)); }
-  .home-product-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
-  .home-product-number { color: var(--ms-on-surface-variant); font-size: .78rem; font-weight: 700; letter-spacing: .12em; }
-  .home-product-icon { display: grid; width: 3.2rem; height: 3.2rem; place-items: center; border: 1px solid rgba(var(--ms-primary-rgb), .24); border-radius: 14px; background: rgba(var(--ms-primary-rgb), .1); color: var(--ms-primary); font-size: 1.35rem; }
-  .home-product-type { display: block; margin-bottom: .55rem; color: var(--ms-primary); font-size: .66rem; font-weight: 800; letter-spacing: .14em; }
-  .home-product-copy h3 { margin: 0 0 .7rem; color: var(--ms-on-surface); font-size: 2rem; font-weight: 800; letter-spacing: -.05em; }
-  .home-product-copy p { margin: 0; color: var(--ms-on-surface-variant); line-height: 1.7; }
-  .home-product-link { display: flex; align-items: center; justify-content: space-between; gap: .8rem; margin-top: auto; padding-top: 1.7rem; color: var(--ms-primary); font-size: .88rem; font-weight: 750; text-decoration: none; }
-  .home-product-link:hover { color: var(--ms-primary); }
+  /* Hero Section */
+  .home-portfolio-hero {
+    position: relative;
+    padding: clamp(4.5rem, 9vw, 7.5rem) 0 clamp(3.5rem, 6vw, 5.5rem);
+  }
+  .home-portfolio-hero .container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+  .home-portfolio-hero-content {
+    max-width: 54rem;
+  }
+
+  .home-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    padding: .4rem .85rem;
+    border: 1px solid var(--ms-outline-variant);
+    border-radius: 999px;
+    background: var(--ms-surface);
+    margin-bottom: 1.25rem;
+  }
+  .home-status-dot {
+    width: .55rem;
+    height: .55rem;
+    border-radius: 50%;
+    background: var(--ms-tertiary);
+    box-shadow: 0 0 8px var(--ms-tertiary);
+    animation: homePulse 2s infinite ease-in-out;
+  }
+  @keyframes homePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .5; transform: scale(.85); }
+  }
+
+  .home-portfolio-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    color: var(--ms-primary);
+    font-size: .73rem;
+    font-weight: 800;
+    letter-spacing: .14em;
+  }
+  .home-portfolio-hero h1 {
+    max-width: 14ch;
+    margin: 0 0 1.25rem;
+    color: var(--ms-on-surface);
+    font-size: clamp(2.8rem, 6.2vw, 5.2rem);
+    font-weight: 850;
+    letter-spacing: -.065em;
+    line-height: .98;
+  }
+  .home-portfolio-hero h1 span {
+    color: var(--ms-primary);
+  }
+  .home-hero-lead {
+    max-width: 42rem;
+    margin: 0;
+    color: var(--ms-on-surface-variant);
+    font-size: clamp(1.05rem, 1.4vw, 1.22rem);
+    line-height: 1.7;
+  }
+
+  .home-portfolio-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .85rem;
+    margin-top: 2rem;
+  }
+  .home-portfolio-button {
+    display: inline-flex;
+    min-height: 3.25rem;
+    align-items: center;
+    justify-content: center;
+    gap: .7rem;
+    padding: .8rem 1.35rem;
+    border: 1px solid var(--ms-outline-variant);
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: .95rem;
+    text-decoration: none;
+    transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  .home-portfolio-button:hover {
+    transform: translateY(-2px);
+  }
+  .home-portfolio-button-primary {
+    border-color: var(--ms-primary-container);
+    background: var(--ms-primary-container);
+    color: var(--ms-on-primary-container);
+  }
+  .home-portfolio-button-primary:hover {
+    background: var(--ms-primary-container);
+    color: var(--ms-on-primary-container);
+    box-shadow: 0 8px 20px rgba(var(--ms-primary-rgb), .25);
+  }
+  .home-portfolio-button-secondary {
+    background: var(--ms-surface);
+    color: var(--ms-on-surface);
+  }
+  .home-portfolio-button-secondary:hover {
+    border-color: var(--ms-primary);
+    color: var(--ms-on-surface);
+  }
+
+  .home-hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-top: 2.2rem;
+  }
+  .home-hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    font-size: .78rem;
+    font-weight: 650;
+    color: var(--ms-on-surface-variant);
+    padding: .35rem .75rem;
+    background: var(--ms-surface);
+    border: 1px solid var(--ms-outline-variant);
+    border-radius: 8px;
+  }
+  .home-hero-pill i {
+    color: var(--ms-primary);
+  }
+
+  /* Hero Showcase Card */
+  .home-hero-showcase {
+    display: block;
+    min-width: 20rem;
+    max-width: 22rem;
+  }
+  .home-showcase-card {
+    position: relative;
+    padding: 1.5rem;
+    background: var(--ms-surface);
+    border: 1px solid var(--ms-outline-variant);
+    border-radius: 20px;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, .08);
+  }
+  .home-showcase-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    margin-bottom: 1.1rem;
+    border-bottom: 1px solid var(--ms-outline-variant);
+  }
+  .home-showcase-dots {
+    display: flex;
+    gap: .35rem;
+  }
+  .home-showcase-dots span {
+    width: .6rem;
+    height: .6rem;
+    border-radius: 50%;
+    background: var(--ms-outline-variant);
+  }
+  .home-showcase-dots span:nth-child(1) { background: #ef4444; }
+  .home-showcase-dots span:nth-child(2) { background: #f59e0b; }
+  .home-showcase-dots span:nth-child(3) { background: #10b981; }
+  .home-showcase-title {
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--ms-on-surface);
+    letter-spacing: .05em;
+  }
+  .home-showcase-status {
+    font-size: .68rem;
+    font-weight: 750;
+    color: var(--ms-tertiary);
+    padding: .2rem .5rem;
+    border-radius: 6px;
+    background: rgba(16, 185, 129, .1);
+  }
+  .home-showcase-body {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    margin-bottom: 1.25rem;
+  }
+  .home-showcase-item {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .75rem;
+    border-radius: 12px;
+    background: var(--ms-surface-container-low);
+    border: 1px solid var(--ms-outline-variant);
+    transition: border-color .2s ease;
+  }
+  .home-showcase-item:hover {
+    border-color: var(--ms-primary);
+  }
+  .home-showcase-icon {
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 8px;
+    background: rgba(var(--ms-primary-rgb), .1);
+    color: var(--ms-primary);
+    font-size: 1.1rem;
+  }
+  .home-showcase-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .home-showcase-info strong {
+    font-size: .88rem;
+    color: var(--ms-on-surface);
+  }
+  .home-showcase-info small {
+    font-size: .72rem;
+    color: var(--ms-on-surface-variant);
+  }
+  .home-showcase-tag {
+    font-size: .65rem;
+    font-weight: 750;
+    color: var(--ms-primary);
+    padding: .2rem .45rem;
+    border-radius: 4px;
+    background: rgba(var(--ms-primary-rgb), .08);
+  }
+  .home-portfolio-index {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-top: .85rem;
+    border-top: 1px solid var(--ms-outline-variant);
+    color: var(--ms-on-surface-variant);
+  }
+  .home-portfolio-index span {
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .15em;
+  }
+  .home-portfolio-index strong {
+    color: var(--ms-primary);
+    font-size: 2.2rem;
+    font-weight: 850;
+    line-height: 1;
+    margin-right: .5rem;
+  }
+  .home-portfolio-index i {
+    color: var(--ms-primary);
+    font-size: 1.1rem;
+  }
+
+  /* Brands Slider / Marquee */
+  .home-brands-ticker {
+    padding: clamp(2rem, 4vw, 3rem) 0 clamp(2.5rem, 5vw, 3.5rem);
+    border-top: 1px solid var(--ms-outline-variant);
+    overflow: hidden;
+  }
+  .home-brands-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  .home-brands-eyebrow {
+    font-size: .72rem;
+    font-weight: 750;
+    letter-spacing: .16em;
+    color: var(--ms-on-surface-variant);
+    text-transform: uppercase;
+  }
+  .home-brands-track-wrap {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent 0%, #000 15%, #000 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 15%, #000 85%, transparent 100%);
+  }
+  .home-brands-track {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.5rem, 3.5vw, 3rem);
+    width: max-content;
+    animation: homeMarquee 26s linear infinite;
+  }
+  .home-brands-track:hover {
+    animation-play-state: paused;
+  }
+  @keyframes homeMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .home-brands-track {
+      animation: none;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+  .home-brand-item {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    padding: .7rem 1.35rem;
+    border-radius: 12px;
+    border: 1px solid var(--ms-outline-variant);
+    background: var(--ms-surface-container-low);
+    color: var(--ms-on-surface);
+    font-size: .92rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    white-space: nowrap;
+    opacity: .88;
+    transition: opacity .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  .home-brand-item:hover {
+    opacity: 1;
+    border-color: var(--ms-primary);
+    transform: translateY(-2px);
+  }
+  .home-brand-item i {
+    color: var(--ms-primary);
+    font-size: 1.15rem;
+  }
+
+  /* Products Section */
+  .home-products {
+    padding: clamp(3rem, 6vw, 5rem) 0;
+    border-top: 1px solid var(--ms-outline-variant);
+  }
+  .home-products-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2.2rem;
+  }
+  .home-products-heading h2 {
+    margin: .6rem 0 0;
+    color: var(--ms-on-surface);
+    font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+    font-weight: 850;
+    letter-spacing: -.05em;
+  }
+  .home-products-heading p {
+    max-width: 28rem;
+    margin: 0 0 .2rem;
+    color: var(--ms-on-surface-variant);
+    line-height: 1.65;
+    font-size: .95rem;
+  }
+
+  .home-product-card,
+  .home-hub-card {
+    position: relative;
+    display: flex;
+    min-height: 25rem;
+    flex-direction: column;
+    overflow: hidden;
+    padding: clamp(1.4rem, 2.5vw, 1.9rem);
+    border: 1px solid var(--ms-outline-variant);
+    border-radius: 20px;
+    background: var(--ms-surface-container-low);
+    color: var(--ms-on-surface);
+    transition: transform .25s ease, border-color .25s ease, background .25s ease, box-shadow .25s ease;
+  }
+  .home-product-card::before {
+    position: absolute;
+    top: 0;
+    right: 1.5rem;
+    left: 1.5rem;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--ms-primary), transparent);
+    content: "";
+    opacity: .35;
+  }
+  .home-product-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--ms-primary);
+    background: var(--ms-surface-container);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, .08);
+  }
+  .home-product-card-featured {
+    border-color: rgba(var(--ms-primary-rgb), .45);
+    background: linear-gradient(160deg, var(--ms-surface-container), var(--ms-surface-container-low));
+  }
+  .home-product-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  .home-product-number {
+    color: var(--ms-on-surface-variant);
+    font-size: .82rem;
+    font-weight: 750;
+    letter-spacing: .12em;
+  }
+  .home-product-icon {
+    display: grid;
+    width: 3.4rem;
+    height: 3.4rem;
+    place-items: center;
+    border: 1px solid rgba(var(--ms-primary-rgb), .24);
+    border-radius: 14px;
+    background: rgba(var(--ms-primary-rgb), .1);
+    color: var(--ms-primary);
+    font-size: 1.4rem;
+  }
+  .home-product-badge-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    margin-bottom: .6rem;
+  }
+  .home-product-type {
+    display: block;
+    color: var(--ms-primary);
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .14em;
+  }
+  .home-product-pill-featured {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    font-size: .65rem;
+    font-weight: 800;
+    color: var(--ms-primary);
+    background: rgba(var(--ms-primary-rgb), .12);
+    padding: .2rem .55rem;
+    border-radius: 999px;
+  }
+  .home-product-copy h3 {
+    margin: 0 0 .75rem;
+    color: var(--ms-on-surface);
+    font-size: 2rem;
+    font-weight: 850;
+    letter-spacing: -.05em;
+  }
+  .home-product-copy p {
+    margin: 0 0 1.25rem;
+    color: var(--ms-on-surface-variant);
+    line-height: 1.65;
+    font-size: .94rem;
+  }
+  .home-product-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+  }
+  .home-product-features li {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .84rem;
+    color: var(--ms-on-surface-variant);
+  }
+  .home-product-features li i {
+    color: var(--ms-primary);
+    font-size: .95rem;
+  }
+  .home-product-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .8rem;
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--ms-outline-variant);
+    color: var(--ms-primary);
+    font-size: .9rem;
+    font-weight: 750;
+    text-decoration: none;
+    transition: color .2s ease;
+  }
+  .home-product-link:hover {
+    color: var(--ms-primary-container);
+  }
+  .home-product-link i {
+    transition: transform .2s ease;
+  }
+  .home-product-link:hover i {
+    transform: translate(2px, -2px);
+  }
+
+  .home-products-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 1.4rem 0 0;
+    border-top: 1px solid var(--ms-outline-variant);
+    color: var(--ms-on-surface-variant);
+    font-size: .92rem;
+  }
+  .home-products-cta a {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    color: var(--ms-primary);
+    font-weight: 750;
+    text-decoration: none;
+  }
+  .home-products-cta a:hover {
+    color: var(--ms-primary-container);
+  }
+
+  /* Commercial Services Section */
+  .home-services {
+    padding: clamp(3rem, 6vw, 5rem) 0;
+    border-top: 1px solid var(--ms-outline-variant);
+  }
+  .home-service-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: clamp(1.6rem, 3vw, 2.2rem);
+    background: var(--ms-surface);
+    border: 1px solid var(--ms-outline-variant);
+    border-radius: 20px;
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .home-service-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--ms-primary);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, .08);
+  }
+  .home-service-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.4rem;
+  }
+  .home-service-icon {
+    display: grid;
+    width: 3.2rem;
+    height: 3.2rem;
+    place-items: center;
+    border-radius: 12px;
+    background: rgba(var(--ms-primary-rgb), .1);
+    color: var(--ms-primary);
+    font-size: 1.35rem;
+  }
+  .home-service-badge {
+    font-size: .7rem;
+    font-weight: 750;
+    color: var(--ms-primary);
+    padding: .3rem .65rem;
+    border-radius: 999px;
+    background: rgba(var(--ms-primary-rgb), .08);
+  }
+  .home-service-card h3 {
+    margin: 0 0 .8rem;
+    color: var(--ms-on-surface);
+    font-size: 1.45rem;
+    font-weight: 850;
+    letter-spacing: -.03em;
+  }
+  .home-service-card p {
+    margin: 0 0 1.25rem;
+    color: var(--ms-on-surface-variant);
+    line-height: 1.65;
+    font-size: .94rem;
+  }
+  .home-service-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-bottom: 1.8rem;
+  }
+  .home-service-tags span {
+    font-size: .75rem;
+    font-weight: 650;
+    color: var(--ms-on-surface-variant);
+    padding: .25rem .6rem;
+    background: var(--ms-surface-container-low);
+    border: 1px solid var(--ms-outline-variant);
+    border-radius: 6px;
+  }
+  .home-service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    margin-top: auto;
+    color: var(--ms-primary);
+    font-weight: 750;
+    font-size: .92rem;
+    text-decoration: none;
+    transition: color .2s ease;
+  }
+  .home-service-link:hover {
+    color: var(--ms-primary-container);
+  }
+  .home-service-link i {
+    transition: transform .2s ease;
+  }
+  .home-service-link:hover i {
+    transform: translateX(4px);
+  }
+
+  /* Engineering Pillars Section */
+  .home-pillars {
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+    border-top: 1px solid var(--ms-outline-variant);
+  }
+  .home-pillar-card {
+    height: 100%;
+    padding: clamp(1.4rem, 2.5vw, 1.8rem);
+    background: var(--ms-surface-container-low);
+    border: 1px solid var(--ms-outline-variant);
+    border-radius: 18px;
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .home-pillar-card:hover {
+    border-color: var(--ms-primary);
+    transform: translateY(-3px);
+  }
+  .home-pillar-icon {
+    display: grid;
+    width: 2.8rem;
+    height: 2.8rem;
+    place-items: center;
+    border-radius: 10px;
+    background: rgba(var(--ms-primary-rgb), .1);
+    color: var(--ms-primary);
+    font-size: 1.25rem;
+    margin-bottom: 1.1rem;
+  }
+  .home-pillar-card h4 {
+    margin: 0 0 .55rem;
+    color: var(--ms-on-surface);
+    font-size: 1.15rem;
+    font-weight: 800;
+  }
+  .home-pillar-card p {
+    margin: 0;
+    color: var(--ms-on-surface-variant);
+    font-size: .88rem;
+    line-height: 1.6;
+  }
+
+  /* Editorial Section */
+  .home-editorial {
+    padding: clamp(3.5rem, 7vw, 6rem) 0;
+    border-top: 1px solid var(--ms-outline-variant);
+  }
+  .home-editorial-all {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--ms-primary);
+    font-weight: 750;
+    text-decoration: none;
+  }
+  .home-editorial-all:hover {
+    color: var(--ms-primary-container);
+  }
+  .home-editorial-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem;
+    margin: 1.5rem 0 3rem;
+  }
+  .home-category-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .65rem 1.1rem;
+    border: 1px solid var(--ms-outline-variant);
+    border-radius: 999px;
+    background: var(--ms-surface);
+    color: var(--ms-on-surface);
+    font-size: .88rem;
+    font-weight: 650;
+    text-decoration: none;
+    transition: border-color .2s ease, color .2s ease, transform .2s ease;
+  }
+  .home-category-chip:hover {
+    transform: translateY(-2px);
+    border-color: var(--ms-primary);
+    color: var(--ms-primary);
+  }
+  .home-popular-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.4rem;
+  }
+  .home-popular-heading h3 {
+    margin: 0;
+    color: var(--ms-on-surface);
+    font-size: 1.25rem;
+    font-weight: 800;
+  }
+  .home-popular-heading h3 i {
+    margin-right: .45rem;
+    color: var(--ms-primary);
+  }
+  .home-popular-heading > span,
+  .home-editorial-loading,
+  .home-editorial-empty {
+    color: var(--ms-on-surface-variant);
+    font-size: .9rem;
+  }
+
+  .home-article-card {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--ms-outline-variant);
+    border-radius: 18px;
+    background: var(--ms-surface);
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .home-article-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--ms-primary);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, .08);
+  }
+  .home-article-rank {
+    position: absolute;
+    z-index: 1;
+    top: .8rem;
+    left: .8rem;
+    display: grid;
+    width: 2.2rem;
+    height: 2.2rem;
+    place-items: center;
+    border: 1px solid var(--ms-outline-variant);
+    border-radius: 50%;
+    background: var(--ms-surface);
+    color: var(--ms-primary);
+    font-size: .75rem;
+    font-weight: 800;
+  }
+  .home-article-card-text-only .home-article-rank {
+    position: static;
+    display: inline-flex;
+    margin: .9rem 0 0 1.15rem;
+  }
+  .home-article-image {
+    display: block;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: var(--ms-surface-container);
+  }
+  .home-article-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .35s ease;
+  }
+  .home-article-card:hover .home-article-image img {
+    transform: scale(1.05);
+  }
+  .home-article-content {
+    display: flex;
+    min-height: 14rem;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+  .home-article-meta,
+  .home-article-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .7rem;
+    color: var(--ms-on-surface-variant);
+    font-size: .78rem;
+  }
+  .home-article-meta a {
+    color: var(--ms-primary);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .home-article-content h4 {
+    margin: .85rem 0 .55rem;
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.35;
+  }
+  .home-article-content h4 a {
+    color: var(--ms-on-surface);
+    text-decoration: none;
+  }
+  .home-article-content h4 a:hover {
+    color: var(--ms-primary);
+  }
+  .home-article-content p {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0 0 1.2rem;
+    color: var(--ms-on-surface-variant);
+    font-size: .88rem;
+    line-height: 1.6;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  .home-article-footer {
+    margin-top: auto;
+    padding-top: .85rem;
+    border-top: 1px solid var(--ms-outline-variant);
+  }
+  .home-article-footer a {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    color: var(--ms-primary);
+    font-weight: 750;
+    text-decoration: none;
+  }
+  .home-article-footer a:hover {
+    color: var(--ms-primary-container);
+  }
+
+  /* Bottom Conversion Banner */
+  .home-conversion {
+    padding: clamp(3rem, 6vw, 5rem) 0;
+    border-top: 1px solid var(--ms-outline-variant);
+  }
+  .home-conversion-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+    padding: clamp(2rem, 4vw, 3rem);
+    border: 1px solid rgba(var(--ms-primary-rgb), .3);
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--ms-surface-container), var(--ms-surface-container-low));
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .08);
+  }
+  .home-conversion-content {
+    max-width: 38rem;
+  }
+  .home-conversion-content h2 {
+    margin: .6rem 0 .8rem;
+    color: var(--ms-on-surface);
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+    font-weight: 850;
+    letter-spacing: -.04em;
+  }
+  .home-conversion-content p {
+    margin: 0;
+    color: var(--ms-on-surface-variant);
+    font-size: .95rem;
+    line-height: 1.65;
+  }
+  .home-conversion-actions {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    min-width: 15rem;
+  }
+
+  /* Focus States for Accessibility */
   .home-product-link:focus-visible,
   .home-portfolio-button:focus-visible,
-  .home-products-cta a:focus-visible { border-radius: 4px; outline: 3px solid rgba(var(--ms-primary-rgb), .45); outline-offset: 3px; }
-  .home-products-cta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.5rem; padding: 1.3rem 0 0; border-top: 1px solid var(--ms-outline-variant); color: var(--ms-on-surface-variant); }
-  .home-products-cta a { display: inline-flex; align-items: center; gap: .55rem; color: var(--ms-primary); font-weight: 750; text-decoration: none; }
+  .home-products-cta a:focus-visible,
+  .home-service-link:focus-visible,
+  .home-category-chip:focus-visible,
+  .home-article-card a:focus-visible,
+  .home-editorial-all:focus-visible {
+    border-radius: 6px;
+    outline: 3px solid rgba(var(--ms-primary-rgb), .5);
+    outline-offset: 3px;
+  }
 
-  .home-editorial { padding: clamp(3rem, 7vw, 6rem) 0; border-top: 1px solid var(--ms-outline-variant); background: var(--ms-surface-container-low); }
-  .home-editorial-all { display: inline-flex; align-items: center; gap: .5rem; color: var(--ms-primary); font-weight: 750; text-decoration: none; }
-  .home-editorial-categories { display: flex; flex-wrap: wrap; gap: .65rem; margin: 1.5rem 0 3rem; }
-  .home-category-chip { display: inline-flex; align-items: center; gap: .6rem; padding: .7rem 1rem; border: 1px solid var(--ms-outline-variant); border-radius: 999px; background: var(--ms-surface); color: var(--ms-on-surface); font-size: .9rem; font-weight: 650; text-decoration: none; transition: border-color .2s ease, color .2s ease, transform .2s ease; }
-  .home-category-chip:hover { transform: translateY(-2px); border-color: var(--ms-primary); color: var(--ms-primary); }
-  .home-popular-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1.2rem; }
-  .home-popular-heading h3 { margin: 0; color: var(--ms-on-surface); font-size: 1.2rem; font-weight: 800; }
-  .home-popular-heading h3 i { margin-right: .45rem; color: var(--ms-primary); }
-  .home-popular-heading > span,.home-editorial-loading,.home-editorial-empty { color: var(--ms-on-surface-variant); font-size: .9rem; }
-  .home-article-card { position: relative; height: 100%; overflow: hidden; border: 1px solid var(--ms-outline-variant); border-radius: 18px; background: var(--ms-surface); }
-  .home-article-rank { position: absolute; z-index: 1; top: .8rem; left: .8rem; display: grid; width: 2.2rem; height: 2.2rem; place-items: center; border: 1px solid var(--ms-outline-variant); border-radius: 50%; background: var(--ms-surface); color: var(--ms-primary); font-size: .75rem; font-weight: 800; }
-  .home-article-card-text-only .home-article-rank { position: static; display: inline-flex; margin: .9rem 0 0 1.15rem; }
-  .home-article-image { display: block; aspect-ratio: 16/9; overflow: hidden; background: var(--ms-surface-container); }
-  .home-article-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
-  .home-article-card:hover .home-article-image img { transform: scale(1.04); }
-  .home-article-content { display: flex; min-height: 14rem; flex-direction: column; padding: 1.15rem; }
-  .home-article-meta,.home-article-footer { display: flex; align-items: center; justify-content: space-between; gap: .7rem; color: var(--ms-on-surface-variant); font-size: .76rem; }
-  .home-article-meta a { color: var(--ms-primary); font-weight: 700; text-decoration: none; }
-  .home-article-content h4 { margin: .8rem 0 .55rem; font-size: 1.12rem; font-weight: 780; line-height: 1.35; }
-  .home-article-content h4 a { color: var(--ms-on-surface); text-decoration: none; }
-  .home-article-content p { display: -webkit-box; overflow: hidden; margin: 0 0 1.2rem; color: var(--ms-on-surface-variant); font-size: .88rem; line-height: 1.6; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
-  .home-article-footer { margin-top: auto; padding-top: .75rem; border-top: 1px solid var(--ms-outline-variant); }
-  .home-article-footer a { display: inline-flex; align-items: center; gap: .35rem; color: var(--ms-primary); font-weight: 750; text-decoration: none; }
-  .home-category-chip:focus-visible,.home-article-card a:focus-visible,.home-editorial-all:focus-visible { border-radius: 4px; outline: 3px solid rgba(var(--ms-primary-rgb), .45); outline-offset: 3px; }
+  /* Responsive Rules */
+  @media (max-width: 991.98px) {
+    .home-hero-showcase {
+      display: none;
+    }
+    .home-conversion-card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .home-conversion-actions {
+      width: 100%;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
 
   @media (max-width: 767.98px) {
-    .home-portfolio-hero { padding-top: 5.5rem; }
-    .home-portfolio-hero .container { align-items: flex-start; }
-    .home-portfolio-index { display: none; }
-    .home-products-heading { display: block; }
-    .home-products-heading p { margin-top: .75rem; }
-    .home-popular-heading { align-items: flex-start; flex-direction: column; }
+    .home-portfolio-hero {
+      padding-top: 4.8rem;
+    }
+    .home-portfolio-hero .container {
+      align-items: flex-start;
+    }
+    .home-products-heading {
+      display: block;
+    }
+    .home-products-heading p {
+      margin-top: .75rem;
+    }
+    .home-popular-heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
   }
 
   @media (max-width: 575.98px) {
-    .home-portfolio-hero { padding-block: 4.8rem 3.8rem; }
-    .home-portfolio-hero h1 { max-width: 10ch; font-size: clamp(3rem, 14vw, 4.6rem); }
-    .home-portfolio-actions { flex-direction: column; }
-    .home-portfolio-button { width: 100%; justify-content: space-between; }
-    .home-product-card { min-height: 20rem; }
-    .home-products-cta { align-items: flex-start; flex-direction: column; }
+    .home-portfolio-hero {
+      padding-block: 4rem 3rem;
+    }
+    .home-portfolio-hero h1 {
+      max-width: 10ch;
+      font-size: clamp(2.4rem, 12vw, 3.8rem);
+    }
+    .home-portfolio-actions {
+      flex-direction: column;
+    }
+    .home-portfolio-button {
+      width: 100%;
+      justify-content: space-between;
+    }
+    .home-product-card {
+      min-height: 22rem;
+    }
+    .home-products-cta {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+    .home-conversion-actions {
+      flex-direction: column;
+    }
   }
 </style>
